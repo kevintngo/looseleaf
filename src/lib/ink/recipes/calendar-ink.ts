@@ -140,7 +140,7 @@ const v = (name: string, i: number): string => `var(--ll-cal-${name}${i})`
   css += `${S} td[data-day]:has(>button:focus-visible)::after{content:"";position:absolute;inset:-8px;z-index:2;pointer-events:none;background:var(--ll-focus);${maskBox('var(--ll-cal-focus)')}}`
   css += `${S} td[data-day]>button:focus-visible{outline:none}`
 
-  css += `@media (hover:hover){${S} td:not([data-range]):not([data-disabled])>button:not([data-selected-single=true]):hover{background:var(--ll-hi-select);border-radius:3px 8px 4px 9px/8px 3px 9px 4px}}`
+  css += `@media (hover:hover){${S} td:not([data-range]):not([data-disabled])>button:not([data-selected-single=true]):hover{background:var(--ll-hi-select);border-radius:6px}}`
 
   css +=
     `@media (forced-colors:active){` +
@@ -164,7 +164,8 @@ export const calendarGridRecipe = defineRecipe<CalendarGridParams>({
   pad: 12,
   draw(ink, { w, h }, { rows, weekNumbers }, ctx) {
     const head = Math.min(CALENDAR_HEAD, h * 0.4)
-    const cell = (h - head) / Math.max(1, rows)
+    const row = (h - head) / Math.max(1, rows)
+    const cell = weekNumbers ? row : w / 7
     const wn = weekNumbers ? Math.max(0, w - 7 * cell) : 0
     const rtl = ctx.dir === 'rtl'
     const X = (x: number): number => (rtl ? w - x : x)
@@ -172,7 +173,7 @@ export const calendarGridRecipe = defineRecipe<CalendarGridParams>({
     ink.layer('rest', () => {
       line(ink, -2, head, w + 3, head, { pen: calm ? 'pencil.fine' : 'ink.fine', opts: { alpha: 0.85, simple: true } })
       for (let r = 1; r <= rows; r++) {
-        const y = head + r * cell
+        const y = head + r * row
         line(ink, -2, y, w + 3, y, { pen: calm ? 'pencil.fine' : 'pencil', opts: { alpha: calm ? 0.7 : 0.75, simple: true } })
       }
       for (let c = 0; c <= 7; c++) {

@@ -126,7 +126,7 @@ function InlineCode({ className, ...props }: React.ComponentProps<"code">) {
   return (
     <code
       data-slot="typography-inline-code"
-      className={cn("relative bg-muted px-[0.35rem] py-[0.15rem] font-mono text-[0.85em] font-medium text-ink [border-radius:2px_6px_3px_5px/5px_2px_6px_3px]", className)}
+      className={cn("relative bg-muted box-decoration-clone px-[0.35rem] py-[0.15rem] font-mono text-[0.85em] font-medium text-ink wrap-anywhere [border-radius:2px_6px_3px_5px/5px_2px_6px_3px]", className)}
       {...props}
     />
   )

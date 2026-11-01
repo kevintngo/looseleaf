@@ -30,7 +30,7 @@ export function DayCard({ day, list, onOpen, className }: { day: string; list: r
             {events.map((e) => (
               <li key={e.id}>
                 <button type="button" className={row} onClick={() => onOpen(e)}>
-                  <span className="ll-num w-11 shrink-0 text-end text-ink-soft">{clock(e.start)}</span>
+                  <span className="ll-num w-14 shrink-0 text-end whitespace-nowrap text-ink-soft">{clock(e.start)}</span>
                   <Dot kind={e.kind} />
                   <span className="min-w-0 flex-1 truncate">{e.title}</span>
                   <span className="sr-only">, {clock(e.start)} to {clock(e.end)}, {kindOf(e.kind).label}. Open to change it.</span>
@@ -64,7 +64,7 @@ export function ComingUp({ day, list, onOpen, className }: { day: string; list: 
             {next.map((e) => (
               <li key={e.id}>
                 <button type="button" className={row} onClick={() => onOpen(e)}>
-                  <span className="ll-num w-16 shrink-0 text-ink-soft">{format(parseDay(e.date), "EEE d")}</span>
+                  <span className="ll-num w-20 shrink-0 whitespace-nowrap text-ink-soft">{format(parseDay(e.date), "EEE d")}</span>
                   <Dot kind={e.kind} />
                   <span className="min-w-0 flex-1 truncate">{e.title}</span>
                   <span className="sr-only">

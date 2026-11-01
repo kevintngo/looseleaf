@@ -41,7 +41,7 @@ export function Tabs({ label, items, value, defaultValue, onValueChange, variant
         className="max-w-full flex-wrap justify-start gap-y-2 aria-[orientation=horizontal]:h-auto"
       >
         {items.map((item) => (
-          <TabsTrigger key={item.id} value={item.id} aria-label={item.ariaLabel} className="flex-none">
+          <TabsTrigger key={item.id} value={item.id} aria-label={item.ariaLabel} className="h-auto min-h-9 max-w-full flex-none whitespace-normal wrap-anywhere">
             {item.label}
           </TabsTrigger>
         ))}

@@ -34,7 +34,7 @@ export default {
     "One day is the tab stop (roving tabindex). Arrow keys move by day and week, Home and End to the week edge, PageUp / PageDown by month, Shift with them by year, Enter and Space select. Right-to-left swaps the horizontal arrows.",
     "The previous / next buttons keep `aria-disabled` (not `disabled`) at the end of `startMonth` / `endMonth`, so focus is not lost when you reach the limit.",
     "Nothing depends on hue alone: the chosen day is circled and bold, a range is a swipe with bold ends, a disabled day is hatched (and unclickable), today is underlined, and focus is a drawn blue loop that bleeds past the cell. The month caption is a polite live region, so paging announces the new month.",
-    "Touch: every day is at least 30 px (40 px by default). Compact density is 34 px, calm 30 px.",
+    "Touch: a day is 40 px by default, 34 px in compact density and 30 px in calm. In a space narrower than the month the days shrink but stay square, so the ruled lines always fall between them, and several months stack instead of squeezing side by side.",
     "Forced colors (Windows high contrast): the masks give way to real borders: a border round the chosen day, top and bottom borders on a range, an underline for today, a line-through for disabled days and a Highlight outline for focus.",
     "Reduced motion: month changes do not animate (`animate` is off by default).",
   ],

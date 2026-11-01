@@ -109,8 +109,8 @@ export default function CalendarPlanner({ as: Root = "main" }: { as?: "main" | "
       <div className="grid items-start gap-6 lg:grid-cols-[auto_1fr]">
         <div className="flex flex-col gap-4">
           <DotsContext.Provider value={dots}>
-            <div className="relative mx-auto w-fit">
-              <Fastener kind="clip" seed="planner-clip" className="pointer-events-none absolute -top-5 right-[3.125rem] z-(--ll-z-prop) calm:hidden" />
+            <div className="relative mx-auto w-fit max-lg:mt-8">
+              <Fastener kind="clip" seed="planner-clip" className="pointer-events-none absolute -top-10 right-[3.125rem] z-(--ll-z-prop) calm:hidden" />
               <Calendar
                 mode="single"
                 required

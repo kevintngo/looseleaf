@@ -63,7 +63,7 @@ function CalendarMonthGrid({ className, children, ...props }: MonthGridProps) {
     still: true,
   })
   return (
-    <div data-slot="calendar-grid" ref={ruled ? hostRef : undefined} {...(ruled ? hostProps : {})} className="relative isolate w-fit">
+    <div data-slot="calendar-grid" ref={ruled ? hostRef : undefined} {...(ruled ? hostProps : {})} className="relative isolate w-fit [grid-area:grid]">
       {ruled ? node : null}
       <table className={className} {...props}>
         {children}
@@ -96,7 +96,7 @@ function CalendarDayButton({ className, day, modifiers, children, ...props }: Da
       data-range-middle={modifiers.range_middle || undefined}
       aria-current={modifiers.today ? "date" : undefined}
       className={cn(
-        "grid size-[calc(100%-6px)] place-items-center m-[3px] cursor-default p-0 font-script text-[1.3rem] leading-none font-semibold text-inherit outline-hidden select-none compact:text-[1.2rem] calm:text-[1.05rem]",
+        "grid aspect-square w-[calc(100%-6px)] place-items-center m-[3px] cursor-default p-0 font-script text-[1.3rem] leading-none font-semibold text-inherit outline-hidden select-none compact:text-[1.2rem] calm:text-[1.05rem]",
         "data-[selected-single=true]:font-bold data-[range-start=true]:font-bold data-[range-end=true]:font-bold",
         "disabled:cursor-not-allowed aria-disabled:cursor-not-allowed",
         className
@@ -213,6 +213,7 @@ function Calendar({
         <DayPicker
           showOutsideDays={showOutsideDays}
           captionLayout={captionLayout}
+          navLayout="around"
           dir={dirProp ?? (ink.hasProvider ? ink.dir : undefined)}
           className={cn(
             "group/calendar p-3 [--cell:2.5rem] [--wn:2rem] compact:[--cell:2.125rem] calm:[--cell:1.875rem] calm:p-2 [[data-slot=card-content]_&]:p-0 [[data-slot=popover-content]_&]:bg-transparent",
@@ -224,14 +225,14 @@ function Calendar({
           }}
           classNames={{
             root: cn("w-fit", d.root),
-            months: cn("relative flex flex-col gap-5 md:flex-row", d.months),
-            month: cn("flex w-fit flex-col", d.month),
+            months: cn("relative flex flex-wrap justify-center gap-5", d.months),
+            month: cn("grid w-fit grid-cols-[var(--cell)_minmax(0,1fr)_var(--cell)] [grid-template-areas:'prev_cap_next'_'grid_grid_grid']", d.month),
             nav: cn("absolute inset-x-0 top-0 z-(--ll-z-raised) flex h-(--cell) w-full items-center justify-between", d.nav),
-            button_previous: cn("select-none aria-disabled:opacity-40", d.button_previous),
-            button_next: cn("select-none aria-disabled:opacity-40", d.button_next),
-            month_caption: cn("flex h-(--cell) w-full items-center justify-center px-(--cell)", d.month_caption),
+            button_previous: cn("place-self-center select-none [grid-area:prev] aria-disabled:opacity-40", d.button_previous),
+            button_next: cn("place-self-center select-none [grid-area:next] aria-disabled:opacity-40", d.button_next),
+            month_caption: cn("flex min-h-(--cell) w-full items-center justify-center [container-type:inline-size] [grid-area:cap]", d.month_caption),
             dropdowns: cn("flex h-(--cell) w-full items-center justify-center gap-2.5", d.dropdowns),
-            caption_label: cn("font-script text-[1.65rem] leading-none font-semibold text-ink select-none calm:text-[1.4rem]", d.caption_label),
+            caption_label: cn("font-script text-[min(1.65rem,13cqi)] leading-none font-semibold whitespace-nowrap text-ink select-none calm:text-[min(1.4rem,13cqi)]", d.caption_label),
             month_grid: cn("table-fixed border-collapse [border-spacing:0]", d.month_grid),
             weekdays: cn(d.weekdays),
             weekday: cn(
@@ -242,7 +243,7 @@ function Calendar({
             week_number_header: cn("w-(--wn) p-0", d.week_number_header),
             week_number: cn("w-(--wn) p-0 pe-2 text-end align-middle font-type text-xs font-normal text-pencil-text select-none", d.week_number),
             day: cn(
-              "group/day size-(--cell) p-0 text-center align-middle text-ink data-outside:text-pencil-text data-outside:[&>button]:font-normal data-disabled:text-pencil-text",
+              "group/day w-(--cell) p-0 text-center align-middle text-ink data-outside:text-pencil-text data-outside:[&>button]:font-normal data-disabled:text-pencil-text",
               d.day
             ),
             hidden: cn("invisible", d.hidden),

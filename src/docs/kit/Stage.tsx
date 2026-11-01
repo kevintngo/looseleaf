@@ -15,8 +15,8 @@ export interface StageProps {
 }
 
 const INNER: Record<NonNullable<ExampleMeta["layout"]>, string> = {
-  center: "flex w-full min-h-[inherit] flex-wrap items-center justify-center gap-4 px-6 py-10",
-  stack: "mx-auto flex w-full min-h-[inherit] max-w-xl flex-col items-start gap-4 px-6 py-8",
+  center: "flex w-full min-h-[inherit] flex-wrap items-center justify-center gap-4 px-4 py-10 sm:px-6",
+  stack: "mx-auto flex w-full min-h-[inherit] max-w-xl flex-col items-start gap-4 px-4 py-8 sm:px-6",
   full: "block w-full min-h-[inherit]",
 }
 
