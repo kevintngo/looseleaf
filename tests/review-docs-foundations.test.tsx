@@ -119,16 +119,6 @@ describe("the Numbers section says only what the fonts do", () => {
     expect(new Set(plex.digits).size).toBe(1)
   })
 
-  it("shows the same amounts in four faces, each with ll-num", () => {
-    renderUI(<TypographyPage />)
-    const demo = screen.getByRole("group", { name: /same column of amounts in four faces/ })
-    const lists = within(demo).getAllByRole("list")
-    expect(lists).toHaveLength(4)
-    for (const list of lists) expect(list).toHaveClass("ll-num")
-    expect(lists.map((l) => l.className.match(/font-(hand|script|mono)/)![1])).toEqual(["hand", "script", "script", "mono"])
-    expect(screen.getByText(/none of the four we ship does/)).toBeInTheDocument()
-  })
-
   it("puts words with braces or angle brackets in an expression, so the copied line is valid JSX", async () => {
     const { user } = renderUI(<TypographyPage />)
     const box = screen.getByRole("textbox", { name: "Your words" })

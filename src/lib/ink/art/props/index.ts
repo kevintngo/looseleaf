@@ -1,3 +1,4 @@
+
 import type { ArtDef } from '@/lib/ink/art/types'
 
 export const propBatches = {  } as const

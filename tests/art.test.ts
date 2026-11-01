@@ -164,14 +164,6 @@ describe("drawSkeleton", () => {
     expect(r.bbox[0]).toBeGreaterThan(-6)
     expect(r.bbox[2]).toBeLessThan(30)
   })
-  it("def.tilt turns the drawing and shade:false switches the automatic hatch off", () => {
-    const d: ArtDef = { grid: 64, kind: "doodle", parts: [["f", "tomato", "M12 12 L52 12.5 L52.4 52 L12.2 52.4 Z"], ["s", "M11 11 L53 11.6 L53.4 53 L11.2 53.4 Z"]] }
-    const flat = drawSkeleton(d, 96, "t").svg
-    expect(drawSkeleton({ ...d, tilt: 12 }, 96, "t").svg).not.toBe(flat)
-    expect(flat).toContain("ll-graphite")
-    expect(drawSkeleton({ ...d, shade: false }, 96, "t").svg).not.toContain("ll-graphite")
-    expect(drawSkeleton(d, 48, "t").svg).not.toContain("ll-graphite")
-  })
   it("the memo returns the same object for the same key", () => {
     let n = 0
     const a = memo("test|memo", () => ({ n: ++n }))

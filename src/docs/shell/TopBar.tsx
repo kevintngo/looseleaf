@@ -9,7 +9,7 @@ import { paths } from "../core/router-core"
 import { Kbd } from "../kit"
 import { SettingsMenu } from "./SettingsMenu"
 
-export const GITHUB_URL: string = import.meta.env.VITE_GITHUB_URL ?? "https://github.com/looseleaf/looseleaf"
+export const GITHUB_URL: string = import.meta.env.VITE_GITHUB_URL ?? "https://github.com/kevintngo/looseleaf"
 
 function useShortcutHint(): string {
   const [hint, setHint] = useState("Ctrl K")

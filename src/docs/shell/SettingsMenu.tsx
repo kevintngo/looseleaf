@@ -52,7 +52,7 @@ export function SettingsMenu() {
       </PopoverTrigger>
       <PopoverContent align="end" aria-label="Display settings" tilt={false} className="flex w-80 flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <p id={densityLabel} className="font-type text-xs tracking-wide text-ink-muted uppercase">
+          <p id={densityLabel} className="font-type text-xs text-ink-muted">
             Density
           </p>
           <RadioGroup aria-labelledby={densityLabel} value={density} onValueChange={(v) => setDensity(v as Density)} className="gap-2.5">
@@ -63,7 +63,7 @@ export function SettingsMenu() {
         </div>
         <Separator variant="dashed" />
         <div className="flex flex-col gap-2">
-          <p id={motionLabel} className="font-type text-xs tracking-wide text-ink-muted uppercase">
+          <p id={motionLabel} className="font-type text-xs text-ink-muted">
             Motion
           </p>
           <RadioGroup aria-labelledby={motionLabel} value={motion} onValueChange={(v) => setMotion(v as Motion)} className="gap-2.5">

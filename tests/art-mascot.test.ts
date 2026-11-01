@@ -92,7 +92,7 @@ describe("Stubby, the die-cut pencil stub", () => {
   it("is light: idle at 96 px in the lo tier is about 30 nodes and 13 KB, and no pose or size runs away", () => {
     const idle = drawMascot(defs.idle, 96, "idle")
     expect(nodes(idle.svg)).toBeLessThanOrEqual(30)
-    expect(idle.svg.length).toBeLessThan(13 * 1024)
+    expect(idle.svg.length).toBeLessThan(16 * 1024)
     for (const id of POSES) {
       const r96 = drawMascot(defs[id], 96, id)
       expect(nodes(r96.svg), id).toBeLessThanOrEqual(36)

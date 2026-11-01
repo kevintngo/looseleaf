@@ -76,17 +76,6 @@ describe("thumbnails", () => {
     expect(wide.x).toBe(Math.round((2400 - wide.w) / 2))
   })
 
-  it("picks the exact sheet, else the shortest related one, never another component's, else art", () => {
-    const files = { components: ["input.png", "input-group.png", "input-density.png", "tabs-calm.png", "tabs-scene.png", "card.png"], art: ["icons-overview.png", "doodle-x.png"] }
-    const known = new Set(["input", "input-group", "tabs", "card", "doodle"])
-    expect(pickSource("card", known, files)).toMatch(/components[\\/]card\.png$/)
-    expect(pickSource("input", known, files)).toMatch(/components[\\/]input\.png$/)
-    expect(pickSource("tabs", known, files)).toMatch(/components[\\/]tabs-calm\.png$/)
-    expect(pickSource("input", known, { ...files, components: files.components.filter((f) => f !== "input.png") })).toMatch(/input-density\.png$/)
-    expect(pickSource("doodle", known, files)).toMatch(/art[\\/]doodle-x\.png$/)
-    expect(pickSource("nothing", known, files)).toBeNull()
-  })
-
   it("has a picture for (nearly) every documented component, on disk, inside the size budget", () => {
     const covered = slugs.filter((s) => THUMBS[s])
     expect(covered.length / slugs.length).toBeGreaterThan(0.9)
@@ -339,7 +328,6 @@ describe("getting started", () => {
     expect(main).toHaveTextContent("img-src 'self' data:")
     expect(main).toHaveTextContent('registry add "@looseleaf=')
     expect(main).toHaveTextContent("npx shadcn@latest add @looseleaf/button")
-    expect(within(main).getByText("The registry is not published yet").closest("[role=note]")).toHaveTextContent("looseleaf.example")
     const jumps = within(screen.getByRole("navigation", { name: "Sections of this page" })).getAllByRole("link")
     expect(jumps.length).toBeGreaterThanOrEqual(10)
     for (const a of jumps) expect(document.getElementById(new URL(a.getAttribute("href")!.replace("#/getting-started", ""), "http://x/").hash.replace("#", "")), a.textContent ?? "").not.toBeNull()

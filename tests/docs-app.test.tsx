@@ -501,7 +501,7 @@ describe("getting started", () => {
     for (const name of ["Requirements", "Install with the registry", "Manual installation", "Fonts", "Tokens", "Provider", "Next steps"]) {
       expect(screen.getByRole("heading", { level: 2, name })).toBeInTheDocument()
     }
-    expect(document.body).toHaveTextContent('npx shadcn@latest registry add "@looseleaf=https://looseleaf.example/r/{name}.json"')
+    expect(document.body).toHaveTextContent('npx shadcn@latest registry add "@looseleaf=https://kevintngo.github.io/looseleaf/r/{name}.json"')
     expect(document.body).toHaveTextContent("npx shadcn@latest add @looseleaf/looseleaf")
     expect(screen.getByRole("navigation", { name: "On this page" })).toBeInTheDocument()
   })

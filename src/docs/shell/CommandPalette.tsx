@@ -121,7 +121,7 @@ function PaletteBody({ onChoose }: { onChoose: (movesFocus: boolean) => void }) 
                 <span className="dk-palette-title truncate font-bold">{highlight(result.entry.title, result.titlePositions)}</span>
                 <span className="dk-palette-sub truncate text-sm font-normal text-ink-muted">{result.entry.subtitle}</span>
               </span>
-              <span className="dk-palette-group shrink-0 font-type text-xs tracking-wide text-ink-muted uppercase">{result.entry.group}</span>
+              <span className="dk-palette-group shrink-0 font-type text-xs text-ink-muted">{result.entry.group}</span>
             </CommandItem>
           ))}
         </CommandGroup>

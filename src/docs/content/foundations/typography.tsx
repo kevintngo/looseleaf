@@ -80,7 +80,7 @@ const FACES: readonly Face[] = [
 function FaceCard({ face }: { face: Face }) {
   return (
     <Paper as="li" stock={face.stock} seed={`face:${face.id}`} className="p-5">
-      <p className="font-type text-[13px] tracking-wide text-pencil-text uppercase">{face.role}</p>
+      <p className="font-type text-[13px] text-pencil-text">{face.role}</p>
       <p className={cn(face.cls, "mt-1 text-5xl leading-none text-ink", face.id === "script" ? "font-bold" : "")}>
         {face.name}
       </p>
@@ -229,7 +229,7 @@ function Floors() {
     <div className="grid gap-5 @container">
       <div className="grid gap-5 @2xl:grid-cols-2">
         <Paper stock="paper" tilt={false} className="p-4">
-          <p className="font-type text-[13px] tracking-wide text-pencil-text uppercase">Kevin Sans Hand, one size per line</p>
+          <p className="font-type text-[13px] text-pencil-text">Kevin Sans Hand, one size per line</p>
           <ul role="list" className="m-0 mt-2 grid list-none gap-1 p-0">
             {sizes.map((s) => (
               <li key={s} className={cn("font-hand text-ink", s < 14 && "text-pencil-text")} style={{ fontSize: s }}>
@@ -239,7 +239,7 @@ function Floors() {
           </ul>
         </Paper>
         <Paper stock="paper" tilt={false} className="p-4">
-          <p className="font-type text-[13px] tracking-wide text-pencil-text uppercase">Equal visual size</p>
+          <p className="font-type text-[13px] text-pencil-text">Equal visual size</p>
           <div className="mt-2 grid gap-2 text-ink">
             <p className="font-hand text-[16px] leading-snug">Hand 16 px: the reference.</p>
             <p className="font-script text-[16px] leading-snug">Script 16 px: visibly smaller.</p>
@@ -293,7 +293,7 @@ function Numbers() {
     <div className="grid gap-4 sm:grid-cols-2">
       {COLUMNS.map((c) => (
         <Paper key={c.label} stock="receipt" tilt={false} className="px-5 py-5">
-          <p className="font-type text-[13px] tracking-wide text-pencil-text uppercase">{c.label}</p>
+          <p className="font-type text-[13px] text-pencil-text">{c.label}</p>
           <ul role="list" className={cn("m-0 mt-2 grid list-none gap-0.5 p-0 text-3xl leading-tight text-ink ll-num", c.cls)}>
             {AMOUNTS.map((a) => (
               <li key={a} className="text-end">

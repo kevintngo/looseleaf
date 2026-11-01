@@ -13,6 +13,10 @@ export function SiteFooter() {
           <p className="text-[15px] leading-snug text-ink-soft">
             Looseleaf is shadcn/ui, drawn by hand. Every page here is built from the library it documents, so what you see is what you get.
           </p>
+          <p className="mt-1 text-[15px] leading-snug text-ink-soft">Made by Kevin T. Ngo. Say hi on X:</p>
+          <a href="https://x.com/kevin_t_ngo" target="_blank" rel="noreferrer noopener" className="w-fit font-script text-4xl leading-tight font-bold text-link no-underline hover:text-link-hover">
+            @kevin_t_ngo<span className="sr-only"> on X (opens in a new tab)</span>
+          </a>
           <ul role="list" className="flex flex-wrap gap-x-4 gap-y-1 font-bold">
             <li>
               <Link to={paths.gettingStarted}>Getting started</Link>

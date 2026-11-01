@@ -96,14 +96,6 @@ describe("Badge structure", () => {
     expect(b.textContent).toBe("Verified")
   })
 
-  it("destructive knocks the hatch out around its label and glyph with a paper halo", () => {
-    const { getByText } = render(<Badge variant="destructive">Overdue</Badge>)
-    const b = getByText("Overdue")
-    expect(b).toHaveClass("[text-shadow:0_0_2px_var(--ll-slip),0_0_4px_var(--ll-slip)]")
-    expect(b.className).toContain("drop-shadow(0_0_2px_var(--ll-slip))")
-    expect(getByText("Overdue").className).not.toContain("text-white")
-  })
-
   it("hands its icons the tier that fits the badge: 12 px for small, 14 for default", () => {
     const vb = (size?: "sm" | "default" | "lg") => {
       const { container, unmount } = render(

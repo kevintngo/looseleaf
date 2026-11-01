@@ -129,7 +129,7 @@ function InstallSummary({ info, dependsOn, loading }: { info: InstallInfo; depen
     <dl className="dk-summary mt-1 grid grid-cols-[auto_1fr] items-baseline gap-x-4 gap-y-2">
       {info.files.length > 0 ? (
         <>
-          <dt className="font-type text-xs tracking-wide text-ink-muted uppercase">Adds</dt>
+          <dt className="font-type text-xs text-ink-muted">Adds</dt>
           <dd className="flex flex-wrap gap-2">
             {info.files.map((f) => (
               <InlineCode key={f}>{f.replace(/^src\//, "")}</InlineCode>
@@ -139,7 +139,7 @@ function InstallSummary({ info, dependsOn, loading }: { info: InstallInfo; depen
       ) : null}
       {dependsOn.length > 0 ? (
         <>
-          <dt className="font-type text-xs tracking-wide text-ink-muted uppercase">Also installs</dt>
+          <dt className="font-type text-xs text-ink-muted">Also installs</dt>
           <dd className="flex flex-wrap gap-2">
             {dependsOn.map((n) => (
               <Chip key={n} tone="outline" plain>
@@ -151,7 +151,7 @@ function InstallSummary({ info, dependsOn, loading }: { info: InstallInfo; depen
       ) : null}
       {info.dependencies.length > 0 ? (
         <>
-          <dt className="font-type text-xs tracking-wide text-ink-muted uppercase">npm packages</dt>
+          <dt className="font-type text-xs text-ink-muted">npm packages</dt>
           <dd className="flex flex-wrap gap-2">
             {info.dependencies.map((n) => (
               <Chip key={n} tone="outline" plain>

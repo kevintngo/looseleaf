@@ -1,3 +1,4 @@
+
 import type { ArtDef } from '@/lib/ink/art/types'
 import { poses } from '@/lib/ink/art/mascots/poses'
 import * as mascotBody from '@/lib/ink/art/mascots/body'

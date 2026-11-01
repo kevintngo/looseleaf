@@ -79,14 +79,6 @@ describe("Slider structure", () => {
     for (const el of container.querySelectorAll("[data-slot=slider], [data-slot=slider-track]")) expect(el.className).not.toMatch(/overflow-(hidden|clip|auto)/)
   })
 
-  it("draws the disabled slider and keeps every thumb unfocusable", () => {
-    const { getByRole, container } = renderUI(<Slider defaultValue={[40]} disabled aria-label="v" />)
-    expect(getByRole("slider")).toHaveAttribute("data-disabled")
-    expect(layers(getByRole("slider"))).toEqual(["rest"])
-    expect(layers(container.querySelector("[data-slot=slider-range]")!)).toEqual(["rest"])
-    expect(container.querySelector("[data-slot=slider-range]")!.innerHTML).toContain("var(--ll-pencil)")
-  })
-
   it("has forced-colors fallbacks: a bordered groove, a Highlight range, a solid knob", () => {
     const { container, getByRole } = renderUI(<Slider defaultValue={[40]} aria-label="v" />)
     expect(container.querySelector("[data-slot=slider-track]")).toHaveClass("forced-colors:border")

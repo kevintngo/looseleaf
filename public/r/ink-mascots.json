@@ -15,7 +15,7 @@
     },
     {
       "path": "src/lib/ink/art/mascots/index.ts",
-      "content": "import type { ArtDef } from '@/lib/ink/art/types'\nimport { poses } from '@/lib/ink/art/mascots/poses'\nimport * as mascotBody from '@/lib/ink/art/mascots/body'\nimport * as mascotProps from '@/lib/ink/art/mascots/props'\n\nexport const mascotBatches = { poses } as const\nexport const mascot = { ...poses } satisfies Record<string, ArtDef>\nexport type MascotPose = keyof typeof mascot\nexport { mascotBody }\nexport { mascotProps }\n",
+      "content": "\nimport type { ArtDef } from '@/lib/ink/art/types'\nimport { poses } from '@/lib/ink/art/mascots/poses'\nimport * as mascotBody from '@/lib/ink/art/mascots/body'\nimport * as mascotProps from '@/lib/ink/art/mascots/props'\n\nexport const mascotBatches = { poses } as const\nexport const mascot = { ...poses } satisfies Record<string, ArtDef>\nexport type MascotPose = keyof typeof mascot\nexport { mascotBody }\nexport { mascotProps }\n",
       "type": "registry:lib",
       "target": "@lib/ink/art/mascots/index.ts"
     },

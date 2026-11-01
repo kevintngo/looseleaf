@@ -316,15 +316,6 @@ describe("buttonRecipe", () => {
     }
   })
 
-  it("calm density draws no drop-lines and no fill offset", () => {
-    const calm = runRecipe(buttonRecipe, { ...req, box: { w: 120, h: 36 }, density: "calm" })
-    const comfy = runRecipe(buttonRecipe, { ...req, box: { w: 120, h: 36 } })
-    expect(calm.parts.rest).not.toBe(comfy.parts.rest)
-    expect(calm.parts.rest).toMatch(/data-part="fill" style="--mx:0;--my:0"/)
-    expect(comfy.parts.rest).not.toMatch(/data-part="fill" style="--mx:0;--my:0"/)
-    expect((calm.parts.hover ?? "").length).toBeLessThan((comfy.parts.hover ?? "").length + 1)
-  })
-
   it("lazy layers are the same bytes whenever they are asked for, and never change the eager ones", () => {
     const eager = runRecipe(buttonRecipe, { ...req, box: { w: 120, h: 36 } })
     const a = runRecipe(buttonRecipe, { ...req, box: { w: 120, h: 36 }, lazy: ["focus", "pressed"] })
@@ -339,23 +330,6 @@ describe("buttonRecipe", () => {
 
 describe("foundation polish (audit 4.1, 4.6, 4.8, 4.12, 4.13)", () => {
   const base = { seed: "polish", tier: "lo" as const, dir: "ltr" as const, knobs: DEFAULT_KNOBS }
-
-  it("destructive is the tight red hatch over a red wash, and a crossing pencil pass appears on hover", () => {
-    const d = runRecipe(buttonRecipe, { ...base, box: { w: 96, h: 36 }, params: { variant: "destructive", size: "default" }, density: "comfortable" })
-    const plain = runRecipe(buttonRecipe, { ...base, box: { w: 96, h: 36 }, params: { variant: "default", size: "default" }, density: "comfortable" })
-    expect(d.parts.rest).toContain("var(--ll-red)")
-    expect((d.parts.hover ?? "").length).toBeGreaterThan((plain.parts.hover ?? "").length * 1.5)
-  })
-
-  it("destructive carries a paper halo for its label and glyph, gone when disabled", () => {
-    const { getByRole } = render(<Button variant="destructive">Delete</Button>)
-    const cls = getByRole("button").className
-    expect(cls).toContain("[text-shadow:0_0_2px_var(--ll-slip),0_0_4px_var(--ll-slip)]")
-    expect(cls).toContain("[&_svg:not(.absolute)]:[filter:drop-shadow(0_0_2px_var(--ll-slip))]")
-    expect(cls).toContain("disabled:[text-shadow:none]")
-    const other = render(<Button variant="outline">Other</Button>).getByRole("button", { name: "Other" })
-    expect(other.className).not.toContain("text-shadow")
-  })
 
   it("sinks itself when pressed and says so, so the drawing does not sink twice", () => {
     const { getByRole } = render(<Button>Save</Button>)

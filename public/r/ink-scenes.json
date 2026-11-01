@@ -15,7 +15,7 @@
     },
     {
       "path": "src/lib/ink/art/scenes/index.ts",
-      "content": "import type { ArtDef } from '@/lib/ink/art/types'\nimport { emptyScenes } from '@/lib/ink/art/scenes/empty-scenes'\n\nexport const sceneBatches = { emptyScenes } as const\nexport const scenes = { ...emptyScenes } satisfies Record<string, ArtDef>\nexport type SceneName = keyof typeof scenes\n",
+      "content": "\nimport type { ArtDef } from '@/lib/ink/art/types'\nimport { emptyScenes } from '@/lib/ink/art/scenes/empty-scenes'\n\nexport const sceneBatches = { emptyScenes } as const\nexport const scenes = { ...emptyScenes } satisfies Record<string, ArtDef>\nexport type SceneName = keyof typeof scenes\n",
       "type": "registry:lib",
       "target": "@lib/ink/art/scenes/index.ts"
     }

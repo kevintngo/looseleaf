@@ -7,7 +7,7 @@ import { Tally } from "@/components/ui/tally"
 export default function Annotated() {
   return (
     <Paper data-home="annotated" stock="paper" rules="ruled" tape="corner" seed="home-notes" className="w-full pt-4 pr-6 pb-5 pl-14">
-      <p className="font-type text-sm leading-[28px] tracking-[0.16em] text-pencil-text uppercase">Reading notes / Tuesday</p>
+      <p className="font-type text-sm leading-[28px] text-pencil-text">Reading notes / Tuesday</p>
       <p className="font-script text-[2.1rem] leading-[56px] font-bold text-ink">Same parts, new hand</p>
       <p className="text-[17px] leading-[28px]">
         Looseleaf keeps shadcn&rsquo;s API and swaps the skin. Every line is <Highlight>drawn by a pen with pressure</Highlight>, every fill sits{" "}

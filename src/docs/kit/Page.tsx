@@ -28,7 +28,7 @@ export function Page({ kicker, title, description, meta, toc, children, footer, 
     <div data-slot="docs-page" className={cx("mx-auto flex w-full max-w-[72rem] items-start justify-center gap-8", className)}>
       <PageSheet as="article" ref={article} width="lg" tape="top" tilt={false} className="dk-article min-w-0 flex-1 gap-10">
         <PageHeader className="gap-3">
-          {kicker ? <p className="dk-kicker font-type text-sm tracking-wide text-ink-muted uppercase [&_a]:underline-offset-4 [&_a]:hover:underline">{kicker}</p> : null}
+          {kicker ? <p className="dk-kicker font-type text-sm text-ink-muted [&_a]:underline-offset-4 [&_a]:hover:underline">{kicker}</p> : null}
           <PageTitle underline="highlight" tabIndex={-1} className="dk-title text-[2.6rem] outline-offset-4 sm:text-5xl">
             {title}
           </PageTitle>
@@ -110,7 +110,7 @@ export function TableOfContents({ items }: { items: readonly TocItem[] }) {
   return (
     <div data-slot="docs-toc" className="dk-toc sticky top-24 hidden w-56 shrink-0 xl:block">
       <Paper as="nav" aria-label="On this page" stock="slip" tape="corner" tilt={1} rules="none" className="px-4 pt-5 pb-4">
-        <p className="dk-toc-title font-type text-xs tracking-wide text-ink-muted uppercase">On this page</p>
+        <p className="dk-toc-title font-type text-xs text-ink-muted">On this page</p>
         <ul role="list" className="-mx-1 mt-2 flex max-h-[calc(100dvh-14rem)] flex-col overflow-y-auto px-1">
           {items.map((item) => (
             <li key={item.id}>

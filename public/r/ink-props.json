@@ -9,7 +9,7 @@
   "files": [
     {
       "path": "src/lib/ink/art/props/index.ts",
-      "content": "import type { ArtDef } from '@/lib/ink/art/types'\n\nexport const propBatches = {  } as const\nexport const props = {  } satisfies Record<string, ArtDef>\nexport type PropName = keyof typeof props\n",
+      "content": "\nimport type { ArtDef } from '@/lib/ink/art/types'\n\nexport const propBatches = {  } as const\nexport const props = {  } satisfies Record<string, ArtDef>\nexport type PropName = keyof typeof props\n",
       "type": "registry:lib",
       "target": "@lib/ink/art/props/index.ts"
     }

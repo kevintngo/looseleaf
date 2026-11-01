@@ -40,7 +40,7 @@ export function Demo({ label, height, surface, className, children }: { label: s
 export function Panel({ title, className, children }: { title?: string; className?: string; children: ReactNode }) {
   return (
     <Paper stock="slip" tilt={false} className={cn("p-4", className)}>
-      {title ? <p className="mb-3 font-type text-[13px] tracking-wide text-pencil-text uppercase">{title}</p> : null}
+      {title ? <p className="mb-3 font-type text-[13px] text-pencil-text">{title}</p> : null}
       {children}
     </Paper>
   )

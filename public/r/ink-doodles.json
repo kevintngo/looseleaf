@@ -9,7 +9,7 @@
   "files": [
     {
       "path": "src/lib/ink/art/doodles/index.ts",
-      "content": "import type { ArtDef } from '@/lib/ink/art/types'\nimport { nature } from '@/lib/ink/art/doodles/nature'\nimport { things } from '@/lib/ink/art/doodles/things'\nimport { marks } from '@/lib/ink/art/doodles/marks'\n\nexport const doodleBatches = { nature, things, marks } as const\nexport const doodles = { ...nature, ...things, ...marks } satisfies Record<string, ArtDef>\nexport type DoodleName = keyof typeof doodles\n",
+      "content": "\nimport type { ArtDef } from '@/lib/ink/art/types'\nimport { nature } from '@/lib/ink/art/doodles/nature'\nimport { things } from '@/lib/ink/art/doodles/things'\nimport { marks } from '@/lib/ink/art/doodles/marks'\n\nexport const doodleBatches = { nature, things, marks } as const\nexport const doodles = { ...nature, ...things, ...marks } satisfies Record<string, ArtDef>\nexport type DoodleName = keyof typeof doodles\n",
       "type": "registry:lib",
       "target": "@lib/ink/art/doodles/index.ts"
     },

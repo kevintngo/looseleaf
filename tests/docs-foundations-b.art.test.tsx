@@ -79,9 +79,9 @@ describe("snippets", () => {
 })
 
 describe("the stickers and doodles page", () => {
-  it("has its seven sections, and draws only the first block of each shelf", () => {
+  it("has its six sections, and draws only the first block of each shelf", () => {
     renderUI(<StickersDoodlesBody />)
-    for (const name of ["Doodles", "Stickers", "Badges and seals", "Stamps", "Stubby", "Empty-state scenes", "Using the art"]) {
+    for (const name of ["Doodles", "Stickers", "Badges and seals", "Stamps", "Stubby", "Using the art"]) {
       expect(screen.getByRole("heading", { level: 2, name })).toBeInTheDocument()
     }
     expect(tilesOf("doodle").length).toBe(DOODLE_FAMILIES[0]!.ids.length)
@@ -149,27 +149,9 @@ describe("the stickers and doodles page", () => {
     expect(await clip()).toBe('<Mascot pose="oops" />')
   })
 
-  it("draws a scene when it is near, in either tier, and copies the Empty that goes with it", async () => {
-    const { user } = renderUI(<StickersDoodlesBody />)
-    const scene = document.querySelector<HTMLElement>('[data-scene="error-404"]')!
-    expect(scene.querySelector("svg")).toBeNull()
-    revealAll()
-    await waitFor(() => expect(scene).toHaveAttribute("data-state", "drawn"))
-    const svg = scene.querySelector("svg")!
-    expect(svg).toHaveAttribute("viewBox", "0 0 240 180")
-    expect(svg).toHaveAttribute("aria-hidden", "true")
-    expect(svg.innerHTML.length).toBeGreaterThan(1000)
-    await user.click(screen.getByRole("radio", { name: "compact scene, 120 by 90" }))
-    await waitFor(() => expect(document.querySelector('[data-scene="error-404"] svg')).toHaveAttribute("viewBox", "0 0 120 90"))
-    const card = document.querySelector('[data-scene="error-404"]')!.closest("li")!
-    await user.click(within(card).getByRole("button", { name: /Copy Empty/ }))
-    expect(await clip()).toContain('<EmptyMedia pose="shrug" size={96} />')
-  })
-
   it("has no accessibility violations", async () => {
     const { container } = renderUI(<StickersDoodlesBody />)
     revealAll()
-    await waitFor(() => expect(document.querySelectorAll('[data-scene][data-state="drawn"]').length).toBe(SCENE_ENTRIES.length))
     await axeCheck(container)
   })
 })

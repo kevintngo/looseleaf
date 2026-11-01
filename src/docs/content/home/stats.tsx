@@ -31,7 +31,7 @@ export function Stats() {
                 <span className="ll-num font-script text-6xl leading-none font-bold text-ink">{s.value}</span>
                 <span className="flex flex-col gap-0.5">
                   {s.strokes > 0 ? <Tally count={s.strokes} size="sm" label={`${s.strokes} strokes: ${s.per}`} /> : null}
-                  <span className="font-type text-sm tracking-[0.1em] text-pencil-text uppercase">{s.per}</span>
+                  <span className="font-type text-sm text-pencil-text">{s.per}</span>
                 </span>
               </dd>
             </div>

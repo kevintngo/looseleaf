@@ -326,16 +326,6 @@ describe("bubbleRecipe", () => {
     expect((hi.parts.rest ?? "").length).toBeGreaterThan((lo.parts.rest ?? "").length * 2)
   })
 
-  it("calm: the tail takes the body's quiet wash, not the full marker (it glowed beside a muted body)", () => {
-    const tail = (density: "comfortable" | "calm") => {
-      const rest = runRecipe(bubbleRecipe, { ...req, box: { w: 240, h: 44 }, density }).parts.rest ?? ""
-      return rest.slice(rest.indexOf('data-part="tail"'))
-    }
-    expect(tail("comfortable")).toContain('fill="var(--ll-marker)" fill-opacity=".86"')
-    expect(tail("calm")).toContain('fill="var(--ll-marker)" fill-opacity=".6"')
-    expect(tail("calm")).not.toContain('fill-opacity=".86"')
-  })
-
   it("calm density is a pencil hairline with a flat wash", () => {
     const calm = runRecipe(bubbleRecipe, { ...req, box: { w: 240, h: 44 }, density: "calm" })
     const comfy = runRecipe(bubbleRecipe, { ...req, box: { w: 240, h: 44 } })

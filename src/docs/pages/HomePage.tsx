@@ -60,7 +60,7 @@ function DefaultHome() {
           ["Foundations", FOUNDATIONS.length],
         ].map(([label, value]) => (
           <div key={label} className="flex flex-col-reverse items-center gap-1">
-            <dt className="font-type text-xs tracking-wide text-ink-muted uppercase">{label}</dt>
+            <dt className="font-type text-xs text-ink-muted">{label}</dt>
             <dd className="ll-num font-script text-5xl leading-none font-bold text-ink-you">{value}</dd>
           </div>
         ))}

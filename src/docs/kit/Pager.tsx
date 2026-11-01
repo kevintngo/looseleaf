@@ -55,7 +55,7 @@ function PagerItem({ link, dir }: { link: PagerLink; dir: "prev" | "next" }) {
         }
       />
       <span className="flex min-w-0 flex-col">
-        <span className={"dk-pager-label flex items-center gap-1.5 font-type text-xs tracking-wide text-ink-muted uppercase " + (back ? "" : "justify-end")}>
+        <span className={"dk-pager-label flex items-center gap-1.5 font-type text-xs text-ink-muted " + (back ? "" : "justify-end")}>
           {back ? "Previous" : "Next"}
           <Kbd aria-hidden="true" className="max-sm:hidden">
             {back ? "[" : "]"}

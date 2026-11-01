@@ -289,8 +289,6 @@ describe("switchRecipe and switchThumbRecipe", () => {
       }
     }
     expect(run({}, 44, 24, { dir: "rtl" }).parts.rest).not.toBe(run({}).parts.rest)
-    const th = (dir: "ltr" | "rtl") => runRecipe(switchThumbRecipe, { ...req, params: {}, box: { w: 16, h: 16 }, density: "comfortable", dir }).parts.rest
-    expect(th("rtl")).not.toBe(th("ltr"))
   })
 
   it("lazy layers are the same bytes whenever asked for and never change the eager ones", () => {

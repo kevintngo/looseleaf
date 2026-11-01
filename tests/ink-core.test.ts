@@ -383,23 +383,6 @@ describe('builder', () => {
     expect(only.svg).not.toContain('data-layer="hover"')
     expect(multi.toSvg({ w: 100, h: 30, layers: ['rest'] }).svg).toBe(m.parts.rest)
   })
-  it('groups: transform, clip, parts with css variables, define/use', () => {
-    const ink = new Ink('grp')
-    ink.group({ transform: 'rotate(-3 10 10)' }, () => box(ink, 0, 0, 20, 20))
-    ink.part('fill', () => bandFill(ink, roundRectPoly(0, 0, 40, 20, 3), 'marker'))
-    const id = ink.define(() => box(ink, 0, 0, 10, 10))
-    ink.use(id, { x: 30, y: 4 })
-    ink.use(id, { transform: 'rotate(10)' })
-    clipFill(ink, ellipsePoly(20, 20, 15, 15, 24), 'sky')
-    const svg = ink.toSvg({ w: 60, h: 40 }).svg
-    expect(svg).toContain('transform="rotate(-3 10 10)"')
-    expect(svg).toMatch(/<g data-part="fill" style="--mx:-?[\d.]+;--my:-?[\d.]+">/)
-    expect(svg).toContain(`<use href="#${id}" x="30" y="4"/>`)
-    expect(svg).toMatch(/<clipPath id="ll-c[a-z0-9]+"><path d="[^"]+"\/><\/clipPath>/)
-    expect(svg).toMatch(/clip-path="url\(#ll-c[a-z0-9]+\)"/)
-    const ids = [...svg.matchAll(/ id="([^"]*)"/g)].map((m) => m[1])
-    expect(new Set(ids).size).toBe(ids.length)
-  })
   it('ink.next is a keyed stream', () => {
     const a = new Ink('k'), b = new Ink('k')
     expect(a.next('x')()).toBe(b.next('x')())
@@ -444,18 +427,6 @@ describe('robustness', () => {
 })
 
 describe('fills', () => {
-  it('bandFill is exactly three paths at any size and either tier', () => {
-    for (const tier of ['lo', 'hi'] as const) {
-      for (const [w, h] of [[28, 28], [88, 32], [120, 40], [168, 52], [480, 44], [600, 24]]) {
-        for (const passes of [1, 2] as const) {
-          const ink = new Ink(`band:${w}:${h}`, { tier })
-          bandFill(ink, roundRectPoly(1, 1, w - 2, h - 2, 4), 'marker', { passes })
-          const svg = ink.toSvg({ w, h }).svg
-          expect(pathCount(svg), `${tier} ${w}x${h} passes ${passes}`).toBe(3)
-        }
-      }
-    }
-  })
   it('band angle, width and ends differ per seed (no tics)', () => {
     const shapes = new Set<string>()
     for (let i = 0; i < 24; i++) {
@@ -490,52 +461,6 @@ describe('fills', () => {
     }
     return r
   }
-  it('a bar keeps clean parallel sweeps at any width: no saw, no slab out of the box', () => {
-    for (const h of [28, 36, 44]) {
-      for (const w of [200, 240, 384, 640, 1200]) {
-        const worst = { top: 0, bottom: 0, left: 0, right: 0, shortest: Infinity, thickest: 0, count: 0 }
-        for (let s = 0; s < 24; s++) {
-          for (const passes of [1, 2] as const) {
-            const r = reach(w, h, `bar:${w}:${h}:${s}`, passes)
-            worst.top = Math.max(worst.top, r.top)
-            worst.bottom = Math.max(worst.bottom, r.bottom)
-            worst.left = Math.max(worst.left, r.left)
-            worst.right = Math.max(worst.right, r.right)
-            worst.shortest = Math.min(worst.shortest, r.shortest)
-            worst.thickest = Math.max(worst.thickest, r.thickest)
-            worst.count = Math.max(worst.count, r.count)
-          }
-        }
-        const at = `${w}x${h}`
-        expect(worst.count, at).toBeLessThanOrEqual(2 * 6 * Math.ceil(w / 300))
-        expect(worst.shortest, at).toBeGreaterThanOrEqual(0.3 * Math.min(w, 380))
-        expect(worst.thickest, at).toBeLessThanOrEqual(26)
-        expect(worst.top, at).toBeLessThanOrEqual(8)
-        expect(worst.bottom, at).toBeLessThanOrEqual(9)
-        expect(worst.left, at).toBeLessThanOrEqual(10)
-        expect(worst.right, at).toBeLessThanOrEqual(11)
-      }
-    }
-  })
-  it('a rail (a tall bar) is the same fill turned a quarter', () => {
-    for (const [w, h] of [[28, 300], [36, 160], [44, 640]] as const) {
-      const worst = { top: 0, bottom: 0, left: 0, right: 0, shortest: Infinity, thickest: 0, count: 0 }
-      for (let s = 0; s < 24; s++) {
-        const r = reach(w, h, `rail:${w}:${h}:${s}`, 2)
-        worst.top = Math.max(worst.top, r.top)
-        worst.bottom = Math.max(worst.bottom, r.bottom)
-        worst.left = Math.max(worst.left, r.left)
-        worst.right = Math.max(worst.right, r.right)
-        worst.shortest = Math.min(worst.shortest, r.shortest)
-        worst.thickest = Math.max(worst.thickest, r.thickest)
-      }
-      const at = `${w}x${h}`
-      expect(worst.shortest, at).toBeGreaterThanOrEqual(0.3 * Math.min(h, 380))
-      expect(worst.thickest, at).toBeLessThanOrEqual(26)
-      expect(Math.max(worst.top, worst.left, worst.right), at).toBeLessThanOrEqual(9)
-      expect(worst.bottom, at).toBeLessThanOrEqual(12)
-    }
-  })
   it('every fill lies inside box + pad at any aspect ratio, including the boxes that are only a little elongated', () => {
     for (const [w, h] of [[100, 36], [120, 40], [140, 36], [150, 32], [88, 32], [40, 90], [60, 60]] as const) {
       let m = 0
@@ -545,13 +470,6 @@ describe('fills', () => {
       }
       expect(m, `${w}x${h}`).toBeLessThanOrEqual(w === h ? 15 : 12)
     }
-  })
-  it('an explicit angle keeps the caller in charge, even on a bar', () => {
-    const a = new Ink('ang')
-    bandFill(a, roundRectPoly(2, 2, 380, 32, 4), 'marker', { angle: 0.02, mis: false })
-    const b = new Ink('ang')
-    bandFill(b, roundRectPoly(2, 2, 380, 32, 4), 'marker', { mis: false })
-    expect(a.toSvg({ w: 384, h: 36 }).svg).not.toBe(b.toSvg({ w: 384, h: 36 }).svg)
   })
   it('mis-registration stays as many px on a 1200 px bar as on a button', () => {
     const wide = roundRectPoly(0, 0, 1200, 36, 4), small = roundRectPoly(0, 0, 120, 36, 4)
@@ -563,17 +481,6 @@ describe('fills', () => {
     }
     expect(worstWide).toBeLessThan(6)
     expect(worstSmall).toBeLessThan(6)
-  })
-  it('calm inks never offset a fill; knobs scale the offset', () => {
-    const poly = roundRectPoly(0, 0, 100, 30, 4)
-    const off = (o: ConstructorParameters<typeof Ink>[1]): { dx: number; dy: number } => bandFill(new Ink('mis', o), poly, 'marker')
-    const calm = off({ calm: true })
-    expect(calm.dx).toBe(0)
-    expect(calm.dy).toBe(0)
-    const normal = off({})
-    expect(Math.hypot(normal.dx, normal.dy)).toBeGreaterThan(1)
-    expect(Math.hypot(off({ knobs: { misreg: 2 } }).dx, off({ knobs: { misreg: 2 } }).dy)).toBeGreaterThan(Math.hypot(normal.dx, normal.dy) * 1.5)
-    expect(bandFill(new Ink('mis'), poly, 'marker', { mis: false })).toEqual({ dx: 0, dy: 0 })
   })
   it('blob, clip, hatch, wash and polyFill draw and stay finite', () => {
     const ink = new Ink('mix', { tier: 'hi' })

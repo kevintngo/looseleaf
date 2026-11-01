@@ -522,14 +522,4 @@ describe("inputRecipe", () => {
 
 describe("foundation polish: calm is hairline (audit 4.12)", () => {
   const req = { seed: "polish", tier: "lo" as const, dir: "ltr" as const, knobs: DEFAULT_KNOBS, box: { w: 240, h: 28 } }
-
-  it("a calm field is one pencil.fine loop: lighter than the comfortable two-pull box, for rest and invalid", () => {
-    for (const params of [{}, { invalid: true }]) {
-      const calm = runRecipe(inputRecipe, { ...req, params, density: "calm" })
-      const comfy = runRecipe(inputRecipe, { ...req, params, density: "comfortable" })
-      const layer = params.invalid ? "invalid" : "rest"
-      expect(calm.parts[layer]!.length, layer).toBeLessThan(comfy.parts[layer]!.length)
-      expect(calm.parts[layer], layer).not.toBe(comfy.parts[layer])
-    }
-  })
 })

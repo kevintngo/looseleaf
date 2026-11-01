@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { DEFAULT_REGISTRY_URL, addCommand, componentsJsonSnippet, initCommand, packagesCommand, registerNamespaceCommand, registryBase } from "../core/install"
+import { addCommand, componentsJsonSnippet, initCommand, packagesCommand, registerNamespaceCommand, registryBase } from "../core/install"
 import { Link, useAnchorHref } from "../core/router"
 import { paths } from "../core/router-core"
 import { AnchorHeading, Callout, CodeBlock, InlineCode, Prose, Section } from "../kit"
@@ -314,6 +314,16 @@ export default function GettingStartedBody() {
         </ul>
       </nav>
 
+      <Prose>
+        <p>
+          Looseleaf is made by Kevin T. Ngo. Questions, ideas, or something you built with it? Say hi on X at{" "}
+          <a href="https://x.com/kevin_t_ngo" target="_blank" rel="noreferrer noopener">
+            @kevin_t_ngo<span className="sr-only"> (opens in a new tab)</span>
+          </a>
+          .
+        </p>
+      </Prose>
+
       <Section id="requirements" title="Requirements">
         <Prose>
           <ul>
@@ -338,15 +348,6 @@ export default function GettingStartedBody() {
       </Section>
 
       <Section id="install" title="Install with the registry" description="The fastest route: the CLI adds the files, the packages, the theme and the fonts.">
-        {base === DEFAULT_REGISTRY_URL ? (
-          <Callout tone="todo" title="The registry is not published yet">
-            <p>
-              The address in the commands below, <InlineCode>{DEFAULT_REGISTRY_URL}</InlineCode>, is a placeholder, so they will not resolve as written. Build the registry from the source tree (
-              <InlineCode>npm run registry:build</InlineCode> writes <InlineCode>public/r</InlineCode>), host that folder anywhere static and put its address where the placeholder is. A site built with{" "}
-              <InlineCode>VITE_REGISTRY_URL</InlineCode> shows that address here and this note goes away.
-            </p>
-          </Callout>
-        ) : null}
         <AnchorHeading id="registry" level={3}>
           1. Register the namespace
         </AnchorHeading>

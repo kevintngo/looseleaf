@@ -42,7 +42,6 @@ const QUALITY = [
 
 const LIMITS = [
   "The Notebook theme is light only. The dark variant exists for a later theme; a dark material system (opaque pens, no multiply) is planned.",
-  "The registry URL in the examples is a placeholder until it is published: set VITE_REGISTRY_URL and rebuild.",
   "Long lists do not draw a rule per row on purpose: table and menu rows use plain CSS, and calm density is there for the rest.",
   "A few CSS effects only a real engine can confirm, such as filters on SVG roots and clip-path on SVG groups, are still to be checked in every browser: Safari and Firefox get the first pass.",
   "Textarea auto-grow uses field-sizing, which Firefox does not ship yet; the textarea keeps a minimum height there.",
