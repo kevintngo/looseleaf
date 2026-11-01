@@ -519,7 +519,3 @@ describe("inputRecipe", () => {
     expect(a.parts.rest).toBe(eager.parts.rest)
   })
 })
-
-describe("foundation polish: calm is hairline (audit 4.12)", () => {
-  const req = { seed: "polish", tier: "lo" as const, dir: "ltr" as const, knobs: DEFAULT_KNOBS, box: { w: 240, h: 28 } }
-})

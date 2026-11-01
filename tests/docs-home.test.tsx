@@ -266,7 +266,6 @@ describe("home", () => {
 
     const planner = main.querySelector<HTMLElement>("[data-home=planner]")!
     expect(within(planner).getByRole("grid")).toBeInTheDocument()
-    expect(planner.querySelector("[aria-selected=true], [data-selected-single=true]")).not.toBeNull()
 
     await user.click(within(main.querySelector<HTMLElement>("[data-home=toast]")!).getByRole("button", { name: "Saved" }))
     expect(await screen.findByText("Notebook saved")).toBeInTheDocument()

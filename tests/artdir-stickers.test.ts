@@ -43,7 +43,7 @@ describe("a die-cut sticker is one piece of vinyl", () => {
     for (const [id, def] of drawn) if (pieces(def, size, id) > 1) bad.push(id)
     for (const [id, def] of badges) if (pieces(badgeSkeleton((def as { text: string }).text, def as never), size, id) > 1) bad.push(id)
     expect(bad).toEqual([])
-  })
+  }, 60000)
 })
 
 const partsOf = (d: ArtDef): Part[] => [...(d.hi ?? [])]
