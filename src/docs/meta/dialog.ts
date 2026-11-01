@@ -32,7 +32,7 @@ export default {
         { name: "seed", type: "string | number", description: "Pins the hand: the same seed cuts, tilts and draws the same way." },
       ],
     },
-    { name: "DialogHeader", description: "Title and description; centred on phones, left on larger screens." },
+    { name: "DialogHeader", description: "Title and description; centered on phones, left on larger screens." },
     { name: "DialogTitle", description: "The name of the dialog (script font, 27 px). Required by screen readers." },
     { name: "DialogDescription", description: "What it is for. Wired to `aria-describedby` by Radix." },
     { name: "DialogBody", description: "Looseleaf addition: the scrolling middle for long content (`max-h` 60dvh, `overflow-y-auto`). The sheet itself never scrolls. It is a tab stop with a drawn focus ring (`tabIndex={0}`, override it if the body holds focusable controls), because a scroll area with nothing focusable in it cannot be scrolled by keyboard." },

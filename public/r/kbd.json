@@ -33,7 +33,7 @@
     "a11y": [
       "Kbd is the semantic <kbd> element: screen readers read the text as it is written. Write words for modifier keys when the symbol would be read unhelpfully (\"Ctrl\" rather than an icon), or give an icon-only key an Icon with a label (aria-label is not allowed on a bare <kbd>).",
       "Decorative by nature: it is not focusable and has no role. The press animation is pointer feedback only; nothing depends on it.",
-      "Muted graphite on paper is 8.9:1. Inside a Tooltip or a menu the label and the drawing take that surface's text colour.",
+      "Muted graphite on paper is 8.9:1. Inside a Tooltip or a menu the label and the drawing take that surface's text color.",
       "Calm density draws a plain pencil box without the thickness; reduced motion removes the press transition."
     ],
     "usage": "import { Kbd, KbdGroup } from \"@/components/ui/kbd\"\n\nexport function Example() {\n  return (\n    <div className=\"flex flex-col items-start gap-3\">\n      <p>\n        Press <Kbd>Esc</Kbd> to close.\n      </p>\n      <KbdGroup>\n        <Kbd>Ctrl</Kbd>\n        <span>+</span>\n        <Kbd>K</Kbd>\n      </KbdGroup>\n    </div>\n  )\n}",

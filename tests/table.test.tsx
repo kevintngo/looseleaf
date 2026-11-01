@@ -175,7 +175,7 @@ describe("table tiles", () => {
     expect(tableTiles().rule).toBe(tableTiles().rule)
   })
 
-  it("are colour-free alpha masks: black fills only, no CSS variables, no hex", () => {
+  it("are color-free alpha masks: black fills only, no CSS variables, no hex", () => {
     for (const [name, url] of Object.entries(tableTiles())) {
       const svg = raw(url)
       expect(svg, name).toMatch(/^<svg xmlns='http:\/\/www\.w3\.org\/2000\/svg'/)

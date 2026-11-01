@@ -189,7 +189,7 @@ describe('output hygiene', () => {
     ['field', control('h4', 480, 44), 480, 44],
     ['wide', control('h5', 600, 44), 600, 44],
   ]
-  it.each(samples)('%s: no NaN, Infinity, undefined or hex colours', (_name, ink, w, h) => {
+  it.each(samples)('%s: no NaN, Infinity, undefined or hex colors', (_name, ink, w, h) => {
     const { svg } = ink.toSvg({ w, h })
     expect(svg).not.toMatch(/NaN|Infinity|undefined|null|\[object/)
     expect(svg).not.toMatch(/(?<![\w-])#[0-9a-fA-F]{3,8}(?![\w-])/)
@@ -292,7 +292,7 @@ describe('builder', () => {
       }
     }
   })
-  it('joins neighbouring groups that would carry the same mask and blend (text and felt)', () => {
+  it('joins neighboring groups that would carry the same mask and blend (text and felt)', () => {
     const ink = new Ink('join')
     ink.text(4, 12, 'hello', { size: 12 })
     ink.stroke([[0, 20], [60, 22]], 'ink')

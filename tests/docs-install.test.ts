@@ -113,7 +113,7 @@ describe("registryInfo", () => {
     ],
   })
 
-  it("reads one item and normalises dependency references to names", () => {
+  it("reads one item and normalizes dependency references to names", () => {
     expect(registryInfo(registry, "button")).toEqual({
       dependencies: ["radix-ui"],
       registryDependencies: ["ink", "looseleaf-theme", "card"],

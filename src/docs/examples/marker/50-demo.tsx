@@ -5,7 +5,7 @@ import { Spinner } from "@/components/ui/spinner"
 export const meta = {
   title: "In a conversation",
   description:
-    "shadcn's `marker-demo`: a note with an icon, a running status with a spinner (`role=\"status\"`, pulsing), a labelled separator and another note. The original's `shimmer` utility is not shipped, so the pulse here is Tailwind's `motion-safe:animate-pulse`.",
+    "shadcn's `marker-demo`: a note with an icon, a running status with a spinner (`role=\"status\"`, pulsing), a labeled separator and another note. The original's `shimmer` utility is not shipped, so the pulse here is Tailwind's `motion-safe:animate-pulse`.",
   layout: "center" as const,
 }
 

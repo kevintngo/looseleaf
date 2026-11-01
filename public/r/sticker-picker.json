@@ -36,7 +36,7 @@
       "Pressing a sticker with the mouse does not move the focus out of the search field, so with closeOnSelect off the arrow keys keep working between picks.",
       "Each option is named by its sticker (\"Rocket\"); the count of matches is announced politely as you type (\"12 stickers.\", \"No stickers found.\").",
       "The category chips are toggle buttons (aria-pressed) in their own tab stop; clicking one returns focus to the field. The row scrolls sideways on a narrow popover.",
-      "The highlighted sticker is shown by a highlighter swipe behind it, a small turn and the peeled corner, not by colour alone. Windows high contrast keeps the stickers (intrinsic art).",
+      "The highlighted sticker is shown by a highlighter swipe behind it, a small turn and the peeled corner, not by color alone. Windows high contrast keeps the stickers (intrinsic art).",
       "The empty state has a status line and Stubby with a magnifier."
     ],
     "usage": "import { Button } from \"@/components/ui/button\"\nimport { StickerPicker, StickerPickerContent, StickerPickerTrigger } from \"@/components/ui/sticker-picker\"\n\nexport function Example() {\n  return (\n    <StickerPicker onSelect={(sticker) => attach(sticker.name)}>\n      <StickerPickerTrigger asChild>\n        <Button variant=\"outline\">Add sticker</Button>\n      </StickerPickerTrigger>\n      <StickerPickerContent />\n    </StickerPicker>\n  )\n}",

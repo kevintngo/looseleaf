@@ -2,7 +2,7 @@ import { LabelTag, LabelTagTitle } from "@/components/ui/label-tag"
 
 export const meta = {
   title: "Tags that link",
-  description: "`asChild` makes the tag a link (or a button). It keeps its native focus and keyboard behaviour and swings on its eyelet when you hover it.",
+  description: "`asChild` makes the tag a link (or a button). It keeps its native focus and keyboard behavior and swings on its eyelet when you hover it.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

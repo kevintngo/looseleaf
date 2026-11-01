@@ -4,7 +4,7 @@ import { Progress } from "@/components/ui/progress"
 
 export const meta = {
   title: "Default",
-  description: "A pencil-hatched box coloured in with a marker as far as the value says. Change the value and the marker glides to it (a CSS clip on a full-length pass; nothing is redrawn).",
+  description: "A pencil-hatched box colored in with a marker as far as the value says. Change the value and the marker glides to it (a CSS clip on a full-length pass; nothing is redrawn).",
   layout: "stack" as const,
 }
 

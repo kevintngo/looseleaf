@@ -291,7 +291,7 @@ describe("bubbleRecipe", () => {
     }
   })
 
-  it("every variant x tier x density x dir is sane (no NaN, only var(--ll-*) colours)", () => {
+  it("every variant x tier x density x dir is sane (no NaN, only var(--ll-*) colors)", () => {
     for (const variant of bubbleVariantList) {
       for (const tier of ["lo", "hi"] as const) {
         for (const density of ["comfortable", "compact", "calm"] as const) {

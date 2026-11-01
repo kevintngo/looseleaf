@@ -168,7 +168,7 @@ function StickerSheet({
         ) : null}
         {title ? (
           <div className="relative mb-2 flex h-6 items-baseline justify-between gap-3 px-1.5">
-            <p id={titleId} className="truncate font-type text-sm tracking-wide text-pencil-text uppercase">
+            <p id={titleId} className="truncate font-type text-sm text-pencil-text">
               {title}
             </p>
             <p className="shrink-0 font-type text-xs text-pencil-text ll-num">{Math.max(0, left)} left</p>

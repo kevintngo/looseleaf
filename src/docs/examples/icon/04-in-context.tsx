@@ -3,7 +3,7 @@ import { Icon } from "@/components/ui/icon"
 
 export const meta = {
   title: "In real UI",
-  description: "Status rows and three real buttons (an icon with a label, an icon on its own, a label with a chevron): colour comes from the parent, size from the usual `size-N` classes, and inside a Button the icon takes the button's own size.",
+  description: "Status rows and three real buttons (an icon with a label, an icon on its own, a label with a chevron): color comes from the parent, size from the usual `size-N` classes, and inside a Button the icon takes the button's own size.",
   layout: "stack" as const,
 }
 

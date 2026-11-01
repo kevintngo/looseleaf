@@ -25,7 +25,7 @@ export default {
     { name: "useSonner", description: "Sonner's hook that returns the list of active toasts." },
   ],
   a11y: [
-    "Sonner renders a polite aria-live region (`aria-label=\"Notifications alt+T\"`); Alt+T focuses it so a keyboard user can reach the toasts, and hovering or focusing pauses the timers. Each type is its own icon shape and paper (guest check, pink, yellow, blue sticky), so colour is never the only signal.",
+    "Sonner renders a polite aria-live region (`aria-label=\"Notifications alt+T\"`); Alt+T focuses it so a keyboard user can reach the toasts, and hovering or focusing pauses the timers. Each type is its own icon shape and paper (guest check, pink, yellow, blue sticky), so color is never the only signal.",
     "Action and cancel are real buttons at least 24 px tall; the close button is named \"Close toast\". Keep toast text short and never put the only copy of an error in a toast that disappears: pair it with an inline message.",
     "Swipe to dismiss is a pointer shortcut only (sonner); every toast also closes with its close button, its action, its timer or `toast.dismiss()`.",
     "The toss-in uses the theme's `ll-toss` (`ll-drop` when the stack is not on the right) and collapses to nothing with reduced motion. In `calm` density the slips lose their tilt, tape and pin.",

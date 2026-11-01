@@ -34,7 +34,7 @@ describe("taped sheets keep 32 px of desk on a phone", () => {
 })
 
 describe("error-404", () => {
-  it("the search box types from the start edge, not from the centre of the centred sheet", () => {
+  it("the search box types from the start edge, not from the center of the centered sheet", () => {
     const { getByRole } = renderUI(<Error404 />)
     expect(getByRole("searchbox", { name: "Search the site" })).toHaveClass("text-start")
   })

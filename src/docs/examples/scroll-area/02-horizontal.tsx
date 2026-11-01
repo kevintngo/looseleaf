@@ -16,7 +16,7 @@ const notes = [
   ["blue", "Read chapter 4"],
   ["yellow", "Post the parcel"],
   ["green", "Tidy the desk"],
-  ["orange", "Practise lettering"],
+  ["orange", "Practice lettering"],
 ] as const
 
 const stock = {

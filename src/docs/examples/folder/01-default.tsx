@@ -2,7 +2,7 @@ import { Folder, FolderContent, FolderTab, FolderTabs } from "@/components/ui/fo
 
 export const meta = {
   title: "A folder with tabs",
-  description: "The front tab is the folder's colour and runs into the body; the others stand behind it. Arrow keys move between tabs; Home and End jump.",
+  description: "The front tab is the folder's color and runs into the body; the others stand behind it. Arrow keys move between tabs; Home and End jump.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

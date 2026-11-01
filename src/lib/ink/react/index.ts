@@ -1,4 +1,4 @@
-export { InkDefs, InkTiles, ensureInkDefs } from "@/lib/ink/react/defs"
+export { InkDefs, InkTiles, ensureInkDefs, ensureInkFonts } from "@/lib/ink/react/defs"
 export { useEnsureInkDefs } from "@/lib/ink/react/ensure-defs"
 export { IconSizeContext, useIconSize } from "@/lib/ink/react/icon-size"
 export { InkProvider, type InkProviderProps } from "@/lib/ink/react/provider"

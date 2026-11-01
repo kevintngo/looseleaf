@@ -5,7 +5,7 @@ const SEMANTIC_NON_COLOR = new Set(['--radius'])
 export const FONT_VARIABLES = ['--font-hand', '--font-script', '--font-type', '--font-mono']
 
 const NAMED_COLORS = new Set(
-  'transparent currentcolor white black red green blue gray grey silver maroon purple fuchsia lime olive yellow navy teal aqua orange'.split(' ')
+  'transparent currentcolor white black red green blue gray gray silver maroon purple fuchsia lime olive yellow navy teal aqua orange'.split(' ')
 )
 const COLOR_FN = /^(#[0-9a-f]{3,8}\b|(?:rgb|rgba|hsl|hsla|hwb|lab|lch|oklab|oklch|color|color-mix|light-dark)\()/i
 

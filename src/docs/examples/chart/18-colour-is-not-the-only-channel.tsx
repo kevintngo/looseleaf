@@ -4,8 +4,8 @@ import { BarChart, ChartContainer, ChartLegend, ChartTooltip, LineChart, type Ch
 import { Button } from "@/components/ui/button"
 
 export const meta = {
-  title: "Colour is not the only channel",
-  description: "Every series carries a pencil pattern (hatching, dots, cross-hatching, rules, scribble) on its marks, and a marker shape and a dash pattern on its lines. Switch to greyscale to see the chart still reads; switch the patterns off (`patterns={false}`) to see what plain colour would have left you.",
+  title: "Color is not the only channel",
+  description: "Every series carries a pencil pattern (hatching, dots, cross-hatching, rules, scribble) on its marks, and a marker shape and a dash pattern on its lines. Switch to grayscale to see the chart still reads; switch the patterns off (`patterns={false}`) to see what plain color would have left you.",
   layout: "stack" as const,
 }
 
@@ -30,7 +30,7 @@ export default function Example() {
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-4">
       <div className="flex flex-wrap gap-2">
         <Button size="sm" variant={grey ? "default" : "outline"} aria-pressed={grey} onClick={() => setGrey((g) => !g)}>
-          greyscale
+          grayscale
         </Button>
         <Button size="sm" variant={patterns ? "default" : "outline"} aria-pressed={patterns} onClick={() => setPatterns((p) => !p)}>
           patterns

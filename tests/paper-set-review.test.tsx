@@ -206,7 +206,7 @@ describe("lists of paper", () => {
   })
 })
 
-describe("behaviour a real page leans on", () => {
+describe("behavior a real page leans on", () => {
   it("a right-to-left folder moves between tabs with the arrow that points that way (Radix Tabs' dir), tabs keep the roving tab stop", async () => {
     const { user, getAllByRole } = renderUI(
       <Folder defaultValue="a" dir="rtl">

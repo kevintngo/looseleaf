@@ -70,7 +70,7 @@ function PenTable({ tier }: { tier: Tier }) {
   return (
     <TableScroll label="The pen table">
       <table className="w-full min-w-[42rem] border-collapse text-[15px]">
-        <caption className="sr-only">Every named pen: a sample stroke, its kind, width, opacity, grain, colour token and the size of its drawing</caption>
+        <caption className="sr-only">Every named pen: a sample stroke, its kind, width, opacity, grain, color token and the size of its drawing</caption>
         <thead>
           <tr>
             <th scope="col" className={th}>Stroke</th>
@@ -79,7 +79,7 @@ function PenTable({ tier }: { tier: Tier }) {
             <th scope="col" className={th}>Width</th>
             <th scope="col" className={th}>Opacity</th>
             <th scope="col" className={th}>Grain</th>
-            <th scope="col" className={th}>Colour</th>
+            <th scope="col" className={th}>Color</th>
             <th scope="col" className={th}>Markup</th>
           </tr>
         </thead>
@@ -213,7 +213,7 @@ function Anatomy() {
       </div>
       <ol className="m-0 grid list-none gap-4 p-0 sm:grid-cols-2" aria-label="The layers of one stroke, in the order they are painted">
         <li className="min-w-0">
-          <LayerSvg ex={ex} layers={[]} centre label="The centre line the hand follows, dotted" />
+          <LayerSvg ex={ex} layers={[]} centre label="The center line the hand follows, dotted" />
           <p className="mt-1 text-[15px] leading-snug">
             <strong>The intention.</strong> A handful of points. Everything else is the hand deciding how to round them into a line.
           </p>
@@ -230,13 +230,13 @@ function Anatomy() {
         <li className="min-w-0">
           <LayerSvg ex={ex} layers={ex.layers} label="All the layers of the stroke together" />
           <p className="mt-1 text-[15px] leading-snug">
-            <strong>Together.</strong> The layers, painted in order. Flat colour so far.
+            <strong>Together.</strong> The layers, painted in order. Flat color so far.
           </p>
         </li>
         <li className="min-w-0">
           <InkPicture drawn={whole} label="A stroke by the same pen with its grain laid over it, as it ships" />
           <p className="mt-1 text-[15px] leading-snug">
-            <strong>As shipped.</strong> The layers are merged per material and one colour-independent grain mask is laid over them (another take by the same pen).
+            <strong>As shipped.</strong> The layers are merged per material and one color-independent grain mask is laid over them (another take by the same pen).
           </p>
         </li>
       </ol>
@@ -246,7 +246,7 @@ function Anatomy() {
 
 const ENDS: { start: "pool" | "soft"; end: "pool" | "flick" | "soft"; title: string; note: string }[] = [
   { start: "pool", end: "flick", title: "Pool, then flick", note: "The felt tip lands and blots; the hand lifts off with a quick tapered flick. Most strokes end this way." },
-  { start: "pool", end: "pool", title: "Pool, pool", note: "It stops dead and the ink gathers: a dot at each end, like a full stop." },
+  { start: "pool", end: "pool", title: "Pool, pool", note: "It stops dead and the ink gathers: a dot at each end, like a period." },
   { start: "soft", end: "soft", title: "Soft, soft", note: "A light touch both ways: a small blot, no flick. For small marks and tight rules." },
 ]
 
@@ -287,7 +287,7 @@ function PenSelect({ value, onChange }: { value: PenName; onChange: (p: PenName)
         {group("Felt tips", withWeights(ROWS.filter((r) => r.group === "felt")))}
         {group("Pencils", withWeights(ROWS.filter((r) => r.group === "pencil")))}
         {group("Markers", ROWS.filter((r) => r.group === "marker" || r.group === "accent-marker").map((r) => r.name))}
-        {group("Coloured felt tips", ROWS.filter((r) => r.group === "accent-felt").map((r) => r.name))}
+        {group("Colored felt tips", ROWS.filter((r) => r.group === "accent-felt").map((r) => r.name))}
       </NativeSelect>
     </div>
   )
@@ -394,7 +394,7 @@ export default function PensPage() {
           <p>
             A normal SVG stroke is one width from end to end, which is exactly what a hand does not do. Here a pen turns a handful of points into a <strong>filled polygon</strong> whose width
             follows a speed profile: it swells where the hand slows and on the down-stroke, thins on the up-stroke, blots where it lands, skips where the paper&apos;s tooth catches it and flicks as it
-            leaves. There are no filters and no blur; the texture is one colour-independent grain mask laid over the ribbons.
+            leaves. There are no filters and no blur; the texture is one color-independent grain mask laid over the ribbons.
           </p>
           <p>
             Everything is seeded. The same seed draws the same stroke on the server and in the browser; a different seed is a different hand.
@@ -415,7 +415,7 @@ export default function PensPage() {
             <Weights tier={tier} />
           </Demo>
         </Section>
-        <Section id="accents" level={3} title="Coloured pens" description="Every stationery accent has a marker (m_) and a felt tip (f_). They are for decoration: stickers, washi, chart fills.">
+        <Section id="accents" level={3} title="Colored pens" description="Every stationery accent has a marker (m_) and a felt tip (f_). They are for decoration: stickers, washi, chart fills.">
           <Demo label="Accent markers and felt tips">
             <div className="grid gap-5">
               <PenGrid label="Accent markers" rows={ACCENT_MARKERS} tier={tier} />
@@ -455,7 +455,7 @@ export default function PensPage() {
         </Demo>
       </Section>
 
-      <Section id="fills" title="Fills sit in register" description="A fill is its own layer, printed in register with its line: one solid colour that reaches just under the outline, so a shape reads at a glance and nothing is left unfilled.">
+      <Section id="fills" title="Fills sit in register" description="A fill is its own layer, printed in register with its line: one solid color that reaches just under the outline, so a shape reads at a glance and nothing is left unfilled.">
         <Section id="hatching" level={3} title="Hatching" description="Pencil hatching is the pattern channel: destructive buttons, disabled fills and chart series use it so meaning never rides on hue alone.">
           <Demo label="Pencil hatching in one, two and three tones">
             <Hatches />
@@ -463,13 +463,13 @@ export default function PensPage() {
         </Section>
       </Section>
 
-      <Section id="materials" title="Materials and grain" description={`Each material has one grain mask: ${GRAINS.join(", ")}. Each has ${MASK_VARIANTS} phase variants, so two neighbours never share the same speckle.`}>
+      <Section id="materials" title="Materials and grain" description={`Each material has one grain mask: ${GRAINS.join(", ")}. Each has ${MASK_VARIANTS} phase variants, so two neighbors never share the same speckle.`}>
         <Demo label="A highlighter and a marker crossing, multiplied or not">
           <Crossing />
         </Demo>
         <Prose>
           <p>
-            Grain is baked once as a mask and reused for any colour, so a theme never rebakes a texture. Components do not call the pen themselves: they hand a <InlineCode>defineRecipe</InlineCode>{" "}
+            Grain is baked once as a mask and reused for any color, so a theme never rebakes a texture. Components do not call the pen themselves: they hand a <InlineCode>defineRecipe</InlineCode>{" "}
             function a box and a seed, and it calls shapes (<InlineCode>box</InlineCode>, <InlineCode>underline</InlineCode>, <InlineCode>bandFill</InlineCode>) that call the pen. The page above
             is the only place the raw pen is on show.
           </p>

@@ -5,7 +5,7 @@ export default {
   title: "Highlight",
   category: "Marks",
   description:
-    "A highlighter swipe behind real words. The phrase stays text you can select and copy; the swipe follows it line by line when it wraps, in yellow or any stationery colour, and can draw itself on as it scrolls into view.",
+    "A highlighter swipe behind real words. The phrase stays text you can select and copy; the swipe follows it line by line when it wraps, in yellow or any stationery color, and can draw itself on as it scrolls into view.",
   status: "new",
   parts: [
     {
@@ -27,7 +27,7 @@ export default {
   a11y: [
     "The words are ordinary text: selectable, copyable, found by search, read in order. The swipe is aria-hidden and pointer-events-none, so it never takes a click or a selection.",
     "It is a <mark>, so assistive technology that announces highlighted text still does. Text on the swipe stays ink on a translucent tint (about 12:1 on the yellow).",
-    "Before the first measure, without JavaScript and in Windows high contrast you get the browser's own <mark> background (system Mark colours in high contrast). With animate the swipe is only drawn once scripts run.",
+    "Before the first measure, without JavaScript and in Windows high contrast you get the browser's own <mark> background (system Mark colors in high contrast). With animate the swipe is only drawn once scripts run.",
     "Reduced motion (or data-motion=\"reduced\") zeroes the draw-on: the swipe simply appears.",
   ],
   usage: `import { Highlight } from "@/components/ui/highlight"

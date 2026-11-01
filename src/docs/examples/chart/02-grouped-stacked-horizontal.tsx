@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 
 export const meta = {
   title: "Grouped, stacked, sideways",
-  description: "One dataset, four ways to lay it out. Each series keeps its colour and its pencil pattern (hatching, dots, cross-hatching), so the bars stay apart in greyscale. Negative values hang below the line.",
+  description: "One dataset, four ways to lay it out. Each series keeps its color and its pencil pattern (hatching, dots, cross-hatching), so the bars stay apart in grayscale. Negative values hang below the line.",
   layout: "stack" as const,
 }
 

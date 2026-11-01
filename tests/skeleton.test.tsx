@@ -73,7 +73,7 @@ describe("skeleton stylesheet", () => {
     expect(skeletonCss()).toBe(css)
   })
 
-  it("has three frames of every tile as custom properties, each an alpha shape as a data-URI svg with no colour of its own", () => {
+  it("has three frames of every tile as custom properties, each an alpha shape as a data-URI svg with no color of its own", () => {
     for (const kind of ["eh", "ev", "ha", "ci"]) {
       for (let f = 0; f < SKELETON_FRAMES; f++) {
         const m = new RegExp(`--ll-sk-${kind}${f}:url\\("data:image/svg\\+xml,([^"]+)"\\)`).exec(css)

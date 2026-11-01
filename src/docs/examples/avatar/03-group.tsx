@@ -4,7 +4,7 @@ import { Icon } from "@/components/ui/icon"
 export const meta = {
   title: "Groups",
   description:
-    "`AvatarGroup` overlaps faces and a paper-coloured ring cuts each one out of the last (`--ll-avatar-ring` changes the colour on a different surface). `AvatarGroupCount` is the sketched disc for everyone who did not fit; it takes text or an icon.",
+    "`AvatarGroup` overlaps faces and a paper-colored ring cuts each one out of the last (`--ll-avatar-ring` changes the color on a different surface). `AvatarGroupCount` is the sketched disc for everyone who did not fit; it takes text or an icon.",
   layout: "center" as const,
   height: 240,
 }

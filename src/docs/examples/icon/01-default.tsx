@@ -2,7 +2,7 @@ import { Icon } from "@/components/ui/icon"
 
 export const meta = {
   title: "Default",
-  description: "Sixteen pixels, ink in the current text colour. Names are lucide's, so a shadcn snippet keeps working.",
+  description: "Sixteen pixels, ink in the current text color. Names are lucide's, so a shadcn snippet keeps working.",
 }
 
 export default function Example() {

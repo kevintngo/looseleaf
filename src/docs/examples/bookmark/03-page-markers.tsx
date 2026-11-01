@@ -4,7 +4,7 @@ import { Paper } from "@/components/ui/paper"
 
 export const meta = {
   title: "Page markers",
-  description: "`BookmarkRibbon` is the ribbon with no behaviour: decoration that hangs out of the top of a sheet or a notebook.",
+  description: "`BookmarkRibbon` is the ribbon with no behavior: decoration that hangs out of the top of a sheet or a notebook.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

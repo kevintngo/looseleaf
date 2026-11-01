@@ -189,7 +189,7 @@ describe("Textarea as a form control", () => {
     expect(seen).toEqual([{ bio: "hello\nworld" }])
   })
 
-  it("is labelled by <label htmlFor> and passes native attributes through", () => {
+  it("is labeled by <label htmlFor> and passes native attributes through", () => {
     const { getByLabelText } = render(
       <>
         <label htmlFor="bio">Bio</label>

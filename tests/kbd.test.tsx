@@ -49,7 +49,7 @@ describe("Kbd", () => {
     expect(depth).toHaveAttribute("data-hide-on", "pressed")
   })
 
-  it("follows the text colour in tooltips (the drawing is currentColor)", () => {
+  it("follows the text color in tooltips (the drawing is currentColor)", () => {
     const { getByText } = render(<Kbd>Esc</Kbd>)
     const k = getByText("Esc")
     expect(k).toHaveClass("[[data-slot=tooltip-content]_&]:text-inherit")

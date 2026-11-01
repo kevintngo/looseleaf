@@ -29,7 +29,7 @@ const TOKEN_USE = `<div className="bg-paper text-ink font-hand p-4">
 </div>`
 
 const TOKEN_OVERRIDE = `:root {
-  --ll-marker: #2f7d6b;   /* the primary action colour */
+  --ll-marker: #2f7d6b;   /* the primary action color */
   --ll-hi: #f4d35e;       /* highlighter */
 }`
 
@@ -107,15 +107,15 @@ function GettingStartedBody() {
           2. Add what you need
         </AnchorHeading>
         <CommandTabs command={(pm) => addCommand(pm, "looseleaf")} title="Everything" />
-        <Callout tone="warn" title="This one overwrites your colour tokens">
+        <Callout tone="warn" title="This one overwrites your color tokens">
           <p>
-            <InlineCode>looseleaf</InlineCode> is the umbrella: theme, fonts, the ink engine and every component. Installing it replaces your shadcn colour
+            <InlineCode>looseleaf</InlineCode> is the umbrella: theme, fonts, the ink engine and every component. Installing it replaces your shadcn color
             tokens with the Notebook palette (the CLI asks first). To keep your own palette, add single components instead.
           </p>
         </Callout>
         <CommandTabs command={(pm) => addCommand(pm, "button")} title="One component" />
         <p className="dk-hint">
-          A component install keeps colour tokens you already have and adds the Looseleaf ones you are missing. Blocks install under{" "}
+          A component install keeps color tokens you already have and adds the Looseleaf ones you are missing. Blocks install under{" "}
           <InlineCode>components/blocks/</InlineCode>: <InlineCode>{addCommand("npm", "login")}</InlineCode>. A direct URL works without the
           namespace: <InlineCode>{addCommand("npm", "button", "url", base)}</InlineCode>.
         </p>
@@ -158,7 +158,7 @@ function GettingStartedBody() {
         </p>
       </Section>
 
-      <Section id="tokens" title="Tokens" description="Every colour, width and duration is a CSS custom property, so theming never touches component code.">
+      <Section id="tokens" title="Tokens" description="Every color, width and duration is a CSS custom property, so theming never touches component code.">
         <Prose>
           <p>
             The palette lives in <InlineCode>--ll-*</InlineCode> variables. shadcn's semantic names (<InlineCode>--background</InlineCode>,{" "}
@@ -168,7 +168,7 @@ function GettingStartedBody() {
         <CodeBlock code={TOKEN_USE} lang="tsx" title="Using the palette" />
         <CodeBlock code={TOKEN_OVERRIDE} lang="css" title="Overriding a token" />
         <p className="dk-hint">
-          The full list, with contrast notes, is on <Link to={paths.foundations("colour")}>colour</Link>; how a second theme is built is on{" "}
+          The full list, with contrast notes, is on <Link to={paths.foundations("color")}>color</Link>; how a second theme is built is on{" "}
           <Link to={paths.foundations("theming")}>theming</Link>.
         </p>
       </Section>

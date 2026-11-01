@@ -260,7 +260,7 @@ describe("SSR and hydration", () => {
 })
 
 describe("examples", () => {
-  it("Panels: a row with a column inside, two labelled handles", async () => {
+  it("Panels: a row with a column inside, two labeled handles", async () => {
     const { getByRole, getAllByRole } = renderUI(<Panels />)
     await settle()
     expect(getAllByRole("separator")).toHaveLength(2)

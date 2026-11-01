@@ -32,11 +32,11 @@
       "dialog"
     ],
     "a11y": [
-      "A CSS sheet brings the tooth tiles of its stock itself (one deduplicated `<style>` per tile, in the server HTML too), so it needs no provider. Saturated sticky notes lay a veil of their own colour over the tooth, so orange and pink read as paper, not plaster.",
+      "A CSS sheet brings the tooth tiles of its stock itself (one deduplicated `<style>` per tile, in the server HTML too), so it needs no provider. Saturated sticky notes lay a veil of their own color over the tooth, so orange and pink read as paper, not plaster.",
       "The sheet, its rules, tape and fasteners are decoration: the drawing is aria-hidden, pointer-events: none and never focusable. Paper adds no role; give it one (`as=\"article\"`, `role=\"region\"` with a label) when the content deserves it.",
       "Text is ink on paper (14:1 on paper, 9.4:1 on kraft, at least 9:1 on every sticky note) and stays upright: only the sheet and its rules turn.",
       "Tilt is clamped to --ll-tilt-max and is zero in calm density and in reduced-motion contexts that set it; props are hidden in calm density.",
-      "In Windows high contrast the drawn svg (fibre fringe, edge line) steps aside and the host gets a real 1px outline; the paper stays cut to its edge, and tape stays visible."
+      "In Windows high contrast the drawn svg (fiber fringe, edge line) steps aside and the host gets a real 1px outline; the paper stays cut to its edge, and tape stays visible."
     ],
     "usage": "import { Paper } from \"@/components/ui/paper\"\n\nexport function Note() {\n  return (\n    <Paper stock=\"index-card\" tape=\"both\" className=\"w-72 p-6\">\n      <h3 className=\"font-script text-2xl font-bold\">Buy more ink</h3>\n      <p>Black, blue, and one red for corrections.</p>\n    </Paper>\n  )\n}\n\n<Paper edge={{ bottom: \"torn\" }} fastener=\"pin\" className=\"p-6\">…</Paper>",
     "parts": [

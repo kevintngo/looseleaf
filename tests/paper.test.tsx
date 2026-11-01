@@ -688,7 +688,7 @@ describe("foundation polish (audit 4.2, 4.9)", () => {
     expect(tilesIn(renderToString(<Paper edge="zig" stock="receipt" size={[300, 200]}>x</Paper>))).toEqual(["ll-tex-cloud"])
   })
 
-  it("saturated sticky notes are veiled with their own colour, ordinary paper is not", () => {
+  it("saturated sticky notes are veiled with their own color, ordinary paper is not", () => {
     for (const stock of ["sticky-orange", "sticky-pink", "sticky-yellow"] as const) {
       const { container, unmount } = render(<Paper stock={stock}>x</Paper>)
       expect((container.firstElementChild as HTMLElement).style.getPropertyValue("--ll-veil"), stock).toBe("45%")

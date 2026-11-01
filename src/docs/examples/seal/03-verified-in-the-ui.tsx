@@ -37,7 +37,7 @@ export default function Example() {
         </Card>
       </div>
       <Card className="relative items-center gap-2 p-6 text-center">
-        <p className="font-type text-xs tracking-widest text-pencil-text uppercase">Certificate of</p>
+        <p className="font-type text-xs text-pencil-text">Certificate of</p>
         <h3 className="font-script text-4xl">Good Handwriting</h3>
         <p className="max-w-[16rem] text-muted-foreground">Awarded to Maya Chen for lettering that stays on the line, mostly.</p>
         <div className="mt-3 flex items-end gap-4">

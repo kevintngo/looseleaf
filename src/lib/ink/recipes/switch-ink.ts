@@ -101,7 +101,6 @@ export const switchThumbRecipe = defineRecipe<SwitchThumbParams>({
     const cx = w / 2
     const cy = h / 2
     const rad = d / 2 - 0.8
-    const rtl = ctx.dir === 'rtl'
     ink.layer('rest', () => {
       if (disabled) {
         dashedBox(ink, 0, 0, w, h, { r: d / 2, pen: 'pencil', opts: { color: 'pencil', width: 1.1 } })

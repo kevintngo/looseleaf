@@ -54,7 +54,7 @@ describe("Sketchpad: structure", () => {
     const { getByRole, getAllByRole } = renderUI(<Sketchpad />)
     expect(getByRole("application", { name: "Drawing" })).toHaveAttribute("aria-roledescription", "drawing canvas")
     expect(getByRole("radiogroup", { name: "Tool" })).toBeInTheDocument()
-    expect(getByRole("radiogroup", { name: "Colour" })).toBeInTheDocument()
+    expect(getByRole("radiogroup", { name: "Color" })).toBeInTheDocument()
     expect(getByRole("radiogroup", { name: "Width" })).toBeInTheDocument()
     expect(getAllByRole("radio", { name: /Felt|Pencil|Marker|Highlighter|Eraser/ })).toHaveLength(5)
     expect(getByRole("radio", { name: "Felt" })).toBeChecked()
@@ -89,7 +89,7 @@ describe("Sketchpad: structure", () => {
       </Sketchpad>,
     )
     expect(getAllByRole("radio", { name: /Felt|Eraser/ })).toHaveLength(2)
-    expect(queryByRole("radiogroup", { name: "Colour" })).toBeNull()
+    expect(queryByRole("radiogroup", { name: "Color" })).toBeNull()
     expect(queryByRole("button", { name: "Oops" })).toBeDisabled()
     expect(queryByRole("application", { name: "Napkin" })).toBeInTheDocument()
   })
@@ -102,7 +102,7 @@ describe("Sketchpad: structure", () => {
 })
 
 describe("Sketchpad: pointer drawing", () => {
-  it("a drag becomes one stroke in the current tool, colour and size", () => {
+  it("a drag becomes one stroke in the current tool, color and size", () => {
     const onValueChange = vi.fn()
     const { container, getByRole } = renderUI(<Sketchpad onValueChange={onValueChange} />)
     drag(canvasOf(container), LINE)
@@ -176,8 +176,8 @@ describe("Sketchpad: pointer drawing", () => {
   })
 })
 
-describe("Sketchpad: tools, colours, sizes", () => {
-  it("the toolbar chooses the pen, the colour and the width for the next stroke", async () => {
+describe("Sketchpad: tools, colors, sizes", () => {
+  it("the toolbar chooses the pen, the color and the width for the next stroke", async () => {
     const onValueChange = vi.fn()
     const { container, user, getByRole } = renderUI(<Sketchpad onValueChange={onValueChange} />)
     await user.click(getByRole("radio", { name: "Marker" }))
@@ -222,7 +222,7 @@ describe("Sketchpad: tools, colours, sizes", () => {
     expect(onColorChange).toHaveBeenCalledTimes(2)
   })
 
-  it("controlled tool, colour and size", async () => {
+  it("controlled tool, color and size", async () => {
     const onToolChange = vi.fn()
     const { getByRole, user } = renderUI(<Sketchpad tool="pencil" color="green" size={0.6} onToolChange={onToolChange} />)
     expect(getByRole("radio", { name: "Pencil" })).toBeChecked()
@@ -374,7 +374,7 @@ describe("Sketchpad: keyboard drawing", () => {
 })
 
 describe("Sketchpad: read only, disabled, replay", () => {
-  it("readOnly is a labelled picture without a toolbar", async () => {
+  it("readOnly is a labeled picture without a toolbar", async () => {
     const { container, getByRole, queryByRole } = renderUI(<Sketchpad readOnly defaultValue={[stroke("a", LINE), stroke("b", LINE)]} />)
     expect(getByRole("img", { name: "Drawing, 2 strokes" })).not.toHaveAttribute("tabindex")
     expect(queryByRole("radiogroup")).toBeNull()
@@ -388,7 +388,7 @@ describe("Sketchpad: read only, disabled, replay", () => {
     await axeCheck(container)
   })
 
-  it("replay uncovers each stroke along its centre line, one after another", () => {
+  it("replay uncovers each stroke along its center line, one after another", () => {
     const value = [stroke("a", LINE), stroke("b", LINE, { tool: "marker" })]
     const { container } = render(<Sketchpad readOnly replay defaultValue={value} />)
     const masks = container.querySelectorAll("mask[id^='ll-replay-']")
@@ -440,7 +440,7 @@ describe("Sketchpad: handle and export", () => {
     expect(ref.current?.toDataURL().startsWith("data:image/svg+xml;charset=utf-8,")).toBe(true)
   })
 
-  it("toPNG answers null where nothing can rasterise the svg", async () => {
+  it("toPNG answers null where nothing can rasterize the svg", async () => {
     vi.useFakeTimers()
     try {
       const ref = React.createRef<SketchpadHandle>()
@@ -492,7 +492,7 @@ describe("stroke drawing (the pen)", () => {
     expect(a.svg).toContain("var(--ll-ink)")
   })
 
-  it("another id, colour, tool or pressure draws another line", () => {
+  it("another id, color, tool or pressure draws another line", () => {
     const base = strokeMarkup(s).svg
     expect(strokeMarkup({ ...s, id: "p2" }).svg).not.toBe(base)
     expect(strokeMarkup({ ...s, color: "red" }).svg).toContain("var(--ll-red)")
@@ -573,7 +573,7 @@ describe("tool button samples", () => {
   const rest = (tool: string, color: string) =>
     runRecipe(sketchToolRecipe as Parameters<typeof runRecipe>[0], { box, params: { tool, color }, seed: "t", tier: "lo", density: "comfortable", dir: "ltr", knobs: { wobble: 1, misreg: 1, bleed: 1, width: 1 } }).parts.rest ?? ""
 
-  it("shows the highlighter in yellow over a dark ink (the colour picking it would choose), and in its own colour otherwise", () => {
+  it("shows the highlighter in yellow over a dark ink (the color picking it would choose), and in its own color otherwise", () => {
     for (const dark of ["ink", "ink-you", "red", "green"]) expect(rest("highlighter", dark)).toContain("var(--ll-hi)")
     expect(rest("highlighter", "tangerine")).toContain("var(--ll-tangerine)")
     expect(rest("highlighter", "tangerine")).not.toContain("var(--ll-hi)")

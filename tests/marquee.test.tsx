@@ -148,7 +148,7 @@ describe("Marquee", () => {
 })
 
 describe("marquee reduced-motion strip", () => {
-  it("centres the still strip with `safe center`, so a row wider than the tape starts at the reading edge instead of being cropped on both sides", () => {
+  it("centers the still strip with `safe center`, so a row wider than the tape starts at the reading edge instead of being cropped on both sides", () => {
     const { container } = renderUI(<Ticker />)
     const css = Array.from(container.ownerDocument.querySelectorAll("style")).map((n) => n.textContent ?? "").join("\n")
     expect(css).toContain("justify-content:center;justify-content:safe center")

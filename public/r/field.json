@@ -42,7 +42,7 @@
     "a11y": [
       "Field is a role=group; a FieldLabel is a real <label> (use htmlFor + id), so a click on it focuses or toggles the control. Wrap radios and checkboxes in a FieldSet with a FieldLegend so the group has a name.",
       "FieldError is role=\"alert\": it is announced when it appears. Point the control at it with aria-describedby and set aria-invalid, so the control's own box turns red as well (hue is never the only cue: the message, the wavy underline and the bang of the field say it too).",
-      "A choice card is one big label: clicking anywhere on it toggles its control, and the checked state is shown by the wash and the felt box, not by colour alone (the radio or checkbox inside shows it too). In Windows high contrast the checked card becomes a Highlight block.",
+      "A choice card is one big label: clicking anywhere on it toggles its control, and the checked state is shown by the wash and the felt box, not by color alone (the radio or checkbox inside shows it too). In Windows high contrast the checked card becomes a Highlight block.",
       "Disabling: set `data-disabled=\"true\"` on the Field (the label goes graphite) AND `disabled` on the control. A `disabled` FieldSet disables the controls natively, but the drawn controls choose their dashed disabled drawing from their own props (or their root's), not from an ancestor fieldset: pass `disabled` to each.",
       "`responsive` uses a container query on the FieldGroup, so it reacts to the width of the form, not of the screen.",
       "Right-to-left: everything uses logical properties; the error underline is symmetric."

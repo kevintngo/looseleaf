@@ -29,7 +29,7 @@ export function describeTextMark(spec: TextMarkSpec): void {
   const lines = () => restore.push(mockLines(spec.slot, THREE_LINES))
   const expected = spec.mode === "lines" ? 3 : 1
 
-  describe(`${spec.name} (shared text-mark behaviour)`, () => {
+  describe(`${spec.name} (shared text-mark behavior)`, () => {
     it(`is a <${spec.tag}> with data-slot="${spec.slot}" and the words as plain text`, () => {
       lines()
       const { getByText } = render(spec.make({}, "the words"))

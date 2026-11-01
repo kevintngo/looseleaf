@@ -29,7 +29,7 @@ describe("error-404 block", () => {
     expectDecorativeInk(container)
   })
 
-  it("has a labelled search that hands the words over and does not navigate", async () => {
+  it("has a labeled search that hands the words over and does not navigate", async () => {
     const onSearch = vi.fn()
     const { user, getByRole } = renderUI(<Error404 onSearch={onSearch} />)
     const search = getByRole("searchbox", { name: "Search the site" })

@@ -20,7 +20,7 @@ export default {
         { name: "minStepsBetweenThumbs", type: "number", default: "0", description: "Range sliders: keep the thumbs this many steps apart." },
         { name: "ticks", type: "boolean | number", description: "Pencil tick marks hanging under the groove: `true` marks every step when there are 20 or fewer, else ten intervals; a number is that many intervals. The end marks are longer." },
         { name: "getValueText", type: "(value: number, index: number) => string", description: "aria-valuetext of each thumb: what a screen reader says instead of the bare number (\"12 px\", \"72 %\", \"Soft\"). Use it whenever you show the value with a unit next to the slider." },
-        { name: "tone", type: '"marker" | "hi" | "blue"', default: '"marker"', description: "What colours the range: terracotta marker, highlighter or blue felt." },
+        { name: "tone", type: '"marker" | "hi" | "blue"', default: '"marker"', description: "What colors the range: terracotta marker, highlighter or blue felt." },
         { name: "inverted / dir", type: "boolean / \"ltr\" | \"rtl\"", description: "Reverse the direction the values grow in; right-to-left starts at the right." },
         { name: "disabled", type: "boolean", description: "Dashed pencil groove, graphite range and a dashed knob. Not focusable." },
         { name: "name / form", type: "string", description: "Names the hidden inputs Radix adds inside a form (one per thumb, `name[]` for a range)." },

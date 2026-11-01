@@ -82,7 +82,7 @@ function InkRoles() {
           </td>
         </tr>
         <tr>
-          <th scope="row">Stationery colours</th>
+          <th scope="row">Stationery colors</th>
           <td>Decoration only: stickers, washi tape, badges, avatars, chart fills, stamps. Never text, never a control.</td>
           <td>
             <span className="flex flex-wrap gap-1.5" aria-hidden="true">
@@ -135,7 +135,7 @@ function StatesSpecimen() {
 
 function PatternSpecimen() {
   return (
-    <Stage layout="center" label="Danger is a pattern and a word, not only a colour">
+    <Stage layout="center" label="Danger is a pattern and a word, not only a color">
       <Specimen caption="a red pencil hatch, and the word">
         <Button variant="destructive">
           <Icon name="trash" />
@@ -180,7 +180,7 @@ interface Principle {
 const PRINCIPLES: readonly Principle[] = [
   {
     title: "Practical first",
-    body: "Underneath the drawing it is shadcn/ui: the same parts, props, data-slots and Radix behaviour, so a shadcn user can swap one of our files in without touching their JSX. Extras (tone, seed, tilt) are additions, never changes.",
+    body: "Underneath the drawing it is shadcn/ui: the same parts, props, data-slots and Radix behavior, so a shadcn user can swap one of our files in without touching their JSX. Extras (tone, seed, tilt) are additions, never changes.",
   },
   {
     title: "Charm is a dial",
@@ -191,13 +191,13 @@ const PRINCIPLES: readonly Principle[] = [
     body: "A drawing that is made for 96 px is mud at 16. Icons, doodles, stickers and Stubby are redrawn for the small sizes, with a heavier pen and fewer details, instead of being shrunk.",
   },
   {
-    title: "States are drawn, not just coloured",
+    title: "States are drawn, not just colored",
     body: "Hover, pressed, focus, disabled and invalid each change the drawing (an offset, a hatch, a ring, a dash), so none of them depends on seeing a hue.",
     specimen: () => <StatesSpecimen />,
   },
   {
-    title: "Meaning never rides on colour alone",
-    body: "Destructive is a hatch and a word. A chart series has its own pencil pattern. Status icons differ by silhouette. A colour-blind reader loses nothing.",
+    title: "Meaning never rides on color alone",
+    body: "Destructive is a hatch and a word. A chart series has its own pencil pattern. Status icons differ by silhouette. A color-blind reader loses nothing.",
     specimen: () => <PatternSpecimen />,
   },
   {
@@ -211,7 +211,7 @@ const PRINCIPLES: readonly Principle[] = [
   },
   {
     title: "Themes are tokens",
-    body: "Every colour, width and duration is a custom property. A second theme is a block of overrides, and no component is edited to get one.",
+    body: "Every color, width and duration is a custom property. A second theme is a block of overrides, and no component is edited to get one.",
   },
 ]
 
@@ -235,7 +235,7 @@ function Checklist() {
 export default function PrinciplesBody() {
   return (
     <>
-      <Section id="identity" title="A real notebook on a tidy desk" description="Cream paper, a dark felt-tip, a blue one for you, a pencil for the small print. Every colour is a tool, and every tool has one job.">
+      <Section id="identity" title="A real notebook on a tidy desk" description="Cream paper, a dark felt-tip, a blue one for you, a pencil for the small print. Every color is a tool, and every tool has one job.">
         <InkRoles />
         <Prose>
           <p>

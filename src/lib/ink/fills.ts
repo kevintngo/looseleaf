@@ -3,7 +3,7 @@ import type { Ink } from '@/lib/ink/builder'
 import type { PaintKey } from '@/lib/ink/paint'
 import { clamp, type Rng } from '@/lib/ink/rng'
 import { noise1 } from '@/lib/ink/noise'
-import { PathWriter, TAU, TIERS, area, bboxOf, centroid, densifyClosed, offsetPoly, scanSpans, seg, simplePath, smoothClosed, wobblePoly, xform } from '@/lib/ink/geom'
+import { TAU, area, bboxOf, centroid, densifyClosed, offsetPoly, scanSpans, seg, wobblePoly, xform } from '@/lib/ink/geom'
 import { pen as resolvePen } from '@/lib/ink/pens'
 
 export function misreg(poly: Pt[], rng: Rng, amt = 3, o: { bias?: number; tilt?: number; grow?: number } = {}): Pt[] {
@@ -118,9 +118,6 @@ export interface BandOpts {
   material?: Material
 }
 
-const BAR = 4.4
-
-const REACH = 380
 
 export function bandFill(ink: Ink, poly: Pt[], color: PaintKey, o: BandOpts = {}): Offset {
   return solidFill(ink, poly, color, { alpha: solidAlpha(o.alpha, 0.85, o.passes ?? 1), material: o.material })
@@ -286,68 +283,6 @@ export function highlight(ink: Ink, x: number, y: number, w: number, h: number, 
   const mid: Pt = [(x1 + x2) / 2, (y1 + y2) / 2 + rng.gauss(0, 0.04 * h)]
   const P = resolvePen(o.pen ?? 'hi')
   ink.stroke([[x1, y1], mid, [x2, y2]], P, { width: (h * (o.k ?? 0.86)) / P.W, end: rng() < 0.5 ? 'flick' : 'pool', start: 'pool', wobble: 0.6, ...o.opts })
-}
-
-function markerBand(ink: Ink, a: Pt, b: Pt, width: number, color: PaintKey, alpha: number, o: { chisel?: number; pool?: boolean } = {}): void {
-  const rng = ink.next('mb')
-  const cfg = TIERS[ink.tier]
-  const L = Math.hypot(b[0] - a[0], b[1] - a[1])
-  if (L < 1) return
-  const t: Pt = [(b[0] - a[0]) / L, (b[1] - a[1]) / L], nn: Pt = [-t[1], t[0]]
-  const hw = width / 2
-  const sk = Math.min(0.45 * L, (o.chisel ?? 0.36) * width) * (rng() < 0.5 ? 1 : -1)
-  const amp = clamp(0.04 * width + 0.0025 * L, 0.12, 0.7)
-  const p1 = rng.range(0, TAU), p2 = rng.range(0, TAU), p3 = rng.range(0, TAU), p4 = rng.range(0, TAU)
-  const cnt = Math.max(3, Math.ceil(L / 3))
-  const bulge = Math.min(0.16 * width, 0.1 * L)
-  const top: Pt[] = [], bot: Pt[] = []
-  for (let i = 0; i <= cnt; i++) {
-    const u = i / cnt
-    const w1 = amp * (Math.sin(5.1 * u * (L / 40 + 1) + p1) + 0.4 * Math.sin(13.7 * u + p2))
-    const w2 = amp * (Math.sin(5.1 * u * (L / 40 + 1) + p3) + 0.4 * Math.sin(13.7 * u + p4))
-    const bl = Math.sin(Math.PI * u) ** 0.35
-    const cx = a[0] + t[0] * L * u, cy = a[1] + t[1] * L * u
-    top.push([cx + nn[0] * (hw + w1) + t[0] * (sk / 2) - t[0] * bulge * (1 - bl), cy + nn[1] * (hw + w1) + t[1] * (sk / 2) - t[1] * bulge * (1 - bl)])
-    bot.push([cx - nn[0] * (hw + w2) - t[0] * (sk / 2) + t[0] * bulge * (1 - bl), cy - nn[1] * (hw + w2) - t[1] * (sk / 2) + t[1] * bulge * (1 - bl)])
-  }
-  const poly = [...top, ...bot.reverse()]
-  let d = smoothClosed(poly, cfg)
-  let rule: 'evenodd' | undefined
-  if (width > 5 && L > 1.6 * width && rng() < 0.6) {
-    const w = new PathWriter(cfg.q)
-    const slits = rng() < 0.4 ? 2 : 1
-    for (let s = 0; s < slits; s++) {
-      const u0 = rng.range(0.2, 0.6), u1 = Math.min(0.94, u0 + rng.range(0.2, 0.4))
-      const off = rng.range(-0.28, 0.28) * width
-      const m = 8
-      const at = (u: number, k: number, sgn: number): Pt => [a[0] + t[0] * L * u + nn[0] * (off + sgn * 0.3 * Math.sin(Math.PI * k)), a[1] + t[1] * L * u + nn[1] * (off + sgn * 0.3 * Math.sin(Math.PI * k))]
-      for (let i = 0; i <= m; i++) {
-        const p = at(u0 + (u1 - u0) * (i / m), i / m, 1)
-        if (i) w.L(p[0], p[1])
-        else w.M(p[0], p[1])
-      }
-      for (let i = m; i >= 0; i--) {
-        const p = at(u0 + (u1 - u0) * (i / m), i / m, -1)
-        w.L(p[0], p[1])
-      }
-      w.Z()
-    }
-    d += w.d
-    rule = 'evenodd'
-  }
-  const bb = bboxOf(poly)
-  ink.flat('marker', d, color, alpha, { rule, bbox: bb })
-  ink.flat('marker', smoothClosed(poly, cfg), color, alpha * 0.32, { stroke: color, sw: clamp(0.08 * width, 0.6, 1.1) })
-  if (o.pool !== false) {
-    const r0 = Math.min(0.5 * width, 0.35 * L)
-    const pool = (p: Pt, dir: 1 | -1, op: number): void => {
-      const l = r0 * 0.5
-      const q = (u: number, v: number): Pt => [p[0] + t[0] * (u * dir) + nn[0] * v + t[0] * ((Math.sign(v) * sk) / 2), p[1] + t[1] * (u * dir) + nn[1] * v + t[1] * ((Math.sign(v) * sk) / 2)]
-      ink.flat('marker', smoothClosed([q(0, hw * 0.92), q(l, hw * 0.92), q(l, -hw * 0.92), q(0, -hw * 0.92)], cfg), color, op)
-    }
-    pool(a, 1, alpha * 0.2)
-    pool(b, -1, alpha * 0.26)
-  }
 }
 
 export interface PolyFillOpts {

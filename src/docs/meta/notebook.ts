@@ -15,7 +15,7 @@ export default {
         { name: "binding", type: '"spiral" | "rings" | "stitched" | "none"', default: '"spiral"', description: "A wire spiral (a coil per 24 px, each through its own hole), three binder rings on a steel strip, a stab binding with a running thread, or nothing." },
         { name: "side", type: '"start" | "top"', default: '"start"', description: "Which edge is bound. `start` is the left in LTR and mirrors in RTL; `top` is a reporter's pad (30 px pad rules, no margin)." },
         { name: "pages", type: "0 | 1 | 2 | 3", default: "2", description: "Sheets peeking out under this one at its foot and far edge." },
-        { name: "tone", type: '"steel" | Accent', default: '"steel"', description: "Colour of the wire (or of the thread for a stitched binding; steel then uses blue thread)." },
+        { name: "tone", type: '"steel" | Accent', default: '"steel"', description: "Color of the wire (or of the thread for a stitched binding; steel then uses blue thread)." },
         { name: "rules", type: "RuleName", default: '"ruled" ("pad" when bound on top)', description: "Printed rules: ruled, graph, dots, pad, none ... The margin and the rules mirror in RTL." },
         { name: "curl", type: "boolean", default: "false", description: "Fold the bottom-right corner (a dog-ear). Pair it with `NotebookTurn`." },
         { name: "value / defaultValue / onValueChange", type: "string", description: "Which `NotebookPage` is shown, when the notebook has several. Controlled or not." },
@@ -40,7 +40,7 @@ export default {
       name: "NotebookCover",
       description: "The cover of a closed notebook, for a shelf or a library: cloth over board with a darker stitched spine on the start edge and an elastic band round the end. One drawn sheet, tilted and shadowed as one; 11 x 15 rem by default. The label goes in as children and sits in a body laid over the cover (its padding is a share of the COVER's width, whatever holds the shelf). Until it is measured it wears a plain card.",
       props: [
-        { name: "tone", type: 'Accent | "ink"', default: '"tomato"', description: "The cloth: any stationery colour, or `ink` for black." },
+        { name: "tone", type: 'Accent | "ink"', default: '"tomato"', description: "The cloth: any stationery color, or `ink` for black." },
         { name: "band", type: "boolean", default: "true", description: "The elastic band." },
         { name: "tilt / seed / size", type: "boolean | number / string | number / [w, h]", description: "A seeded turn under 1.4 degrees; pins the hand; the box in px for server-rendered drawings." },
       ],

@@ -11,7 +11,7 @@ export default {
     {
       name: "Annotate",
       description:
-        "Renders the matching mark (Highlight, Underline, Circled, Strike or Scribble) for `type`, so every behaviour of those applies: the words stay text, the drawing is aria-hidden and follows line breaks, and `animate` writes it on the first time it scrolls into view.",
+        "Renders the matching mark (Highlight, Underline, Circled, Strike or Scribble) for `type`, so every behavior of those applies: the words stay text, the drawing is aria-hidden and follows line breaks, and `animate` writes it on the first time it scrolls into view.",
       props: [
         { name: "type", type: '"highlight" | "underline" | "circle" | "box" | "brackets" | "strike-through" | "crossed-off" | "scribble"', required: true, description: "Which mark to put on the words." },
         { name: "color", type: "HighlightTone | MarkPen", description: "For highlight: yellow, pink, green, blue, orange, lilac or teal. For everything else: ink, blue, red, green, pencil, marker or orange." },

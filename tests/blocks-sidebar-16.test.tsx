@@ -29,7 +29,7 @@ describe("sidebar-16 block", () => {
     expect(b.container.querySelector('[data-slot="sidebar-container"]')!.className).toContain("h-[calc(100%-var(--header-height))]!")
   })
 
-  it("folds the pad from a labelled button in the header", async () => {
+  it("folds the pad from a labeled button in the header", async () => {
     const { user, container } = renderUI(<Sidebar16 />, opts)
     const pad = container.querySelector('[data-slot="sidebar"][data-state]')!
     await user.click(within(container.querySelector('[data-slot="site-header"]') as HTMLElement).getByRole("button", { name: "Toggle Sidebar" }))

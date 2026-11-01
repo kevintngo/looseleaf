@@ -185,7 +185,7 @@ export const appNav: AppNavItem[] = [
 ]
 
 export const appProjects: Project[] = [
-  { name: "Spring catalogue", url: "#spring-catalogue", icon: "frame" },
+  { name: "Spring catalog", url: "#spring-catalogue", icon: "frame" },
   { name: "Postcard club", url: "#postcard-club", icon: "mail" },
   { name: "Field trip", url: "#field-trip", icon: "map" },
 ]
@@ -367,7 +367,7 @@ export const mails: Mail[] = [
     id: "m7",
     name: "You",
     email: "jo@looseleaf.example",
-    subject: "Draft: Spring catalogue intro",
+    subject: "Draft: Spring catalog intro",
     date: "Tuesday",
     teaser: "Every spring the studio opens its windows, and the pens come out of their tins.\nThis year we made something a bit different.",
     folder: "Drafts",

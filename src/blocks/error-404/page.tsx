@@ -38,7 +38,7 @@ export default function Error404({ onSearch, onGoBack = () => window.history.bac
         <Paper stock="paper" tilt={false} tape="both" tapeKind="masking" seed="error-404" className="mx-auto max-w-3xl px-6 py-12 text-center @xl:px-12">
           <Error404Scene />
 
-          <p className="mt-10 font-type text-sm tracking-[0.18em] text-pencil-text uppercase">Error 404 &middot; Page not found</p>
+          <p className="mt-10 font-type text-sm text-pencil-text">Error 404 &middot; Page not found</p>
           <Lettering as="h1" id={titleId} size="md" tone="marker" wobble={0.4} seed="error-404-title" className="mt-3">
             This page wandered off
           </Lettering>

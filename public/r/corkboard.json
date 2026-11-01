@@ -35,7 +35,7 @@
       "Arrow keys move the focused note by 8 px (Shift 32 px), R turns it 4 degrees clockwise (Shift+R back, limited to 24), Enter or Space brings it to the front. Notes stay inside the cork.",
       "Where a note ended up is announced politely, once, after the last key press (\"Call mum at 56, 30.\").",
       "Pointer: notes are picked up anywhere except on links, buttons, inputs and elements marked data-corkboard-nodrag, so a note can hold controls. Escape while dragging with the keyboard focus on the note puts it back.",
-      "The focus ring is drawn round the note; it never depends on colour alone. Windows high contrast gives the note a real outline.",
+      "The focus ring is drawn round the note; it never depends on color alone. Windows high contrast gives the note a real outline.",
       "Reduced motion: no lift animation, the pin does not pop. Calm density: notes lie flat and the pins are left out.",
       "Resizing: a layout saved on a wide board is drawn inside a narrower one (a note is pulled back in as the cork changes size), while the stored positions are left alone, so widening the board again puts everything where it was saved.",
       "Every note is a tab stop, so a board of fifty notes is fifty Tab presses: keep boards to a handful of notes, or put the board behind a skip link. Touch: a note is touch-action none (a drag on it never scrolls the page), the cork around the notes still scrolls."

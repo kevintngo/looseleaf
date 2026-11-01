@@ -5,7 +5,7 @@ import { desktopOnly, short } from "./_data"
 
 export const meta = {
   title: "Bar: default",
-  description: "Bars coloured in with a marker that misses the outline a little, the number on top of each, and the best month circled by hand. `tape` holds the card to the desk.",
+  description: "Bars colored in with a marker that misses the outline a little, the number on top of each, and the best month circled by hand. `tape` holds the card to the desk.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

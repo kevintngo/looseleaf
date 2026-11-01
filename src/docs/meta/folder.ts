@@ -5,7 +5,7 @@ export default {
   title: "Folder",
   category: "Paper",
   description:
-    "A manila file folder that is also a set of tabs: a row of paper tabs standing on a sheet of the same paper. The active tab is the folder's own colour and runs down into the body, so tab and folder are one piece; the others stand a little lower and darker. It is Radix Tabs underneath.",
+    "A manila file folder that is also a set of tabs: a row of paper tabs standing on a sheet of the same paper. The active tab is the folder's own color and runs down into the body, so tab and folder are one piece; the others stand a little lower and darker. It is Radix Tabs underneath.",
   status: "new",
   upstream: "tabs",
   parts: [
@@ -35,8 +35,8 @@ export default {
   ],
   a11y: [
     "Radix Tabs gives the whole pattern: `tablist` / `tab` / `tabpanel` roles, `aria-selected`, `aria-controls`, roving focus with arrow keys, Home and End (Left and Right swap in RTL), and a disabled tab skipped by the keyboard.",
-    "The drawn tab paper, the crease and the shadows are aria-hidden. The active tab is also `aria-selected` and bold, so it never depends on colour alone. Tab text is ink: 9:1 on the manila, 7.5:1 on a tab standing behind it.",
-    "Windows high contrast replaces the drawn tabs with bordered buttons (the tabs carry a real border until their drawing exists and in forced colours), and the active tab fills with the system highlight colour. The open panel is a tab stop and shows the standard focus ring.",
+    "The drawn tab paper, the crease and the shadows are aria-hidden. The active tab is also `aria-selected` and bold, so it never depends on color alone. Tab text is ink: 9:1 on the manila, 7.5:1 on a tab standing behind it.",
+    "Windows high contrast replaces the drawn tabs with bordered buttons (the tabs carry a real border until their drawing exists and in forced colors), and the active tab fills with the system highlight color. The open panel is a tab stop and shows the standard focus ring.",
   ],
   usage: `import { Folder, FolderContent, FolderTab, FolderTabs } from "@/components/ui/folder"
 

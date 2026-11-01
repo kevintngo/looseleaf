@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 export const meta = {
   title: "Default",
-  description: "A set of labelled controls: a legend in the script font, fields that stack label, control and help, and the gaps between them. Nothing is drawn but the controls; Field is layout and words.",
+  description: "A set of labeled controls: a legend in the script font, fields that stack label, control and help, and the gaps between them. Nothing is drawn but the controls; Field is layout and words.",
   layout: "stack" as const,
 }
 

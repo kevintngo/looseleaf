@@ -5,7 +5,7 @@ import { browsers } from "./_data"
 
 export const meta = {
   title: "Pie: simple",
-  description: "Slices coloured in with a marker, outlined in felt, each shaded with its own pencil pattern. Arrow keys walk the slices. `showLabels={false}` leaves the percentages off.",
+  description: "Slices colored in with a marker, outlined in felt, each shaded with its own pencil pattern. Arrow keys walk the slices. `showLabels={false}` leaves the percentages off.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

@@ -87,7 +87,7 @@ describe("the icon browser", () => {
     const dock = document.querySelector<HTMLElement>("[data-dock]")!
     expect(within(dock).getByText("chevron-down")).toBeInTheDocument()
     expect(within(dock).getByText(/16 px: 16 px redraw/)).toBeInTheDocument()
-    await user.click(screen.getByRole("radio", { name: "doodle: with colour" }))
+    await user.click(screen.getByRole("radio", { name: "doodle: with color" }))
     await user.click(tiles().find((t) => t.dataset.tile === "chevron-down")!)
     expect(await navigator.clipboard.readText()).toBe('<Icon name="chevron-down" tone="doodle" />')
   })
@@ -164,7 +164,7 @@ describe("filterIcons", () => {
     expect(filterIcons(ICON_ENTRIES, { query: "home", family: "all", washOnly: false })[0]!.id).toBe("house")
   })
 
-  it("narrows by family and by colour wash", () => {
+  it("narrows by family and by color wash", () => {
     const washed = filterIcons(ICON_ENTRIES, { query: "", family: "all", washOnly: true })
     expect(washed.length).toBeGreaterThan(0)
     expect(washed.every((e) => e.accent)).toBe(true)

@@ -5,7 +5,7 @@ export default {
   title: "Tabs",
   category: "Navigation",
   description:
-    "Index-divider tabs: the active one is lifted and filled with highlighter, and the pencil baseline breaks under it. Also a hairline `line` style with a blue felt underline, and vertical binder tabs. Radix behaviour and roving focus are untouched.",
+    "Index-divider tabs: the active one is lifted and filled with highlighter, and the pencil baseline breaks under it. Also a hairline `line` style with a blue felt underline, and vertical binder tabs. Radix behavior and roving focus are untouched.",
   status: "stable",
   upstream: "tabs",
   parts: [

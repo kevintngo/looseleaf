@@ -44,7 +44,7 @@ function Error500Slip({ reference, request, time }: Error500SlipProps) {
           <ReceiptLine price={time}>Time</ReceiptLine>
           <ReceiptLine price={request}>Asked for</ReceiptLine>
         </ReceiptLines>
-        <ReceiptTotal label="REF" circled seed="error-500-ref">
+        <ReceiptTotal label="Ref" circled seed="error-500-ref">
           {reference}
         </ReceiptTotal>
         <ReceiptBarcode value={reference.replace(/[^0-9a-z]/gi, "").toUpperCase()} />

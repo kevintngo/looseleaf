@@ -2,7 +2,7 @@ import { Marker, MarkerContent } from "@/components/ui/marker"
 
 export const meta = {
   title: "Separator",
-  description: "shadcn's `marker-separator`: a labelled divider for a date or a turn of the conversation. The words are ordinary content (no `role=\"separator\"`), so they are read out.",
+  description: "shadcn's `marker-separator`: a labeled divider for a date or a turn of the conversation. The words are ordinary content (no `role=\"separator\"`), so they are read out.",
   layout: "center" as const,
 }
 

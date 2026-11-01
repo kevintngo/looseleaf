@@ -5,7 +5,7 @@ export default {
   title: "Ribbon",
   category: "Marks",
   description:
-    "A ribbon label: a band of coloured paper with words on it, folded ends and all. For a section heading, a New flag on a card, a price label or a call to action.",
+    "A ribbon label: a band of colored paper with words on it, folded ends and all. For a section heading, a New flag on a card, a price label or a call to action.",
   status: "new",
   parts: [
     {
@@ -24,7 +24,7 @@ export default {
   ],
   a11y: [
     "The words are real DOM text on a plain span; the drawing is aria-hidden, ignores the pointer and never affects layout.",
-    "With asChild the ribbon is whatever you gave it: a link or a button, with its own role, keyboard behaviour and name. Focus-visible draws a blue ring round the whole ribbon, tails included.",
+    "With asChild the ribbon is whatever you gave it: a link or a button, with its own role, keyboard behavior and name. Focus-visible draws a blue ring round the whole ribbon, tails included.",
     "Ink text on each offered tone is at least 4.5:1 (marker 4.6 on its drawn fill, lemon and highlighter 12+). Windows high contrast hides the drawing and gives the element a real outline.",
     "Hover lifts a link ribbon 1 px, draws a drop-line under it and underlines its words, so it is visible without hue. Reduced motion makes the lift instant. Calm density draws a hairline outline and a single-pass fill.",
   ],

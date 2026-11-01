@@ -125,7 +125,7 @@ describe("Folder", () => {
     expect(getByRole("tablist")).toHaveAttribute("aria-orientation", "horizontal")
   })
 
-  it("forced colours: the active tab fills with the system highlight and its text switches with it", () => {
+  it("forced colors: the active tab fills with the system highlight and its text switches with it", () => {
     const { getAllByRole } = render(<Files />)
     expect(getAllByRole("tab")[0].className).toContain("data-[state=active]:[&>svg_[data-layer=hover]]:hidden")
     expect(getAllByRole("tab")[0].className).toContain("forced-colors:data-[state=active]:bg-[Highlight]")

@@ -4,7 +4,7 @@ import { Rating } from "@/components/ui/rating"
 
 export const meta = {
   title: "Survey rows",
-  description: "Several ratings side by side with their own labels and a running summary. Each row is labelled with aria-labelledby; the value text is your own.",
+  description: "Several ratings side by side with their own labels and a running summary. Each row is labeled with aria-labelledby; the value text is your own.",
   layout: "stack" as const,
 }
 

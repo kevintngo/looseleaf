@@ -25,7 +25,7 @@
     ],
     "a11y": [
       "Tape is decoration: aria-hidden, focusable=false, pointer-events: none. Never put the only copy of information on it; a label written on tape is real text next to (not inside) the svg.",
-      "Tape keeps its colours in Windows high contrast (it is an intrinsic ink kind).",
+      "Tape keeps its colors in Windows high contrast (it is an intrinsic ink kind).",
       "Its tilt collapses to zero in calm density."
     ],
     "usage": "import { Tape } from \"@/components/ui/tape\"\n\n<div className=\"relative w-64 p-6\">\n  <Tape kind=\"washi-dots\" className=\"absolute -top-3 left-6\" />\n  …content\n</div>",

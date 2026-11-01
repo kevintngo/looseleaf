@@ -1,5 +1,5 @@
-import { blobFill } from '@/lib/ink/fills'
-import { seg } from '@/lib/ink/geom'
+import { blobFill, flatFill } from '@/lib/ink/fills'
+import { roundRectPoly, seg } from '@/lib/ink/geom'
 import { box, loop } from '@/lib/ink/shapes'
 import { defineRecipe } from '@/lib/ink/recipes'
 import { arcPts, sectorPoly } from '@/lib/ink/charts/chart-polar'
@@ -28,9 +28,10 @@ export const markRecipe = defineRecipe<MiniParams>({
           const s = Math.min(w, h)
           const x0 = (w - s) / 2
           const y0 = (h - s) / 2
-          ink.part('fill', () => blobFill(ink, rectPts(x0 + 1, y0 + 1, s - 2, s - 2), key, { alpha: 0.9, mis: calm ? false : 0.9, rough: 0.25 }))
+          const sq = roundRectPoly(x0 + 0.8, y0 + 0.8, s - 1.6, s - 1.6, Math.min(3, s / 4))
+          ink.part('fill', () => flatFill(ink, sq, key, 0.95))
           if (p.pattern !== 'solid') patternFill(ink, p.pattern, rectPts(x0 + 2, y0 + 2, s - 4, s - 4), { color: hatchOn(p.slot), maxPulls: 9, alpha: 0.75, gapK: 0.62 })
-          box(ink, x0, y0, s, s, { pen: 'ink.fine', corner: 1.5, style: 'two', stubs: false, ghost: false, opts: { simple: true, width: 1 } })
+          ink.flat('text', 'M' + sq.map((q) => `${q[0].toFixed(2)} ${q[1].toFixed(2)}`).join('L') + 'Z', 'ink', 1, { stroke: 'ink', sw: 1.1 })
           return
         }
         case 'column':

@@ -176,7 +176,7 @@ describe("field/select", () => {
 })
 
 describe("input-group", () => {
-  test("buttons: favourite toggles and copy ticks", async () => {
+  test("buttons: favorite toggles and copy ticks", async () => {
     const { user } = renderUI(<IGButton />, noCheck)
     const star = screen.getByRole("button", { name: "Favorite" })
     expect(star).toHaveAttribute("aria-pressed", "false")
@@ -293,7 +293,7 @@ describe("message-scroller", () => {
     await user.click(screen.getByRole("button", { name: "Jump to..." }))
     expect((await screen.findAllByRole("menuitem")).length).toBe(4)
   })
-  test("previous context: sends and slider is labelled", async () => {
+  test("previous context: sends and slider is labeled", async () => {
     const { user, container } = renderUI(<ScrollerPrev />, noCheck)
     expect(screen.getByRole("slider", { name: "Previous context peek" })).toBeInTheDocument()
     await user.click(screen.getByRole("button", { name: "Send" }))

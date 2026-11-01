@@ -15,7 +15,7 @@ import {
 export const meta = {
   title: "Collapsible group",
   description:
-    "Official `sidebar-group-collapsible`: the group label becomes the trigger of a Collapsible (`SidebarGroupLabel asChild` around `CollapsibleTrigger`), with a chevron that turns over as it opens. The label wears the highlighter on hover, where shadcn tints it with the accent colour.",
+    "Official `sidebar-group-collapsible`: the group label becomes the trigger of a Collapsible (`SidebarGroupLabel asChild` around `CollapsibleTrigger`), with a chevron that turns over as it opens. The label wears the highlighter on hover, where shadcn tints it with the accent color.",
   layout: "full" as const,
   height: 230,
   stage: "desk" as const,

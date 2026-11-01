@@ -48,13 +48,13 @@ describe("createCatalog from the fixture tree", () => {
     expect(await button.uiSource!()).toContain("class-variance-authority")
     expect(catalog.bySlug.get("card")!.uiSource).toBeNull()
     expect(JSON.parse((await catalog.registry!())).items[0].name).toBe("button")
-    expect([...catalog.content.keys()].sort()).toEqual(["blocks/login", "foundations/colour"])
+    expect([...catalog.content.keys()].sort()).toEqual(["blocks/login", "foundations/color"])
     expect(catalog.blocks).toHaveLength(1)
     expect(catalog.blocks[0]).toMatchObject({ slug: "login", title: "Sign in", tags: ["auth"], contentKey: "blocks/login", surface: "paper" })
     expect(catalog.blocks[0]!.files.map((f) => f.path)).toEqual(["index.tsx", "login-form.tsx"])
   })
 
-  it("knows previous and next neighbours in nav order", () => {
+  it("knows previous and next neighbors in nav order", () => {
     expect(catalog.neighbours("button")).toMatchObject({ prev: null, next: { slug: "date-picker" } })
     expect(catalog.neighbours("card")).toMatchObject({ prev: { slug: "input" }, next: null })
     expect(catalog.neighbours("nope")).toEqual({ prev: null, next: null })

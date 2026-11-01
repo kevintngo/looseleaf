@@ -67,7 +67,7 @@ describe("rtl audit: physical directions in src/components/ui", () => {
 
   const ALLOWED: Array<{ file: string; token: RegExp; why: string }> = [
     { file: "alert-dialog", token: /^-(?:left|right)-7$/, why: "a strip of tape on each top corner: a symmetric pair of objects, not text flow" },
-    { file: "attachment", token: /^-ml-\[26px\]$/, why: "the offset that centres a tape strip together with left-1/2" },
+    { file: "attachment", token: /^-ml-\[26px\]$/, why: "the offset that centers a tape strip together with left-1/2" },
     { file: "corkboard", token: /^left-0$/, why: "notes sit at x/y in board coordinates; the board origin is its top-left in any language" },
     { file: "desk", token: /^origin-left$/, why: "rotation pivot of the still-life pencil (its position is logical: start-10)" },
     { file: "doodle", token: /^-scale-x-100$/, why: "the explicit `flip` prop" },
@@ -130,7 +130,7 @@ describe("rtl audit: physical directions in src/components/ui", () => {
     expect(stale).toEqual([])
   })
 
-  it("fixed by this audit: marker text is text-start, the tear-off hint centres with a physical pair, navigation-menu slides have rtl twins", () => {
+  it("fixed by this audit: marker text is text-start, the tear-off hint centers with a physical pair, navigation-menu slides have rtl twins", () => {
     const src = (name: string) => uiFiles.find((f) => f.file === name)!.code
     expect(src("marker")).toContain("text-start")
     expect(src("marker")).not.toMatch(/\btext-left\b/)

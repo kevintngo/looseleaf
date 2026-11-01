@@ -37,7 +37,7 @@ const QUESTIONS = [
 function Faq01Sheet() {
   return (
     <Paper stock="paper" rules="ruled" tape="corner" tapeKind="masking" seed="faq-sheet" className="pt-4 pe-5 pb-7 ps-14 text-[17px] leading-7 rtl:[&>[data-slot=paper-rules]]:-scale-x-100">
-      <p className="font-type text-sm leading-7 tracking-[0.18em] text-pencil-text uppercase">Frequently asked</p>
+      <p className="font-type text-sm leading-7 text-pencil-text">Frequently asked</p>
       <Accordion type="single" collapsible defaultValue="free" className="w-full">
         {QUESTIONS.map((item) => (
           <AccordionItem key={item.id} value={item.id} className="pb-0 [&>[data-slot=accordion-rule]]:hidden">

@@ -77,7 +77,7 @@ describe("features-01 block, bento on a corkboard", () => {
 
   it("the receipt total and the sticky note's tick are announced", () => {
     const { getByText } = renderUI(<Features01 variant="bento" />)
-    expect(getByText("PAGES KEPT")).toBeInTheDocument()
+    expect(getByText("Pages kept")).toBeInTheDocument()
     expect(getByText(/^Done\./)).toBeInTheDocument()
   })
 

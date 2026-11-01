@@ -13,7 +13,7 @@ export default {
       description: "A <s> (or your own element with asChild) that hosts the drawing, in front of the words. One line per line of the phrase; a cross-out is one X over the whole phrase.",
       props: [
         { name: "kind", type: '"single" | "double" | "cross"', default: '"single"', description: "One line, two lines, or two long diagonals across the phrase." },
-        { name: "tone", type: '"red" | "ink" | "blue" | "green" | "pencil" | "marker" | "orange"', default: '"red"', description: "The pen. Red is a waxy coloured pencil." },
+        { name: "tone", type: '"red" | "ink" | "blue" | "green" | "pencil" | "marker" | "orange"', default: '"red"', description: "The pen. Red is a waxy colored pencil." },
         { name: "weight", type: '"fine" | "regular" | "brush"', default: '"regular"', description: "Fine-liner, regular or brush." },
         { name: "animate", type: "boolean", default: "false", description: "Draw the line on the first time it scrolls into view." },
         { name: "show", type: "boolean", default: "true", description: "Show or hide the line. With animate, turning it on plays the draw-on." },

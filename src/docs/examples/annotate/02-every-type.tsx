@@ -22,7 +22,7 @@ export default function Example() {
     <ul role="list" className="grid max-w-xl grid-cols-2 gap-x-6 gap-y-6 py-2 text-[17px] sm:grid-cols-4">
       {TYPES.map(([type, word]) => (
         <li key={type} className="grid gap-1.5">
-          <span className="font-type text-[11px] tracking-wider whitespace-nowrap text-pencil-text uppercase">{type}</span>
+          <span className="font-type text-[11px] whitespace-nowrap text-pencil-text">{type}</span>
           <span>
             <Annotate type={type} color={type === "highlight" ? "yellow" : type === "strike-through" || type === "crossed-off" || type === "circle" ? "red" : "blue"}>
               {word}

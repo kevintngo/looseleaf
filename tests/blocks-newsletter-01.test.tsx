@@ -11,7 +11,7 @@ beforeEach(() => {
 afterEach(() => restore())
 
 describe("newsletter-01 block", () => {
-  it("is a section named by its h2 with a labelled email field and a submit button", () => {
+  it("is a section named by its h2 with a labeled email field and a submit button", () => {
     const { getByRole, container } = renderUI(<Newsletter01 />)
     expect(getByRole("region", { name: "One short letter, every Sunday" })).toBeInTheDocument()
     expect(headingOutline(container)).toEqual([[2, "One short letter, every Sunday"]])

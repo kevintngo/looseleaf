@@ -68,7 +68,7 @@ describe("search over the fixture catalog", () => {
   })
 
   it("finds foundations, pages and blocks", () => {
-    expect(top("colour")[0]).toBe("foundation:colour")
+    expect(top("color")[0]).toBe("foundation:color")
     expect(top("install")[0]).toBe("page:/getting-started")
     expect(top("sign in")).toContain("block:login")
   })

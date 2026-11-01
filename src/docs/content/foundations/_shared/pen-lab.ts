@@ -170,7 +170,7 @@ export interface Exploded {
 
 export const LAYER_STORY: Record<string, string> = {
   halo: "The stain: ink wicking a hair beyond the tip. Faint, wide, soft.",
-  hair: "Capillary hairs where the felt bleeds along the paper fibres (hi tier).",
+  hair: "Capillary hairs where the felt bleeds along the paper fibers (hi tier).",
   body: "The line itself: a variable-width ribbon that swells where the hand slows and on down-strokes.",
   core: "The wet core: a darker, narrower ribbon down the middle, where the tip pressed hardest.",
   pool: "Pools where the pen landed and where it lifted: a felt tip always leaves a blot at the start.",

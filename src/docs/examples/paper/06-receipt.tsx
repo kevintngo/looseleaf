@@ -15,7 +15,7 @@ const rows = [
 export default function Example() {
   return (
     <Paper stock="receipt" seed="till" className="mx-auto w-64 px-5 py-7 font-type text-sm">
-      <p className="text-center text-base tracking-widest">LOOSELEAF CAFE</p>
+      <p className="text-center text-base tracking-widest">Looseleaf Cafe</p>
       <ul className="mt-3 border-y border-dashed border-pencil-mark py-2">
         {rows.map(([item, price]) => (
           <li key={item} className="flex justify-between">

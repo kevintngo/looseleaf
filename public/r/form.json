@@ -35,7 +35,7 @@
       "FormLabel is a real <label for>, FormControl puts the same id on the control, and aria-describedby points at the description and (while invalid) the message; aria-invalid is set for you.",
       "FormMessage is a <p> that appears next to the control with its id in aria-describedby, so a screen reader reads it with the control when focus arrives. Wrap it in an element with role=\"alert\" (or use Field's FieldError) if you want it announced the moment it appears.",
       "Not every control can be named by FormLabel's `for`: a Slider (role=slider on a span) or a Rating (a radiogroup) needs `aria-labelledby` pointing at an `id` you give the FormLabel, or an `aria-label`. FormControl's id, aria-describedby and aria-invalid do reach a Slider's thumb, a Rating's group and a RadioGroup's group (whose radios turn red).",
-      "Errors do not rely on colour alone: the message text, the wavy underline and the control's own drawn state (red box, a bang on text fields) all say it.",
+      "Errors do not rely on color alone: the message text, the wavy underline and the control's own drawn state (red box, a bang on text fields) all say it.",
       "Validation timing is react-hook-form's (`mode`: onSubmit by default, onChange, onBlur ...); the drawn components do not re-render their ink when it changes, only their state layers.",
       "Windows high contrast: the ink is replaced by real borders, and the message gets a wavy text underline."
     ],

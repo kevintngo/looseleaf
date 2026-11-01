@@ -27,7 +27,7 @@ export default {
   ],
   a11y: [
     "role=\"switch\" with aria-checked true or false. Space and Enter toggle it, Tab focuses it (Radix). Label it with <Label htmlFor>, wrap it, or use aria-label.",
-    "State is not carried by colour alone: off shows a pencil o at the end and the thumb at the start, on shows a felt bar and the thumb at the end.",
+    "State is not carried by color alone: off shows a pencil o at the end and the thumb at the start, on shows a felt bar and the thumb at the end.",
     "The hit area is 8 px larger than the track on every side (an ::after, so layout never moves). The track is 24 px tall at the default size, 20 px small with the enlarged hit area.",
     "A Label beside it is a peer: peer-disabled dims it, and hovering the row (a `group/field`) or the label right after it lights the switch's hover overlay.",
     "Keyboard focus draws a blue felt ring; the drawing is aria-hidden, pointer-events: none and never focusable. Windows high contrast replaces the ink by a real border, a Highlight fill when on and a solid thumb.",

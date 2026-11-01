@@ -51,7 +51,7 @@ describe("confetti()", () => {
     expect(document.querySelector('[data-slot="confetti-layer"]')).toBeNull()
   })
 
-  it("leaves from an element's centre, an event or a point", () => {
+  it("leaves from an element's center, an event or a point", () => {
     const el = document.createElement("button")
     document.body.appendChild(el)
     el.getBoundingClientRect = () => ({ left: 100, top: 200, width: 40, height: 20, right: 140, bottom: 220, x: 100, y: 200, toJSON() {} }) as DOMRect
@@ -73,7 +73,7 @@ describe("confetti()", () => {
     expect(JSON.stringify(anims.slice(10, 15).map((a) => a.keyframes))).not.toBe(JSON.stringify(anims.slice(15).map((a) => a.keyframes)))
   })
 
-  it("count is capped at 400 and 0 throws nothing; shapes and colours narrow the pieces", () => {
+  it("count is capped at 400 and 0 throws nothing; shapes and colors narrow the pieces", () => {
     confetti({ count: 9999, seed: 1 })
     expect(pieces()).toHaveLength(400)
     document.querySelector('[data-slot="confetti-layer"]')?.remove()
@@ -207,7 +207,7 @@ describe("ConfettiTrigger and useConfetti", () => {
 })
 
 describe("confetti drawing and flight", () => {
-  it("every kind and colour is a small self-contained svg without defs", () => {
+  it("every kind and color is a small self-contained svg without defs", () => {
     for (const k of CONFETTI_KINDS) {
       for (const c of CONFETTI_COLORS) {
         const p = confettiPiece(k, c, 1)

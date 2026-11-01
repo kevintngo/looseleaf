@@ -18,7 +18,7 @@ export default {
         { name: "invalid", type: "boolean", description: "Red pencil boxes (also set by `aria-invalid`, which is put on the input too)." },
         { name: "pasteTransformer", type: "(pasted: string) => string", default: "drops spaces and hyphens", description: "Cleans what is pasted before `pattern` looks at it, so \"123 456\" or \"123-456\" from an email fills the row (the package would refuse the whole paste). Pass `(t) => t` to switch it off." },
         { name: "pattern", type: "string", description: "A regular expression the code must match: `REGEXP_ONLY_DIGITS`, `REGEXP_ONLY_CHARS` and `REGEXP_ONLY_DIGITS_AND_CHARS` are re-exported from this file." },
-        { name: "containerClassName", type: "string", description: "Classes for the row around the boxes (default: `flex flex-nowrap gap-3`, at most as wide as its parent). Add `w-full justify-center` to centre it, `flex-wrap` if you would rather it broke into rows." },
+        { name: "containerClassName", type: "string", description: "Classes for the row around the boxes (default: `flex flex-nowrap gap-3`, at most as wide as its parent). Add `w-full justify-center` to center it, `flex-wrap` if you would rather it broke into rows." },
       ],
     },
     { name: "InputOTPGroup", description: "A run of slots: separate boxes with a small gap (upstream's are joined into one bar). On a narrow screen the groups shrink (`min-w-0`) and the boxes narrow to as little as 24 px, so six boxes and a dash stay on one row from 390 px down to about 220 px." },
@@ -36,7 +36,7 @@ export default {
   a11y: [
     "There is one real `<input>` (not six), so name it with a Label (`htmlFor` on the id you pass) or `aria-label`. Screen readers read the code as typed; the boxes are decoration (their drawings are `aria-hidden`).",
     "Typing, Backspace, arrow keys, selection, paste and SMS autofill (`autocomplete=\"one-time-code\"`) are the browser's own; a `pattern` filters what can be typed or pasted. Password managers get room for their badge (`pushPasswordManagerStrategy`).",
-    "`aria-invalid` is set on the input when `invalid` is; the boxes turn red with a drawn pencil box, not only a colour change, and a message (`role=\"alert\"`) is yours to add.",
+    "`aria-invalid` is set on the input when `invalid` is; the boxes turn red with a drawn pencil box, not only a color change, and a message (`role=\"alert\"`) is yours to add.",
     "The active box has a drawn blue ring and a caret; in Windows high contrast it gets a real Highlight outline. The blink stops under reduced motion (and `data-motion=\"reduced\"`).",
     "Form reset: the code lives in the package's own state, so `<button type=\"reset\">` does not clear it; control the value (`value` + `onChange`) and clear it in your own reset handler.",
     "Touch: boxes are 40 x 48 px (36 x 40 compact, 32 x 36 calm; on a phone card they narrow to about 38 px, never below 24), and the invisible input covers the whole row, so a tap anywhere focuses it.",

@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 
 export const meta = {
   title: "Subscribe form",
-  description: "A real-world use: a labelled group in a form. The label points at the control, the marker button is part of the same box, and a bad address turns the whole group red.",
+  description: "A real-world use: a labeled group in a form. The label points at the control, the marker button is part of the same box, and a bad address turns the whole group red.",
   layout: "stack" as const,
 }
 

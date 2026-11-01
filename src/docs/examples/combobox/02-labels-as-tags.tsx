@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label"
 
 export const meta = {
   title: "Labels as hang-tags",
-  description: "A multi-select whose choices are tags on a string: each a little different, a punched hole at the point, the x wearing the highlighter when you reach for it. Click anywhere in the field to type; Backspace in the empty input takes the last tag back. tone=\"auto\" gives each label its own colour.",
+  description: "A multi-select whose choices are tags on a string: each a little different, a punched hole at the point, the x wearing the highlighter when you reach for it. Click anywhere in the field to type; Backspace in the empty input takes the last tag back. tone=\"auto\" gives each label its own color.",
   layout: "center" as const,
   height: 440,
 }

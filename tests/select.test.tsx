@@ -361,7 +361,7 @@ describe("selectRecipe", () => {
     }
   })
 
-  it("draws sane markup at every size, density and tier (no NaN, only var(--ll-*) colours)", () => {
+  it("draws sane markup at every size, density and tier (no NaN, only var(--ll-*) colors)", () => {
     for (const [w, h] of [[80, 28], [180, 36], [400, 32], [700, 40]]) {
       for (const density of ["comfortable", "compact", "calm"] as const) {
         for (const tier of ["lo", "hi"] as const) {

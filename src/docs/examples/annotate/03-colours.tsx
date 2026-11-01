@@ -1,7 +1,7 @@
 import { Annotate } from "@/components/ui/annotate"
 
 export const meta = {
-  title: "Colours and weights",
+  title: "Colors and weights",
   description: "A highlighter takes a tone; every other mark takes a pen. Fine-liner, felt tip or brush.",
   layout: "stack" as const,
 }

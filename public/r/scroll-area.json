@@ -37,7 +37,7 @@
       "Native scrolling: wheel, touch, keyboard (arrows, Space, PageUp/PageDown, Home/End) and scrollbar-less devices all work; the mark is an overlay for pointers and never the only way to scroll.",
       "A scroll region with nothing focusable in it is reachable by keyboard in current browsers; the viewport draws a blue ring inside its edge when focused. If yours is not, give the content `tabIndex={0}` and a name.",
       "The gutter and thumb are aria-hidden drawings; the thumb can be dragged and the gutter clicked, as in Radix.",
-      "Windows high contrast draws the thumb in the system text colour. Reduced motion removes the fade.",
+      "Windows high contrast draws the thumb in the system text color. Reduced motion removes the fade.",
       "Right-to-left content puts the vertical mark on the left: pass `dir=\"rtl\"` to the root, as Radix asks."
     ],
     "usage": "import { ScrollArea } from \"@/components/ui/scroll-area\"\n\nexport function Example() {\n  return (\n    <ScrollArea className=\"h-72 w-48\" bleed>\n      <div className=\"p-4\">{/* long content */}</div>\n    </ScrollArea>\n  )\n}",

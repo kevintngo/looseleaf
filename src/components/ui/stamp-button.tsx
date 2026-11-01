@@ -235,7 +235,7 @@ function StampButtonInner({
       {...(asChild ? { "aria-disabled": disabled || undefined } : { type: "button" as const, disabled })}
       onClick={press as React.MouseEventHandler<HTMLElement>}
       className={cn(
-        "relative isolate inline-flex min-w-28 shrink-0 cursor-pointer items-center justify-center px-6 pb-2 font-type text-base font-bold tracking-widest whitespace-nowrap text-ink uppercase",
+        "relative isolate inline-flex min-w-28 shrink-0 cursor-pointer items-center justify-center px-6 pb-2 font-type text-base font-bold tracking-wide whitespace-nowrap text-ink",
         "transition-[translate] duration-(--ll-dur-press) ease-out hover:-translate-y-px active:translate-y-(--ll-press-sink)",
         "disabled:cursor-not-allowed disabled:text-pencil-text disabled:hover:translate-y-0",
         "[&_svg:not(.absolute):not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",

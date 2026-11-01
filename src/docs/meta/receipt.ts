@@ -10,10 +10,10 @@ export default {
   parts: [
     {
       name: "Receipt",
-      description: "A Paper on the `receipt` stock, a centred 18 rem column with the type font. It takes every Paper prop except `stock`, `rules` and `edge`.",
+      description: "A Paper on the `receipt` stock, a centered 18 rem column with the type font. It takes every Paper prop except `stock`, `rules` and `edge`.",
       props: [{ name: "ends", type: '"zig" | "perf" | "torn" | "cut" | "deckle" | "crimp" | "scallop"', default: '"zig"', description: "The cut of both ends: the tear bar's sawtooth, a perforation, torn, or plain." }],
     },
-    { name: "ReceiptHeader", description: "The shop: its first child is the name in spaced capitals, the rest is address and date, centred." },
+    { name: "ReceiptHeader", description: "The shop: its first child is the name in spaced capitals, the rest is address and date, centered." },
     { name: "ReceiptLines", description: "A `dl` between two dashed rules; put a `ReceiptLine` in it for each item." },
     {
       name: "ReceiptLine",

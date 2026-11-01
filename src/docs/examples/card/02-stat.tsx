@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 export const meta = {
   title: "Stat cards",
-  description: "Index cards for one number each. The figures are set in the script font with tabular numerals; the trend says up or down in words, not only in colour.",
+  description: "Index cards for one number each. The figures are set in the script font with tabular numerals; the trend says up or down in words, not only in color.",
   layout: "stack" as const,
 }
 

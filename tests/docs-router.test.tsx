@@ -20,7 +20,7 @@ describe("parseHash", () => {
     })
   })
 
-  it("normalises case, slashes and encoding in the path but not in the anchor", () => {
+  it("normalizes case, slashes and encoding in the path but not in the anchor", () => {
     expect(parseHash("#//Components///Button/").path).toBe("/components/button")
     expect(parseHash("#/components/data%20table").path).toBe("/components/data table")
     expect(parseHash("#/x#Some%20Anchor").anchor).toBe("Some Anchor")
@@ -37,7 +37,7 @@ describe("matchRoute", () => {
     expect(matchRoute("/")).toEqual({ name: "home" })
     expect(matchRoute("/getting-started")).toEqual({ name: "getting-started" })
     expect(matchRoute("/foundations")).toEqual({ name: "foundations", topic: null })
-    expect(matchRoute("/foundations/colour")).toEqual({ name: "foundations", topic: "colour" })
+    expect(matchRoute("/foundations/color")).toEqual({ name: "foundations", topic: "color" })
     expect(matchRoute("/components")).toEqual({ name: "components", slug: null })
     expect(matchRoute("/components/button")).toEqual({ name: "components", slug: "button" })
     expect(matchRoute("/blocks")).toEqual({ name: "blocks", slug: null })
@@ -137,8 +137,8 @@ describe("RouterProvider in the DOM", () => {
     act(() => navigate("/changelog"))
     await waitFor(() => expect(screen.getByTestId("where")).toHaveTextContent("changelog|/changelog|"))
 
-    act(() => navigate("/foundations/colour#swatches"))
-    await waitFor(() => expect(screen.getByTestId("where")).toHaveTextContent("foundations|/foundations/colour|swatches"))
+    act(() => navigate("/foundations/color#swatches"))
+    await waitFor(() => expect(screen.getByTestId("where")).toHaveTextContent("foundations|/foundations/color|swatches"))
   })
 })
 

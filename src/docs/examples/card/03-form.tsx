@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 export const meta = {
   title: "Guest book",
-  description: "A form on a guest check: green ledger paper, a perforated top, a dashed footer. The fields are ordinary labelled inputs; the sheet only changes the paper they are written on.",
+  description: "A form on a guest check: green ledger paper, a perforated top, a dashed footer. The fields are ordinary labeled inputs; the sheet only changes the paper they are written on.",
   layout: "stack" as const,
 }
 

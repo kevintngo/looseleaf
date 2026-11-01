@@ -159,7 +159,7 @@ describe("InputGroup addon rules", () => {
   })
 })
 
-describe("InputGroup behaviour", () => {
+describe("InputGroup behavior", () => {
   it("clicking an addon focuses the control, but clicking a button in it does not", async () => {
     const onClick = vi.fn()
     const { getByRole, container, user } = renderUI(

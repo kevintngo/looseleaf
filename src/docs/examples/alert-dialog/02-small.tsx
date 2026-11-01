@@ -4,7 +4,7 @@ import { Icon } from "@/components/ui/icon"
 
 export const meta = {
   title: "Small",
-  description: "size=\"sm\": a narrow, centred sheet with the two answers in equal columns. Good for quick confirmations.",
+  description: "size=\"sm\": a narrow, centered sheet with the two answers in equal columns. Good for quick confirmations.",
   layout: "center" as const,
 }
 

@@ -130,7 +130,7 @@ describe("Menubar strip", () => {
   })
 })
 
-describe("Menubar behaviour", () => {
+describe("Menubar behavior", () => {
   it("the open title is marked open; moving to the next title while one is open switches menus", async () => {
     const { user } = renderUI(<Demo />, opts)
     await user.click(fileTrigger())

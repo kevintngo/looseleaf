@@ -33,7 +33,7 @@ export default {
           default: "0",
           description: "Gap between items in the spacing scale (4 px units). 0 joins them: outline items share one box and the seams between them.",
         },
-        { name: "tone", type: '"hi" | "marker"', default: '"hi"', description: "The colour of an item's body when it is on." },
+        { name: "tone", type: '"hi" | "marker"', default: '"hi"', description: "The color of an item's body when it is on." },
         {
           name: "orientation",
           type: '"horizontal" | "vertical"',
@@ -69,7 +69,7 @@ export default {
     "Roving focus by Radix: the group is one tab stop, the arrow keys (left and right, or up and down when vertical) move between items and loop, Home and End jump to the ends, Space and Enter press.",
     "single is announced as a radio group with checked items; multiple as a toolbar of pressed buttons. Give the group an aria-label and every icon-only item its own.",
     "On is never told by hue alone: a filled body sits under the item, and (separate items) a solid box replaces the whisper box.",
-    "The focus ring is drawn on the item and lifted above its neighbours; Windows high contrast falls back to real borders and the browser's focus ring.",
+    "The focus ring is drawn on the item and lifted above its neighbors; Windows high contrast falls back to real borders and the browser's focus ring.",
     "In right-to-left layouts the seams move to the other edge; the drawing is mirrored by the recipe, not by CSS.",
   ],
   usage: `import { Icon } from "@/components/ui/icon"

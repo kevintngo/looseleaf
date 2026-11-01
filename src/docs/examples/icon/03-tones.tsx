@@ -2,7 +2,7 @@ import { Icon } from "@/components/ui/icon"
 
 export const meta = {
   title: "UI and doodle tone",
-  description: "In UI tone an icon is ink only. In doodle tone its accent wash shows, and `accent` picks another colour.",
+  description: "In UI tone an icon is ink only. In doodle tone its accent wash shows, and `accent` picks another color.",
 }
 
 export default function Example() {

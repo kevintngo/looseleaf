@@ -13,7 +13,7 @@ export default function Example() {
       <NativeSelectOption value="todo">Todo</NativeSelectOption>
       <NativeSelectOption value="in-progress">In Progress</NativeSelectOption>
       <NativeSelectOption value="done">Done</NativeSelectOption>
-      <NativeSelectOption value="cancelled">Cancelled</NativeSelectOption>
+      <NativeSelectOption value="canceled">Canceled</NativeSelectOption>
     </NativeSelect>
   )
 }

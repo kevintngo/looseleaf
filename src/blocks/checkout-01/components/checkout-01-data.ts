@@ -107,7 +107,7 @@ export function makeCheckoutSchema(today: Month) {
       if (v.method === "pickup") return
       if (v.address.length < 5) ctx.addIssue({ code: "custom", path: ["address"], message: "Where should it go? Add a street and number." })
       if (v.city.length < 2) ctx.addIssue({ code: "custom", path: ["city"], message: "Add the town or city." })
-      if (v.postcode.length < 3) ctx.addIssue({ code: "custom", path: ["postcode"], message: "Add the postcode." })
+      if (v.postcode.length < 3) ctx.addIssue({ code: "custom", path: ["postcode"], message: "Add the postal code." })
     })
 }
 
@@ -133,7 +133,7 @@ export const FIELD_LABELS: Partial<Record<keyof CheckoutValues, string>> = {
   name: "Full name",
   address: "Street and number",
   city: "Town or city",
-  postcode: "Postcode",
+  postcode: "Postal code",
   country: "Country",
   cardName: "Name on card",
   cardNumber: "Card number",

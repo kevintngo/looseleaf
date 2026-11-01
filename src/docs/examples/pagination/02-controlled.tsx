@@ -12,7 +12,7 @@ import {
 
 export const meta = {
   title: "Controlled, with gaps",
-  description: "Nine pages with the classic windowing: the first and last always show, the current page has a neighbour on each side, the rest fold into ellipses. Previous is inert on page 1 and Next on page 9; the links have real hrefs, so open in a new tab works.",
+  description: "Nine pages with the classic windowing: the first and last always show, the current page has a neighbor on each side, the rest fold into ellipses. Previous is inert on page 1 and Next on page 9; the links have real hrefs, so open in a new tab works.",
   layout: "center" as const,
 }
 

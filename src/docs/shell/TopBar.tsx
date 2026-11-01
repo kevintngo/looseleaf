@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Icon } from "@/components/ui/icon"
-import { Mascot } from "@/components/ui/mascot"
 import { Paper } from "@/components/ui/paper"
 import { useSidebar } from "@/components/ui/sidebar"
 import { Link, useLocation } from "../core/router"
 import { paths } from "../core/router-core"
 import { Kbd } from "../kit"
 import { SettingsMenu } from "./SettingsMenu"
+import { LogoMark } from "./LogoMark"
 
 export const GITHUB_URL: string = import.meta.env.VITE_GITHUB_URL ?? "https://github.com/kevintngo/looseleaf"
 
@@ -50,8 +50,8 @@ export function TopBar({ onSearch }: TopBarProps) {
           <Icon name={isMobile ? "menu" : "panel-left"} size={20} />
         </Button>
         <Link to={paths.home} className="dk-logo group/logo flex shrink-0 items-center gap-1.5 px-1 outline-offset-4">
-          <Mascot pose="wave" size={44} className="transition-transform duration-(--ll-dur-pop) ease-pop group-hover/logo:-rotate-6 max-[359px]:hidden" />
-          <span className="ll-riso font-script text-[1.9rem] leading-none font-bold text-ink [--ll-riso:var(--ll-marker)]">Looseleaf</span>
+          <LogoMark size={34} className="transition-transform duration-(--ll-dur-pop) ease-pop group-hover/logo:-rotate-6 max-[359px]:hidden" />
+          <span className="font-script text-[1.9rem] leading-none font-bold text-ink">Looseleaf</span>
         </Link>
         <nav aria-label="Primary" className="dk-topnav ms-3 hidden items-center gap-0.5 lg:flex">
           {PRIMARY.map((item) => (

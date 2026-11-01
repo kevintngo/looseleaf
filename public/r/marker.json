@@ -36,7 +36,7 @@
     ],
     "a11y": [
       "Markers are plain divs (as upstream). Inside a `role=\"log\"` transcript a separator is announced as its words: 'Today', 'New messages'.",
-      "Nothing is conveyed by the drawing alone: the unread state is the words, and colour is backed by the asterisk and the highlighter swipe.",
+      "Nothing is conveyed by the drawing alone: the unread state is the words, and color is backed by the asterisk and the highlighter swipe.",
       "Use `asChild` with a `button` to make 'New messages' a control; the drawn focus ring is the button's own.",
       "Difference from upstream: `markerVariants` gives the layout only. The lines of `separator` and `border` are drawn parts of `Marker` (a pseudo-element cannot hold a drawing), so applying the variants to your own element draws no line.",
       "Ink lines are 3:1 or more against paper; the words are muted text at 8.9:1 (ink on the highlighter swipe 12:1)."

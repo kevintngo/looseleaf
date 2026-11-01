@@ -3,7 +3,6 @@ import path from "node:path"
 import { act, render, screen, waitFor, within } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { DocsApp } from "@/docs/App"
-import HomeHeroArt from "@/docs/content/home-hero"
 import { LazyOnView } from "@/docs/content/home/lazy-on-view"
 import { DEFAULT_STATE, LIVELY_DEGREES, TILT_MAX, isDefault, seedOf, snippets } from "@/docs/content/home/playground-model"
 import { THUMBS } from "@/docs/content/home/thumbs.generated"
@@ -168,19 +167,14 @@ describe("LazyOnView", () => {
 })
 
 describe("home", () => {
-  it("has hero art that stands on its own as the shell's home-hero slot: Stubby, a note, stickers a beat later", async () => {
-    vi.stubGlobal("IntersectionObserver", SeenIO)
-    const { container } = render(<HomeHeroArt />)
-    const stubby = container.querySelector("[data-slot=mascot][data-pose=wave]")
-    expect(stubby).not.toBeNull()
-    expect(stubby).toHaveClass("[--ll-blend:normal]")
-    expect(container.querySelector("[data-slot=paper]")).toHaveTextContent("the desk below works")
-    await waitFor(() => expect(container.querySelectorAll("[data-slot=sticker]").length).toBe(3), { timeout: 5000 })
-    for (const sticker of container.querySelectorAll("[data-slot=sticker]")) {
-      expect(sticker).toHaveAttribute("aria-hidden", "true")
-      expect(sticker).toHaveClass("absolute", "pointer-events-none")
-    }
-    expect(container.querySelector("[data-slot=mascot]")).toHaveAttribute("aria-hidden", "true")
+  it("keeps the hero to words and one live card: no mascot, no stickers", async () => {
+    renderDocs("#/")
+    await screen.findByRole("heading", { level: 1, name: "Looseleaf" }, SLOW)
+    const hero = document.querySelector<HTMLElement>("[data-slot=home-hero]")!
+    expect(within(hero).getByRole("form", { name: "Sign in" })).toBeInTheDocument()
+    expect(hero.querySelector("[data-slot=mascot]")).toBeNull()
+    expect(hero.querySelector("[data-slot=sticker]")).toBeNull()
+    expect(document.querySelector("header [data-slot=logo-mark]")).not.toBeNull()
   })
 
   it("paints the wordmark, the tagline and the ways in first, and holds the heavy pieces back", async () => {
@@ -194,18 +188,18 @@ describe("home", () => {
     expect(within(main).getByRole("form", { name: "Sign in" })).toBeInTheDocument()
     expect(document.querySelector("[data-home=chart]")).toBeNull()
     expect(document.querySelector("[data-home=sketch]")).toBeNull()
-    expect(document.querySelectorAll("[data-slot=home-slip]").length).toBeGreaterThanOrEqual(8)
+    expect(document.querySelectorAll("[data-slot=home-slip]").length).toBeGreaterThanOrEqual(7)
     const desk = document.querySelector("[data-home=desk]")!
     expect(desk).toHaveClass("ll-desk", "-mx-4", "lg:-mx-10")
-    expect(h1).toHaveClass("sm:text-8xl", "@5xl:text-9xl")
-    expect(h1.className).not.toMatch(/(^|\s)sm:text-9xl/)
+    expect(h1).toHaveClass("text-7xl", "@xl:text-8xl")
   })
 
   it("lays things on the blotter, but no pencil across the footer, and takes them away with the viewer's switch", async () => {
     const first = renderDocs("#/")
     await screen.findByRole("heading", { level: 1, name: "Looseleaf" }, SLOW)
     const objects = () => Array.from(document.querySelectorAll("[data-home=desk] > [data-slot=desk-objects] [data-object]")).map((o) => o.getAttribute("data-object"))
-    expect(objects()).toEqual(expect.arrayContaining(["clips", "coffee", "ruler", "pins"]))
+    expect(objects()).toEqual(expect.arrayContaining(["clips", "ruler"]))
+    expect(objects()).not.toContain("pins")
     expect(objects()).not.toContain("pencil")
     first.unmount()
 
@@ -236,7 +230,7 @@ describe("home", () => {
     const { user } = renderDocs("#/")
     const main = screen.getByRole("main")
     await waitFor(() => expect(main.querySelector("[data-home=planner]")).not.toBeNull(), SLOW)
-    for (const piece of ["chart", "prefs", "annotated", "stickers", "planner", "chat", "tabs", "toast", "stats"]) {
+    for (const piece of ["chart", "prefs", "annotated", "planner", "chat", "tabs", "toast", "stats"]) {
       await waitFor(() => expect(main.querySelector(`[data-home=${piece}]`), piece).not.toBeNull(), SLOW)
     }
 
@@ -261,7 +255,6 @@ describe("home", () => {
     expect(task).toBeChecked()
     expect(within(tabs).getByText("3 of 4 done")).toBeInTheDocument()
 
-    expect(within(main.querySelector<HTMLElement>("[data-home=stickers]")!).getByRole("group", { name: /Sticker page/ })).toBeInTheDocument()
 
     const planner = main.querySelector<HTMLElement>("[data-home=planner]")!
     expect(within(planner).getByRole("grid")).toBeInTheDocument()
@@ -305,7 +298,7 @@ describe("home", () => {
     vi.stubGlobal("IntersectionObserver", SeenIO)
     const { container } = renderDocs("#/")
     const main = screen.getByRole("main")
-    for (const piece of ["chart", "prefs", "annotated", "stickers", "planner", "chat", "tabs", "toast", "stats"]) {
+    for (const piece of ["chart", "prefs", "annotated", "planner", "chat", "tabs", "toast", "stats"]) {
       await waitFor(() => expect(main.querySelector(`[data-home=${piece}]`), piece).not.toBeNull(), SLOW)
     }
     await axeCheck(container)
@@ -480,6 +473,6 @@ describe("components gallery", () => {
   it("still reads the real tree: every real component has a tile in the plain fallback too", () => {
     const real = createCatalog(discoverSources())
     expect(real.content.has("components-gallery")).toBe(true)
-    for (const key of ["home", "home-hero", "getting-started", "playground", "changelog"]) expect(real.content.has(key), key).toBe(true)
+    for (const key of ["home", "getting-started", "playground", "changelog"]) expect(real.content.has(key), key).toBe(true)
   })
 })

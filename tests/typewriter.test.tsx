@@ -247,7 +247,7 @@ describe("typing plan", () => {
     expect(a.steps[a.steps.length - 1].text).toBe("Hello, world.")
   })
 
-  it("commas and full stops hold the hand", () => {
+  it("commas and periods hold the hand", () => {
     const flat = typingPlan(["a".repeat(32)], { ...OPTS, speed: 100 }).total
     const commas = typingPlan(["a,".repeat(16)], { ...OPTS, speed: 100 }).total
     const stops = typingPlan(["a.".repeat(16)], { ...OPTS, speed: 100 }).total

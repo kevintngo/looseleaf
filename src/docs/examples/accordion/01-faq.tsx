@@ -13,7 +13,7 @@ export default function Example() {
     <Accordion type="single" collapsible defaultValue="item-1" className="w-full max-w-md">
       <AccordionItem value="item-1">
         <AccordionTrigger>Is it accessible?</AccordionTrigger>
-        <AccordionContent>Yes. It follows the WAI-ARIA accordion pattern: one tab stop per row, arrows between rows, and every panel is labelled by its trigger.</AccordionContent>
+        <AccordionContent>Yes. It follows the WAI-ARIA accordion pattern: one tab stop per row, arrows between rows, and every panel is labeled by its trigger.</AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
         <AccordionTrigger>Is it drawn by hand?</AccordionTrigger>

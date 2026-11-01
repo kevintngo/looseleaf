@@ -2,7 +2,7 @@ import { Clipboard, ClipboardPaper } from "@/components/ui/clipboard"
 
 export const meta = {
   title: "Hardboard and plastic",
-  description: "The same board in hardboard and in coloured plastic. The paper stays cream, so nothing on it changes contrast.",
+  description: "The same board in hardboard and in colored plastic. The paper stays cream, so nothing on it changes contrast.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

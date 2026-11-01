@@ -66,7 +66,7 @@ describe("Icon", () => {
     expect(container.querySelector("svg")).toHaveStyle({ width: "20px", height: "20px" })
   })
 
-  it("ink is currentColor, so text colour utilities work; accent washes only in doodle tone", () => {
+  it("ink is currentColor, so text color utilities work; accent washes only in doodle tone", () => {
     const ui = renderToString(<Icon name="bell" size={24} />)
     const doodle = renderToString(<Icon name="bell" size={24} tone="doodle" />)
     expect(ui).toContain("currentColor")

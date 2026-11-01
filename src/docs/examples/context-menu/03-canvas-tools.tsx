@@ -17,7 +17,7 @@ import { Paper } from "@/components/ui/paper"
 
 export const meta = {
   title: "Pen picker on a sticky note",
-  description: "A composed use: right-click a sticky note to choose the pen it is written with. The menu is a second sticky, in another colour so it reads as its own note, taped down; the radio rows tick the choice.",
+  description: "A composed use: right-click a sticky note to choose the pen it is written with. The menu is a second sticky, in another color so it reads as its own note, taped down; the radio rows tick the choice.",
   layout: "center" as const,
   height: 400,
   stage: "desk" as const,

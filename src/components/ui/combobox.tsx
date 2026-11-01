@@ -416,7 +416,7 @@ function ComboboxGroup({ className, ...props }: React.ComponentProps<typeof Comm
 }
 
 function ComboboxLabel({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="combobox-label" role="presentation" className={cn("px-2 py-1.5 font-type text-xs tracking-wider text-ink-muted uppercase", className)} {...props} />
+  return <div data-slot="combobox-label" role="presentation" className={cn("px-2 py-1.5 font-type text-xs text-ink-muted", className)} {...props} />
 }
 
 function ComboboxSeparator({ className, ...props }: React.ComponentProps<typeof CommandSeparator>) {

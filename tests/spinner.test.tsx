@@ -114,7 +114,7 @@ describe("Spinner", () => {
     expect(s.style.color).toBe("red")
   })
 
-  it("has no axe violations: default, sized, labelled, write, in a button", async () => {
+  it("has no axe violations: default, sized, labeled, write, in a button", async () => {
     const { container } = render(
       <div>
         <Spinner />
@@ -206,7 +206,7 @@ describe("spinnerMark", () => {
     }
   })
 
-  it("the mask stroke is the centre line with pathLength 1, so the dash trick works", () => {
+  it("the mask stroke is the center line with pathLength 1, so the dash trick works", () => {
     const m = spinnerMark("s", 24)
     expect(m.svg).toMatch(/<mask id="ll-rv-[a-z0-9]+sp"[^>]*><path data-part="reveal" d="M[^"]+" pathLength="1"/)
     expect(m.svg).toMatch(/mask="url\(#ll-rv-[a-z0-9]+sp\)"/)

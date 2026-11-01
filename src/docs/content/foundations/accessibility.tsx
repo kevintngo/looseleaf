@@ -36,7 +36,7 @@ const GUARANTEES: readonly Guarantee[] = [
     area: "Contrast",
     href: "contrast",
     promise: `Body text is AAA on paper (${ratio("card-foreground", "card")} : 1); every text pair is at least AA except the known limits listed below.`,
-    how: "Colour is tokens only. Stationery colours live in the decoration layer, not in text.",
+    how: "Color is tokens only. Stationery colors live in the decoration layer, not in text.",
     check: `node tools/check-tokens.mjs measures ${CONTRAST_ROWS.length} pairs and fails on a regression.`,
   },
   {
@@ -47,9 +47,9 @@ const GUARANTEES: readonly Guarantee[] = [
     check: "A rule in the stylesheet; components use duration tokens, never literal milliseconds.",
   },
   {
-    area: "Forced colours",
+    area: "Forced colors",
     href: "forced-colors",
-    promise: "Controls keep real borders and a system-colour focus outline; the overlay drawing steps aside.",
+    promise: "Controls keep real borders and a system-color focus outline; the overlay drawing steps aside.",
     how: "An @media (forced-colors: active) block hides overlay ink and gives hosts real outlines.",
     check: "The rules are in the stylesheet. Not yet looked at in a real browser: see the caveats.",
   },
@@ -180,7 +180,7 @@ export default function AccessibilityBody() {
         </Prose>
       </Section>
 
-      <Section id="focus" title="Focus" description="A hand-drawn ring in blue felt: the colour that means you and anything you can act on.">
+      <Section id="focus" title="Focus" description="A hand-drawn ring in blue felt: the color that means you and anything you can act on.">
         <FocusSpecimens />
         <Prose>
           <p>
@@ -194,18 +194,18 @@ export default function AccessibilityBody() {
         </Prose>
       </Section>
 
-      <Section id="contrast" title="Contrast" description="Every colour is a token, and every pair that carries text or a mark is measured on the real values.">
+      <Section id="contrast" title="Contrast" description="Every color is a token, and every pair that carries text or a mark is measured on the real values.">
         <ContrastSection />
         <Prose>
           <ul>
             <li>
-              <strong>Ink on paper is {ratio("card-foreground", "card")} : 1.</strong> Text straight on the desk is limited to ink, soft ink and muted text ({ratio("foreground", "background")}, {ratio("--ll-ink-soft", "--ll-desk")} and {ratio("muted-foreground", "background")} : 1); the coloured inks are for paper.
+              <strong>Ink on paper is {ratio("card-foreground", "card")} : 1.</strong> Text straight on the desk is limited to ink, soft ink and muted text ({ratio("foreground", "background")}, {ratio("--ll-ink-soft", "--ll-desk")} and {ratio("muted-foreground", "background")} : 1); the colored inks are for paper.
             </li>
             <li>
               <strong>Drawn lines are marks, not text.</strong> Outlines and field edges are {ratio("border", "card")} : 1 (above the 3 : 1 that WCAG asks of a control&apos;s boundary). Ruled lines and shadows are decorative and deliberately fainter.
             </li>
             <li>
-              <strong>Stationery colours never carry text.</strong> They live in stickers, tape, badges and chart fills. Ink on a tomato or grape sticker is {ratio("--ll-ink", "--ll-tomato")} : 1, so words on those stay large or bold, or move to another colour.
+              <strong>Stationery colors never carry text.</strong> They live in stickers, tape, badges and chart fills. Ink on a tomato or grape sticker is {ratio("--ll-ink", "--ll-tomato")} : 1, so words on those stay large or bold, or move to another color.
             </li>
             <li>
               <strong>Disabled controls are exempt</strong> from contrast, as WCAG allows. They are drawn dashed and pale, and a graphite wash keeps them findable.
@@ -228,13 +228,13 @@ export default function AccessibilityBody() {
         </Prose>
       </Section>
 
-      <Section id="forced-colors" title="Forced colours" description="Windows high contrast replaces colours, shadows and svg fills with a handful of system colours. A drawing built from fills would become solid blobs, so it steps aside.">
-        <DataTable label="What changes in forced colours" minWidth="36rem">
+      <Section id="forced-colors" title="Forced colors" description="Windows high contrast replaces colors, shadows and svg fills with a handful of system colors. A drawing built from fills would become solid blobs, so it steps aside.">
+        <DataTable label="What changes in forced colors" minWidth="36rem">
           <thead>
             <tr>
               <th scope="col">Part</th>
               <th scope="col">Normally</th>
-              <th scope="col">In forced colours</th>
+              <th scope="col">In forced colors</th>
             </tr>
           </thead>
           <tbody>
@@ -256,12 +256,12 @@ export default function AccessibilityBody() {
             <tr>
               <td>Highlighted text</td>
               <td>A highlighter swipe</td>
-              <td>The system Mark colours.</td>
+              <td>The system Mark colors.</td>
             </tr>
             <tr>
               <td>Icons, doodles, stickers, stamps, tape, Stubby</td>
-              <td>Drawn art in ink and colour</td>
-              <td>Kept, because it is the content. Expect it in system colours.</td>
+              <td>Drawn art in ink and color</td>
+              <td>Kept, because it is the content. Expect it in system colors.</td>
             </tr>
             <tr>
               <td>Charts</td>

@@ -18,7 +18,7 @@ export default {
     { name: "FieldGroup", description: "Stacks Fields with a gap and is the container that `responsive` Fields measure (`@container/field-group`)." },
     {
       name: "Field",
-      description: "One labelled thing: a role=group with the control, label, help and error in it. `data-invalid=\"true\"` turns its words red; `data-disabled=\"true\"` dims the label.",
+      description: "One labeled thing: a role=group with the control, label, help and error in it. `data-invalid=\"true\"` turns its words red; `data-disabled=\"true\"` dims the label.",
       props: [{ name: "orientation", type: '"vertical" | "horizontal" | "responsive"', default: '"vertical"', description: "Label above, label beside, or vertical until the FieldGroup is md wide (a container query)." }],
     },
     { name: "FieldContent", description: "Holds a label and its help next to a control in a horizontal Field." },
@@ -32,7 +32,7 @@ export default {
     },
     { name: "FieldTitle", description: "A title that is not a label (`data-slot=\"field-label\"`, as upstream) for the words inside a choice card." },
     { name: "FieldDescription", description: "Muted help text; links inside it are underlined." },
-    { name: "FieldSeparator", description: "A rule between fields; with children a labelled divider (\"or\"). Uses the pencil Separator." },
+    { name: "FieldSeparator", description: "A rule between fields; with children a labeled divider (\"or\"). Uses the pencil Separator." },
     {
       name: "FieldError",
       description: "The message under a field, announced as an alert and underlined with a wavy red pencil line. Renders nothing when there is nothing to say.",
@@ -46,7 +46,7 @@ export default {
   a11y: [
     "Field is a role=group; a FieldLabel is a real <label> (use htmlFor + id), so a click on it focuses or toggles the control. Wrap radios and checkboxes in a FieldSet with a FieldLegend so the group has a name.",
     "FieldError is role=\"alert\": it is announced when it appears. Point the control at it with aria-describedby and set aria-invalid, so the control's own box turns red as well (hue is never the only cue: the message, the wavy underline and the bang of the field say it too).",
-    "A choice card is one big label: clicking anywhere on it toggles its control, and the checked state is shown by the wash and the felt box, not by colour alone (the radio or checkbox inside shows it too). In Windows high contrast the checked card becomes a Highlight block.",
+    "A choice card is one big label: clicking anywhere on it toggles its control, and the checked state is shown by the wash and the felt box, not by color alone (the radio or checkbox inside shows it too). In Windows high contrast the checked card becomes a Highlight block.",
     "Disabling: set `data-disabled=\"true\"` on the Field (the label goes graphite) AND `disabled` on the control. A `disabled` FieldSet disables the controls natively, but the drawn controls choose their dashed disabled drawing from their own props (or their root's), not from an ancestor fieldset: pass `disabled` to each.",
     "`responsive` uses a container query on the FieldGroup, so it reacts to the width of the form, not of the screen.",
     "Right-to-left: everything uses logical properties; the error underline is symmetric.",

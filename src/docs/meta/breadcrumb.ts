@@ -9,7 +9,7 @@ export default {
   status: "stable",
   upstream: "breadcrumb",
   parts: [
-    { name: "Breadcrumb", description: "The `nav` landmark, labelled \"breadcrumb\"." },
+    { name: "Breadcrumb", description: "The `nav` landmark, labeled \"breadcrumb\"." },
     { name: "BreadcrumbList", description: "The ordered list (`ol`). It wraps onto several lines when the path is long." },
     { name: "BreadcrumbItem", description: "One crumb (`li`)." },
     {
@@ -29,9 +29,9 @@ export default {
     { name: "BreadcrumbEllipsis", description: "Three pencil dots for the crumbs left out, with a screen-reader label. Put it in a DropdownMenuTrigger to open the hidden ones: give the trigger an `aria-label` (the ellipsis itself is aria-hidden) and keep the box at `size-6` (24 px) or more so it is easy to hit." },
   ],
   a11y: [
-    "Landmark and list semantics as in the WAI-ARIA breadcrumb pattern: `nav` labelled \"breadcrumb\" holding an ordered list; the current page carries `aria-current=\"page\"` (and, as upstream, `role=\"link\"` with `aria-disabled` since it goes nowhere).",
+    "Landmark and list semantics as in the WAI-ARIA breadcrumb pattern: `nav` labeled \"breadcrumb\" holding an ordered list; the current page carries `aria-current=\"page\"` (and, as upstream, `role=\"link\"` with `aria-disabled` since it goes nowhere).",
     "Separators and the ellipsis glyph are hidden from assistive technology; the ellipsis keeps an `sr-only` \"More\", and the button you wrap it in needs its own name (\"Toggle menu\").",
-    "The underline and the highlighter are decoration with no pointer events and never move the text. Links keep the theme's focus ring; the current page is bold and underlined, so it does not depend on colour.",
+    "The underline and the highlighter are decoration with no pointer events and never move the text. Links keep the theme's focus ring; the current page is bold and underlined, so it does not depend on color.",
   ],
   usage: `import {
   Breadcrumb,

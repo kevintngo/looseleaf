@@ -14,7 +14,7 @@ export default {
       description:
         "A <span data-slot=\"textarea-frame\"> (the drawn box) around <textarea data-slot=\"textarea\">. As with Input, every prop and ref go to the <textarea>; className and style go to the frame, and padding, resize-* and control variants (placeholder:, focus:, ...) are moved onto the textarea.",
       props: [
-        { name: "className", type: "string", description: "Classes for the frame (width, min/max height, margins, font, text colour). Padding, resize-*, field-sizing-* and control-only variants are applied to the <textarea>." },
+        { name: "className", type: "string", description: "Classes for the frame (width, min/max height, margins, font, text color). Padding, resize-*, field-sizing-* and control-only variants are applied to the <textarea>." },
         { name: "inputClassName", type: "string", description: "Classes appended to the <textarea> itself." },
         { name: "ruled", type: "boolean", default: "false", description: "Hand-ruled paper: pencilled rules on the text's baselines. It fixes the rhythm (28 px lines, the first 8 px from the top, min height of three lines) and always grows with its text, so lines and text never drift apart." },
         { name: "autoGrow", type: "boolean", default: "true", description: "Grow with the text using field-sizing: content, as upstream does. false keeps rows and a fixed height." },

@@ -5,7 +5,7 @@ import { Sketchpad, type SketchStroke, type SketchpadHandle } from "@/components
 
 export const meta = {
   title: "Replay",
-  description: "A read-only sketchpad that draws itself on again, stroke after stroke, along each centre line. Reduced motion shows the finished picture.",
+  description: "A read-only sketchpad that draws itself on again, stroke after stroke, along each center line. Reduced motion shows the finished picture.",
   layout: "stack" as const,
 }
 

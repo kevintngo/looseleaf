@@ -5,7 +5,7 @@ export default {
   title: "Toggle",
   category: "Actions",
   description:
-    "A two-state button that stays down: a whisper of pencil box at rest, and a highlighter body that snaps into register when it is on. Same Radix behaviour and variants as shadcn.",
+    "A two-state button that stays down: a whisper of pencil box at rest, and a highlighter body that snaps into register when it is on. Same Radix behavior and variants as shadcn.",
   status: "stable",
   upstream: "toggle",
   parts: [
@@ -31,7 +31,7 @@ export default {
           name: "tone",
           type: '"hi" | "marker"',
           default: '"hi"',
-          description: "The colour of the body when on: yellow highlighter, or terracotta marker for a louder switch.",
+          description: "The color of the body when on: yellow highlighter, or terracotta marker for a louder switch.",
         },
         { name: "pressed / defaultPressed / onPressedChange", type: "Radix", description: "Controlled and uncontrolled state, exactly as Radix Toggle." },
         {
@@ -62,7 +62,7 @@ export default {
     'An icon-only toggle needs a name: pass aria-label ("Bold"). Keep the label the same when the state changes, and let aria-pressed say on or off.',
     "On is never told by hue alone: the toggle gains a solid fine-liner box and a filled body, and the drawn body sits under the label at 12:1 (highlighter) or 4.6:1 (marker).",
     "Keyboard focus draws the blue felt ring (3:1 against paper and desk); Windows high contrast swaps the drawing for a real border and the browser's own pressed styling.",
-    "aria-invalid draws the box in red pencil (again over the body when the toggle is down), so the cue is a line and not only a colour.",
+    "aria-invalid draws the box in red pencil (again over the body when the toggle is down), so the cue is a line and not only a color.",
     "Reduced motion removes the settle, the hover tilt and the snap.",
   ],
   usage: `import { Toggle } from "@/components/ui/toggle"

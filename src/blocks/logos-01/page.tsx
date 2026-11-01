@@ -15,7 +15,7 @@ export default function Logos01() {
     <section aria-labelledby={titleId} className="@container w-full">
       <div className="px-4 py-14 @xl:px-8 @xl:py-20">
         <div className="mx-auto max-w-5xl">
-          <h2 id={titleId} className="text-center font-type text-sm tracking-[0.18em] text-ink-soft uppercase">
+          <h2 id={titleId} className="text-center font-type text-sm text-ink-soft">
             Kept on desks at
           </h2>
 

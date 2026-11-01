@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label"
 
 export const meta = {
   title: "A clipboard",
-  description: "Hardboard with the grain of its fibre, a chrome spring clip over the paper, and a checklist on the ruled sheet (each row is one 28 px line).",
+  description: "Hardboard with the grain of its fiber, a chrome spring clip over the paper, and a checklist on the ruled sheet (each row is one 28 px line).",
   layout: "center" as const,
   stage: "desk" as const,
 }

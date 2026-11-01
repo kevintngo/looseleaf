@@ -12,9 +12,9 @@ export default {
     {
       name: "Input",
       description:
-        "A <span data-slot=\"input-frame\"> (the drawn box: it owns the size, the drawing and the state) around <input data-slot=\"input\">. Everything you pass goes to the <input>, as in shadcn, and ref is the input. className and style go to the frame, so width, height, margin, flex and grid placement, font size and text colour work as they always did; padding, resize-* and variants like placeholder: or file: are moved onto the input, which keeps the whole box clickable and the text inset exactly as in shadcn.",
+        "A <span data-slot=\"input-frame\"> (the drawn box: it owns the size, the drawing and the state) around <input data-slot=\"input\">. Everything you pass goes to the <input>, as in shadcn, and ref is the input. className and style go to the frame, so width, height, margin, flex and grid placement, font size and text color work as they always did; padding, resize-* and variants like placeholder: or file: are moved onto the input, which keeps the whole box clickable and the text inset exactly as in shadcn.",
       props: [
-        { name: "className", type: "string", description: "Classes for the frame (layout, height, font, text colour). Padding utilities and control-only variants (placeholder:, file:, selection:, autofill:, focus:, disabled:) are applied to the <input> instead." },
+        { name: "className", type: "string", description: "Classes for the frame (layout, height, font, text color). Padding utilities and control-only variants (placeholder:, file:, selection:, autofill:, focus:, disabled:) are applied to the <input> instead." },
         { name: "inputClassName", type: "string", description: "Classes appended to the <input> itself, after the ones moved there from className." },
         { name: "seed", type: "string | number", description: "Pins the hand: the same seed always draws the same box, also across remounts. Default: derived from useId()." },
         { name: "disabled", type: "boolean", default: "false", description: "A real disabled input, drawn as dashed pencil on a pale wash. Under a disabled <fieldset> the input is still disabled, but the box is not redrawn." },
@@ -33,7 +33,7 @@ export default {
     "aria-invalid, disabled and readOnly are the real attributes; the drawing follows them. Pair aria-invalid with aria-describedby pointing at the error text.",
     "Focus draws a blue felt ring (3:1 or better against paper) when the input is focused by keyboard or click (text fields always match :focus-visible). Before the drawing exists and in Windows high contrast the browser's own outline and a real border are used.",
     "The drawing is aria-hidden, pointer-events: none and never focusable. Typed text is blue felt on paper (7:1), placeholders are graphite (6.8:1), disabled text is graphite on a pale wash.",
-    "16 px text on every screen size, so iOS does not zoom on focus. Number spinners, the search clear button and the password reveal of Edge are removed; the keyboard behaviour (arrow keys, Escape) is untouched.",
+    "16 px text on every screen size, so iOS does not zoom on focus. Number spinners, the search clear button and the password reveal of Edge are removed; the keyboard behavior (arrow keys, Escape) is untouched.",
     "Reduced motion: no fade, no wobble; the field has no hover tilt at all.",
   ],
   usage: `import { Input } from "@/components/ui/input"

@@ -114,7 +114,7 @@ describe("ScrollArea drawing", () => {
     expect(Array.from(thumb.querySelectorAll(":scope > svg > g[data-layer]")).map((g) => g.getAttribute("data-layer"))).toEqual(["rest", "hover"])
   })
 
-  it("hides the overlay drawing but keeps the thumb visible in forced colours", async () => {
+  it("hides the overlay drawing but keeps the thumb visible in forced colors", async () => {
     const { container } = render(<Sample />)
     await settle()
     expect(container.querySelector("[data-slot=scroll-area-thumb]")!.className).toContain("forced-colors:bg-[CanvasText]")

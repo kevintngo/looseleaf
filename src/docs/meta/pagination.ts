@@ -9,7 +9,7 @@ export default {
   status: "stable",
   upstream: "pagination",
   parts: [
-    { name: "Pagination", description: "The `nav` landmark (`role=\"navigation\"`, labelled \"pagination\"), centred." },
+    { name: "Pagination", description: "The `nav` landmark (`role=\"navigation\"`, labeled \"pagination\"), centered." },
     { name: "PaginationContent", description: "The list (`ul`) of items." },
     { name: "PaginationItem", description: "One entry (`li`)." },
     {
@@ -22,12 +22,12 @@ export default {
         { name: "disabled", type: "boolean", default: "false", description: "For a link that goes nowhere (the first page's Previous): drawn dashed, `aria-disabled`, out of the tab order, its click swallowed (your onClick does not run)." },
       ],
     },
-    { name: "PaginationPrevious", description: "A labelled link (\"Go to previous page\") with a drawn chevron. The word \"Previous\" hides on phones; the label stays." },
+    { name: "PaginationPrevious", description: "A labeled link (\"Go to previous page\") with a drawn chevron. The word \"Previous\" hides on phones; the label stays." },
     { name: "PaginationNext", description: "The same, pointing on (\"Go to next page\")." },
     { name: "PaginationEllipsis", description: "Three pencil dots for the pages left out; hidden from assistive technology with an `sr-only` \"More pages\"." },
   ],
   a11y: [
-    "A `nav` landmark labelled \"pagination\" holding a list of links. The current page has `aria-current=\"page\"`; it is also bold-on-highlighter, so it does not rely on colour.",
+    "A `nav` landmark labeled \"pagination\" holding a list of links. The current page has `aria-current=\"page\"`; it is also bold-on-highlighter, so it does not rely on color.",
     "Previous and Next carry `aria-label`s that name their destination, so they read the same when the word is hidden on a phone. Give number links an accessible name of their own when the bare number is ambiguous (`aria-label=\"Page 3\"`).",
     "A disabled link is `aria-disabled`, removed from the tab order and drawn as the dashed alternative; its click is prevented and your `onClick` is not called.",
     "Each link is at least 36 px square (32 compact, 28 calm), a tab stop with the theme's drawn blue focus ring. Being plain anchors, they work without JavaScript and with any router.",

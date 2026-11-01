@@ -58,7 +58,7 @@ describe("checkMarkup", () => {
   test("does not fire on look-alikes or ordinary prose", () => {
     const ok = [
       '<path d="M 0 0 L 4 4" data-name="banana"></path>',
-      '<div class="w-[calc(100%-2rem)]" aria-label="Undefined behaviour is fun"></div>',
+      '<div class="w-[calc(100%-2rem)]" aria-label="Undefined behavior is fun"></div>',
       "<p>Handling undefined values, NaN checks and Infinity in prose is fine.</p>",
       '<p data-x="unDefined NaNa"></p>',
     ]
@@ -315,7 +315,7 @@ describe("helpers: renderUI + axeCheck", () => {
     expect(message).toContain("target:")
   })
 
-  test("layout-dependent rules are off in jsdom (colour contrast, region)", async () => {
+  test("layout-dependent rules are off in jsdom (color contrast, region)", async () => {
     const { container } = renderUI(<p style={{ color: "#fefefe", background: "#ffffff" }}>faint but this is a token-level concern</p>)
     await axeCheck(container)
   })

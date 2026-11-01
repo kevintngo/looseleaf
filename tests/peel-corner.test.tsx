@@ -98,7 +98,7 @@ describe("PeelCorner", () => {
     expect(k(container)).toBe("0.200")
   })
 
-  it("a short pull on a closed corner returns it; cancelling returns it", () => {
+  it("a short pull on a closed corner returns it; canceling returns it", () => {
     const onPeeledChange = vi.fn()
     const { container, getByRole } = renderUI(<Page onPeeledChange={onPeeledChange} />)
     root(container).getBoundingClientRect = () => ({ left: 0, top: 0, right: 300, bottom: 200, width: 300, height: 200, x: 0, y: 0, toJSON() {} }) as DOMRect
@@ -200,7 +200,7 @@ describe("PeelCorner", () => {
 describe("peel-corner drawing", () => {
   const run = (params: object) => runRecipe(peelFlapRecipe as never, { box: { w: 120, h: 120 }, params, seed: "p", tier: "lo", density: "comfortable", dir: "ltr", knobs: { wobble: 1, misreg: 1, bleed: 1, width: 1 } }).parts.rest ?? ""
 
-  it("the flap is small, in the colour of the paper's back, and mirrors for the left corner", () => {
+  it("the flap is small, in the color of the paper's back, and mirrors for the left corner", () => {
     const a = run({ back: "paper" })
     expect(a.length).toBeLessThan(5000)
     expect(a).toContain("var(--ll-paper)")

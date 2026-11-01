@@ -79,7 +79,7 @@ describe("Seal", () => {
     expect(big.svg.length).toBeGreaterThan(small.svg.length * 1.5)
   })
 
-  it("the ribbon colour is the ribbon's, and only a rosette or a medal has one", () => {
+  it("the ribbon color is the ribbon's, and only a rosette or a medal has one", () => {
     const tomato = sealArt({ variant: "rosette", text: "1", tone: "lemon" }, 96, "s")
     const sky = sealArt({ variant: "rosette", text: "1", tone: "lemon", ribbon: "sky" }, 96, "s")
     expect(tomato.svg).toContain("var(--ll-tomato)")
@@ -88,7 +88,7 @@ describe("Seal", () => {
     expect(scallop.svg).not.toContain("var(--ll-sky)")
   })
 
-  it("wax is a blob with an impression; the colour is the wax's", () => {
+  it("wax is a blob with an impression; the color is the wax's", () => {
     const grape = sealArt({ variant: "wax", text: "L", tone: "grape" }, 96, "s")
     expect(grape.svg).toContain("var(--ll-grape)")
     expect(grape.svg).not.toContain("NaN")

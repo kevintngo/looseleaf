@@ -39,7 +39,7 @@
       "Roving focus by Radix: the group is one tab stop, the arrow keys (left and right, or up and down when vertical) move between items and loop, Home and End jump to the ends, Space and Enter press.",
       "single is announced as a radio group with checked items; multiple as a toolbar of pressed buttons. Give the group an aria-label and every icon-only item its own.",
       "On is never told by hue alone: a filled body sits under the item, and (separate items) a solid box replaces the whisper box.",
-      "The focus ring is drawn on the item and lifted above its neighbours; Windows high contrast falls back to real borders and the browser's focus ring.",
+      "The focus ring is drawn on the item and lifted above its neighbors; Windows high contrast falls back to real borders and the browser's focus ring.",
       "In right-to-left layouts the seams move to the other edge; the drawing is mirrored by the recipe, not by CSS."
     ],
     "usage": "import { Icon } from \"@/components/ui/icon\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function Example() {\n  return (\n    <ToggleGroup type=\"single\" variant=\"outline\" defaultValue=\"list\" aria-label=\"View\">\n      <ToggleGroupItem value=\"list\" aria-label=\"List\">\n        <Icon name=\"list\" />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"grid\" aria-label=\"Grid\">\n        <Icon name=\"layout-grid\" />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"menu\" aria-label=\"Compact\">\n        <Icon name=\"menu\" />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}",

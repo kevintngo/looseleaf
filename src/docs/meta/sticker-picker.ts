@@ -11,7 +11,7 @@ export default {
   parts: [
     {
       name: "StickerPicker",
-      description: "A Popover (same open, defaultOpen, onOpenChange, modal) that also holds what the grid needs: the catalogue, the recent list and what happens on choosing.",
+      description: "A Popover (same open, defaultOpen, onOpenChange, modal) that also holds what the grid needs: the catalog, the recent list and what happens on choosing.",
       props: [
         { name: "onSelect", type: "(sticker: StickerPickerItem) => void", description: "Called with { name, label, category, categoryLabel, tags } when one is chosen (Enter, or a tap)." },
         { name: "value", type: "string | null", description: "The sticker chosen elsewhere: it is marked in the grid (aria-selected, and a check)." },
@@ -39,7 +39,7 @@ export default {
     "Pressing a sticker with the mouse does not move the focus out of the search field, so with closeOnSelect off the arrow keys keep working between picks.",
     "Each option is named by its sticker (\"Rocket\"); the count of matches is announced politely as you type (\"12 stickers.\", \"No stickers found.\").",
     "The category chips are toggle buttons (aria-pressed) in their own tab stop; clicking one returns focus to the field. The row scrolls sideways on a narrow popover.",
-    "The highlighted sticker is shown by a highlighter swipe behind it, a small turn and the peeled corner, not by colour alone. Windows high contrast keeps the stickers (intrinsic art).",
+    "The highlighted sticker is shown by a highlighter swipe behind it, a small turn and the peeled corner, not by color alone. Windows high contrast keeps the stickers (intrinsic art).",
     "The empty state has a status line and Stubby with a magnifier.",
   ],
   usage: `import { Button } from "@/components/ui/button"

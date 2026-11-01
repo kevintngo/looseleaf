@@ -18,7 +18,7 @@ export function Balances() {
             </ReceiptLine>
           ))}
         </ReceiptLines>
-        <ReceiptTotal label="NET WORTH" circled seed="finance-total">
+        <ReceiptTotal label="Net worth" circled seed="finance-total">
           {money(total)}
         </ReceiptTotal>
         <ReceiptBarcode value="0042 1187 0925" />

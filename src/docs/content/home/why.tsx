@@ -21,7 +21,7 @@ const REASONS = [
     key: "accessible",
     title: "Accessible",
     flag: "grass",
-    text: "Radix underneath: keyboard, focus rings, AA text, 24 px targets, reduced motion, forced colours. The charm is decoration; the semantics are ordinary.",
+    text: "Radix underneath: keyboard, focus rings, AA text, 24 px targets, reduced motion, forced colors. The charm is decoration; the semantics are ordinary.",
     foot: "axe-checked",
   },
   {

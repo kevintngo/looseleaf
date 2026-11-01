@@ -17,7 +17,7 @@ export default {
       name: "AlertDialogContent",
       description: "The sheet: a Paper that is also the alertdialog. It takes every Radix Content prop and these.",
       props: [
-        { name: "size", type: '"default" | "sm"', default: '"default"', description: "`sm` is a narrow, centred sheet with the buttons in two equal columns." },
+        { name: "size", type: '"default" | "sm"', default: '"default"', description: "`sm` is a narrow, centered sheet with the buttons in two equal columns." },
         { name: "tone", type: '"default" | "danger"', default: '"default"', description: "`danger` tapes red-and-white hazard strips across the top corners." },
         { name: "stock", type: "StockName", default: '"paper"', description: "What the sheet is made of." },
         { name: "edge", type: "EdgeSpec", default: '"cut"', description: "Cut (CSS, no svg), torn, deckle, ..." },
@@ -32,7 +32,7 @@ export default {
       name: "AlertDialogMedia",
       description: "The picture beside the question: put an Icon or a Sticker in it. It sits on a hand-drawn round patch.",
       props: [
-        { name: "tone", type: '"default" | "danger" | "info"', default: '"default"', description: "The patch colour: highlighter, red pencil wash, sky." },
+        { name: "tone", type: '"default" | "danger" | "info"', default: '"default"', description: "The patch color: highlighter, red pencil wash, sky." },
         { name: "seed", type: "string | number", description: "Pins the hand." },
       ],
     },

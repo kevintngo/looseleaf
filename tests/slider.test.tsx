@@ -47,7 +47,7 @@ describe("Slider structure", () => {
     expect(layers(thumbs[0])).toEqual(["rest", "hover"])
   })
 
-  it("several values give a range slider: one thumb each, named Minimum and Maximum by Radix inside a labelled group", () => {
+  it("several values give a range slider: one thumb each, named Minimum and Maximum by Radix inside a labeled group", () => {
     const { getAllByRole, getByRole } = renderUI(<Slider defaultValue={[20, 70]} aria-label="Price" />)
     expect(getAllByRole("slider").map((t) => t.getAttribute("aria-label"))).toEqual(["Minimum", "Maximum"])
     expect(getByRole("group", { name: "Price" })).toHaveAttribute("data-slot", "slider")

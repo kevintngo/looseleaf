@@ -206,7 +206,7 @@ describe("dieCut", () => {
     expect(dieCut(odd, 96, "t", { peel: 18 }).svg).toContain("matrix(0 -1 -1 0")
     expect(dieCut(blob, 96, "t", { peel: true }).svg).not.toBe(dieCut(blob, 96, "t").svg)
   })
-  it("opaque fills keep their painting order even when a colour repeats (the builder merges same-colour paths)", () => {
+  it("opaque fills keep their painting order even when a color repeats (the builder merges same-color paths)", () => {
     const d: ArtDef = {
       grid: 64,
       kind: "sticker",
@@ -333,7 +333,7 @@ describe("art batches (glob-driven)", () => {
         }
       })
 
-      it("draws at every tier: deterministic, finite, only theme colours", async () => {
+      it("draws at every tier: deterministic, finite, only theme colors", async () => {
         const mod = await load()
         const defs = mod[camel(b.file.split("/").pop()!.replace(/\.ts$/, ""))]
         for (const id of Object.keys(defs)) {
@@ -361,7 +361,7 @@ describe("art batches (glob-driven)", () => {
 })
 
 describe("the paint keys the DSL accepts", () => {
-  it("every PaintKey but `current` is a legal art colour", () => {
+  it("every PaintKey but `current` is a legal art color", () => {
     for (const k of PAINT_KEYS) {
       if (k === "current") continue
       const d: ArtDef = { grid: 64, kind: "doodle", parts: [["f", k, "M10 10 L30 10 L30 30 Z"]] }

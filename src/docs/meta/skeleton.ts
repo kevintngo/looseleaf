@@ -17,7 +17,7 @@ export default {
         {
           name: "className",
           type: "string",
-          description: "Its size and shape: any width and height, rounded-full for a circle. Colours are the theme's pencil and paper tokens.",
+          description: "Its size and shape: any width and height, rounded-full for a circle. Colors are the theme's pencil and paper tokens.",
         },
         {
           name: "seed",
@@ -31,7 +31,7 @@ export default {
     'A skeleton is an empty element, invisible to assistive tech, as shadcn\'s. Mark the region that is loading with aria-busy="true" (and a status or a visually hidden "Loading" for screen readers), and remove the skeletons when the content arrives.',
     "Nothing in it is interactive or focusable; the boil is decoration, and a page of skeletons never announces anything.",
     "Reduced motion (the OS setting or the in-app calm-ink setting) and calm density hold the first frame still.",
-    "In Windows high contrast the drawing is replaced by a dashed system-colour outline.",
+    "In Windows high contrast the drawing is replaced by a dashed system-color outline.",
     "The masks need CSS mask-image (every current browser); the stylesheet is injected with <style href precedence>, so React 19 hoists it, dedupes it and includes it in server HTML.",
   ],
   usage: `import { Skeleton } from "@/components/ui/skeleton"

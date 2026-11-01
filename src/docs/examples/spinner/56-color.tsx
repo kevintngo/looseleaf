@@ -3,7 +3,7 @@ import { Spinner } from "@/components/ui/spinner"
 export const meta = {
   title: "Color",
   description:
-    "Official `spinner-color`: five 24 px spinners, each in its own text colour. shadcn uses the palette's red, green, blue, yellow and purple; here they are red felt-tip, green pencil, blue biro, orange marker and grape marker (yellow highlighter is too pale to read as a line on paper).",
+    "Official `spinner-color`: five 24 px spinners, each in its own text color. shadcn uses the palette's red, green, blue, yellow and purple; here they are red felt-tip, green pencil, blue biro, orange marker and grape marker (yellow highlighter is too pale to read as a line on paper).",
   layout: "center" as const,
 }
 

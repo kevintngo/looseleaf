@@ -26,7 +26,7 @@ export function describeBlockMark(spec: BlockMarkSpec): void {
     restore = []
   })
 
-  describe(`${spec.name} (shared block-mark behaviour)`, () => {
+  describe(`${spec.name} (shared block-mark behavior)`, () => {
     it("draws one aria-hidden svg as a direct child of the ink host", () => {
       const { container, getByTestId } = render(spec.make({ "data-testid": "h" }))
       const host = getByTestId("h")

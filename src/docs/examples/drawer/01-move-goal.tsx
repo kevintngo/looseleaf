@@ -33,7 +33,7 @@ export default function Example() {
               </Button>
               <div className="text-center">
                 <div className="ll-num font-script text-7xl leading-none font-bold tracking-tight">{goal}</div>
-                <div className="font-type text-[0.7rem] text-muted-foreground uppercase">Calories/day</div>
+                <div className="font-type text-[0.7rem] text-muted-foreground">Calories/day</div>
               </div>
               <Button variant="outline" size="icon" className="shrink-0 rounded-full" onClick={() => setGoal((g) => clamp(g + 10))} disabled={goal >= 400} aria-label="Increase">
                 <Icon name="plus" />

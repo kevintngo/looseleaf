@@ -22,12 +22,12 @@ export default function Example() {
       <div className="flex flex-wrap items-end gap-x-6 gap-y-4">
         <figure className="grid justify-items-center gap-1">
           <Arrow direction="right" curve="curl" tone="red" className="h-12 w-40" />
-          <figcaption className="font-type text-[11px] tracking-[0.18em] text-pencil-text uppercase">curl</figcaption>
+          <figcaption className="font-type text-[11px] text-pencil-text">curl</figcaption>
         </figure>
         {(["v", "two", "open", "solid", "none"] as const).map((h) => (
           <figure key={h} className="grid justify-items-center gap-1">
             <Arrow direction="up-right" curve="curved" head={h} tone="ink" className="h-12 w-20" />
-            <figcaption className="font-type text-[11px] tracking-[0.18em] text-pencil-text uppercase">{h}</figcaption>
+            <figcaption className="font-type text-[11px] text-pencil-text">{h}</figcaption>
           </figure>
         ))}
       </div>

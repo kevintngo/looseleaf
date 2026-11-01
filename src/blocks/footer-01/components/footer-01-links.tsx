@@ -5,7 +5,7 @@ import * as React from "react"
 const COLUMNS = [
   { title: "Product", links: ["Notebooks", "Tasks", "Templates", "Changelog", "Pricing"] },
   { title: "Company", links: ["About", "Careers", "Press kit", "Contact"] },
-  { title: "Resources", links: ["Guides", "Help centre", "API docs", "Status", "Community"] },
+  { title: "Resources", links: ["Guides", "Help center", "API docs", "Status", "Community"] },
 ]
 
 function Footer01Links() {

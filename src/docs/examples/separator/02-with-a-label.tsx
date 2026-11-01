@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator"
 export const meta = {
   title: "Or continue with",
   description:
-    "Children turn the separator into a labelled divider: two rules and a word. Here it splits a sign-in card in two, the way every sign-in card does.",
+    "Children turn the separator into a labeled divider: two rules and a word. Here it splits a sign-in card in two, the way every sign-in card does.",
   layout: "stack" as const,
 }
 

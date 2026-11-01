@@ -5,7 +5,7 @@ import { mascot } from "@/lib/ink/art/mascots"
 import { axeCheck, expectInkLayers, renderUI } from "./helpers"
 
 describe("Mascot (Stubby)", () => {
-  it("is intrinsic ink, decorative unless labelled", async () => {
+  it("is intrinsic ink, decorative unless labeled", async () => {
     const { container, rerender, getByRole } = renderUI(<Mascot pose="wave" />)
     const svg = container.querySelector("svg")!
     expect(svg).toHaveAttribute("data-slot", "mascot")

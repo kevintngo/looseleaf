@@ -49,7 +49,7 @@ export default {
     "Up and Down move (disabled rows are skipped), Home and End jump, typing a letter jumps to the next row that starts with it, ArrowRight opens a sub-menu and ArrowLeft closes it, Enter or Space chooses, Escape closes.",
     "A context menu must never be the only way to reach an action: put the same actions on a visible control (a DropdownMenu on a button) as well.",
     "The highlight follows the keyboard as well as the pointer (`data-highlighted`); a row with keyboard focus also gets a bar of blue felt at its start edge. Ticks, dots, chevrons and the pencil boxes are aria-hidden drawings; keycaps are real `kbd` elements.",
-    "Rows are 32 px high (28 compact and calm). Portalled content repeats the InkProvider's data-density, data-motion and data-theme; with reduced motion it appears without the slide and zoom. In forced-colors mode the highlighted row takes the system highlight colours.",
+    "Rows are 32 px high (28 compact and calm). Portalled content repeats the InkProvider's data-density, data-motion and data-theme; with reduced motion it appears without the slide and zoom. In forced-colors mode the highlighted row takes the system highlight colors.",
   ],
   usage: `import {
   ContextMenu,

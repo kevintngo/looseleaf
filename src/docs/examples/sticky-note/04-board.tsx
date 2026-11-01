@@ -5,7 +5,7 @@ import { StickyNote, StickyNoteContent, StickyNoteFooter, StickyNoteTitle } from
 
 export const meta = {
   title: "A team board",
-  description: "A real board: notes you tick off as the week goes, laid on a card. Each note is a labelled group with its own checkbox; the tick is written when you press it.",
+  description: "A real board: notes you tick off as the week goes, laid on a card. Each note is a labeled group with its own checkbox; the tick is written when you press it.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

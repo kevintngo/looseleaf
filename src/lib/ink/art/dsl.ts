@@ -307,7 +307,7 @@ export function validateParts(parts: readonly Part[], kind: ArtKind, tier: strin
     const paths: string[] = []
     switch (p[0]) {
       case 'f':
-        if (!isArtColour(p[1])) E('colour', `"${String(p[1])}" is not an allowed colour (PaintKey, key~, acc, sil)`, at)
+        if (!isArtColour(p[1])) E('colour', `"${String(p[1])}" is not an allowed color (PaintKey, key~, acc, sil)`, at)
         if (p[1] === 'acc' && !hasAccent && kind === 'icon') W('accent', "'acc' part but the def has no `accent` (falls back to the highlighter)", at)
         paths.push(p[2])
         if (p[3] !== undefined && !(p[3] >= 0 && p[3] <= 3)) E('mis', 'fill misregistration multiplier must be 0..3', at)
@@ -316,7 +316,7 @@ export function validateParts(parts: readonly Part[], kind: ArtKind, tier: strin
         paths.push(p[1])
         break
       case 'c':
-        if (!isArtColour(p[1]) || p[1] === 'sil') E('colour', `"${String(p[1])}" is not an allowed stroke colour`, at)
+        if (!isArtColour(p[1]) || p[1] === 'sil') E('colour', `"${String(p[1])}" is not an allowed stroke color`, at)
         paths.push(p[2])
         break
       case 'h':
@@ -335,7 +335,7 @@ export function validateParts(parts: readonly Part[], kind: ArtKind, tier: strin
         if (font !== 'hand' && font !== 'type') E('text', `unknown lettering font "${String(font)}" (hand | type)`, at)
         else if (glyph) for (const ch of String(txt).toUpperCase()) if (ch !== ' ' && glyph(font, ch) === false) E('text', `no glyph for "${ch}" in the ${font} lettering`, at)
         if (![x, y, size].every((v) => typeof v === 'number' && Number.isFinite(v))) E('part-shape', 'text needs numeric x y size', at)
-        if (p[5] !== undefined && !isArtColour(p[5])) E('colour', `"${String(p[5])}" is not an allowed colour`, at)
+        if (p[5] !== undefined && !isArtColour(p[5])) E('colour', `"${String(p[5])}" is not an allowed color`, at)
         return
       }
     }

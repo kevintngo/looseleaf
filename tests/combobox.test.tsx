@@ -330,7 +330,7 @@ describe("Combobox chips", () => {
     expect(input()).toHaveFocus()
   })
 
-  it("tone='auto' gives each value its own colour from its text (stable)", () => {
+  it("tone='auto' gives each value its own color from its text (stable)", () => {
     const { container } = renderUI(<Tags tone="auto" defaultValue={["next", "astro", "nuxt", "remix"]} />)
     const tones = () => Array.from(container.querySelectorAll('[data-slot="combobox-chip"]')).map((c) => c.querySelector("svg")?.innerHTML ?? "")
     const a = tones()

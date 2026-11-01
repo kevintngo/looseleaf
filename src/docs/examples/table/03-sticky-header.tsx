@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 export const meta = {
   title: "Sticky header",
   description:
-    "`sticky` pins the header row while the body scrolls under it; `containerClassName=\"max-h-72\"` gives the scroller its height. The header carries the paper colour (`--ll-table-bg`) and its own double rule.",
+    "`sticky` pins the header row while the body scrolls under it; `containerClassName=\"max-h-72\"` gives the scroller its height. The header carries the paper color (`--ll-table-bg`) and its own double rule.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

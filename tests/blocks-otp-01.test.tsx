@@ -21,7 +21,7 @@ const form = (props: Partial<React.ComponentProps<typeof OtpForm>> = {}) => rend
 const box = () => document.querySelector<HTMLInputElement>('[data-slot="input-otp"]')!
 
 describe("otp-01: the code", () => {
-  it("has six boxes behind one labelled field that asks the phone for the code", () => {
+  it("has six boxes behind one labeled field that asks the phone for the code", () => {
     const { getByLabelText, getByRole } = form()
     expect(document.querySelectorAll('[data-slot="input-otp-slot"]')).toHaveLength(6)
     expect(getByLabelText("Verification code")).toBe(box())

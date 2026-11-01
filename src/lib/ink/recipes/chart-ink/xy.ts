@@ -143,7 +143,7 @@ export const xyRecipe = defineRecipe<XYSpec>({
         return
       }
       for (const b of L.bands) swipeFill(ink, b, L.horizontal, calm)
-      if (spec.grid) drawGrid(ink, L.gridPx, plot, !L.horizontal, calm)
+      if (spec.grid) drawGrid(ink, L.gridPx, plot, !L.horizontal)
       drawAxisLines(ink, plot, { x: true, y: spec.showY, calm, zeroY: L.horizontal ? null : L.basePx })
       drawTicks(ink, L, calm)
 

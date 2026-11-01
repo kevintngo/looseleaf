@@ -52,7 +52,7 @@ function Demo({ page }: { page?: Partial<React.ComponentProps<typeof BreadcrumbP
 }
 
 describe("Breadcrumb", () => {
-  it("is a labelled nav with an ordered list, upstream's slots, and links that go somewhere", () => {
+  it("is a labeled nav with an ordered list, upstream's slots, and links that go somewhere", () => {
     const { getByRole, container } = renderUI(<Demo />)
     const nav = getByRole("navigation", { name: "breadcrumb" })
     expect(nav).toHaveAttribute("data-slot", "breadcrumb")

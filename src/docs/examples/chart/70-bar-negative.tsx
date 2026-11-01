@@ -5,7 +5,7 @@ import { swingColumns, short } from "./_data"
 
 export const meta = {
   title: "Bar: negative",
-  description: "Values below zero hang from the baseline. To colour the gains and the losses apart the rows are split into two columns (`swingColumns` in `_data.ts`) and stacked, so each sign gets its own colour and pencil pattern.",
+  description: "Values below zero hang from the baseline. To color the gains and the losses apart the rows are split into two columns (`swingColumns` in `_data.ts`) and stacked, so each sign gets its own color and pencil pattern.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

@@ -36,7 +36,7 @@
       "table"
     ],
     "a11y": [
-      "A badge is plain inline text in a span: it is read in reading order with what is around it. Give a status badge words (\"Beta\"), never only a colour or a mark.",
+      "A badge is plain inline text in a span: it is read in reading order with what is around it. Give a status badge words (\"Beta\"), never only a color or a mark.",
       "A tally is decoration for the eye; the number is real text in the DOM (visually hidden), so `<Badge tally count={7}>` reads as \"7\".",
       "Ink on the marker fill is 4.6:1, on the highlighter 12:1; destructive is told apart by its hatch and its word as well as its red.",
       "As a link (asChild), the badge keeps the link's role and href, takes keyboard focus and draws the blue felt ring; hover adds a drop-line, a swipe or an underline and is off on touch screens.",

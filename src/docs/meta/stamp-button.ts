@@ -5,7 +5,7 @@ export default {
   title: "Stamp button",
   category: "Actions",
   description:
-    "A button that is a rubber stamp: a wooden knob on an inked die, in the colour of the impression it will leave. Press it and APPROVED, PAID or VOID lands on the page with a thump. The stamps on a page are JSON, so they can be state.",
+    "A button that is a rubber stamp: a wooden knob on an inked die, in the color of the impression it will leave. Press it and APPROVED, PAID or VOID lands on the page with a thump. The stamps on a page are JSON, so they can be state.",
   status: "new",
   upstream: "button",
   parts: [
@@ -40,7 +40,7 @@ export default {
     "Each impression is an image named by its words (role=img, \"Approved\"), so the stamped state is in the reading order; a polite status line says \"Approved stamped.\" once per strike.",
     "Only a stamp struck now lands with the thump: impressions restored from saved JSON, a defaultValue or the server's markup are simply on the page, so a reload does not stamp everything again. The thump is an enter animation on the impression and a 2 px give on the page; with reduced motion (the OS setting, data-motion=\"reduced\", or the provider) the impression simply appears and the page holds still.",
     "The drawn tool is decoration (aria-hidden); its label is DOM text on the die at 4.5:1 or better; focus draws a ring round the whole tool, knob included. Windows high contrast hides the drawing and gives the button a real outline.",
-    "Do not carry the decision by colour alone: the impression says the word, and the label says what pressing does.",
+    "Do not carry the decision by color alone: the impression says the word, and the label says what pressing does.",
   ],
   usage: `import { StampButton, StampSurface } from "@/components/ui/stamp-button"
 

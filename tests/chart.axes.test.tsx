@@ -112,7 +112,7 @@ describe("pickLabelIndices", () => {
   })
 })
 
-describe("chart weight: the colour of many bars, slices and rings is one group", () => {
+describe("chart weight: the color of many bars, slices and rings is one group", () => {
   const masks = (svg: string) => (svg.match(/<g[^>]*mask=/g) ?? []).length
   const run = (recipe: typeof xyRecipe | typeof pieRecipe, spec: unknown, box = { w: 520, h: 260 }) =>
     runRecipe(recipe as typeof xyRecipe, { box, params: spec as never, seed: "w", tier: "lo", density: "comfortable", dir: "ltr", knobs: DEFAULT_KNOBS }).parts.rest ?? ""
@@ -124,7 +124,7 @@ describe("chart weight: the colour of many bars, slices and rings is one group",
     expect(masks(many)).toBeLessThanOrEqual(masks(few) + 3)
     expect(masks(many)).toBeLessThanOrEqual(12)
   })
-  it("a pie of eight slices colours them in one group", () => {
+  it("a pie of eight slices colors them in one group", () => {
     const slices = Array.from({ length: 8 }, (_, i) => ({ key: `s${i}`, name: `S${i}`, value: i + 1, slot: i, pattern: PATTERNS[i % 6] }))
     const pie: PieSpec = { type: "pie", slices, inner: 0.5, start: 0, labels: true, patterns: true, state: "ready" }
     const svg = run(pieRecipe, pie, { w: 300, h: 300 })

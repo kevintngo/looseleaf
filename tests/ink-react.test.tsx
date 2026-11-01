@@ -127,7 +127,7 @@ describe("defineRecipe", () => {
     expect(resolveKnobs(DEFAULT_KNOBS, "compact").misreg).toBeLessThan(1)
   })
 
-  it("uses only var(--ll-*) colours and no NaN", () => {
+  it("uses only var(--ll-*) colors and no NaN", () => {
     const f = runRecipe(probe, { box: { w: 100, h: 30 }, params: {}, seed: "c", tier: "hi", density: "comfortable", dir: "ltr", knobs: DEFAULT_KNOBS, lazy: ["focus"] })
     const all = Object.values(f.parts).join("")
     expect(all).not.toMatch(/#[0-9a-f]{3,8}\b|NaN|undefined|Infinity/i)

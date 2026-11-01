@@ -61,7 +61,7 @@ describe("no tics repeated across the set", () => {
   })
 })
 
-describe("colour rules of the decoration layer", () => {
+describe("color rules of the decoration layer", () => {
   const uses = (d: ArtDef, key: string): boolean => [...d.parts, ...(d.small ?? []), ...(d.hi ?? [])].some((p) => (p[0] === "f" || p[0] === "c") && p[1].replace("~", "") === key)
   it("blue felt (ink-you) is reserved for meaning: no doodle and no drawn sticker uses it", () => {
     const bad = [...Object.entries(doodles as Record<string, ArtDef>), ...drawn].filter(([, d]) => uses(d, "ink-you")).map(([id]) => id)

@@ -2,7 +2,7 @@ import { Folder, FolderContent, FolderTab, FolderTabs } from "@/components/ui/fo
 
 export const meta = {
   title: "Manila, yellow, white",
-  description: "The folder is whatever its stock is: manila, a legal-pad yellow or white card. A folder with one tab is just a labelled folder.",
+  description: "The folder is whatever its stock is: manila, a legal-pad yellow or white card. A folder with one tab is just a labeled folder.",
   layout: "stack" as const,
   stage: "desk" as const,
 }
@@ -15,7 +15,7 @@ export default function Example() {
           <FolderTab value="one">Recipes</FolderTab>
         </FolderTabs>
         <FolderContent value="one" seed="y" tape="top">
-          <p>A folder with one tab is just a labelled folder.</p>
+          <p>A folder with one tab is just a labeled folder.</p>
         </FolderContent>
       </Folder>
       <Folder stock="paper" defaultValue="c">

@@ -33,9 +33,9 @@
     "a11y": [
       "Real table semantics: table, rowgroup, columnheader, row, cell. Nothing is drawn inside the table elements; the rules and swipes are painted with CSS pseudo-elements and are invisible to assistive technology.",
       "Mark the sorted column with `aria-sort=\"ascending\" | \"descending\"` on its TableHead and put a `<button>` inside it (see the data table example); mark chosen rows with `data-state=\"selected\"` and give their checkbox an accessible name.",
-      "Windows high contrast replaces the painted rules and swipe with real cell borders and the system highlight colours.",
+      "Windows high contrast replaces the painted rules and swipe with real cell borders and the system highlight colors.",
       "Hover only lights the swipe on pointers that can hover (and a row with an open menu, `aria-expanded`, stays lit). Reduced motion removes the fade.",
-      "Contrast on the swipe: ink is 11:1 on the full (selected) swipe, but green and red pencil text drop to about 4:1 there (4.7:1 on paper). Write status words in ink on selectable rows, as the data table example does, or keep coloured text out of them.",
+      "Contrast on the swipe: ink is 11:1 on the full (selected) swipe, but green and red pencil text drop to about 4:1 there (4.7:1 on paper). Write status words in ink on selectable rows, as the data table example does, or keep colored text out of them.",
       "Calm density (`data-density=\"calm\"`) draws straight hairline rules, a plain bold header and a flat swipe, for dense data."
     ],
     "usage": "import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from \"@/components/ui/table\"\n\nexport function Example() {\n  return (\n    <Table>\n      <TableCaption>A list of your recent invoices.</TableCaption>\n      <TableHeader>\n        <TableRow>\n          <TableHead>Invoice</TableHead>\n          <TableHead className=\"text-end\">Amount</TableHead>\n        </TableRow>\n      </TableHeader>\n      <TableBody>\n        <TableRow data-state=\"selected\">\n          <TableCell className=\"font-bold\">INV001</TableCell>\n          <TableCell className=\"text-end\">$250.00</TableCell>\n        </TableRow>\n      </TableBody>\n    </Table>\n  )\n}",

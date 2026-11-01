@@ -88,7 +88,7 @@ describe("Bookmark", () => {
     expect(b.className).toContain("data-[state=on]:[&>svg]:[filter:var(--ll-drop-sticker)]")
   })
 
-  it("forced colours: the pressed state fills with the system highlight, since the drawing is hidden there", () => {
+  it("forced colors: the pressed state fills with the system highlight, since the drawing is hidden there", () => {
     const { getByRole } = render(<Bookmark defaultPressed>Saved</Bookmark>)
     expect(getByRole("button", { name: "Saved" }).className).toContain("forced-colors:data-[state=on]:bg-[Highlight]")
   })

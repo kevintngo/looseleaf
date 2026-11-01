@@ -47,7 +47,7 @@ export default {
   a11y: [
     "Radix NavigationMenu: a `nav` landmark (give it `aria-label`), a list of items, triggers with `aria-expanded` and `aria-controls`. It is a disclosure pattern, not `role=menu`: panels hold ordinary links.",
     "Hover (with intent delay), click and Enter or Space open a panel; Escape closes it and returns focus to its trigger. Left and Right (mirrored in RTL) move between triggers and links, ArrowDown from an open trigger steps into the panel, and Tab moves through the panel's links and on. Focus leaving the menu closes it.",
-    "The current page is `aria-current=\"page\"` and a filled tab, so it does not depend on colour. The sketches, the pencil line, the underline and the highlighter are aria-hidden decoration with no pointer events. Tabs are 36 px high (32 compact, 28 calm).",
+    "The current page is `aria-current=\"page\"` and a filled tab, so it does not depend on color. The sketches, the pencil line, the underline and the highlighter are aria-hidden decoration with no pointer events. Tabs are 36 px high (32 compact, 28 calm).",
     "Touch: a tap opens a panel (hover is not needed). Reduced motion removes the drop, the slide between panels and the underline's glide. In forced-colors mode the drawings give way to real outlines.",
   ],
   usage: `import {

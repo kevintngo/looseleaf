@@ -51,7 +51,7 @@ describe("Asterisk", () => {
     expect(a.querySelector("svg")).toBeTruthy()
   })
 
-  it("tone picks the pen colour class; className merges", () => {
+  it("tone picks the pen color class; className merges", () => {
     const { container } = render(<Asterisk tone="blue" className="ms-1" />)
     expect(container.querySelector("svg")!.getAttribute("class")).toContain("text-ink-you")
     expect(container.querySelector("[data-slot=asterisk]")).toHaveClass("ms-1")

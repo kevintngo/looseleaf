@@ -38,7 +38,7 @@
       "avatar"
     ],
     "a11y": [
-      "ItemGroup is role=list and every Item inside it is role=listitem (upstream leaves that to you, and axe reports the group otherwise). An asChild link or button is wrapped in a listitem, so it keeps its own role, name and keyboard behaviour.",
+      "ItemGroup is role=list and every Item inside it is role=listitem (upstream leaves that to you, and axe reports the group otherwise). An asChild link or button is wrapped in a listitem, so it keeps its own role, name and keyboard behavior.",
       "A link or button row is one big hit area. Its focus mark is a plain 2 px blue outline, not the drawn felt ring of a Button (a row carries no drawing, so its ring is CSS too); hover is a highlighter swipe that is also visible without its hue (the swipe changes the background's lightness), and is off on touch screens.",
       "The drawing (outline, rules, wash) is decoration in CSS: it has no role, cannot take focus and does not change layout. In Windows high contrast it becomes a real 1 px border and a real rule.",
       "Muted text is 8.9:1 on paper; the description is clamped to two lines, so put anything essential in the title."

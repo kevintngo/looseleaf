@@ -49,10 +49,10 @@ export default {
   a11y: [
     "The typed field is a plain text input (give it a Label or `aria-label`); the calendar button has its own name (\"Choose date\") and `aria-expanded`, and the slip is a named dialog holding the Calendar, whose keyboard model is react-day-picker's (arrows, Home/End, PageUp/PageDown, Enter/Space).",
     "ArrowDown in the field opens the calendar; Escape closes it and puts focus back on the button; with unsent text Escape drops it. Enter or leaving the field reads what you typed. Pressing Enter on a date that cannot be read does not submit the form it sits in.",
-    "An unreadable or disallowed date sets `aria-invalid` (and draws the red box) until the next edit, so the error is not only in colour: the box is also dashed-red with a bang.",
+    "An unreadable or disallowed date sets `aria-invalid` (and draws the red box) until the next edit, so the error is not only in color: the box is also dashed-red with a bang.",
     "With `typeable={false}` the field is one button (`aria-haspopup=\"dialog\"`, `aria-expanded`) whose text is the date or the placeholder.",
     "A single frame draws the focus ring for whichever part has focus (input or calendar button). The slip repeats the InkProvider's density, motion and theme and sits above dialogs, so a DatePicker inside a Dialog works.",
-    "Presets are Buttons in a labelled group; ranges are announced by the Calendar's day names (\"selected\").",
+    "Presets are Buttons in a labeled group; ranges are announced by the Calendar's day names (\"selected\").",
   ],
   usage: `import * as React from "react"
 import { DatePicker } from "@/components/ui/date-picker"

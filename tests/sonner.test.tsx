@@ -22,7 +22,7 @@ afterEach(() => {
 const slip = (text: string | RegExp) => screen.getByText(text).closest("[data-sonner-toast]") as HTMLElement
 
 describe("Toaster", () => {
-  it("is sonner's live region: a labelled polite section around the ordered list of toasts", () => {
+  it("is sonner's live region: a labeled polite section around the ordered list of toasts", () => {
     const { container } = renderUI(<Toaster />)
     const section = container.querySelector("section")
     expect(section).toHaveAttribute("aria-live", "polite")
@@ -149,10 +149,10 @@ describe("Toaster", () => {
   it("position variants tell sonner where to stack, and non-right stacks are dropped from above instead of tossed", async () => {
     renderUI(<Toaster position="top-center" />)
     act(() => {
-      toast("Top centre")
+      toast("Top center")
     })
-    await screen.findByText("Top centre")
-    const li = slip("Top centre")
+    await screen.findByText("Top center")
+    const li = slip("Top center")
     expect(li).toHaveAttribute("data-y-position", "top")
     expect(li).toHaveAttribute("data-x-position", "center")
     expect(li.className).toContain("data-[x-position=center]:animate-[ll-drop_")

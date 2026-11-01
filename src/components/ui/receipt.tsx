@@ -26,7 +26,7 @@ function Receipt({ className, ends = "zig", ...props }: ReceiptProps) {
 }
 
 function ReceiptHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="receipt-header" className={cn("flex flex-col items-center gap-0.5 text-center [&>:first-child]:text-base [&>:first-child]:tracking-[0.18em] [&>:first-child]:uppercase", className)} {...props} />
+  return <div data-slot="receipt-header" className={cn("flex flex-col items-center gap-0.5 text-center [&>:first-child]:text-base [&>:first-child]:font-bold", className)} {...props} />
 }
 
 function ReceiptLines({ className, ...props }: React.ComponentProps<"dl">) {

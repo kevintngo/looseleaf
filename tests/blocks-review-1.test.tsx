@@ -261,7 +261,7 @@ describe("review: inbox", () => {
     const { user } = renderUI(<Inbox />, opts)
     await user.click(row(/Photos of the field notebooks/))
     await user.click(within(letter()).getByRole("button", { name: "Archive" }))
-    expect(screen.getByRole("heading", { level: 2, name: "Postcode field is fixed" })).toHaveFocus()
+    expect(screen.getByRole("heading", { level: 2, name: "Postal code field is fixed" })).toHaveFocus()
   })
 
   it("archiving the last letter of a search leaves the cursor on the folder tab", async () => {

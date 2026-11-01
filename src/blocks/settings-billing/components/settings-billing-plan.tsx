@@ -38,7 +38,7 @@ export function SettingsBillingPlan({ current, scheduled, onChange }: { current:
             <TicketNumber>No. 0042</TicketNumber>
           </TicketBody>
           <TicketStub>
-            <span className="font-type text-[11px] tracking-widest">ADMIT</span>
+            <span className="font-type text-xs">Admit</span>
             <span className="font-script text-4xl leading-none font-bold">1</span>
           </TicketStub>
         </Ticket>

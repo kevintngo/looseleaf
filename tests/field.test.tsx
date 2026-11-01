@@ -86,7 +86,7 @@ describe("Field parts", () => {
     expect(container.querySelector('[data-slot="field"]')!.className).toContain("data-[invalid=true]:text-destructive")
   })
 
-  it("FieldSeparator with children is a labelled divider built on the pencil Separator", () => {
+  it("FieldSeparator with children is a labeled divider built on the pencil Separator", () => {
     const { container } = renderUI(<FieldSeparator>or</FieldSeparator>)
     const s = container.querySelector('[data-slot="field-separator"]') as HTMLElement
     expect(s).toHaveAttribute("data-content", "true")

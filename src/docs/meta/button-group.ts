@@ -5,7 +5,7 @@ export default {
   title: "Button Group",
   category: "Actions",
   description:
-    "Buttons, fields and printed cells joined into one row (or column) that share their seams: the edge two neighbours have in common is drawn once, by the one before, or by a pencil separator you put between them.",
+    "Buttons, fields and printed cells joined into one row (or column) that share their seams: the edge two neighbors have in common is drawn once, by the one before, or by a pencil separator you put between them.",
   status: "stable",
   upstream: "button-group",
   parts: [
@@ -50,9 +50,9 @@ export default {
     },
   ],
   a11y: [
-    "The group is role=group: give it an aria-label when the buttons alone do not say what they belong to. It adds no keyboard behaviour of its own; Tab visits each control in order (use ToggleGroup for one tab stop with arrow keys).",
+    "The group is role=group: give it an aria-label when the buttons alone do not say what they belong to. It adds no keyboard behavior of its own; Tab visits each control in order (use ToggleGroup for one tab stop with arrow keys).",
     "A separator between buttons is decorative (role=none); the buttons keep their own names and states.",
-    "A focused child is lifted above its neighbours and keeps its whole blue felt ring; in Windows high contrast the drawing is replaced by each control's real border.",
+    "A focused child is lifted above its neighbors and keeps its whole blue felt ring; in Windows high contrast the drawing is replaced by each control's real border.",
     "ButtonGroupText is plain text: give an input it labels a real label (use asChild with <label htmlFor>) or an aria-label.",
   ],
   usage: `import { Button } from "@/components/ui/button"

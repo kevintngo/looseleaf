@@ -153,7 +153,7 @@ export function IconBrowser() {
               onChange={setTone}
               options={[
                 { value: "ui", label: "ui: ink only" },
-                { value: "doodle", label: "doodle: with colour" },
+                { value: "doodle", label: "doodle: with color" },
               ]}
             />
           </div>
@@ -178,7 +178,7 @@ export function IconBrowser() {
         {tone === "doodle" ? (
           <div className="flex items-center gap-3">
             <Switch id={`${hintId}-wash`} checked={washOnly} onCheckedChange={setWashOnly} />
-            <Label htmlFor={`${hintId}-wash`}>Only icons that carry a colour wash ({ICON_ENTRIES.filter((e) => e.accent).length})</Label>
+            <Label htmlFor={`${hintId}-wash`}>Only icons that carry a color wash ({ICON_ENTRIES.filter((e) => e.accent).length})</Label>
           </div>
         ) : null}
       </Toolbar>

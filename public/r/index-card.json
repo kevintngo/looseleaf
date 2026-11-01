@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "index-card",
   "title": "Index card",
-  "description": "A 3 x 5 card of cream stock with a red header rule and blue lines every 30 px. Header, body and footer parts lay out on the printed rules; the card can have its rod hole punched at the foot, a coloured flag stuck over its edge, and a pile of cards behind it.",
+  "description": "A 3 x 5 card of cream stock with a red header rule and blue lines every 30 px. Header, body and footer parts lay out on the printed rules; the card can have its rod hole punched at the foot, a colored flag stuck over its edge, and a pile of cards behind it.",
   "registryDependencies": [
     "https://kevintngo.github.io/looseleaf/r/ink.json",
     "https://kevintngo.github.io/looseleaf/r/ink-paper.json",

@@ -16,7 +16,7 @@ describe("Lettering", () => {
     expect(h.textContent).toBe("Hello, paper")
   })
 
-  it("any element, any size, any second colour", () => {
+  it("any element, any size, any second color", () => {
     const { getByTestId } = render(
       <>
         <Lettering as="h1" size="hero" tone="teal" data-testid="a">One</Lettering>
@@ -31,7 +31,7 @@ describe("Lettering", () => {
   })
 
   it("duotone adds a third pass in another accent through a token", () => {
-    const { getByTestId } = render(<Lettering data-testid="d" duotone="sky">Two colours</Lettering>)
+    const { getByTestId } = render(<Lettering data-testid="d" duotone="sky">Two colors</Lettering>)
     expect(getByTestId("d").style.getPropertyValue("--ll-riso-b")).toBe("var(--ll-sky)")
     expect(getByTestId("d").className).toContain("var(--ll-riso-b)")
   })

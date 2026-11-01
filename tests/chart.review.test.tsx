@@ -50,7 +50,7 @@ describe("accessible name", () => {
 })
 
 describe("standalone charts follow their data", () => {
-  it("series that arrive after an empty first render are labelled and coloured", () => {
+  it("series that arrive after an empty first render are labeled and colored", () => {
     const cols: Array<{ m: string; a?: number; b?: number }> = []
     const { rerender, container } = render(<LineChart data={cols} xKey="m" />)
     rerender(<LineChart data={rows} xKey="m" />)
@@ -60,7 +60,7 @@ describe("standalone charts follow their data", () => {
   })
 })
 
-describe("grouped bars never overlap their neighbours", () => {
+describe("grouped bars never overlap their neighbors", () => {
   it.each([
     [30, 3, 400],
     [52, 3, 400],

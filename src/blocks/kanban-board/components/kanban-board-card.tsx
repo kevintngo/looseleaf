@@ -39,7 +39,7 @@ export function NoteCard({
       onDragEnd={onDragEnd}
       className={cn("min-h-0 w-full cursor-grab gap-2 px-4 pt-6 pb-3 active:cursor-grabbing", dragging && "opacity-50")}
     >
-      <p className="font-type text-xs tracking-widest text-ink-soft uppercase">{note.label}</p>
+      <p className="font-type text-xs text-ink-soft">{note.label}</p>
       <StickyNoteContent>
         <StickyNoteTitle role="heading" aria-level={3} className="text-[1.5rem] leading-[1.05]">
           {note.title}

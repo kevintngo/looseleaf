@@ -18,7 +18,7 @@ export default {
       props: [
         { name: "sideOffset", type: "number", default: "8", description: "Gap between the trigger and the slip (upstream's default is 4: a slip needs room for its shadow and pin). The slip is also capped to the viewport width." },
         { name: "collisionPadding", type: "number | Partial<Record<Side, number>>", default: "8", description: "Room kept between the slip and the viewport edge when it has to shift to fit (upstream's default is 0: a wide slip touched the window)." },
-        { name: "pin", type: "boolean | Accent", default: "false", description: "A push-pin through the top edge: `true` for tomato, or a stationery colour (sky, lemon, grass ...)." },
+        { name: "pin", type: "boolean | Accent", default: "false", description: "A push-pin through the top edge: `true` for tomato, or a stationery color (sky, lemon, grass ...)." },
         { name: "arrow", type: "boolean", default: "false", description: "A felt-tip arrow between the slip and the trigger. Radix turns it to whichever side the popover opened on and adds its height to `sideOffset`." },
         { name: "tape", type: '"corner" | "top" | "both" | false', default: "false", description: "Strips of masking tape at the corners or the top edge." },
         { name: "stock", type: "StockName", default: '"slip"', description: "What it is made of: slip, paper, kraft, sticky-*, index-card ..." },

@@ -3,7 +3,7 @@ import { Page, PageContent, PageDescription, PageFooter, PageHeader, PageTitle }
 
 export const meta = {
   title: "A page",
-  description: "Header, content and footer on a sheet of paper. The title is underlined by hand; the column is centred and as wide as you say.",
+  description: "Header, content and footer on a sheet of paper. The title is underlined by hand; the column is centered and as wide as you say.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

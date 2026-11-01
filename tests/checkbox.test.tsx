@@ -347,7 +347,7 @@ describe("checkboxRecipe", () => {
     expect(run({ disabled: true }).layers).toEqual(["rest", "checked", "indeterminate"])
   })
 
-  it("draws sane markup at every size, density and tier (no NaN, only var(--ll-*) colours)", () => {
+  it("draws sane markup at every size, density and tier (no NaN, only var(--ll-*) colors)", () => {
     for (const px of [14, 16, 18, 20, 24, 28, 36]) {
       for (const density of ["comfortable", "compact", "calm"] as const) {
         for (const tier of ["lo", "hi"] as const) {

@@ -33,7 +33,7 @@ export default function LandingHero01() {
 
           <div className="mt-10 grid items-center gap-12 @5xl:mt-14 @5xl:grid-cols-[minmax(0,1fr)_26rem] @5xl:gap-12">
             <div className="min-w-0">
-              <p className="font-type text-sm tracking-[0.18em] text-pencil-text uppercase">Notes and tasks for small teams</p>
+              <p className="font-type text-sm text-pencil-text">Notes and tasks for small teams</p>
               <Lettering as="h1" id={titleId} size="xl" tone="marker" wobble={0.5} seed="hero-title" className="mt-3">
                 Write it down.
               </Lettering>

@@ -3,7 +3,7 @@ import { Textarea } from "@/components/ui/textarea"
 export const meta = {
   title: "Disabled",
   description:
-    "Official `textarea-disabled`: the same field with `disabled`. The box is redrawn dashed in pencil grey, so the state does not rest on colour alone.",
+    "Official `textarea-disabled`: the same field with `disabled`. The box is redrawn dashed in pencil gray, so the state does not rest on color alone.",
   layout: "center" as const,
 }
 

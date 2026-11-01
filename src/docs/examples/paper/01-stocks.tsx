@@ -2,7 +2,7 @@ import { Paper } from "@/components/ui/paper"
 
 export const meta = {
   title: "Stocks",
-  description: "Paper is a recipe: a colour, a tooth, a shadow and the rules printed on it. Each stock lies at its own small angle.",
+  description: "Paper is a recipe: a color, a tooth, a shadow and the rules printed on it. Each stock lies at its own small angle.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

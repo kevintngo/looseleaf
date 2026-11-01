@@ -18,6 +18,7 @@ export function InkDefs({
   const html = React.useMemo(() => defsMarkup(kinds, tiles), [kinds, tiles])
 
   React.useLayoutEffect(() => {
+    ensureInkFonts()
     const me = token.current
     const recheck = () => setHidden(first() !== me || hasInjected())
     instances.set(me, recheck)
@@ -73,7 +74,24 @@ function defsMarkup(kinds: readonly GrainMaskKind[], tiles: string): string {
   return s
 }
 
+export const KEVIN_SANS_CSS = "https://kevintngo.github.io/looseleaf/fonts/kevin-sans.css"
+
+export function ensureInkFonts(): void {
+  if (typeof document === "undefined" || document.querySelector("[data-ll-fonts]")) return
+  let present = false
+  document.fonts?.forEach((face) => {
+    if (face.family.replace(/["']/g, "").startsWith("Kevin Sans")) present = true
+  })
+  if (present) return
+  const link = document.createElement("link")
+  link.rel = "stylesheet"
+  link.href = KEVIN_SANS_CSS
+  link.setAttribute("data-ll-fonts", "")
+  document.head.appendChild(link)
+}
+
 export function ensureInkDefs(): void {
+  ensureInkFonts()
   if (typeof document === "undefined" || instances.size > 0) return
   if (document.querySelector("[data-ll-defs]") || document.getElementById("ll-felt-0")) return
   const holder = document.createElement("div")

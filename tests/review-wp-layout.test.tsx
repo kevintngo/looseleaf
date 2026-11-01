@@ -311,7 +311,7 @@ describe("the dropzone example is a working drop target", () => {
 })
 
 describe("Avatar in groups", () => {
-  it("lets the group set the cut-out colour, with the card as the default", () => {
+  it("lets the group set the cut-out color, with the card as the default", () => {
     const { container } = render(
       <AvatarGroup className="[--ll-avatar-group-ring:var(--background)]">
         <Avatar>

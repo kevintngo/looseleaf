@@ -3,7 +3,7 @@ import { StampButton, StampSurface } from "@/components/ui/stamp-button"
 
 export const meta = {
   title: "Inks and shapes",
-  description: "The tool takes the colour of the pad it will leave: green, red, blue felt, black. Any preset from the sticker sheet works, or give the words and the shape yourself.",
+  description: "The tool takes the color of the pad it will leave: green, red, blue felt, black. Any preset from the sticker sheet works, or give the words and the shape yourself.",
   layout: "stack" as const,
   stage: "desk" as const,
   height: 540,

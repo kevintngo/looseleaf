@@ -40,9 +40,9 @@ export function KeyboardStrip() {
             <Label htmlFor={`${id}-notify`}>Notify me</Label>
           </span>
         </div>
-        <ToggleGroup type="single" variant="outline" size="sm" defaultValue="centre" aria-label="Alignment">
+        <ToggleGroup type="single" variant="outline" size="sm" defaultValue="center" aria-label="Alignment">
           <ToggleGroupItem value="left">Left</ToggleGroupItem>
-          <ToggleGroupItem value="centre">Centre</ToggleGroupItem>
+          <ToggleGroupItem value="center">Center</ToggleGroupItem>
           <ToggleGroupItem value="right">Right</ToggleGroupItem>
         </ToggleGroup>
         <Slider aria-label="Pencil pressure" defaultValue={[40]} className="max-w-sm" />

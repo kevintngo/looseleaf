@@ -24,7 +24,7 @@ export default function Error500({ reference = "7F3A-91C2", request = "/notebook
         <Paper stock="paper" tilt={false} tape="both" tapeKind="washi-stripes" seed="error-500" className="mx-auto max-w-3xl px-6 py-12 text-center @xl:px-12">
           <Error500Scene />
 
-          <p className="mt-10 font-type text-sm tracking-[0.18em] text-pencil-text uppercase">Error 500 &middot; Server error</p>
+          <p className="mt-10 font-type text-sm text-pencil-text">Error 500 &middot; Server error</p>
           <Lettering as="h1" id={titleId} size="md" tone="tomato" wobble={0.4} seed="error-500-title" className="mt-3">
             Something broke on our side
           </Lettering>

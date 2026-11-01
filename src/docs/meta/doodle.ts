@@ -14,7 +14,7 @@ export default {
       props: [
         { name: "name", type: "DoodleName | string", required: true, description: "A doodle id (`star`, `sun`, `flower`, `mushroom`...)." },
         { name: "size", type: "number", default: "96", description: "Pixels. Below 72 the 48 px redraw (silhouette and one detail, heavier line), from 72 the 96 px master, from 128 the hero tier." },
-        { name: "accent", type: "Accent | \"hi\" | \"kraft\"", description: "Colour of the accent washes, for doodles that have them." },
+        { name: "accent", type: "Accent | \"hi\" | \"kraft\"", description: "Color of the accent washes, for doodles that have them." },
         { name: "seed", type: "string | number", description: "Another seed, another hand." },
         { name: "rotate", type: "number", description: "Degrees. Corner flourishes are drawn for the top-left and turned by you." },
         { name: "flip", type: "boolean", description: "Mirror horizontally (CSS)." },

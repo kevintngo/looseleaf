@@ -8,9 +8,9 @@ const TOASTER = "home-toaster"
 export default function ToastCard() {
   const to = { toasterId: TOASTER }
   return (
-    <Paper data-home="toast" stock="slip" fastener="pin" seed="home-toast" className="w-full max-w-sm px-5 pt-7 pb-5 @2xl:mx-auto">
+    <Paper data-home="toast" stock="slip" tape="top" tapeKind="masking" seed="home-toast" className="w-full max-w-sm px-5 pt-7 pb-5 @2xl:mx-auto">
       <p className="font-script text-3xl leading-none font-bold text-ink">Toss a toast</p>
-      <p className="mt-1 text-sm text-muted-foreground">Each kind is its own paper, so the meaning is not only a colour.</p>
+      <p className="mt-1 text-sm text-muted-foreground">Each kind is its own paper, so the meaning is not only a color.</p>
       <div className="mt-4 flex flex-wrap gap-2">
         <Button size="sm" onClick={() => toast.success("Notebook saved", { ...to, description: "All 48 pages are safe." })}>
           Saved

@@ -5,7 +5,7 @@ import { browserColumns, browsers } from "./_data"
 
 export const meta = {
   title: "Bar: mixed",
-  description: "A colour and a pencil pattern for every bar. One column per browser (`browserColumns` in `_data.ts`), stacked, gives each category its own series, so the tooltip and the table name it too.",
+  description: "A color and a pencil pattern for every bar. One column per browser (`browserColumns` in `_data.ts`), stacked, gives each category its own series, so the tooltip and the table name it too.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

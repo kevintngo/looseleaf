@@ -142,7 +142,7 @@ describe("printed rules that would fight the content", () => {
 })
 
 describe("announcement-bar", () => {
-  it("the dismiss button is centred with margins, not a translate", () => {
+  it("the dismiss button is centered with margins, not a translate", () => {
     renderUI(<AnnouncementBar />)
     const button = screen.getByRole("button", { name: "Dismiss announcement" })
     expect(button.className).toContain("my-auto")

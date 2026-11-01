@@ -3,14 +3,14 @@ import { LabelTag, LabelTagDescription, LabelTagPrice, LabelTagTitle } from "@/c
 
 export const meta = {
   title: "A shelf of price tags",
-  description: "A real use: a product shelf on a kraft card, two tags to a row. Each tag is a labelled group with its price as text; the string hangs from the shelf edge.",
+  description: "A real use: a product shelf on a kraft card, two tags to a row. Each tag is a labeled group with its price as text; the string hangs from the shelf edge.",
   layout: "stack" as const,
   stage: "desk" as const,
   height: 420,
 }
 
 const goods = [
-  { name: "Felt tips", note: "twelve colours", price: "18.00", twine: "tomato" },
+  { name: "Felt tips", note: "twelve colors", price: "18.00", twine: "tomato" },
   { name: "Washi tape", note: "dots, of course", price: "3.00", twine: "sky" },
   { name: "Glue stick", note: "acid free", price: "2.10", twine: "grass" },
   { name: "Notebook", note: "spiral, ruled", price: "6.40", twine: "grape" },

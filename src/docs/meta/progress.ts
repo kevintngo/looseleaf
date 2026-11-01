@@ -5,7 +5,7 @@ export default {
   title: "Progress",
   category: "Feedback",
   description:
-    "A bar somebody hatched in pencil and is colouring in with a marker. The marker is one full-length pass revealed by a CSS clip up to the value, so changing the value is a transition, not a redraw. Without a value it becomes a scribble sliding across. Radix Progress underneath.",
+    "A bar somebody hatched in pencil and is coloring in with a marker. The marker is one full-length pass revealed by a CSS clip up to the value, so changing the value is a transition, not a redraw. Without a value it becomes a scribble sliding across. Radix Progress underneath.",
   status: "stable",
   upstream: "progress",
   parts: [

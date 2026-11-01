@@ -25,7 +25,7 @@ function Features01Bento() {
             seed="bento-write"
             className="flex h-full flex-col pt-4 pe-6 pb-7 ps-14 text-[17px] leading-7 rtl:[&>[data-slot=paper-rules]]:-scale-x-100"
           >
-            <p className="font-type text-sm leading-7 tracking-[0.18em] text-pencil-text uppercase">Kickoff notes / Tuesday</p>
+            <p className="font-type text-sm leading-7 text-pencil-text">Kickoff notes / Tuesday</p>
             <h3 className="font-script text-3xl leading-7 font-bold">Write together</h3>
             <p className="text-ink-soft">Everyone edits the same page at once. Name flags show who is where, and nobody has to say &ldquo;are you in the doc?&rdquo; ever again.</p>
             <ul role="list" className="mt-7 grid list-none">
@@ -74,7 +74,7 @@ function Features01Bento() {
               <ReceiptLine price="11:15">Cut the intro</ReceiptLine>
               <ReceiptLine price="14:30">Final, really</ReceiptLine>
             </ReceiptLines>
-            <ReceiptTotal label="PAGES KEPT" circled seed="bento-total">
+            <ReceiptTotal label="Pages kept" circled seed="bento-total">
               12
             </ReceiptTotal>
           </Receipt>

@@ -53,7 +53,7 @@ describe("Tally specifics", () => {
     expect(tallyBox(0, 22).w).toBe(0)
   })
 
-  it("is drawn on the server (explicit size) and identical twice; kept in forced colours", () => {
+  it("is drawn on the server (explicit size) and identical twice; kept in forced colors", () => {
     const html = renderToString(<Tally count={7} seed="s" />)
     expect(html).toContain("<svg")
     expect(html).toContain("data-ink-keep")

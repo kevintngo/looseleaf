@@ -10,10 +10,10 @@ function SignupTicket() {
         <TicketBody>
           <TicketTitle>Admit one</TicketTitle>
           <TicketDescription>The Looseleaf Club</TicketDescription>
-          <p className="text-xs tracking-wider text-ink-soft uppercase">Founding season - general</p>
+          <p className="text-xs text-ink-soft">Founding season - general</p>
         </TicketBody>
         <TicketStub>
-          <span className="text-xs tracking-wider uppercase">No.</span>
+          <span className="text-xs">No.</span>
           <TicketNumber>0001</TicketNumber>
         </TicketStub>
       </Ticket>

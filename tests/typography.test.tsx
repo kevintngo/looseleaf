@@ -135,7 +135,7 @@ describe("Prose", () => {
     expect(css).toMatch(/forced-colors: active\)[\s\S]*:where\(th, td\)::after \{ display: none; \}/)
   })
 
-  it("the stylesheet only uses tokens (no colour literals) and keeps specificity low with :where", () => {
+  it("the stylesheet only uses tokens (no color literals) and keeps specificity low with :where", () => {
     render(<Prose>x</Prose>)
     const css = Array.from(document.querySelectorAll("style")).map((s) => s.textContent).join("\n")
     const prose = css.slice(css.indexOf('[data-slot="typography-prose"]'))

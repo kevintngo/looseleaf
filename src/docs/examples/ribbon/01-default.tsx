@@ -2,7 +2,7 @@ import { Ribbon } from "@/components/ui/ribbon"
 
 export const meta = {
   title: "A banner",
-  description: "A band of coloured paper with folded, swallow-tailed ends. The words are real text; the paper is drawn behind them and grows with them.",
+  description: "A band of colored paper with folded, swallow-tailed ends. The words are real text; the paper is drawn behind them and grows with them.",
   layout: "center" as const,
 }
 

@@ -53,7 +53,7 @@ export function matchRoute(path: string): Route {
     case "getting-started":
       return second === undefined ? { name: "getting-started" } : { name: "not-found", path }
     case "foundations":
-      return { name: "foundations", topic: second ?? null }
+      return { name: "foundations", topic: second === "colour" ? "color" : (second ?? null) }
     case "components":
       return { name: "components", slug: second ?? null }
     case "blocks":

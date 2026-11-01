@@ -140,7 +140,7 @@ describe("alertRecipe", () => {
     expect(run("note").layers).toEqual([])
   })
 
-  it("tones differ by pattern, not only colour: hatch, double rule, marker strip, highlighter fill", () => {
+  it("tones differ by pattern, not only color: hatch, double rule, marker strip, highlighter fill", () => {
     const strip = (t: AlertTone) => run(t).parts.rest!
     expect(strip("destructive")).toContain("var(--ll-red)")
     expect(strip("info")).toContain("var(--ll-ink-you)")

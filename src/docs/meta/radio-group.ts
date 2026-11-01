@@ -5,7 +5,7 @@ export default {
   title: "Radio Group",
   category: "Forms",
   description:
-    "Pick exactly one. Each choice is a hand-circled ring; picking it colours the dot in with a terracotta blot and writes a felt spiral into it. Radix Radio Group underneath: roving focus, arrow keys, form value, orientation and direction.",
+    "Pick exactly one. Each choice is a hand-circled ring; picking it colors the dot in with a terracotta blot and writes a felt spiral into it. Radix Radio Group underneath: roving focus, arrow keys, form value, orientation and direction.",
   status: "stable",
   upstream: "radio-group",
   parts: [
@@ -38,7 +38,7 @@ export default {
     "Label each radio with <Label htmlFor>, wrap it, or use aria-label. A Label beside it is a peer: peer-disabled dims it, and hovering the row (a `group/field`) or the label right after the radio lights the ring's hover overlay.",
     "The hit area reaches 8 px past the ring on every side (an ::after, so layout never moves): 32 px for the 16 px ring.",
     "Keyboard focus draws a blue felt ring; the drawing is aria-hidden, pointer-events: none and never focusable. Windows high contrast replaces it by a real border and the Indicator shows a real dot.",
-    "The chosen state is a filled dot, not only a colour: a bold blot with a dark spiral. Reduced motion shows the finished dot at once.",
+    "The chosen state is a filled dot, not only a color: a bold blot with a dark spiral. Reduced motion shows the finished dot at once.",
     "Right-to-left needs nothing: the ring is symmetric and every offset is logical. Pass `dir=\"rtl\"` to mirror the arrow keys.",
   ],
   usage: `import { Label } from "@/components/ui/label"

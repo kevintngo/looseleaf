@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "lettering",
   "title": "Lettering",
-  "description": "Display titles in the script font with a riso print look: ink with a second colour printed a hair off register. Pure CSS text-shadow, so the words are real text at any size. No gradients, no filters.",
+  "description": "Display titles in the script font with a riso print look: ink with a second color printed a hair off register. Pure CSS text-shadow, so the words are real text at any size. No gradients, no filters.",
   "registryDependencies": [
     "https://kevintngo.github.io/looseleaf/r/handwritten.json",
     "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
@@ -24,7 +24,7 @@
       "quote"
     ],
     "a11y": [
-      "A real heading (or the element you choose): headings keep their level and outline. The offset colour is decoration; the ink text has 14:1 contrast on paper.",
+      "A real heading (or the element you choose): headings keep their level and outline. The offset color is decoration; the ink text has 14:1 contrast on paper.",
       "Use one Lettering as the page's h1 at most; for repeated display text prefer p or span.",
       "The riso offset is a text-shadow, so it scales with the text, follows the density knob (calm = none) and disappears in Windows high contrast."
     ],

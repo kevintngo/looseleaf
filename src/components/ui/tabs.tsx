@@ -33,7 +33,7 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        default: "",
+        default: "gap-1",
         line: "gap-1",
       },
     },
@@ -74,7 +74,8 @@ function TabsTrigger({
       disabled={disabled}
       className={cn(
         "relative isolate inline-flex h-9 flex-1 items-center justify-center gap-1.5 px-4 font-hand text-[15px] font-bold whitespace-nowrap text-muted-foreground transition-[translate,color] duration-(--ll-dur-hover) ease-settle hover:text-foreground data-[state=active]:text-foreground disabled:pointer-events-none disabled:text-pencil-text compact:h-8 calm:h-7 calm:text-sm",
-        "data-[orientation=horizontal]:pt-1 data-[orientation=vertical]:pt-0.5 data-[orientation=horizontal]:data-[state=active]:-translate-y-0.5 data-[orientation=vertical]:w-full data-[orientation=vertical]:justify-start data-[orientation=vertical]:data-[state=active]:translate-x-0.5 data-[orientation=vertical]:rtl:data-[state=active]:-translate-x-0.5",
+        "data-[orientation=horizontal]:pt-1 data-[orientation=vertical]:pt-0.5 data-[orientation=vertical]:w-full data-[orientation=vertical]:justify-start",
+        variant === "default" && "data-[orientation=horizontal]:data-[state=active]:-translate-y-0.5 data-[orientation=vertical]:data-[state=active]:translate-x-0.5 data-[orientation=vertical]:rtl:data-[state=active]:-translate-x-0.5",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not(.absolute):not([class*='size-'])]:size-4",
         WIPE_WHEN_ACTIVE,
         className

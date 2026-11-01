@@ -26,7 +26,7 @@ export default {
   a11y: [
     "It is a native select: role=combobox / listbox, the platform's keyboard (arrows, typeahead, Enter, Escape), its own mobile picker, autofill and form value. Nothing is re-implemented.",
     "Label it with a Label (`htmlFor` + `id`) or `aria-label`. A first option with an empty value reads as a placeholder (graphite text) when it is selected.",
-    "The frame follows the select's own state: keyboard focus draws the blue ring, `aria-invalid` the red box, `disabled` the dashed one. The popup itself cannot be styled by any library; only its colours and font are asked for.",
+    "The frame follows the select's own state: keyboard focus draws the blue ring, `aria-invalid` the red box, `disabled` the dashed one. The popup itself cannot be styled by any library; only its colors and font are asked for.",
     "The chevron is decorative (aria-hidden) and does not take the pointer, so the whole box opens the list. Windows high contrast replaces the ink by a real border.",
     "Right-to-left: the chevron cell, the divider tick and the bang are on the start side.",
   ],

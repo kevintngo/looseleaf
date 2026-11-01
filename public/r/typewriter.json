@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "typewriter",
   "title": "Typewriter",
-  "description": "Text that types itself in the typewriter face, with an inked caret. Keys land at uneven speeds and hold at commas and full stops; several phrases can go one under the other or be typed, held and backspaced in turn.",
+  "description": "Text that types itself in the typewriter face, with an inked caret. Keys land at uneven speeds and hold at commas and periods; several phrases can go one under the other or be typed, held and backspaced in turn.",
   "registryDependencies": [
     "https://kevintngo.github.io/looseleaf/r/ink.json",
     "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",

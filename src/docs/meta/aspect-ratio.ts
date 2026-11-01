@@ -17,7 +17,7 @@ export default {
     },
   ],
   a11y: [
-    "Layout only: no role, no name, no keyboard behaviour. Give the image inside it real alt text, or an empty alt if it is decoration.",
+    "Layout only: no role, no name, no keyboard behavior. Give the image inside it real alt text, or an empty alt if it is decoration.",
     "The frames in the examples (a Polaroid's white border, tape, a pin) are decoration and hidden from assistive tech; the caption is real text.",
     "A ratio box has no minimum height, so it collapses to nothing in a container that has no width: give the parent one.",
   ],

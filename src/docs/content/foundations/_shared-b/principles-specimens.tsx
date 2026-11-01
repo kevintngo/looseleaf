@@ -93,7 +93,7 @@ function Offset() {
       <Specimen caption="solid fill, clean line">
         <Button>Save</Button>
       </Specimen>
-      <Specimen caption="colour inside the line">
+      <Specimen caption="color inside the line">
         <Doodle name="heart" size={80} />
       </Specimen>
       <Specimen caption="a swipe behind the words">
@@ -171,7 +171,7 @@ function Hand() {
 
 function Multiply() {
   return (
-    <Panel n={9} label="colour is ink on paper, never a flat fill">
+    <Panel n={9} label="color is ink on paper, never a flat fill">
       <Specimen caption="not this: a flat rectangle hides the paper">
         <p className="m-0 text-xl">
           the <span className="bg-lemon px-1">good bits</span> get marked
@@ -246,7 +246,7 @@ export const LAWS: readonly Law[] = [
     n: 4,
     title: "Fills are a separate layer",
     rule: "Offset and imperfect.",
-    why: "Marker is laid after the outline and misses it by a few pixels. Hover widens the miss; pressing snaps it into register. The gap between line and colour is what reads as ink on paper.",
+    why: "Marker is laid after the outline and misses it by a few pixels. Hover widens the miss; pressing snaps it into register. The gap between line and color is what reads as ink on paper.",
     meet: "Button, Checkbox, Badge, Highlight and every filled doodle.",
     specimen: () => <Offset />,
   },
@@ -254,14 +254,14 @@ export const LAWS: readonly Law[] = [
     n: 5,
     title: "Paper has tooth",
     rule: "Light from the upper left.",
-    why: "A sheet is a stock colour plus a baked relief tile lit from the top left, and one tile serves every colour. Nothing sits on a flat fill.",
+    why: "A sheet is a stock color plus a baked relief tile lit from the top left, and one tile serves every color. Nothing sits on a flat fill.",
     meet: "Paper and Card stocks, Desk, and the sticky notes.",
     specimen: () => <Tooth />,
   },
   {
     n: 6,
     title: "Shadows are warm umber and short",
-    rule: "Never a long grey blur.",
+    rule: "Never a long gray blur.",
     why: "A sheet on a desk casts a hair of contact shadow and a soft short one, in brown. Long blurred shadows say floating screen, not paper.",
     meet: "The shadow prop of Paper and the --shadow-* tokens.",
     specimen: () => <Shadows />,
@@ -284,9 +284,9 @@ export const LAWS: readonly Law[] = [
   },
   {
     n: 9,
-    title: "Colour is ink, pencil and marker",
+    title: "Color is ink, pencil and marker",
     rule: "On paper, multiplied. Never a flat UI fill.",
-    why: "Marker and highlighter darken the paper under them instead of covering it, so texture shows through. Saturated stationery colours are for the decoration layer only; the real interface stays calm.",
+    why: "Marker and highlighter darken the paper under them instead of covering it, so texture shows through. Saturated stationery colors are for the decoration layer only; the real interface stays calm.",
     meet: "The ll-multiply utility, --ll-blend, Highlight, and every marker fill.",
     specimen: () => <Multiply />,
   },

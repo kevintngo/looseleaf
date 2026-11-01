@@ -13,7 +13,7 @@ describe("CodeBlock tone", () => {
     expect(paper.container.querySelector('[data-slot="code-block"]')).toHaveAttribute("data-tone", "paper")
   })
 
-  it("colours keywords, strings, numbers and comments from the --ll-code palette", () => {
+  it("colors keywords, strings, numbers and comments from the --ll-code palette", () => {
     const { container } = render(<CodeBlock code={'const name = "paper"\nconst n = 42\n// a note'} language="ts" />)
     expect(tokenOf(container, "keyword")).toHaveTextContent("const")
     expect(tokenOf(container, "string")).toHaveTextContent('"paper"')

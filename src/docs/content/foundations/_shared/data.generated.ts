@@ -334,7 +334,7 @@ export const PALETTE: PaletteEntry[] = [
  {
   "token": "--ll-focus",
   "value": "#2c4f9e",
-  "role": "focus mark colour; one token recolours every ring",
+  "role": "focus mark color; one token recolors every ring",
   "alias": "",
   "group": "ink",
   "onPaper": 7.09,
@@ -617,7 +617,7 @@ export const ROLES: PaletteEntry[] = [
  {
   "token": "--border",
   "value": "#8e887f",
-  "role": "the stroke colour of drawn lines",
+  "role": "the stroke color of drawn lines",
   "alias": "var(--ll-pencil-mark)",
   "group": "shadcn",
   "onPaper": 3.23,
@@ -777,7 +777,7 @@ export const ROLES: PaletteEntry[] = [
  {
   "token": "--ll-umber",
   "value": "#3a2c1e",
-  "role": "colour form of the shade triplet, for color-mix()",
+  "role": "color form of the shade triplet, for color-mix()",
   "alias": "rgb(var(--ll-shade))",
   "group": "paper",
   "onPaper": 12.37,
@@ -867,7 +867,7 @@ export const ROLES: PaletteEntry[] = [
  {
   "token": "--ll-riso",
   "value": "#df6b3c",
-  "role": "default offset colour of .ll-riso; set it on a title to change it",
+  "role": "default offset color of .ll-riso; set it on a title to change it",
   "alias": "var(--ll-marker)",
   "group": "paper",
   "onPaper": 3.06,
@@ -927,7 +927,7 @@ export const ROLES: PaletteEntry[] = [
  {
   "token": "--ll-syn-keyword",
   "value": "#ad3d2b",
-  "role": "code colours: red / green / orange pencil pulled toward ink so they pass 4.5:1 on the paper-shade code chip",
+  "role": "code colors: red / green / orange pencil pulled toward ink so they pass 4.5:1 on the paper-shade code chip",
   "alias": "color-mix(in srgb, var(--ll-red), var(--ll-ink) 14%)",
   "group": "paper",
   "onPaper": 5.54,
@@ -3235,7 +3235,7 @@ export const FOREST: ForestData = {
   {
    "id": "inks",
    "title": "Inks",
-   "note": "The felt tip goes green-black, blue felt becomes petrol teal, and the pencils get a greener grey. Focus follows the blue.",
+   "note": "The felt tip goes green-black, blue felt becomes petrol teal, and the pencils get a greener gray. Focus follows the blue.",
    "decls": {
     "--ll-ink": "#262c24",
     "--ll-ink-soft": "#454b40",
@@ -3298,7 +3298,7 @@ export const FOREST: ForestData = {
   {
    "id": "marker",
    "title": "Marker and highlighter",
-   "note": "A softer terracotta and a straw-coloured highlighter. This is the step the checker will object to.",
+   "note": "A softer terracotta and a straw-colored highlighter. This is the step the checker will object to.",
    "decls": {
     "--ll-marker": "#cf7a3d",
     "--ll-hi": "#e3c86c",
@@ -3349,7 +3349,7 @@ export const FOREST: ForestData = {
   },
   {
    "id": "shade",
-   "title": "Shadow colour",
+   "title": "Shadow color",
    "note": "Shadows are umber in Notebook. In a green room they are green-black. It is one triplet.",
    "decls": {
     "--ll-shade": "34 42 28"

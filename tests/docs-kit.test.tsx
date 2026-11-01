@@ -466,7 +466,7 @@ describe("Pager", () => {
     await waitFor(() => expect(window.location.hash).toBe("#/components/c"))
   })
 
-  it("draws nothing without a neighbour", () => {
+  it("draws nothing without a neighbor", () => {
     const { container } = renderUI(
       <RouterProvider>
         <Pager label="Pages" />
@@ -787,7 +787,7 @@ describe("ComponentActions", () => {
 })
 
 describe("CodeBlock", () => {
-  it("is the library's typed slip: file name, ribbon, a copy button that says so, a labelled scroller", async () => {
+  it("is the library's typed slip: file name, ribbon, a copy button that says so, a labeled scroller", async () => {
     const { user } = renderUI(
       <AnnouncerProvider announce={() => {}}>
         <CodeBlock code={"const a = 1\n\n\n"} lang="ts" title="a.ts" lineNumbers maxHeight={80} />
@@ -838,7 +838,7 @@ describe("the stylesheet", () => {
 })
 
 describe("the site", () => {
-  it("is built from the library: no lucide, no other icon set, no hand-made svg in the chrome", () => {
+  it("is built from the library: no lucide, no other icon set, no hand-made svg in the chrome but the logo mark", () => {
     const dirs = ["kit", "shell", "widgets", "pages"].map((d) => path.join(ROOT, "src/docs", d))
     const offenders: string[] = []
     const walk = (d: string) => {
@@ -847,7 +847,7 @@ describe("the site", () => {
         if (e.isDirectory()) walk(p)
         else if (/\.tsx?$/.test(e.name)) {
           const src = fs.readFileSync(p, "utf8")
-          if (/lucide|<svg\b|<path\b/.test(src)) offenders.push(path.relative(ROOT, p))
+          if (/lucide|<svg\b|<path\b/.test(src) && e.name !== "LogoMark.tsx") offenders.push(path.relative(ROOT, p))
         }
       }
     }

@@ -37,7 +37,7 @@ export default {
   a11y: [
     "The stub is role=\"button\" named by its text (or `label`) and described by \"Press Enter or Space to tear it off along the dotted line, or pull it away with a pointer\". Enter and Space tear it; pointer dragging is an extra, never the only way.",
     "When it comes off the status line says \"Torn off.\" politely, once; the stub then leaves the tab order and the accessibility tree.",
-    "Pointer: pull at least half way (or all the way) to tear; a shorter pull springs back; a tap tears; a cancelled pointer springs back.",
+    "Pointer: pull at least half way (or all the way) to tear; a shorter pull springs back; a tap tears; a canceled pointer springs back.",
     "Focus: when the stub is torn off with the keyboard, focus moves to the ticket itself (it becomes programmatically focusable, with no ring), so Tab carries on from the ticket instead of restarting at the top of the page. Keys typed in something inside the stub never tear it.",
     "Reduced motion: the stub does not swing or fall, it is simply gone. Right-to-left layouts put the stub on the left and pull it that way.",
     "The perforation and the scissors are decoration (aria-hidden). Calm density leaves the scissors out and keeps the dashes.",

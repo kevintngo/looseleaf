@@ -50,17 +50,17 @@ export default {
   title: "Chart",
   category: "Charts",
   description:
-    "Charts drawn by hand: bars coloured in with a marker, felt lines, pencil-shaded areas, pies, radars, dials, sparklines, tally marks and calendar heat maps. Real text on a real DOM, a keyboard cursor, a tooltip on a slip of paper, a legend that switches series off, a table for screen readers, and a pencil pattern on every series so colour is never the only channel.",
+    "Charts drawn by hand: bars colored in with a marker, felt lines, pencil-shaded areas, pies, radars, dials, sparklines, tally marks and calendar heat maps. Real text on a real DOM, a keyboard cursor, a tooltip on a slip of paper, a legend that switches series off, a table for screen readers, and a pencil pattern on every series so color is never the only channel.",
   status: "new",
   upstream: "chart",
   parts: [
     {
       name: "ChartContainer",
       description:
-        "The frame around a chart and its legend and tooltip. Same job as shadcn's: it owns the config and puts the series colours on the frame as `--color-<key>` (a `theme` gives a light and a dark value). It also owns which series are switched off. The drawing is not recharts: every chart component in this file draws itself with the ink engine.",
+        "The frame around a chart and its legend and tooltip. Same job as shadcn's: it owns the config and puts the series colors on the frame as `--color-<key>` (a `theme` gives a light and a dark value). It also owns which series are switched off. The drawing is not recharts: every chart component in this file draws itself with the ink engine.",
       props: [
         { name: "config", type: "ChartConfig", required: true, description: "`{ desktop: { label: 'Desktop', color: 'var(--chart-1)' } }`. A key's position is its palette slot (`--chart-1` is the marker orange, then blue felt, green pencil, deep highlighter, grape). Add `pattern`, `marker` and `dash` to override the look a series gets." },
-        { name: "patterns", type: 'boolean | "auto"', default: '"auto"', description: "Pencil patterns on filled marks and dashes on lines when there is more than one series (`true`: always, `false`: colour only)." },
+        { name: "patterns", type: 'boolean | "auto"', default: "solid, patterns in forced colors", description: "Solid color by default. `\"auto\"` adds pencil patterns on filled marks and dashes on lines when there is more than one series, `true` always does. With no value, patterns switch on by themselves when the system forces its own colors." },
         { name: "hiddenSeries", type: "string[]", description: "Series (or slices) switched off, controlled. The legend buttons toggle them." },
         { name: "defaultHiddenSeries", type: "string[]", description: "Uncontrolled start value." },
         { name: "onHiddenSeriesChange", type: "(hidden: string[]) => void", description: "A legend button was pressed." },
@@ -87,7 +87,7 @@ export default {
     },
     {
       name: "ChartTooltipContent",
-      description: "The slip of paper: a label in the script font and one row per series with a swatch that matches the drawing (colour, pattern, marker). Same props as shadcn's; the payload is recharts-shaped so an existing `formatter` keeps working.",
+      description: "The slip of paper: a label in the script font and one row per series with a swatch that matches the drawing (color, pattern, marker). Same props as shadcn's; the payload is recharts-shaped so an existing `formatter` keeps working.",
       props: [
         { name: "indicator", type: '"dot" | "line" | "dashed"', default: '"dot"', description: "The swatch: a chip (a line swatch for line series), a narrow bar, or a dashed rule." },
         { name: "hideLabel", type: "boolean", default: "false", description: "Leave out the label." },
@@ -95,7 +95,7 @@ export default {
         { name: "labelFormatter", type: "(label: ReactNode, payload: ChartTooltipItem[]) => ReactNode", description: "Change the label." },
         { name: "formatter", type: "(value, name, item, index, payload) => ReactNode", description: "Replace a whole row." },
         { name: "nameKey / labelKey", type: "string", description: "Which payload key names a row / the label in the config." },
-        { name: "color", type: "string", description: "Force the indicator colour." },
+        { name: "color", type: "string", description: "Force the indicator color." },
         { name: "className / labelClassName", type: "string", description: "Merged onto the slip / the label." },
       ],
     },
@@ -134,19 +134,19 @@ export default {
     },
     {
       name: "BarChart",
-      description: "Bars: single, grouped, stacked or sideways, with negative values hanging below the line. Bars are filled edge to edge in solid colour, with a steady felt outline rounded at the far end. The highest bar can be circled by hand.",
+      description: "Bars: single, grouped, stacked or sideways, with negative values hanging below the line. Bars are filled edge to edge in solid color, with a steady felt outline rounded at the far end. The highest bar can be circled by hand.",
       props: [
         { name: "horizontal", type: "boolean", default: "false", description: "Bars run sideways, categories down the left (ignored when a series is not a bar)." },
         { name: "layout", type: '"horizontal" | "vertical"', description: 'recharts\' name for the same thing: "vertical" runs the bars sideways.' },
         ...xyProps,
       ],
     },
-    { name: "LineChart", description: "A felt line per series, with a marker shape and a dash pattern each so lines survive greyscale. Gaps in the data break the line. Long series keep their peaks and dips.", props: xyProps },
-    { name: "AreaChart", description: "Lines with the space under them washed in the series colour and shaded in pencil. Stack them with `stacked`.", props: xyProps },
+    { name: "LineChart", description: "A felt line per series, with a marker shape and a dash pattern each so lines survive grayscale. Gaps in the data break the line. Long series keep their peaks and dips.", props: xyProps },
+    { name: "AreaChart", description: "Lines with the space under them washed in the series color and shaded in pencil. Stack them with `stacked`.", props: xyProps },
     { name: "ScatterChart", description: "Points on two number lines, one marker shape per series; a `sizeKey` turns them into bubbles. Up to 600 points are drawn; the tooltip finds the nearest point.", props: [{ name: "sizeKey", type: "string", description: "The data key that sizes each point." }, ...xyProps] },
     {
       name: "PieChart",
-      description: "Slices coloured in with a marker, outlined in felt, each with its own pencil pattern and a percentage round the outside. Arrow keys walk the slices; the legend switches them off.",
+      description: "Slices colored in with a marker, outlined in felt, each with its own pencil pattern and a percentage round the outside. Arrow keys walk the slices; the legend switches them off.",
       props: [
         { name: "data", type: "Record<string, unknown>[]", required: true, description: "One row per slice." },
         { name: "nameKey", type: "string", description: "The key that names a slice and finds its config entry. Default: the first key with text." },
@@ -188,11 +188,11 @@ export default {
     },
     {
       name: "Gauge",
-      description: "A dial: marker zones (each with a pencil pattern) and a red felt needle, or a single coloured arc. `role=\"meter\"` with a value, a minimum, a maximum and a text, so assistive tech reads it. The children are the text under the pivot.",
+      description: "A dial: marker zones (each with a pencil pattern) and a red felt needle, or a single colored arc. `role=\"meter\"` with a value, a minimum, a maximum and a text, so assistive tech reads it. The children are the text under the pivot.",
       props: [
         { name: "value", type: "number", required: true, description: "The reading; clamped to min and max." },
         { name: "min / max", type: "number", default: "0 / 100", description: "The ends of the dial." },
-        { name: "zones", type: "{ to: number; tone?: 'good' | 'warn' | 'bad' | 'info' | 'brand' | number }[]", description: "Coloured stretches from the minimum up." },
+        { name: "zones", type: "{ to: number; tone?: 'good' | 'warn' | 'bad' | 'info' | 'brand' | number }[]", description: "Colored stretches from the minimum up." },
         { name: "sweep", type: "number", default: "180", description: "Degrees the dial covers (180 is a half circle)." },
         { name: "ticks", type: "number", default: "10", description: "Pencil ticks round the outside." },
         { name: "valueFormatter", type: "(value: number) => string", description: "Number text." },
@@ -208,7 +208,7 @@ export default {
         { name: "data", type: "(number | null)[] | Record<string, unknown>[]", required: true, description: "Numbers, or rows with `dataKey`." },
         { name: "dataKey / xKey", type: "string", description: "For rows: the value and the category key." },
         { name: "variant", type: '"line" | "area" | "bar"', default: '"line"', description: "How it is drawn." },
-        { name: "slot / series", type: "number / string", description: "Palette slot, or the config key whose colour to use." },
+        { name: "slot / series", type: "number / string", description: "Palette slot, or the config key whose color to use." },
         { name: "ends", type: "boolean", default: "true", description: "A red dot on the last point." },
         { name: "extremes", type: "boolean", default: "false", description: "Small marks on the lowest and highest points." },
         { name: "interactive", type: "boolean", default: "false", description: "Hover and arrow keys show a tooltip." },
@@ -218,7 +218,7 @@ export default {
     },
     {
       name: "TallyChart",
-      description: "Counts as hand-tallied marks: four uprights and a slash across for every five, in the colour of the row. When a row is too long for the width each mark stands for more, and the chart says so.",
+      description: "Counts as hand-tallied marks: four uprights and a slash across for every five, in the color of the row. When a row is too long for the width each mark stands for more, and the chart says so.",
       props: [
         { name: "data", type: "Record<string, unknown>[]", required: true, description: "One row per line of the board." },
         { name: "nameKey / valueKey", type: "string", description: "Which keys name and count a row." },
@@ -228,7 +228,7 @@ export default {
     },
     {
       name: "Heatmap",
-      description: "Squares coloured in shades of one marker: a calendar (weeks across, weekdays down, month names on top) or a grid of your own rows and columns. Arrow keys move over the cells: left and right by week, up and down by day.",
+      description: "Squares colored in shades of one marker: a calendar (weeks across, weekdays down, month names on top) or a grid of your own rows and columns. Arrow keys move over the cells: left and right by week, up and down by day.",
       props: [
         { name: "data", type: "Record<string, unknown>[]", required: true, description: "Calendar: rows with a date and a value. Grid: rows with a row name, a column name and a value." },
         { name: "variant", type: '"calendar" | "grid"', default: '"calendar"', description: "The layout." },
@@ -236,7 +236,7 @@ export default {
         { name: "weeks / end / weekStart", type: "number / string | Date / 0 | 1", description: "Weeks shown, the last day, and whether weeks start on Sunday (0) or Monday (1)." },
         { name: "rowKey / colKey / rows / cols", type: "string / string[]", description: "Grid keys and the order of rows and columns." },
         { name: "levels / thresholds", type: "number / number[]", default: "5", description: "Shades, and optionally the value at which each starts." },
-        { name: "slot / series", type: "number / string", description: "Palette slot, or the config key whose colour to use. Default the green pencil." },
+        { name: "slot / series", type: "number / string", description: "Palette slot, or the config key whose color to use. Default the green pencil." },
         { name: "unit", type: "string", description: "What a value counts (\"pages\"), shown in the tooltip." },
         { name: "showLegend", type: "boolean", default: "true", description: "The Less / More key." },
         ...common,
@@ -246,7 +246,7 @@ export default {
   a11y: [
     "Every chart is one tab stop with arrow-key navigation. The drawing is a `role=\"application\"` with an accessible name, a role description (\"bar chart\") and a spoken summary; left and right move between data points (up and down between series, or between rows for sideways bars and grids), Home and End jump to the first and last, Escape closes the tooltip. The current point is announced through a polite live region.",
     "Each chart ships its data as a visually hidden table (a caption, column and row headers) next to the drawing. Charts that are pictures (empty, loading, static sparklines) are `role=\"img\"` with the same summary; a gauge is `role=\"meter\"` with a value, a minimum, a maximum and a text.",
-    "Colour is never the only channel: every series has a pencil pattern (hatching, dots, cross-hatching, rules, scribble) on its marks, and lines have a marker shape and a dash pattern. The legend and the tooltip show the same swatch as the drawing. Legend entries are buttons with `aria-pressed`.",
+    "Color is not the only channel: every series is named in the legend and the tooltip, values are announced, and lines have a marker shape and a dash pattern. Filled marks are solid color; set `patterns` to add hatching, dots, cross-hatching, rules and scribble, which also switch on by themselves in forced-colors mode. Legend entries are buttons with `aria-pressed`.",
     "All chart text is DOM text in the hand fonts at 12 px or more (15 px script in the default density). Ink on paper is 14:1; muted tick labels 8.9:1. The pointer never has to be used: everything the tooltip shows is in the live region and the table.",
     "Reduced motion removes the wipe-on, the pulse and the cursor slide. In Windows high contrast the drawing is replaced by the data table. Calm density draws hairlines, no fill offset and 12 px hand text for dense screens. The plot always runs left to right (a time axis does not mirror); the legend and the words on the tooltip follow the page direction.",
   ],

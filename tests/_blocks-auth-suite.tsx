@@ -135,10 +135,10 @@ export function describeAuthPage(spec: AuthSuite): void {
       for (const f of names.filter((n) => n.includes("/components/"))) expect(path.basename(f)).toMatch(new RegExp(`^${spec.slug}-`))
     })
 
-    it("uses logical properties, no lucide, no hard-coded colour and no dead href", () => {
+    it("uses logical properties, no lucide, no hard-coded color and no dead href", () => {
       for (const { file, source } of files) {
         expect(source, `${file} imports lucide`).not.toMatch(/lucide/)
-        expect(source, `${file} has a hex colour`).not.toMatch(/#[0-9a-fA-F]{3,8}\b(?![\w-])/)
+        expect(source, `${file} has a hex color`).not.toMatch(/#[0-9a-fA-F]{3,8}\b(?![\w-])/)
         expect(source, `${file} has href="#"`).not.toMatch(/href="#"/)
         const hits = [...source.matchAll(PHYSICAL)].map((m) => m[0])
         expect(hits, `${file} uses physical direction classes`).toEqual([])
@@ -170,7 +170,7 @@ export function describeLoginForm(spec: LoginFormSuite): void {
   const signIn = { name: "Sign in" }
 
   describe(`${spec.slug}: the sign-in form`, () => {
-    it("has labelled fields with the right autocomplete hints, providers and links", () => {
+    it("has labeled fields with the right autocomplete hints, providers and links", () => {
       const { getByLabelText, getByRole } = mountForm(spec.Form)
       expect(getByLabelText("Email")).toHaveAttribute("autocomplete", "email")
       expect(getByLabelText("Password")).toHaveAttribute("autocomplete", "current-password")
@@ -295,7 +295,7 @@ export function describeSignupForm(spec: SignupFormSuite): void {
   }
 
   describe(`${spec.slug}: the sign-up form`, () => {
-    it("has labelled fields with the right autocomplete hints, providers and a way back to sign in", () => {
+    it("has labeled fields with the right autocomplete hints, providers and a way back to sign in", () => {
       const { getByLabelText, getByRole } = mountForm(spec.Form)
       expect(getByLabelText("Full name")).toHaveAttribute("autocomplete", "name")
       expect(getByLabelText("Email")).toHaveAttribute("autocomplete", "email")

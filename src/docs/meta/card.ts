@@ -11,7 +11,7 @@ export default {
   parts: [
     {
       name: "Card",
-      description: "A Paper with shadcn's card layout (a flex column, gap 6, py 6). It takes every Paper prop; its default stock is `card` (paper colour, a small shadow).",
+      description: "A Paper with shadcn's card layout (a flex column, gap 6, py 6). It takes every Paper prop; its default stock is `card` (paper color, a small shadow).",
       props: [
         { name: "stock", type: "StockName", default: '"card"', description: "Paper, slip, index-card, graph, dot-grid, check, ledger, pad, kraft, napkin, sticky-*, photo, parchment, receipt." },
         { name: "edge", type: "EdgeSpec", default: '"cut"', description: "Cut (pure CSS), torn, deckle, crimp, zig, perf, scallop, or one kind per side." },

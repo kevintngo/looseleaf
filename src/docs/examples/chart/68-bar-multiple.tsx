@@ -5,7 +5,7 @@ import { visitors, short, monthOfRow } from "./_data"
 
 export const meta = {
   title: "Bar: multiple",
-  description: "Several series side by side in each category. Colour is never the only channel: the second series is shaded with a different pencil pattern. The tooltip's `indicator=\"dashed\"` marks its rows with a dashed rule.",
+  description: "Several series side by side in each category. Color is never the only channel: the second series is shaded with a different pencil pattern. The tooltip's `indicator=\"dashed\"` marks its rows with a dashed rule.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

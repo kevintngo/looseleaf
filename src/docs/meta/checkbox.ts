@@ -5,7 +5,7 @@ export default {
   title: "Checkbox",
   category: "Forms",
   description:
-    "A hand-drawn box you tick. Checking fills it with solid marker and writes a heavy felt tick over it, stroke by stroke; a dash means partly checked. Radix behaviour, keyboard and form support are untouched.",
+    "A hand-drawn box you tick. Checking fills it with solid marker and writes a heavy felt tick over it, stroke by stroke; a dash means partly checked. Radix behavior, keyboard and form support are untouched.",
   status: "stable",
   upstream: "checkbox",
   parts: [

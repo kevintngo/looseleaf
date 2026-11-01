@@ -5,7 +5,7 @@ import { visitors, short, monthOfRow } from "./_data"
 
 export const meta = {
   title: "Line: multiple",
-  description: "Two lines, told apart by more than colour: each series gets its own dash pattern (solid, dashed, dotted). Try the greyscale example if you doubt it.",
+  description: "Two lines, told apart by more than color: each series gets its own dash pattern (solid, dashed, dotted). Try the grayscale example if you doubt it.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

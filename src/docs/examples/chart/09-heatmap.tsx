@@ -2,7 +2,7 @@ import { ChartContainer, ChartTooltip, Heatmap } from "@/components/ui/chart"
 
 export const meta = {
   title: "Heat map",
-  description: "A half year of days, each square coloured in a shade of one marker; or any grid of your own. Arrow keys walk it in two dimensions: left and right by week, up and down by day.",
+  description: "A half year of days, each square colored in a shade of one marker; or any grid of your own. Arrow keys walk it in two dimensions: left and right by week, up and down by day.",
   layout: "stack" as const,
 }
 

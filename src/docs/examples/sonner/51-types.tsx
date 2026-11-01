@@ -4,7 +4,7 @@ import { Toaster, toast } from "@/components/ui/sonner"
 export const meta = {
   title: "Types",
   description:
-    "Official `sonner-types`: default, success, info, warning, error and a promise that goes from loading to success after two seconds. Each type is a different stock of paper (guest check, blue, yellow and pink stickies), so meaning never rests on colour alone.",
+    "Official `sonner-types`: default, success, info, warning, error and a promise that goes from loading to success after two seconds. Each type is a different stock of paper (guest check, blue, yellow and pink stickies), so meaning never rests on color alone.",
   layout: "center" as const,
 }
 

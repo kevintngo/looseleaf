@@ -12,7 +12,7 @@ export default {
     {
       name: "Badge",
       description:
-        "A span (or, with asChild, the element you hand it) with a hand-drawn layer behind its label. The label is DOM text in the hand font; the drawing is measured from the element and centred on it. Unlike shadcn's it has no overflow-hidden (the drawing bleeds a few px outside the box, and clipping would cut it), so to truncate a long label put a truncating span inside it. It draws no aria-invalid state. Each badge is one small ink host (about 2 to 6 KB of svg, drawn at 0.3 to 0.8 ms): fine for a screenful, and for a status column of a few hundred rows if you page it; the ghost variant draws nothing until it is a hovered link.",
+        "A span (or, with asChild, the element you hand it) with a hand-drawn layer behind its label. The label is DOM text in the hand font; the drawing is measured from the element and centered on it. Unlike shadcn's it has no overflow-hidden (the drawing bleeds a few px outside the box, and clipping would cut it), so to truncate a long label put a truncating span inside it. It draws no aria-invalid state. Each badge is one small ink host (about 2 to 6 KB of svg, drawn at 0.3 to 0.8 ms): fine for a screenful, and for a status column of a few hundred rows if you page it; the ghost variant draws nothing until it is a hovered link.",
       props: [
         {
           name: "variant",
@@ -71,7 +71,7 @@ export default {
     },
   ],
   a11y: [
-    'A badge is plain inline text in a span: it is read in reading order with what is around it. Give a status badge words ("Beta"), never only a colour or a mark.',
+    'A badge is plain inline text in a span: it is read in reading order with what is around it. Give a status badge words ("Beta"), never only a color or a mark.',
     'A tally is decoration for the eye; the number is real text in the DOM (visually hidden), so `<Badge tally count={7}>` reads as "7".',
     "Ink on the marker fill is 4.6:1, on the highlighter 12:1; destructive is told apart by its hatch and its word as well as its red.",
     "As a link (asChild), the badge keeps the link's role and href, takes keyboard focus and draws the blue felt ring; hover adds a drop-line, a swipe or an underline and is off on touch screens.",

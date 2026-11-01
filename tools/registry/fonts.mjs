@@ -34,10 +34,9 @@ export function buildKevinSansItem(fontFamilies = {}) {
     name: 'font-kevin-sans',
     type: 'registry:theme',
     title: 'Kevin Sans',
-    description: 'Kevin Sans, the hand of every Looseleaf label, title and stamp: one family tuned for three roles (font-hand, font-script, font-type), loaded from the Looseleaf site.',
+    description: 'Kevin Sans, the hand of every Looseleaf label, title and stamp: one family tuned for three roles (font-hand, font-script, font-type). The ink engine loads it from the Looseleaf site the first time a component draws, unless the page already has it.',
     categories: ['fonts'],
     cssVars: { theme },
-    css: { [`@import url("${KEVIN_SANS_CSS}")`]: {} },
   }
 }
 

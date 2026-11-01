@@ -25,25 +25,25 @@ export const FOUNDATIONS: readonly FoundationTopic[] = [
     title: "Principles",
     summary: "The ten laws of the hand, what each pen means and a checklist for shipping: the why behind every other page.",
     facts: [
-      "A notebook on a tidy desk: cream paper, a dark felt-tip for the words, blue felt for you and anything you can act on, graphite for the small print. Every colour is a tool with one job.",
-      "Ten laws decide whether a component looks drawn by a person: lines are ribbons with pressure, nothing closes, no two things are identical, fills are a separate layer, paper has tooth, shadows are warm and short, paper tilts and text never does, text sits on real baselines, colour is ink and marker, and the charm is a dial you can turn down.",
+      "A notebook on a tidy desk: cream paper, a dark felt-tip for the words, blue felt for you and anything you can act on, graphite for the small print. Every color is a tool with one job.",
+      "Ten laws decide whether a component looks drawn by a person: lines are ribbons with pressure, nothing closes, no two things are identical, fills are a separate layer, paper has tooth, shadows are warm and short, paper tilts and text never does, text sits on real baselines, color is ink and marker, and the charm is a dial you can turn down.",
       "Every drawing is seeded, so the same seed draws the same hand on the server and in the browser.",
       "A short list of questions to ask before a component or a screen ships.",
     ],
     see: [
-      { label: "Colour", to: "/foundations/colour" },
+      { label: "Color", to: "/foundations/color" },
       { label: "Pens", to: "/foundations/pens" },
     ],
   },
   {
-    slug: "colour",
-    title: "Colour",
-    summary: "Ink, pencil, marker and highlighter on cream paper. Loud colours stay in the decoration layer.",
+    slug: "color",
+    title: "Color",
+    summary: "Ink, pencil, marker and highlighter on cream paper. Loud colors stay in the decoration layer.",
     facts: [
       "Real UI is calm: cream paper, dark brown-black felt-tip, blue felt for you and anything interactive, graphite pencil for meta text.",
       "Red pencil means correction or danger, green pencil means ok, terracotta marker is the primary action, yellow highlighter is emphasis and selection.",
       "Saturated stationery accents (tomato, tangerine, lemon, grass, teal, sky, grape, bubblegum) exist only in stickers, washi, badges, avatars, chart fills and stamps.",
-      "Every colour is a --ll-* custom property and shadcn's semantic names (--background, --primary, ...) alias them, so a theme is a block of variable overrides.",
+      "Every color is a --ll-* custom property and shadcn's semantic names (--background, --primary, ...) alias them, so a theme is a block of variable overrides.",
     ],
     swatches: [
       { token: "--ll-paper", label: "paper" },
@@ -95,8 +95,8 @@ export const FOUNDATIONS: readonly FoundationTopic[] = [
     facts: [
       "A stroke is a filled variable-width polygon, not a uniform SVG stroke: it swells on the down-stroke, skips where the pen runs dry and wanders like a hand.",
       "Two weight classes give drawings hierarchy: fine-liner for detail, brush for the main shapes.",
-      "Fills are a separate layer printed in register: one solid colour that reaches right under its outline, so nothing is left unfilled.",
-      "Grain is one colour-independent mask per material; marker and highlighter blend with multiply.",
+      "Fills are a separate layer printed in register: one solid color that reaches right under its outline, so nothing is left unfilled.",
+      "Grain is one color-independent mask per material; marker and highlighter blend with multiply.",
     ],
     see: [{ label: "Paper", to: "/foundations/paper" }],
   },
@@ -105,7 +105,7 @@ export const FOUNDATIONS: readonly FoundationTopic[] = [
     title: "Paper",
     summary: "Sheets, edges, desk and the small props that hold them together.",
     facts: [
-      "A sheet is a stock colour, a baked relief tile lit from the upper left, an edge profile and a short umber shadow. Only the sheet tilts, never the text.",
+      "A sheet is a stock color, a baked relief tile lit from the upper left, an edge profile and a short umber shadow. Only the sheet tilts, never the text.",
       "edge=\"cut\" is pure CSS, so ordinary cards cost no SVG. Torn and deckle edges draw an ink outline.",
       "Props: masking and washi tape, paper clips, push-pins, staples, binder clips, stitches, rubber bands, coffee rings.",
       "The desk is a linen weave with a soft vignette.",
@@ -117,7 +117,7 @@ export const FOUNDATIONS: readonly FoundationTopic[] = [
     title: "Icons",
     summary: "Hand-drawn doodle icons, redrawn at every size instead of scaled.",
     facts: [
-      "More than 120 icons, lucide-name compatible, single colour with an optional accent.",
+      "More than 120 icons, lucide-name compatible, single color with an optional accent.",
       "Size tiers 16, 20, 24, 32, 48, 64, 96 and 128. Small sizes are redrawn with a heavier pen and fewer details, not scaled down.",
       "No lucide-react anywhere: every glyph is one of ours.",
       "Icons are decorative by default (aria-hidden); pair them with a text label or give the button an accessible name.",
@@ -159,12 +159,12 @@ export const FOUNDATIONS: readonly FoundationTopic[] = [
   {
     slug: "accessibility",
     title: "Accessibility",
-    summary: "Radix behaviour underneath, ink on top: the drawing never gets in the way.",
+    summary: "Radix behavior underneath, ink on top: the drawing never gets in the way.",
     facts: [
       "Keyboard and ARIA come from Radix (or native elements) exactly as in shadcn/ui. Ink layers are aria-hidden, pointer-events none and never affect layout.",
       "Text is at least AA against its paper. Focus is a drawn ring that keeps 3:1 against paper.",
       "Hit areas are DOM boxes of at least 24 px; the drawing may be smaller than the target, never larger.",
-      "Under forced-colors the drawn borders fall back to real ones. Chart series use hatch patterns as well as colour.",
+      "Under forced-colors the drawn borders fall back to real ones. In forced-colors mode chart series switch to pencil patterns.",
     ],
   },
   {
@@ -177,7 +177,7 @@ export const FOUNDATIONS: readonly FoundationTopic[] = [
       "Dark mode is shadcn's: the dark class on <html>. It will be its own material system with opaque pens and a normal blend mode.",
       "Components never need editing to be re-themed.",
     ],
-    see: [{ label: "Colour", to: "/foundations/colour" }],
+    see: [{ label: "Color", to: "/foundations/color" }],
   },
 ]
 

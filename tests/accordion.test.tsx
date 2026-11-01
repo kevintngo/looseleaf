@@ -50,7 +50,7 @@ describe("Accordion structure", () => {
     for (const slot of ["accordion", "accordion-item", "accordion-trigger", "accordion-content"]) expect(container.querySelector(`[data-slot="${slot}"]`), slot).not.toBeNull()
   })
 
-  it("puts each trigger in a heading with aria-expanded, and opens a labelled region", async () => {
+  it("puts each trigger in a heading with aria-expanded, and opens a labeled region", async () => {
     const { user, getByRole, queryByRole } = renderUI(<Sample {...single} />)
     const trigger = getByRole("button", { name: "First" })
     expect(trigger.closest("h3")).not.toBeNull()
@@ -73,7 +73,7 @@ describe("Accordion structure", () => {
   })
 })
 
-describe("Accordion behaviour", () => {
+describe("Accordion behavior", () => {
   it("single collapsible: opens one row at a time and closes it again", async () => {
     const { user, getByRole } = renderUI(<Sample {...single} defaultValue="a" />)
     expect(getByRole("button", { name: "First" })).toHaveAttribute("aria-expanded", "true")

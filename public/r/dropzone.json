@@ -34,9 +34,9 @@
     ],
     "a11y": [
       "The drop target is a `<label>` round a real `<input type=\"file\">`: the input is a tab stop (visually hidden, never `display: none`), Enter and Space open the picker natively, the label's text is its name (override with `inputProps['aria-label']`), and a screen reader user never needs drag and drop.",
-      "Keyboard focus shows the blue ring round the whole patch (the input is inside the labelled host). Drag state is only visual: the drop works for pointer users, the picker for everyone.",
+      "Keyboard focus shows the blue ring round the whole patch (the input is inside the labeled host). Drag state is only visual: the drop works for pointer users, the picker for everyone.",
       "Refusals are announced: `DropzoneRejections` is a `role=\"alert\"` with one line per file and reason. The list is a named `<ul>`; each remove button is named \"Remove <file>\" and hands the focus to the zone when its row goes; a progress line is a `progressbar` with `aria-valuenow`.",
-      "The state is never colour alone: over is a thicker blue stitch on yellow with Stubby carrying a parcel; invalid is red stitches, `aria-invalid` and the alert; disabled is pale stitches and a disabled input.",
+      "The state is never color alone: over is a thicker blue stitch on yellow with Stubby carrying a parcel; invalid is red stitches, `aria-invalid` and the alert; disabled is pale stitches and a disabled input.",
       "Reduced motion stops the wiggle and the icon's lift. Windows high contrast draws a real dashed border (solid while a file is over).",
       "Touch: the whole patch is the target (at least 160 px tall by default, 128 compact, 96 calm); rows are 40 px with a 28 px remove target."
     ],

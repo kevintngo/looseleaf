@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 
 export const meta = {
   title: "Legend and hidden series",
-  description: "Every legend entry is a button with aria-pressed: switch a series off (struck through) and on again. A series keeps its colour, marker and dash while it is away. Control it from outside with hiddenSeries.",
+  description: "Every legend entry is a button with aria-pressed: switch a series off (struck through) and on again. A series keeps its color, marker and dash while it is away. Control it from outside with hiddenSeries.",
   layout: "stack" as const,
 }
 

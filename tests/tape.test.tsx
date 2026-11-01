@@ -25,7 +25,7 @@ describe("Tape", () => {
     expectInkLayers(container, { min: 1, kinds: ["tape"] })
   })
 
-  it("size, angle, colour and placement", () => {
+  it("size, angle, color and placement", () => {
     const { container } = render(<Tape length={120} height={26} angle={-30} color="sky" kind="washi-stripes" className="absolute -top-3 left-4" seed="a" />)
     const t = container.firstElementChild as SVGElement
     expect(t).toHaveAttribute("width", "120")

@@ -3,7 +3,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 export const meta = {
   title: "Textarea",
-  description: "shadcn's `field-textarea`: a labelled ruled box with a hint underneath. `rows` sets the height, as on a plain textarea.",
+  description: "shadcn's `field-textarea`: a labeled ruled box with a hint underneath. `rows` sets the height, as on a plain textarea.",
   layout: "center" as const,
 }
 

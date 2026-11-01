@@ -6,7 +6,7 @@ import { Typewriter } from "@/components/ui/typewriter"
 
 export const meta = {
   title: "Printing a receipt",
-  description: "A real use: an order confirmation types itself onto a receipt, and onDone brings in the button. `reserve` holds the height of the finished receipt, so the paper does not grow (or move, in a centred stage) as it prints. Print another remounts it with a new key.",
+  description: "A real use: an order confirmation types itself onto a receipt, and onDone brings in the button. `reserve` holds the height of the finished receipt, so the paper does not grow (or move, in a centered stage) as it prints. Print another remounts it with a new key.",
   layout: "center" as const,
   stage: "desk" as const,
   height: 420,

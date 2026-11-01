@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest"
 import { hydrationProblems } from "./_hydrate-lib"
 import { formatProblems, smokeRender, withServerGlobals } from "./_ssr-lib"
 
-const PAGES = ["colour", "typography", "pens", "paper", "motion", "density", "theming"] as const
+const PAGES = ["color", "typography", "pens", "paper", "motion", "density", "theming"] as const
 
 const load = (page: (typeof PAGES)[number]) => () => import(`../src/docs/content/foundations/${page}.tsx`) as Promise<Record<string, unknown>>
 

@@ -8,7 +8,7 @@ export const meta = {
 }
 
 const clauses = [
-  "You may keep this notebook as long as you like, and write in it in any colour.",
+  "You may keep this notebook as long as you like, and write in it in any color.",
   "Pages torn out belong to whoever holds them; margins belong to the reader.",
   "Doodles are protected speech. Coffee rings are an acceptable form of signature.",
   "If you find a pencil stub in the binding, it is yours, and it was always yours.",

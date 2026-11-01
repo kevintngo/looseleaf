@@ -116,7 +116,7 @@ describe("AvatarFallback", () => {
     expect(container.querySelector("[data-slot=avatar-fallback]")).toHaveAttribute("data-tone", avatarTone("Ada Lovelace"))
   })
 
-  it("lets children win over the generated initials, and a tone win over the name's colour", () => {
+  it("lets children win over the generated initials, and a tone win over the name's color", () => {
     const { container } = render(
       <Avatar>
         <AvatarFallback name="Ada Lovelace" tone="grape">
@@ -128,7 +128,7 @@ describe("AvatarFallback", () => {
     expect(container.querySelector("[data-slot=avatar-fallback]")).toHaveAttribute("data-tone", "grape")
   })
 
-  it("a string child picks the colour when there is no name", () => {
+  it("a string child picks the color when there is no name", () => {
     const { container } = render(
       <Avatar>
         <AvatarFallback>JO</AvatarFallback>
@@ -137,7 +137,7 @@ describe("AvatarFallback", () => {
     expect(container.querySelector("[data-slot=avatar-fallback]")).toHaveAttribute("data-tone", avatarTone("JO"))
   })
 
-  it("draws the disc in the picked colour as its own host", () => {
+  it("draws the disc in the picked color as its own host", () => {
     const { container } = render(
       <Avatar>
         <AvatarFallback name="Sam Reyes" />
@@ -155,7 +155,7 @@ describe("avatarTone and initials", () => {
     expect(AVATAR_TONES).toContain(avatarTone("Anyone"))
   })
 
-  it("spreads names over all eight colours", () => {
+  it("spreads names over all eight colors", () => {
     const names = ["Ada", "Jo", "Mika", "Sam", "Priya", "Tomas", "Lena", "Omar", "Yuki", "Ines", "Kofi", "Nora", "Alice", "Bob", "Carol", "Dave", "Eve", "Frank", "Grace", "Heidi", "Ivan", "Judy", "Mallory", "Niaj", "Olivia", "Peggy", "Rupert", "Sybil", "Trent", "Victor", "Walter", "Zoe", "Amelie", "Bao", "Chidi", "Dara"]
     const seen = new Map<string, number>()
     for (const n of names) seen.set(avatarTone(n), (seen.get(avatarTone(n)) ?? 0) + 1)
@@ -197,7 +197,7 @@ describe("Avatar drawing", () => {
     expect(drawn[2]).toContain("var(--ll-marker)")
   })
 
-  it("the badge is a dot host with a status colour, and keeps a name for screen readers", () => {
+  it("the badge is a dot host with a status color, and keeps a name for screen readers", () => {
     const { container, getByText } = render(
       <Avatar>
         <AvatarBadge status="busy">
@@ -279,7 +279,7 @@ describe("recipes", () => {
     expect(runRecipe(avatarRingRecipe, { ...req, seed: "other", params: { ring: "ink" }, box: { w: 32, h: 32 } }).parts.rest).not.toBe(a.parts.rest)
   })
 
-  it("every status has its colour", () => {
+  it("every status has its color", () => {
     const keys = { online: "grass", away: "tangerine", busy: "tomato", offline: "pencil-mark", marker: "marker" } as const
     for (const [status, key] of Object.entries(keys)) {
       const f = runRecipe(avatarBadgeRecipe, { ...req, params: { status: status as keyof typeof keys }, box: { w: 10, h: 10 } })
@@ -330,7 +330,7 @@ describe("examples", () => {
     await axeCheck()
   })
 
-  it("Colour from the name shows twelve faces and three ring pens", async () => {
+  it("Color from the name shows twelve faces and three ring pens", async () => {
     const { container } = renderUI(<Colours />)
     expect(container.querySelectorAll("[data-slot=avatar]")).toHaveLength(15)
     expect(container.querySelectorAll("[data-slot=avatar][data-ink-host]").length).toBe(14)

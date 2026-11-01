@@ -31,8 +31,8 @@
     ],
     "a11y": [
       "Real elements with their real semantics: h1 to h4, p, ul/ol, blockquote, code. Nothing here changes the outline or the reading order.",
-      "Body text is the hand at 17 px in ink on paper (14:1); muted text is the muted-foreground token (4.5:1 or better on paper and on the desk); links are blue felt (7:1) and bold with a thick underline, never colour alone.",
-      "The hand-drawn heading rule is a baked alpha mask painted by ::after; browsers without mask support keep a plain pencil border. Windows high contrast paints the rule with system text colour.",
+      "Body text is the hand at 17 px in ink on paper (14:1); muted text is the muted-foreground token (4.5:1 or better on paper and on the desk); links are blue felt (7:1) and bold with a thick underline, never color alone.",
+      "The hand-drawn heading rule is a baked alpha mask painted by ::after; browsers without mask support keep a plain pencil border. Windows high contrast paints the rule with system text color.",
       "Line length is capped at 64 characters in Prose; long words wrap and code blocks scroll sideways (a table wider than the column needs a scrolling wrapper of its own)."
     ],
     "usage": "import { H1, Lead, P, InlineCode, Prose } from \"@/components/ui/typography\"\n\nexport function Article() {\n  return (\n    <article>\n      <H1>Notes on keeping a notebook</H1>\n      <Lead>A small argument you have with yourself.</Lead>\n      <P>Run <InlineCode>npm run notes</InlineCode> to see them.</P>\n    </article>\n  )\n}\n\nexport function Markdown({ html }: { html: string }) {\n  return <Prose dangerouslySetInnerHTML={{ __html: html }} />\n}",

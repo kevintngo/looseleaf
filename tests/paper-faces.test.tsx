@@ -79,7 +79,7 @@ describe("face marks", () => {
     expect(faceClip({ d: "M0 0L1 1Z", evenodd: true })).toBe("path(evenodd, 'M0 0L1 1Z')")
   })
 
-  it("faceLook gives the classes and custom properties a stock wears, sticky notes their veil, a dyed stock its colour", () => {
+  it("faceLook gives the classes and custom properties a stock wears, sticky notes their veil, a dyed stock its color", () => {
     const paper = faceLook("paper", "s")
     expect(paper.className).toBe("ll-stock-paper ll-tooth-cold")
     expect(paper.vars["--ll-tex-paper-pos"].split(", ")).toHaveLength(3)

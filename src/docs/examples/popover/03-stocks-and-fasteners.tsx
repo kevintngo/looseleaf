@@ -3,7 +3,7 @@ import { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitl
 
 export const meta = {
   title: "Stocks and fasteners",
-  description: "Any stock, held down by a pin of any colour or by tape. A torn edge is drawn when the popover opens (the only case where it costs SVG).",
+  description: "Any stock, held down by a pin of any color or by tape. A torn edge is drawn when the popover opens (the only case where it costs SVG).",
   layout: "center" as const,
   height: 380,
 }

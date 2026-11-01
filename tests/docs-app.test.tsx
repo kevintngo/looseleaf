@@ -225,7 +225,7 @@ describe("navigation", () => {
   it("lists the eleven foundations, principles first, and the blocks", () => {
     renderDocs("#/foundations/motion")
     const nav = docNav()
-    const names = ["Principles", "Colour", "Typography", "Pens", "Paper", "Icons", "Stickers & doodles", "Motion", "Density", "Accessibility", "Theming"]
+    const names = ["Principles", "Color", "Typography", "Pens", "Paper", "Icons", "Stickers & doodles", "Motion", "Density", "Accessibility", "Theming"]
     for (const name of names) {
       expect(within(nav).getByRole("link", { name })).toBeInTheDocument()
     }
@@ -451,8 +451,8 @@ describe("components overview", () => {
 
 describe("foundations", () => {
   it("shows a placeholder with facts, and live token swatches or font specimens", () => {
-    renderDocs("#/foundations/colour")
-    expect(screen.getByRole("heading", { level: 1, name: "Colour" })).toBeInTheDocument()
+    renderDocs("#/foundations/color")
+    expect(screen.getByRole("heading", { level: 1, name: "Color" })).toBeInTheDocument()
   })
 
   it("renders the placeholder when no content module exists", () => {
@@ -465,13 +465,13 @@ describe("foundations", () => {
   })
 
   it("lets a content module replace the placeholder body", async () => {
-    renderDocs("#/foundations/colour")
-    expect(await screen.findByText("Hand-written colour page body")).toBeInTheDocument()
+    renderDocs("#/foundations/color")
+    expect(await screen.findByText("Hand-written color page body")).toBeInTheDocument()
     expect(screen.queryByText("This page is still being drawn")).toBeNull()
   })
 
   it("draws swatches from tokens when there is no content module", () => {
-    renderDocs("#/foundations/colour", fixtureCatalog({ content: {} }))
+    renderDocs("#/foundations/color", fixtureCatalog({ content: {} }))
     expect(document.querySelectorAll(".dk-swatch")).toHaveLength(22)
     const chip = document.querySelector<HTMLElement>(".dk-swatch-chip")!
     expect(chip.getAttribute("style")).toContain("var(--ll-paper)")
@@ -482,7 +482,7 @@ describe("foundations", () => {
     expect(screen.getByRole("heading", { level: 1, name: "Principles" })).toBeInTheDocument()
     expect(document.body).toHaveTextContent("Ten laws decide")
     const pager = screen.getByRole("navigation", { name: "Previous and next foundation" })
-    expect(within(pager).getByRole("link", { name: /Colour/ })).toHaveAttribute("href", "#/foundations/colour")
+    expect(within(pager).getByRole("link", { name: /Color/ })).toHaveAttribute("href", "#/foundations/color")
     expect(within(pager).queryByRole("link", { name: /Previous/ })).toBeNull()
   })
 
@@ -814,7 +814,7 @@ describe("accessibility (axe)", () => {
   })
 
   it("foundations, components overview, blocks and not-found have no violations", async () => {
-    for (const hash of ["#/foundations/colour", "#/foundations/typography", "#/components", "#/blocks", "#/blocks/login", "#/nope", "#/changelog", "#/playground"]) {
+    for (const hash of ["#/foundations/color", "#/foundations/typography", "#/components", "#/blocks", "#/blocks/login", "#/nope", "#/changelog", "#/playground"]) {
       const { unmount } = renderDocs(hash)
       await screen.findByRole("heading", { level: 1 })
       await axeCheck(document.body, { rules: pageRules })

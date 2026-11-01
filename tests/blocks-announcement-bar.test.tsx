@@ -12,7 +12,7 @@ beforeEach(() => {
 afterEach(() => restore())
 
 describe("announcement-bar block", () => {
-  it("is a labelled region with the news, a link and a dismiss button", () => {
+  it("is a labeled region with the news, a link and a dismiss button", () => {
     const { getByRole } = renderUI(<AnnouncementBar />)
     const region = getByRole("region", { name: "Announcement" })
     expect(region).toHaveTextContent("Penmark 2.0 is here")

@@ -321,7 +321,7 @@ export function DataTable({ data: initialData }: { data: Section[] }) {
                     <TableCell>
                       <span className="flex max-w-40 items-center gap-1.5 @2xl/main:max-w-48">
                         <SectionViewer item={row} onSave={(next) => update(row.id, next)} />
-                        {favorites.has(row.id) ? <Icon name="star" size={14} label="Favourite" className="text-hi-deep" /> : null}
+                        {favorites.has(row.id) ? <Icon name="star" size={14} label="Favorite" className="text-hi-deep" /> : null}
                       </span>
                     </TableCell>
                   )}
@@ -396,11 +396,11 @@ export function DataTable({ data: initialData }: { data: Section[] }) {
                           onSelect={() => {
                             const on = !favorites.has(row.id)
                             setFavorites((f) => toggle(f, row.id, on))
-                            setNote(on ? `${row.header} is a favourite now.` : `${row.header} is no longer a favourite.`)
+                            setNote(on ? `${row.header} is a favorite now.` : `${row.header} is no longer a favorite.`)
                           }}
                         >
                           <Icon name="star" />
-                          {favorites.has(row.id) ? "Unfavourite" : "Favourite"}
+                          {favorites.has(row.id) ? "Unfavorite" : "Favorite"}
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem

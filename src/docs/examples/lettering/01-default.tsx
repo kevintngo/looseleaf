@@ -2,7 +2,7 @@ import { Lettering } from "@/components/ui/lettering"
 
 export const meta = {
   title: "Default",
-  description: "Ink with a marker-coloured second pass, printed a hair out of register.",
+  description: "Ink with a marker-colored second pass, printed a hair out of register.",
   layout: "center" as const,
 }
 

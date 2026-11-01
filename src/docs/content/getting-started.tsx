@@ -138,7 +138,7 @@ const TOKEN_USE = `<div className="bg-paper text-ink font-hand p-4">
 </div>`
 
 const TOKEN_OVERRIDE = `:root {
-  --ll-marker: #2f7d6b;   /* the primary action colour */
+  --ll-marker: #2f7d6b;   /* the primary action color */
   --ll-hi: #f4d35e;       /* highlighter */
 }`
 
@@ -195,11 +195,11 @@ const PROBLEMS: { id: string; symptom: string; fix: ReactNode }[] = [
     ),
   },
   {
-    id: "colours",
-    symptom: "The colours are wrong, or my shadcn palette disappeared",
+    id: "colors",
+    symptom: "The colors are wrong, or my shadcn palette disappeared",
     fix: (
       <>
-        Installing <InlineCode>looseleaf</InlineCode> or <InlineCode>looseleaf-theme</InlineCode> overwrites the colour tokens with the Notebook palette (the CLI asks first). Add single components to keep yours;
+        Installing <InlineCode>looseleaf</InlineCode> or <InlineCode>looseleaf-theme</InlineCode> overwrites the color tokens with the Notebook palette (the CLI asks first). Add single components to keep yours;
         missing Looseleaf tokens are added, the ones you have are left alone. The Notebook theme is a light theme: there is no <InlineCode>.dark</InlineCode> block yet.
       </>
     ),
@@ -362,15 +362,15 @@ export default function GettingStartedBody() {
           2. Add what you need
         </AnchorHeading>
         <CommandTabs command={(pm) => addCommand(pm, "looseleaf")} title="Everything" />
-        <Callout tone="warn" title="This one overwrites your colour tokens">
+        <Callout tone="warn" title="This one overwrites your color tokens">
           <p>
-            <InlineCode>looseleaf</InlineCode> is the umbrella: theme, fonts, the ink engine and every component. Installing it replaces your shadcn colour tokens with the Notebook palette (the CLI asks first).
+            <InlineCode>looseleaf</InlineCode> is the umbrella: theme, fonts, the ink engine and every component. Installing it replaces your shadcn color tokens with the Notebook palette (the CLI asks first).
             To keep your own palette, add single components instead.
           </p>
         </Callout>
         <CommandTabs command={(pm) => addCommand(pm, "button")} title="One component" />
         <p className="dk-hint">
-          A component install keeps colour tokens you already have and adds the Looseleaf ones you are missing. It brings the drawing engine (<InlineCode>ink</InlineCode>) and its own recipe with it, but not the sticker book:
+          A component install keeps color tokens you already have and adds the Looseleaf ones you are missing. It brings the drawing engine (<InlineCode>ink</InlineCode>) and its own recipe with it, but not the sticker book:
           art is separate (<InlineCode>ink-icons</InlineCode>, <InlineCode>ink-stickers</InlineCode>, <InlineCode>ink-doodles</InlineCode>, <InlineCode>ink-mascot</InlineCode>) and arrives only with the components that draw it. Blocks land under{" "}
           <InlineCode>components/blocks/</InlineCode>: <InlineCode>{addCommand("npm", "login-01")}</InlineCode>.
         </p>
@@ -445,7 +445,7 @@ export default function GettingStartedBody() {
         </p>
       </Section>
 
-      <Section id="tokens" title="Tokens" description="Every colour, width and duration is a CSS custom property, so theming never touches component code.">
+      <Section id="tokens" title="Tokens" description="Every color, width and duration is a CSS custom property, so theming never touches component code.">
         <Prose>
           <p>
             The palette lives in <InlineCode>--ll-*</InlineCode> variables. shadcn's semantic names (<InlineCode>--background</InlineCode>, <InlineCode>--primary</InlineCode>, <InlineCode>--ring</InlineCode>, ...) alias them,
@@ -455,7 +455,7 @@ export default function GettingStartedBody() {
         <CodeBlock code={TOKEN_USE} lang="tsx" title="Using the palette" />
         <CodeBlock code={TOKEN_OVERRIDE} lang="css" title="Overriding a token" />
         <p className="dk-hint">
-          The full list, with contrast notes, is on <Link to={paths.foundations("colour")}>colour</Link>; how a second theme is built is on <Link to={paths.foundations("theming")}>theming</Link>.
+          The full list, with contrast notes, is on <Link to={paths.foundations("color")}>color</Link>; how a second theme is built is on <Link to={paths.foundations("theming")}>theming</Link>.
         </p>
       </Section>
 
@@ -539,7 +539,7 @@ export default function GettingStartedBody() {
           ))}
         </dl>
         <p className="dk-hint">
-          Something not here? The look-dev notes travel with the source (<InlineCode>notes/</InlineCode>), and every component page has an Accessibility section with its keyboard behaviour.
+          Something not here? The look-dev notes travel with the source (<InlineCode>notes/</InlineCode>), and every component page has an Accessibility section with its keyboard behavior.
         </p>
       </Section>
 

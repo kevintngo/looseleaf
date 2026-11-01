@@ -35,7 +35,7 @@ const REGISTRY = [
 ]
 
 const QUALITY = [
-  "Around 6,500 automated tests: roles and names, keyboard behaviour, controlled and uncontrolled use, forms, axe on every component and every docs page.",
+  "Around 6,500 automated tests: roles and names, keyboard behavior, controlled and uncontrolled use, forms, axe on every component and every docs page.",
   "Every example is also rendered to a string twice and compared, hydrated with console errors trapped, and mounted at four box sizes to check that something was drawn.",
   "A house-rules linter, a Tailwind class checker and a token checker run in one gate (node tools/qa.mjs).",
 ]
@@ -111,7 +111,7 @@ export default function ChangelogBody() {
                 <strong>Drawing.</strong> Sketchpad with replay and export, Signature pad.
               </li>
               <li>
-                <strong>Charts.</strong> Bar, line, area, pie and donut, radar, radial and gauge, scatter, heatmap, tally chart, sparklines, with hand-drawn annotations and a colour-is-not-the-only-channel mode.
+                <strong>Charts.</strong> Bar, line, area, pie and donut, radar, radial and gauge, scatter, heatmap, tally chart, sparklines, with hand-drawn annotations and a color-is-not-the-only-channel mode.
               </li>
               <li>
                 <strong>Chat.</strong> Message, Bubble, Prompt input, Typing indicator, Message scroller, Attachment, Code block.

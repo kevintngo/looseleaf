@@ -49,7 +49,7 @@ function ColourRow({ spec, value, changed, failing, onChange, onReset, resetLabe
     <li className="flex items-center gap-2.5 border-b border-line-soft py-1.5 last:border-b-0">
       <input
         type="color"
-        aria-label={`${spec.label}: pick a colour`}
+        aria-label={`${spec.label}: pick a color`}
         value={value}
         onChange={(e) => {
           setDraft(null)
@@ -143,7 +143,7 @@ function ContrastPanel({ pairs }: { pairs: readonly LivePair[] }) {
       </p>
       {pairs.length < CONTRAST.length ? (
         <p className="text-[14.5px] text-muted-foreground">
-          {CONTRAST.length - pairs.length} of the build&apos;s {CONTRAST.length} pairs are not recomputed here: selected text on the highlighter swipe needs the browser to flatten a translucent colour.
+          {CONTRAST.length - pairs.length} of the build&apos;s {CONTRAST.length} pairs are not recomputed here: selected text on the highlighter swipe needs the browser to flatten a translucent color.
         </p>
       ) : null}
       {failing.length ? <PairTable pairs={failing} label="Contrast pairs that fail in the edited theme" /> : <p className="text-[15px] text-muted-foreground">Nothing to fix. Try pushing the marker toward the paper.</p>}
@@ -212,7 +212,7 @@ function Editor({ state, setState }: { state: ThemeState; setState: (fn: (s: The
                   })}
                   {g.id === "table" ? (
                     <ColourRow
-                      spec={{ token: "--ll-shade", label: "Shadow colour", note: "umber in Notebook; the triplet behind every shadow" }}
+                      spec={{ token: "--ll-shade", label: "Shadow color", note: "umber in Notebook; the triplet behind every shadow" }}
                       value={shadeHex(state)}
                       changed={"--ll-shade" in state.colours}
                       failing={[]}
@@ -244,7 +244,7 @@ function Editor({ state, setState }: { state: ThemeState; setState: (fn: (s: The
         </div>
       </div>
 
-      <Section id="contrast-live" level={3} title="Does it still read?" description="The same maths as the build's checker, run on your edits. Every pair the stylesheet's record can recompute from the palette is here.">
+      <Section id="contrast-live" level={3} title="Does it still read?" description="The same math as the build's checker, run on your edits. Every pair the stylesheet's record can recompute from the palette is here.">
         <ContrastPanel pairs={pairs} />
       </Section>
 
@@ -297,7 +297,7 @@ function Walkthrough({ onShow }: { onShow: (count: number) => void }) {
         <h3 className="m-0 font-script text-2xl leading-tight font-bold">1. Start from the slot</h3>
         <p className="max-w-2xl text-[16px] leading-snug">
           The stylesheet already has an empty <InlineCode>[data-theme=&quot;forest&quot;]</InlineCode> block waiting. Nothing is inside it yet, so the theme and Notebook are the same thing. Roles, shadows, gradients,
-          syntax colours, selection and focus all recompute from whatever you put in there; you never touch a component.
+          syntax colors, selection and focus all recompute from whatever you put in there; you never touch a component.
         </p>
         <CodeBlock lang="css" title="looseleaf.css" code={`[data-theme="forest"] {\n}`} copy={false} />
       </li>
@@ -340,7 +340,7 @@ function Walkthrough({ onShow }: { onShow: (count: number) => void }) {
       <li className="grid gap-2" data-testid="step-knobs">
         <h3 className="m-0 font-script text-2xl leading-tight font-bold">{FOREST.steps.length + 2}. The parts that are not CSS</h3>
         <p className="max-w-2xl text-[16px] leading-snug">
-          Two of forest&apos;s choices are not colours. The hand is a little steadier (<InlineCode>--ll-wobble: {FOREST.knobs.wobble}</InlineCode>, which is a knob, so it lives in the block), and its sheets are
+          Two of forest&apos;s choices are not colors. The hand is a little steadier (<InlineCode>--ll-wobble: {FOREST.knobs.wobble}</InlineCode>, which is a knob, so it lives in the block), and its sheets are
           deckled instead of cut. An edge profile is not a variable: it is a prop, so a theme sets it once in a wrapper (or in the recipe object it passes the provider) and nobody repeats it.
         </p>
         <CodeBlock
@@ -366,14 +366,14 @@ const TIERS = [
 
 const OVERRIDE = [
   ["Always", "Every surface (desk, paper, shade, slip, card, graph, kraft, check, pad, photo), every ink (ink, soft, muted, blue, the pencils, red, green, orange-text, focus, link-hover), the shade triplet, and marker, highlighter and highlighter-deep."],
-  ["Usually", "The rules (rule-blue, rule-red, pad-rule, check-rule and the two ledger inks), the sticky colours, the tape colours, and the eight stationery accents."],
+  ["Usually", "The rules (rule-blue, rule-red, pad-rule, check-rule and the two ledger inks), the sticky colors, the tape colors, and the eight stationery accents."],
   ["Sometimes", "The recipe knobs: wobble, pen weights, misregistration, shadow strength, blend, tilt. And the baked tiles, if the theme bakes others."],
-  ["Never in CSS", "The shadcn roles, the shadow stacks, gradients, selection, syntax colours: they are derived. Fonts are compile-time; a theme with other typefaces ships its own font items."],
+  ["Never in CSS", "The shadcn roles, the shadow stacks, gradients, selection, syntax colors: they are derived. Fonts are compile-time; a theme with other typefaces ships its own font items."],
 ]
 
 const RULES = [
-  "Roles are declared where a re-scope can land. A property that holds var() is computed on the element that declares it, so the colour aliases are written on :root and on [data-theme], [data-ll-scope]. A check fails if the two drift.",
-  "Translucent colours are color-mix(), never rgb triplets. The one triplet is --ll-shade, because shadows need an alpha.",
+  "Roles are declared where a re-scope can land. A property that holds var() is computed on the element that declares it, so the color aliases are written on :root and on [data-theme], [data-ll-scope]. A check fails if the two drift.",
+  "Translucent colors are color-mix(), never rgb triplets. The one triplet is --ll-shade, because shadows need an alpha.",
   "One multiplier for every shadow: --ll-shadow-k. A dark theme sets one number.",
   "One motion switch: --ll-motion multiplies every duration.",
   "Per-element inputs (--ll-tilt, --ll-stock, the jitter values) are never set on :root; a component writes them on its own element.",
@@ -477,14 +477,14 @@ export default function ThemingPage() {
       <Section id="anatomy" title="A theme is tokens and a few knobs">
         <Prose>
           <p>
-            Notebook is not special-cased anywhere. It is a palette of {swatches} colours, some numbers for the hand, and a stylesheet that derives everything else from them. A second theme is a block
-            of CSS custom properties that overrides some of those, on <InlineCode>&lt;html&gt;</InlineCode> or on any subtree, next to a small recipe object for the choices that are not colours.
+            Notebook is not special-cased anywhere. It is a palette of {swatches} colors, some numbers for the hand, and a stylesheet that derives everything else from them. A second theme is a block
+            of CSS custom properties that overrides some of those, on <InlineCode>&lt;html&gt;</InlineCode> or on any subtree, next to a small recipe object for the choices that are not colors.
             No component is edited.
           </p>
         </Prose>
       </Section>
 
-      <Section id="editor" title="Edit a theme live" description="Change any colour or knob and the page of real components below re-themes; the contrast table answers at once. Nothing you do here leaves the preview.">
+      <Section id="editor" title="Edit a theme live" description="Change any color or knob and the page of real components below re-themes; the contrast table answers at once. Nothing you do here leaves the preview.">
         <Editor state={state} setState={setState} />
       </Section>
 
@@ -495,7 +495,7 @@ export default function ThemingPage() {
       <Section id="forest" title="A worked example: forest" description="We are not shipping a second theme. This is the process, run on the real checker, so you can do it for yours.">
         <Prose>
           <p>
-            Forest is pale sage felt, warm cream paper, a kraft-coloured slip and petrol-teal ink. Each step below adds its declarations to a scratch copy of the stylesheet and runs the same
+            Forest is pale sage felt, warm cream paper, a kraft-colored slip and petrol-teal ink. Each step below adds its declarations to a scratch copy of the stylesheet and runs the same
             contrast check the build runs. The results are not staged; the first one surprised us too.
           </p>
         </Prose>
@@ -539,7 +539,7 @@ export default function ThemingPage() {
             (server and hydration) always uses Notebook&apos;s numbers, so hydration is exact and Notebook never redraws.
           </p>
           <p>
-            A dark theme is a different material system, not a recolour: opaque pens (<InlineCode>--ll-blend: normal</InlineCode>), stronger shadows (<InlineCode>--ll-shadow-k</InlineCode> around 2.5)
+            A dark theme is a different material system, not a recolor: opaque pens (<InlineCode>--ll-blend: normal</InlineCode>), stronger shadows (<InlineCode>--ll-shadow-k</InlineCode> around 2.5)
             and a desk lighter than the paper. It is not started; the shadcn <InlineCode>.dark</InlineCode> class is not used by any Looseleaf token.
           </p>
         </Prose>
@@ -551,7 +551,7 @@ export default function ThemingPage() {
             <li>Put the block after <InlineCode>looseleaf.css</InlineCode> (same specificity, later wins) or fill a slot in it. Every name must already exist in the base; a checker rejects a typo.</li>
             <li>
               Run the contrast record for your theme by name and fix what it lists. The scripts below live in the Looseleaf repository (<InlineCode>tools/</InlineCode>), not in what the registry installs; the editor above runs the same
-              maths in the browser, so it works from anywhere.
+              math in the browser, so it works from anywhere.
             </li>
             <li>Render the palette sheet and look at it.</li>
             <li>Put <InlineCode>data-theme=&quot;forest&quot;</InlineCode> on <InlineCode>&lt;html&gt;</InlineCode>, or on a subtree. Density and motion are independent attributes.</li>
@@ -577,7 +577,7 @@ node tools/lookdev/palette.mjs --theme forest        # the swatch sheet, with th
 
       <Related
         items={[
-          foundation("colour", "Colour", "The palette a theme replaces, and its contrast record."),
+          foundation("color", "Color", "The palette a theme replaces, and its contrast record."),
           foundation("pens", "Pens", "What the wobble and width knobs do."),
           foundation("paper", "Paper", "The stocks and edges a theme can recut."),
           foundation("density", "Density", "The other axis: a theme and a density are independent."),

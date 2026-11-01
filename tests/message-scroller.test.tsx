@@ -753,7 +753,7 @@ describe("review: following a stream", () => {
     expect(st).toBe(516)
   })
 
-  it("keeps working after React strict mode has run its effects twice (a cancelled frame must not lock the scroller)", async () => {
+  it("keeps working after React strict mode has run its effects twice (a canceled frame must not lock the scroller)", async () => {
     const pending = new Map<number, FrameRequestCallback>()
     let n = 0
     vi.stubGlobal("requestAnimationFrame", (cb: FrameRequestCallback) => {

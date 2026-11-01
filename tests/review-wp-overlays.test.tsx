@@ -462,7 +462,7 @@ describe("drawer and toasts / phones", () => {
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull())
   })
 
-  it("the dim reserves its scrollbar gutter so the drop-in cannot shove a centred sheet sideways; phones pad the foot for the home indicator", async () => {
+  it("the dim reserves its scrollbar gutter so the drop-in cannot shove a centered sheet sideways; phones pad the foot for the home indicator", async () => {
     renderUI(
       <div>
         <Dialog defaultOpen>

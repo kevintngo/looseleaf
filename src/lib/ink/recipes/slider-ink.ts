@@ -1,10 +1,9 @@
 import { solidFill, wash } from '@/lib/ink/fills'
 import { ellipsePoly, pillPoly, roundRectPoly } from '@/lib/ink/geom'
-import { clamp } from '@/lib/ink/rng'
 import { box, dashedBox, focusRing, loop } from '@/lib/ink/shapes'
 import { defineRecipe } from '@/lib/ink/recipes'
 import type { Ink } from '@/lib/ink/builder'
-import type { PenName, Pt } from '@/lib/ink/types'
+import type { Pt } from '@/lib/ink/types'
 
 export const THUMB_INSET = 10
 
@@ -63,7 +62,6 @@ export const sliderTrackRecipe = defineRecipe<SliderTrackParams>({
 export const sliderToneList = ['marker', 'hi', 'blue'] as const
 export type SliderTone = (typeof sliderToneList)[number]
 
-const TONE_PEN: Record<SliderTone, PenName> = { marker: 'terracotta', hi: 'hi', blue: 'blue' }
 
 export interface SliderRangeParams {
   vertical?: boolean
@@ -76,10 +74,9 @@ export const sliderRangeRecipe = defineRecipe<SliderRangeParams>({
   kind: 'slider',
   layers: ['rest'],
   pad: 12,
-  draw(ink, { w, h }, { vertical = false, tone = 'marker', disabled }, ctx) {
+  draw(ink, { w, h }, { vertical = false, tone = 'marker', disabled }) {
     const len = vertical ? h : w
     const th = vertical ? w : h
-    const mid = th / 2
     ink.layer('rest', () => {
       const color = disabled ? 'pencil-mark' : tone === 'hi' ? 'hi' : tone === 'blue' ? 'ink-you' : 'marker'
       const pill = vertical ? pillPoly(1.6, 0, th - 3.2, len) : pillPoly(0, 1.6, len, th - 3.2)

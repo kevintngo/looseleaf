@@ -1,5 +1,5 @@
 import { bandFill, blobFill, highlight, solidFill, wash } from '@/lib/ink/fills'
-import { roundRectPoly, seg } from '@/lib/ink/geom'
+import { roundRectPoly } from '@/lib/ink/geom'
 import { box, chain, dashedBox, focusRing, loop, underline } from '@/lib/ink/shapes'
 import { clamp } from '@/lib/ink/rng'
 import { defineRecipe } from '@/lib/ink/recipes'

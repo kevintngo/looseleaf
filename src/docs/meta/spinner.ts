@@ -5,7 +5,7 @@ export default {
   title: "Spinner",
   category: "Feedback",
   description:
-    "A pencil that will not stop scribbling: a hand-wound spiral whose line is drawn and undrawn round and round, in the colour of the text around it. Still, and whole, when motion is reduced. Stubby can write instead, in three frames like a flip book.",
+    "A pencil that will not stop scribbling: a hand-wound spiral whose line is drawn and undrawn round and round, in the color of the text around it. Still, and whole, when motion is reduced. Stubby can write instead, in three frames like a flip book.",
   status: "stable",
   upstream: "spinner",
   parts: [
@@ -39,9 +39,9 @@ export default {
   ],
   a11y: [
     'Like shadcn\'s, it is role=status with aria-label="Loading": a polite live region that announces its name when it appears. Put a visible word next to it when you can ("Saving...").',
-    "The drawing is aria-hidden. It uses the current text colour, so it is as visible as the text next to it (in a disabled button that is the disabled text colour).",
+    "The drawing is aria-hidden. It uses the current text color, so it is as visible as the text next to it (in a disabled button that is the disabled text color).",
     "Reduced motion (the OS setting, or the in-app calm-ink setting) stops the slide and shows the whole scribble, standing still; Stubby holds his last frame, the finished scribble.",
-    "In Windows high contrast the drawing is kept (it is art, not a border) and takes the system text colour.",
+    "In Windows high contrast the drawing is kept (it is art, not a border) and takes the system text color.",
   ],
   usage: `import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"

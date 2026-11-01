@@ -4,7 +4,7 @@ import zlib from "node:zlib"
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import AccessibilityBody from "@/docs/content/foundations/accessibility"
-import ColourPage from "@/docs/content/foundations/colour"
+import ColourPage from "@/docs/content/foundations/color"
 import DensityPage from "@/docs/content/foundations/density"
 import IconsBody from "@/docs/content/foundations/icons"
 import MotionPage from "@/docs/content/foundations/motion"
@@ -199,7 +199,7 @@ describe("claims that were checked against the code", () => {
 
   it("the primary-button note does not claim a darker fill helps a dark label", () => {
     renderUI(<ColourPage />)
-    const note = screen.getByText(/that flat colour is what the token check measures/)
+    const note = screen.getByText(/that flat color is what the token check measures/)
     expect(note.textContent).toMatch(/less than 4\.60 : 1 there/)
     expect(note.textContent).not.toMatch(/room to spare/)
   })
@@ -217,7 +217,7 @@ describe("claims that were checked against the code", () => {
     expect(screen.getByText(new RegExp(`${CONTRAST.length - live} of the build's ${CONTRAST.length} pairs are not recomputed here`))).toBeInTheDocument()
   })
 
-  it("the colour checker names its number for a screen reader", () => {
+  it("the color checker names its number for a screen reader", () => {
     renderUI(<ColourPage />)
     const live = document.querySelector('[aria-live="polite"][aria-atomic="true"]')!
     expect(live.textContent).toMatch(/^Contrast ratio \d+\.\d\d : 1$/)
@@ -342,13 +342,13 @@ describe("galleries", () => {
     await waitFor(() => expect(shelf.querySelectorAll("[data-tile]").length).toBeGreaterThan(0))
   })
 
-  it("a colour-wash filter does not outlive its switch", async () => {
+  it("a color-wash filter does not outlive its switch", async () => {
     const { user } = renderUI(<IconsBody />)
     const browser = document.querySelector<HTMLElement>('[data-slot="icon-browser"]')!
     const counts = () => within(browser).getAllByRole("status").map((s) => s.textContent).find((t) => /icons$/.test(t ?? ""))
     expect(counts()).toBe("160 icons")
-    await user.click(within(browser).getByRole("radio", { name: "doodle: with colour" }))
-    await user.click(within(browser).getByRole("switch", { name: /Only icons that carry a colour wash/ }))
+    await user.click(within(browser).getByRole("radio", { name: "doodle: with color" }))
+    await user.click(within(browser).getByRole("switch", { name: /Only icons that carry a color wash/ }))
     await waitFor(() => expect(counts()).toMatch(/^\d+ of 160 icons$/))
     await user.click(within(browser).getByRole("radio", { name: "ui: ink only" }))
     await waitFor(() => expect(counts()).toBe("160 icons"))

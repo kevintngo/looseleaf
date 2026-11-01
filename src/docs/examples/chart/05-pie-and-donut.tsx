@@ -2,7 +2,7 @@ import { ChartCenterLabel, ChartContainer, ChartLegend, ChartTooltip, ChartToolt
 
 export const meta = {
   title: "Pie and donut",
-  description: "Slices coloured in with a marker, separated by felt lines, each with its own pencil pattern. The donut's hole is DOM text: it shows the total, and the slice under the pointer or the arrow keys.",
+  description: "Slices colored in with a marker, separated by felt lines, each with its own pencil pattern. The donut's hole is DOM text: it shows the total, and the slice under the pointer or the arrow keys.",
   layout: "stack" as const,
 }
 

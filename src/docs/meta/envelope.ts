@@ -14,7 +14,7 @@ export default {
       description: "The outer element (`w-full max-w-sm`, a container for its own measurements) around the body (`aspect-[8/5]`), whose drawing is the back panel: a sheet with the flap that lifts a sliver on hover and stands up when open. When open the envelope makes room above itself for the flap and the letter.",
       props: [
         { name: "stock", type: "StockName", default: '"kraft"', description: "What it is made of: kraft (manila), paper, index-card, a sticky stock ..." },
-        { name: "stamp", type: "Accent | false", default: '"tomato"', description: "The postage stamp in the top corner (perforated, with a little picture), in a stationery colour, or none. It sits at the end corner and mirrors in RTL." },
+        { name: "stamp", type: "Accent | false", default: '"tomato"', description: "The postage stamp in the top corner (perforated, with a little picture), in a stationery color, or none. It sits at the end corner and mirrors in RTL." },
         { name: "postmark", type: "boolean", default: "true", description: "Two rings and wavy cancellation lines over the stamp (only with a stamp)." },
         { name: "airmail", type: "boolean", default: "false", description: "A border of slanted red and blue stripes." },
         { name: "open / defaultOpen / onOpenChange", type: "boolean / boolean / (open: boolean) => void", description: "As Collapsible: controlled or not." },

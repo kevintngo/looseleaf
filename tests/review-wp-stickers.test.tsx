@@ -211,7 +211,7 @@ describe("sticker picker edges", () => {
     return r
   }
 
-  it("an empty catalogue says so instead of 'Nothing looks like \"\"'", async () => {
+  it("an empty catalog says so instead of 'Nothing looks like \"\"'", async () => {
     await open(
       <StickerPicker stickers={["not-a-sticker-xyz"]}>
         <StickerPickerTrigger asChild>

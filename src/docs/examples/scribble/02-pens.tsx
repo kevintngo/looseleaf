@@ -7,7 +7,7 @@ export const meta = {
 }
 
 const row = "grid grid-cols-[6.5rem_1fr] items-baseline gap-x-4"
-const pen = "font-type text-xs tracking-widest text-muted-foreground uppercase"
+const pen = "font-type text-xs text-muted-foreground"
 
 export default function Example() {
   return (

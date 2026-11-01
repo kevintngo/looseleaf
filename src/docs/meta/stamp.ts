@@ -10,7 +10,7 @@ export default {
   parts: [
     {
       name: "Stamp",
-      description: "An intrinsic ink svg in one colour of pad ink, drawn through the baked `stamp` wear mask.",
+      description: "An intrinsic ink svg in one color of pad ink, drawn through the baked `stamp` wear mask.",
       props: [
         { name: "name", type: "string", description: "A preset from the sticker sheet: `stamp-approved`, `stamp-draft`, `stamp-paid`, `stamp-urgent`, `stamp-received`, `stamp-void`, `stamp-new`, `stamp-member`. Other props override it." },
         { name: "text", type: "string", description: "The main word (capitals are set for you)." },

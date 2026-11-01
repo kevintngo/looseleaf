@@ -452,7 +452,7 @@ function SketchpadColors({ className, children, colors = SKETCH_COLORS, ...props
   return (
     <RadioGroupPrimitive.Root
       data-slot="sketchpad-colors"
-      aria-label="Colour"
+      aria-label="Color"
       orientation="horizontal"
       value={ctx.color}
       onValueChange={(v) => ctx.setColor(v as SketchColor)}
@@ -879,7 +879,7 @@ function SketchpadCanvas({ className, children, paper = "plain", paperProps, lab
     if (k === "Escape") {
       if (gesture.current?.pointer === "key") {
         end(true)
-        ctx.say("Stroke cancelled.")
+        ctx.say("Stroke canceled.")
       } else setCursor(null)
     }
   }

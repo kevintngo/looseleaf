@@ -12,7 +12,7 @@ export const meta = {
 export default function Example() {
   return (
     <Paper stock="index-card" tape="corner" tilt seed="quote-card" className="w-full max-w-md p-7">
-      <p className="h-4 font-type text-xs leading-4 tracking-widest text-pencil-text uppercase">Kind words</p>
+      <p className="h-4 font-type text-xs leading-4 text-pencil-text">Kind words</p>
       <Quote className="gap-1">
         <QuoteText animate size="md" className="pt-0 leading-[30px]">
           I stopped using three apps the week I found this. It just looks like my notebook.

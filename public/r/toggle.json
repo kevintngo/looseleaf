@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "toggle",
   "title": "Toggle",
-  "description": "A two-state button that stays down: a whisper of pencil box at rest, and a highlighter body that snaps into register when it is on. Same Radix behaviour and variants as shadcn.",
+  "description": "A two-state button that stays down: a whisper of pencil box at rest, and a highlighter body that snaps into register when it is on. Same Radix behavior and variants as shadcn.",
   "dependencies": [
     "class-variance-authority",
     "radix-ui"
@@ -39,7 +39,7 @@
       "An icon-only toggle needs a name: pass aria-label (\"Bold\"). Keep the label the same when the state changes, and let aria-pressed say on or off.",
       "On is never told by hue alone: the toggle gains a solid fine-liner box and a filled body, and the drawn body sits under the label at 12:1 (highlighter) or 4.6:1 (marker).",
       "Keyboard focus draws the blue felt ring (3:1 against paper and desk); Windows high contrast swaps the drawing for a real border and the browser's own pressed styling.",
-      "aria-invalid draws the box in red pencil (again over the body when the toggle is down), so the cue is a line and not only a colour.",
+      "aria-invalid draws the box in red pencil (again over the body when the toggle is down), so the cue is a line and not only a color.",
       "Reduced motion removes the settle, the hover tilt and the snap."
     ],
     "usage": "import { Toggle } from \"@/components/ui/toggle\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function Example() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Toggle aria-label=\"Toggle visibility\">\n        <Icon name=\"eye\" />\n      </Toggle>\n      <Toggle variant=\"outline\" defaultPressed>\n        <Icon name=\"bell\" />\n        Follow\n      </Toggle>\n    </div>\n  )\n}",

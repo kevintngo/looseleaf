@@ -240,7 +240,7 @@ describe("official scenarios that need a click", () => {
     }
   })
 
-  it("select-scrollable lists 27 zones in five labelled groups", async () => {
+  it("select-scrollable lists 27 zones in five labeled groups", async () => {
     const t = renderUI(<SelectScrollable />, { user: { pointerEventsCheck: 0 } })
     await t.user.click(t.getByRole("combobox"))
     const list = await t.findByRole("listbox")

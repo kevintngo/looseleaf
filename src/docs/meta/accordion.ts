@@ -5,7 +5,7 @@ export default {
   title: "Accordion",
   category: "Layout",
   description:
-    "Ruled rows that open. Each row sits on a hand-pulled pencil rule; a hovered row gets a highlighter swipe, and an opened row turns its chevron over, writes a margin brace beside its text and lets the words soak in. Radix behaviour and keyboard support are untouched.",
+    "Ruled rows that open. Each row sits on a hand-pulled pencil rule; a hovered row gets a highlighter swipe, and an opened row turns its chevron over, writes a margin brace beside its text and lets the words soak in. Radix behavior and keyboard support are untouched.",
   status: "stable",
   upstream: "accordion",
   parts: [
@@ -37,13 +37,13 @@ export default {
     {
       name: "AccordionContent",
       description:
-        "The panel (`role=\"region\"`, labelled by its trigger). It slides open with a height animation that clips the text only while it moves (at rest nothing is clipped, so a focus ring inside stays whole), and soaks its text in. `className` reaches the box that holds your children, as upstream's does, so `grid gap-3` or `flex flex-col gap-4` space them (the brace's wrapper sits between; vertical padding classes such as `pb-0` stay on the outer div, where the brace's height is measured).",
+        "The panel (`role=\"region\"`, labeled by its trigger). It slides open with a height animation that clips the text only while it moves (at rest nothing is clipped, so a focus ring inside stays whole), and soaks its text in. `className` reaches the box that holds your children, as upstream's does, so `grid gap-3` or `flex flex-col gap-4` space them (the brace's wrapper sits between; vertical padding classes such as `pb-0` stay on the outer div, where the brace's height is measured).",
     },
   ],
   a11y: [
     "The WAI-ARIA accordion pattern from Radix: each trigger is a button with `aria-expanded` and `aria-controls` inside a heading; Enter and Space toggle; ArrowDown, ArrowUp, Home and End move between triggers.",
-    "The panel is a `region` labelled by its trigger. Closed panels are removed from the accessibility tree.",
-    "The chevron, the rules, the swipe and the brace are aria-hidden and pointer-events: none. State is told by aria-expanded and the turned chevron, not by colour.",
+    "The panel is a `region` labeled by its trigger. Closed panels are removed from the accessibility tree.",
+    "The chevron, the rules, the swipe and the brace are aria-hidden and pointer-events: none. State is told by aria-expanded and the turned chevron, not by color.",
     "Keyboard focus draws a blue felt ring round the row; hover-only decoration never carries meaning. Windows high contrast hides the drawings and uses the browser's own focus ring.",
     "Reduced motion (the OS setting or data-motion=\"reduced\") opens rows at once and shows the brace finished.",
     "Right-to-left layouts mirror the brace and text indent; the chevron is symmetric.",

@@ -56,7 +56,7 @@ describe("Page", () => {
     expect(container.querySelector('svg[data-slot="fastener"]')).toHaveAttribute("data-kind", "pin")
   })
 
-  it("is a centred column whose width is a prop", () => {
+  it("is a centered column whose width is a prop", () => {
     const { container, rerender } = render(<Full />)
     const page = container.firstElementChild as HTMLElement
     expect(page).toHaveClass("mx-auto", "w-full", "max-w-2xl", "flex", "flex-col", "gap-6")

@@ -1,8 +1,8 @@
 import { Lettering } from "@/components/ui/lettering"
 
 export const meta = {
-  title: "Sizes, colours, duotone and wobble",
-  description: "Five sizes; the second colour is a token; a duotone print adds a third pass; wobble writes each word a hair off the baseline.",
+  title: "Sizes, colors, duotone and wobble",
+  description: "Five sizes; the second color is a token; a duotone print adds a third pass; wobble writes each word a hair off the baseline.",
   layout: "stack" as const,
 }
 
@@ -21,7 +21,7 @@ export default function Example() {
         <Lettering as="p" size="md" tone="grass">grass</Lettering>
       </div>
       <div className="flex flex-wrap gap-x-10 gap-y-2">
-        <Lettering as="p" size="lg" duotone="sky">Two colours</Lettering>
+        <Lettering as="p" size="lg" duotone="sky">Two colors</Lettering>
         <Lettering as="p" size="lg" tone="teal" wobble={1.6}>hand cut words</Lettering>
       </div>
     </div>

@@ -27,7 +27,7 @@ export default {
   ],
   a11y: [
     "role=\"img\" with aria-label set to the number (or your label): a screen reader hears \"7\", not seven strokes. Add the counted thing in visible text nearby.",
-    "The marks are the only place the number is shown as a drawing, so the svg is kept in Windows high contrast (as system colours).",
+    "The marks are the only place the number is shown as a drawing, so the svg is kept in Windows high contrast (as system colors).",
     "Right-to-left pages start the first bundle on the right.",
     "Reduced motion zeroes the wipe.",
   ],

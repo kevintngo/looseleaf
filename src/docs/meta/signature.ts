@@ -15,7 +15,7 @@ export default {
       props: [
         { name: "flourish", type: '"swoosh" | "underline" | "none"', default: '"swoosh"', description: "The pen's tail: a swoosh with a loop and a crossing stroke, a flourished underline, or nothing." },
         { name: "size", type: '"sm" | "md" | "lg"', default: '"md"', description: "The name at 28, 44 or 64 px. Override with a text-* class." },
-        { name: "tone", type: '"blue" | "ink" | "red" | "green" | "pencil" | "marker" | "orange"', default: '"blue"', description: "The pen of the flourish (and the colour of the name for blue and ink)." },
+        { name: "tone", type: '"blue" | "ink" | "red" | "green" | "pencil" | "marker" | "orange"', default: '"blue"', description: "The pen of the flourish (and the color of the name for blue and ink)." },
         { name: "weight", type: '"fine" | "regular" | "brush"', default: '"regular"', description: "Fine-liner, felt tip or brush." },
         { name: "animate", type: "boolean", default: "false", description: "Sign it in the first time it scrolls into view: the name is written left to right, then the flourish." },
         { name: "show", type: "boolean", default: "true", description: "Show or hide the flourish (the name always stays)." },

@@ -132,7 +132,7 @@ describe("indexCardRecipe", () => {
     }
   })
 
-  it("puts the rod hole at the bottom centre and the flag on the end edge, mirrored in RTL", () => {
+  it("puts the rod hole at the bottom center and the flag on the end edge, mirrored in RTL", () => {
     expect(INDEX_CARD.holeFromFoot).toBeGreaterThan(INDEX_CARD.holeR)
     expect(run(indexCardRecipe, p, 440, 264, { dir: "rtl" }).parts.rest).toContain("scale(-1 1)")
     expect(run(indexCardRecipe, p, 440, 264).parts.rest).not.toContain("scale(-1 1)")

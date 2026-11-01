@@ -2,7 +2,7 @@ import { NotebookCover, NotebookCoverLabel } from "@/components/ui/notebook"
 
 export const meta = {
   title: "On the shelf",
-  description: "The closed notebook: cloth over board, a darker spine stitched to it, an elastic band, and a paper label. Any stationery colour, or black.",
+  description: "The closed notebook: cloth over board, a darker spine stitched to it, an elastic band, and a paper label. Any stationery color, or black.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

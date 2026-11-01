@@ -3,7 +3,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 export const meta = {
   title: "Default",
-  description: "Pick one. The choice is circled, then coloured in: a terracotta blot with a felt spiral written into it. Arrow keys move the choice.",
+  description: "Pick one. The choice is circled, then colored in: a terracotta blot with a felt spiral written into it. Arrow keys move the choice.",
   layout: "stack" as const,
 }
 

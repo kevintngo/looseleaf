@@ -3,7 +3,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 export const meta = {
   title: "Sides and notes",
-  description: "The arrow follows whichever side the note opens on (Radix flips it near the edge of the screen). Any stock makes a note: sticky pads in four colours, or a plain slip.",
+  description: "The arrow follows whichever side the note opens on (Radix flips it near the edge of the screen). Any stock makes a note: sticky pads in four colors, or a plain slip.",
   layout: "center" as const,
   height: 300,
 }

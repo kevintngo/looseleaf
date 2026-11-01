@@ -5,7 +5,7 @@ import { visitors, short, monthOfRow } from "./_data"
 
 export const meta = {
   title: "Area: stacked",
-  description: "`stacked` piles the series on top of each other; `series` sets the order from the bottom up. Each keeps its own wash and pencil pattern, so the layers stay apart in greyscale.",
+  description: "`stacked` piles the series on top of each other; `series` sets the order from the bottom up. Each keeps its own wash and pencil pattern, so the layers stay apart in grayscale.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

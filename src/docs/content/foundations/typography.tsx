@@ -93,7 +93,7 @@ function FaceCard({ face }: { face: Face }) {
         <dd className="font-mono text-[13px]">{face.token}</dd>
         <dt className="text-pencil-text">Weights</dt>
         <dd className="ll-num font-mono text-[13px]">{face.weights.join(", ")}</dd>
-        <dt className="text-pencil-text">Licence</dt>
+        <dt className="text-pencil-text">License</dt>
         <dd>{face.licence}</dd>
       </dl>
       <p className="mt-3 text-[15px] leading-snug">
@@ -516,13 +516,13 @@ export default function TypographyPage() {
         </Prose>
       </Section>
 
-      <Section id="riso" title="Riso titles" description="A display title can be printed slightly off register, as if a second colour went through the press. It is one text-shadow, so the words stay text.">
-        <Demo label="ll-riso in four colours">
+      <Section id="riso" title="Riso titles" description="A display title can be printed slightly off register, as if a second color went through the press. It is one text-shadow, so the words stay text.">
+        <Demo label="ll-riso in four colors">
           <Riso />
         </Demo>
         <Prose>
           <p>
-            Set <InlineCode>--ll-riso</InlineCode> on a title or a whole section to change the second colour. The offset is multiplied by the misregistration knob, so calm density prints it
+            Set <InlineCode>--ll-riso</InlineCode> on a title or a whole section to change the second color. The offset is multiplied by the misregistration knob, so calm density prints it
             dead on.
           </p>
         </Prose>
@@ -536,7 +536,7 @@ export default function TypographyPage() {
 
       <Related
         items={[
-          foundation("colour", "Colour", "Which ink each piece of text is written in."),
+          foundation("color", "Color", "Which ink each piece of text is written in."),
           foundation("density", "Density", "Where jitter and the wobble switch off."),
           foundation("motion", "Motion", "Soak, the way new text arrives."),
           component("typography", "Typography", "The components in the scale, with props."),

@@ -140,7 +140,7 @@ function RolesTable() {
   return (
     <TableScroll label="shadcn roles and the palette tokens they follow">
       <table className="w-full min-w-[34rem] border-collapse text-[15px]">
-        <caption className="sr-only">Each shadcn role, the Looseleaf token it follows, its colour and the contrast that matters for it</caption>
+        <caption className="sr-only">Each shadcn role, the Looseleaf token it follows, its color and the contrast that matters for it</caption>
         <thead>
           <tr>
             <th scope="col" className={th}>
@@ -150,7 +150,7 @@ function RolesTable() {
               Follows
             </th>
             <th scope="col" className={th}>
-              Colour
+              Color
             </th>
             <th scope="col" className={th}>
               What it has to clear
@@ -358,7 +358,7 @@ function DeskText() {
 function Accents() {
   return (
     <div className="grid gap-3">
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-2" role="img" aria-label="Eight strips of washi tape in the eight stationery accent colours">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2" role="img" aria-label="Eight strips of washi tape in the eight stationery accent colors">
         {ACCENT_TAPES.map((c, i) => (
           <Tape key={c} kind={TAPE_KINDS[i % TAPE_KINDS.length]} color={c} length={78} height={24} seed={`accent:${c}`} />
         ))}
@@ -376,14 +376,14 @@ const infoCount = CONTRAST.filter((r) => r.status === "warn").length
 export default function ColourPage() {
   return (
     <>
-      <Section id="who-wrote-it" title="Colour means who wrote it">
+      <Section id="who-wrote-it" title="Color means who wrote it">
         <Prose>
           <p>
-            In a real notebook nobody picks colour for decoration. The brown-black felt tip is the voice of the page. Blue is you. A pencil in the margin is a note, a red one is a correction,
+            In a real notebook nobody picks color for decoration. The brown-black felt tip is the voice of the page. Blue is you. A pencil in the margin is a note, a red one is a correction,
             a green one says fine. The terracotta marker means <em>do this</em> and the yellow highlighter means <em>look here</em>.
           </p>
           <p>
-            Looseleaf keeps to that. The loud stationery colours (tomato, teal, bubblegum) exist too, but only where a bright colour cannot be mistaken for meaning: stickers, washi tape, badges,
+            Looseleaf keeps to that. The loud stationery colors (tomato, teal, bubblegum) exist too, but only where a bright color cannot be mistaken for meaning: stickers, washi tape, badges,
             avatars and chart fills.
           </p>
         </Prose>
@@ -392,23 +392,23 @@ export default function ColourPage() {
         </Demo>
       </Section>
 
-      <Section id="palette" title="The palette" description="Every colour is a custom property, and every value below was read from the stylesheet when this page was built. Click a chip to copy its var().">
+      <Section id="palette" title="The palette" description="Every color is a custom property, and every value below was read from the stylesheet when this page was built. Click a chip to copy its var().">
         <Section id="surfaces" level={3} title="Surfaces" description="Cream paper on a sage desk. The paper is lighter than the desk on purpose (1.95 : 1), so a sheet always reads as a sheet.">
-          <SwatchGrid label="Surface colours" entries={surfaces} />
+          <SwatchGrid label="Surface colors" entries={surfaces} />
         </Section>
         <Section id="inks" level={3} title="Inks" description="Each pen has one job. Blue and the pencils are the ones you will meet most often as text.">
-          <SwatchGrid label="Ink colours" entries={inks} />
+          <SwatchGrid label="Ink colors" entries={inks} />
         </Section>
         <Section id="accents" level={3} title="Stationery accents" description="Decoration only. Ink on tomato and grape is 3.95 : 1, so sticker lettering there stays large or dark.">
-          <SwatchGrid label="Stationery accent colours" entries={accents} />
+          <SwatchGrid label="Stationery accent colors" entries={accents} />
         </Section>
       </Section>
 
-      <Section id="roles" title="Roles: shadcn's names, our colours" description="A shadcn project already speaks in --background, --primary and --border. Those names stay; each one is an alias of a palette token, so a theme only ever changes the palette.">
+      <Section id="roles" title="Roles: shadcn's names, our colors" description="A shadcn project already speaks in --background, --primary and --border. Those names stay; each one is an alias of a palette token, so a theme only ever changes the palette.">
         <RolesTable />
         <Callout tone="note" title="Why the marker is the primary">
           <p>
-            <InlineCode>--primary</InlineCode> is the terracotta marker with an ink label on it: 4.60 : 1 as a flat fill, and that flat colour is what the token check measures. The button lays
+            <InlineCode>--primary</InlineCode> is the terracotta marker with an ink label on it: 4.60 : 1 as a flat fill, and that flat color is what the token check measures. The button lays
             the fill down as two overlapping marker sweeps, and where they overlap the pigment is darker, which gives the label a little less than 4.60 : 1 there. Nobody has measured the rendered
             pixels yet; if you need headroom on a theme, lighten the marker before you touch the label.
           </p>
@@ -416,7 +416,7 @@ export default function ColourPage() {
       </Section>
 
       <Section id="contrast" title="Contrast, measured" description={`${CONTRAST.length} pairs are checked by the QA gate: ${okCount} clear their line and ${infoCount} carry a note. Nothing below was rounded in our favour.`}>
-        <Panel title="Check any two colours">
+        <Panel title="Check any two colors">
           <Checker />
         </Panel>
         <Prose>
@@ -435,22 +435,22 @@ export default function ColourPage() {
         <ContrastRecord />
       </Section>
 
-      <Section id="rules" title="Where each colour is allowed">
+      <Section id="rules" title="Where each color is allowed">
         <Section id="rule-desk" level={3} title="On the desk: ink, soft ink, muted" description="Text straight on the sage desk may only be one of the three inks. Blue felt drops to 3.64 : 1 there, which is enough for a focus ring and not for a sentence.">
-          <Demo label="Text colours on the desk">
+          <Demo label="Text colors on the desk">
             <DeskText />
           </Demo>
         </Section>
-        <Section id="rule-accents" level={3} title="The loud colours live on tape" description="Stationery accents are decoration, so they are washi, stickers and stamps. They never carry the only copy of a meaning.">
+        <Section id="rule-accents" level={3} title="The loud colors live on tape" description="Stationery accents are decoration, so they are washi, stickers and stamps. They never carry the only copy of a meaning.">
           <Demo label="The eight stationery accents as washi tape">
             <Accents />
           </Demo>
         </Section>
-        <Section id="rule-pattern" level={3} title="Meaning never rides on colour alone">
+        <Section id="rule-pattern" level={3} title="Meaning never rides on color alone">
           <Prose>
             <ul>
               <li>Destructive buttons are red pencil <em>hatching</em> with a word on top, so they differ by pattern as well as hue.</li>
-              <li>Chart series get a hatch channel next to their colour, for people who cannot tell the pencils apart.</li>
+              <li>Chart series get a hatch channel next to their color, for people who cannot tell the pencils apart.</li>
               <li>Hover is a highlighter swipe or a drop-line, never just a change of hue.</li>
               <li>Red text goes on paper, never on paper-shade or a sticker.</li>
             </ul>
@@ -458,16 +458,16 @@ export default function ColourPage() {
         </Section>
       </Section>
 
-      <Section id="using" title="Using the colours">
+      <Section id="using" title="Using the colors">
         <Prose>
           <p>
-            In Tailwind the names are the token without its prefix. In your own CSS use the custom property. Drawing code never writes a hex: the engine asks the one colour choke point, which hands
+            In Tailwind the names are the token without its prefix. In your own CSS use the custom property. Drawing code never writes a hex: the engine asks the one color choke point, which hands
             back a <InlineCode>var()</InlineCode>, so a theme reaches every stroke.
           </p>
         </Prose>
         <CodeBlock
           lang="tsx"
-          title="Three ways to use one colour"
+          title="Three ways to use one color"
           code={`// Tailwind: the token name without --ll-
 <p className="bg-paper text-ink">Ink on paper</p>
 <a className="text-ink-you hover:text-link-hover">A link</a>
@@ -477,7 +477,7 @@ export default function ColourPage() {
 import { paint } from "@/lib/ink/paint"
 const fill = paint("marker")   // "var(--ll-marker)"`}
         />
-        <Callout tone="tip" title="Pick a role before you pick a colour">
+        <Callout tone="tip" title="Pick a role before you pick a color">
           <p>
             Reach for <InlineCode>bg-primary</InlineCode>, <InlineCode>text-muted-foreground</InlineCode> and <InlineCode>border-border</InlineCode> in app code; they follow the theme and keep
             shadcn class strings working. Use palette names (<InlineCode>text-ink-you</InlineCode>) when you mean the pen, not the role.
@@ -488,7 +488,7 @@ const fill = paint("marker")   // "var(--ll-marker)"`}
       <Related
         items={[
           foundation("theming", "Theming", "Change the palette and watch the contrast table answer."),
-          foundation("paper", "Paper", "The stocks these colours are printed on."),
+          foundation("paper", "Paper", "The stocks these colors are printed on."),
           foundation("accessibility", "Accessibility", "The rest of the contrast and focus story."),
           component("button", "Button", "The marker as a primary action, in every state."),
           component("badge", "Badge", "Stationery accents in small doses."),

@@ -73,7 +73,7 @@ describe("MessageText", () => {
     expect(t).toHaveClass("whitespace-pre-wrap")
   })
 
-  it("the words are plain inline text: no inline-block, no layer of their own (WebKit cut a script face's last letter to its advance), the wobble is a relative offset and a colour", () => {
+  it("the words are plain inline text: no inline-block, no layer of their own (WebKit cut a script face's last letter to its advance), the wobble is a relative offset and a color", () => {
     const { container } = render(<MessageText seed="s">one two three</MessageText>)
     const t = container.querySelector('[data-slot="message-text"]') as HTMLElement
     expect(t).not.toHaveClass("ll-hand-jitter")

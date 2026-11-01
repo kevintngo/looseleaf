@@ -2,7 +2,7 @@ import { LabelTag, LabelTagDescription, LabelTagPrice, LabelTagTitle } from "@/c
 
 export const meta = {
   title: "Shapes, stocks, string",
-  description: "Price tag, arched, and a luggage tag; kraft, white and coloured card; natural or coloured twine; a brass eyelet, a steel one, or a bare hole.",
+  description: "Price tag, arched, and a luggage tag; kraft, white and colored card; natural or colored twine; a brass eyelet, a steel one, or a bare hole.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

@@ -56,7 +56,7 @@ describe("Button", () => {
     }
   })
 
-  it("buttonVariants is layout only: heights of upstream shadcn, no colours, no rounding", () => {
+  it("buttonVariants is layout only: heights of upstream shadcn, no colors, no rounding", () => {
     expect(buttonVariants({ size: "default" })).toContain("h-9")
     expect(buttonVariants({ size: "xs" })).toContain("h-6")
     expect(buttonVariants({ size: "sm" })).toContain("h-8")
@@ -291,7 +291,7 @@ describe("buttonRecipe", () => {
     expect(runRecipe(buttonRecipe, { ...req, params: { variant: "default", size: "default", disabled: true }, box: { w: 120, h: 36 } }).layers).toEqual(["disabled"])
   })
 
-  it("every variant x size x tier x density draws sane markup (no NaN, only var(--ll-*) colours)", () => {
+  it("every variant x size x tier x density draws sane markup (no NaN, only var(--ll-*) colors)", () => {
     for (const variant of buttonVariantList) {
       for (const size of buttonSizeList) {
         for (const density of ["comfortable", "compact", "calm"] as const) {

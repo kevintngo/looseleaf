@@ -5,14 +5,14 @@ export default {
   title: "Separator",
   category: "Layout",
   description:
-    "A rule that visually or semantically separates content, drawn by hand: pencil, ledger dashes, a squiggle, dots, a strip of tape, a running stitch or a torn edge of paper. Horizontal or vertical, with an optional centred label.",
+    "A rule that visually or semantically separates content, drawn by hand: pencil, ledger dashes, a squiggle, dots, a strip of tape, a running stitch or a torn edge of paper. Horizontal or vertical, with an optional centered label.",
   status: "stable",
   upstream: "separator",
   parts: [
     {
       name: "Separator",
       description:
-        "A Radix Separator (asChild is not offered: the element is the drawing's host). Without children it is a 1 px hairline whose drawing is centred on it and spills up to 12 px across it (a hairline host, so layout is exactly shadcn's). Along its length the host clips (`overflow-x: clip` for a horizontal rule, `overflow-y: clip` for a vertical one), so a rule that ends at the window edge never scrolls the page sideways. With children it becomes a labelled divider: two rules around your text.",
+        "A Radix Separator (asChild is not offered: the element is the drawing's host). Without children it is a 1 px hairline whose drawing is centered on it and spills up to 12 px across it (a hairline host, so layout is exactly shadcn's). Along its length the host clips (`overflow-x: clip` for a horizontal rule, `overflow-y: clip` for a vertical one), so a rule that ends at the window edge never scrolls the page sideways. With children it becomes a labeled divider: two rules around your text.",
       props: [
         {
           name: "orientation",
@@ -44,7 +44,7 @@ export default {
     },
   ],
   a11y: [
-    "Decorative by default (role=none), like shadcn: use decorative={false} only for a real thematic break, and give a labelled non-decorative separator an aria-label, since children of role=separator are presentational.",
+    "Decorative by default (role=none), like shadcn: use decorative={false} only for a real thematic break, and give a labeled non-decorative separator an aria-label, since children of role=separator are presentational.",
     "A vertical separator that is not decorative gets aria-orientation=vertical from Radix.",
     "The drawing is aria-hidden and pointer-events: none. Until it exists, and in Windows high contrast, the rule is a plain 1 px line.",
     "Tape, stitched and torn are decoration; nothing about the meaning of a divider ever depends on them.",

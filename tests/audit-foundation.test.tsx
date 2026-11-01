@@ -65,7 +65,7 @@ describe("overlay recipe: a Popover whose content is a sheet of paper (tests/_ov
     expect(svg.style.zIndex).toBe("-1")
   })
 
-  it("keeps Radix behaviour: Escape closes and focus returns to the trigger; axe finds nothing", async () => {
+  it("keeps Radix behavior: Escape closes and focus returns to the trigger; axe finds nothing", async () => {
     setBox(288, 120)
     const { user } = renderUI(<Demo edge="torn" />)
     const trigger = screen.getByRole("button", { name: "Open" })

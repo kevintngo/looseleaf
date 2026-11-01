@@ -29,7 +29,7 @@ const Doc = (p: Partial<React.ComponentProps<typeof StampSurface>> = {}) => (
 const impressions = (c: HTMLElement) => [...c.querySelectorAll('[data-slot="stamp-impression"]')] as SVGElement[]
 
 describe("StampButton", () => {
-  it("is a button named by its label, in the colour of its ink", () => {
+  it("is a button named by its label, in the color of its ink", () => {
     const { getByRole } = renderUI(<Doc />)
     const b = getByRole("button", { name: "Approve" })
     expect(b).toHaveAttribute("data-slot", "stamp-button")

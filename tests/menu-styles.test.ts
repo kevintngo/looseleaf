@@ -38,7 +38,7 @@ describe("menu-styles", () => {
     expect(MENU_SUB_TRIGGER).toContain("data-[state=open]:ll-swipe")
   })
 
-  it("no class string carries a hard-coded colour", () => {
+  it("no class string carries a hard-coded color", () => {
     for (const s of [MENU_ITEM, MENU_CHOICE_ITEM, MENU_SUB_TRIGGER, MENU_LABEL, MENU_MARK, MENU_SHORTCUT, MENU_KEYCAP, ...KINDS.map((k) => menuContentClass(k)), ...KINDS.map((k) => menuViewportClass(k))]) {
       expect(s).not.toMatch(/#[0-9a-f]{3,8}\b|rgb\(|hsl\(/i)
     }

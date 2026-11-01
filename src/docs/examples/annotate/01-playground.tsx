@@ -35,7 +35,7 @@ export default function Example() {
         </Button>
       </div>
       <Paper key={take} stock="paper" rules="ruled" seed="reader" className="w-full pt-4 pr-6 pb-6 pl-14 md:pr-60">
-        <p className="font-type text-[11px] leading-[28px] tracking-[0.18em] text-pencil-text uppercase">Reading notes / Tuesday</p>
+        <p className="font-type text-[11px] leading-[28px] text-pencil-text">Reading notes / Tuesday</p>
         <h3 className="font-script text-[2.1rem] leading-[56px] font-bold">On owning books</h3>
         <p className="text-[17px] leading-[28px]">
           Most of what I remember from a book is in the{" "}

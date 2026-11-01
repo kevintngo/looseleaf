@@ -7,7 +7,7 @@ export const meta = {
 }
 
 const row = "flex flex-wrap items-baseline gap-x-10 gap-y-3"
-const kicker = "mb-1 font-type text-xs tracking-widest text-muted-foreground uppercase"
+const kicker = "mb-1 font-type text-xs text-muted-foreground"
 
 export default function Example() {
   return (

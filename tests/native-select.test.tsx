@@ -94,7 +94,7 @@ describe("NativeSelect structure", () => {
   })
 })
 
-describe("NativeSelect behaviour", () => {
+describe("NativeSelect behavior", () => {
   it("selects an option by keyboard and pointer, uncontrolled and controlled", async () => {
     const { getByRole, user } = renderUI(<Demo defaultValue="is" />)
     const sel = getByRole("combobox") as HTMLSelectElement

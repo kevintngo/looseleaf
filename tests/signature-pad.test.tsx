@@ -161,7 +161,7 @@ describe("SignaturePad", () => {
     expect(getByText("empty")).toBeInTheDocument()
   })
 
-  it("png format falls back to the svg where nothing can rasterise it", async () => {
+  it("png format falls back to the svg where nothing can rasterize it", async () => {
     vi.useFakeTimers()
     try {
       const onValueChange = vi.fn()

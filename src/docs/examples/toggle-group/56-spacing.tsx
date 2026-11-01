@@ -4,7 +4,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 export const meta = {
   title: "Spacing",
   description:
-    "Official `toggle-group-spacing`: `spacing={2}` pulls the items apart, so each keeps a box of its own. shadcn fills the icon with a colour when an item is on; here each item keeps its highlighter body and writes its icon in that colour instead (a drawn line has no fill to change).",
+    "Official `toggle-group-spacing`: `spacing={2}` pulls the items apart, so each keeps a box of its own. shadcn fills the icon with a color when an item is on; here each item keeps its highlighter body and writes its icon in that color instead (a drawn line has no fill to change).",
   layout: "center" as const,
 }
 

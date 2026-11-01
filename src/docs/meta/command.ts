@@ -21,7 +21,7 @@ export default {
     {
       name: "CommandDialog",
       description:
-        "The palette in a Dialog, set on a napkin with a pinked edge, pinned near the top of the window (a centred sheet would move the search field under your eyes as the list grows and shrinks; `className` overrides it). The title and description are for screen readers only. Opening it with a shortcut (Ctrl / Cmd + K) is yours to wire (see the example).",
+        "The palette in a Dialog, set on a napkin with a pinked edge, pinned near the top of the window (a centered sheet would move the search field under your eyes as the list grows and shrinks; `className` overrides it). The title and description are for screen readers only. Opening it with a shortcut (Ctrl / Cmd + K) is yours to wire (see the example).",
       props: [
         { name: "title / description", type: "string", default: '"Command Palette" / "Search for a command to run..."', description: "The dialog's accessible name and description." },
         { name: "showCloseButton", type: "boolean", default: "false", description: "The corner x. Off by default (upstream: on): a palette closes with Escape or a click outside." },

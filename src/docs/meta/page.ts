@@ -10,10 +10,10 @@ export default {
   parts: [
     {
       name: "Page",
-      description: "A Paper laid out as a centred flex column (gap 6, px 6 / 10, py 8 / 10). It takes every Paper prop; the holes and the stain are ink behind the content, turned with the sheet. The holes' drawing is exactly the page's box (it adds no bleed of its own); but a page that fills the window is turned by up to 0.35 degrees and its far corners swing a few px past the window's edge, so give a full-width page a container with `overflow-x-clip` (and 8 px of side padding, which keeps its shadow) or lay it square with `tilt={false}`.",
+      description: "A Paper laid out as a centered flex column (gap 6, px 6 / 10, py 8 / 10). It takes every Paper prop; the holes and the stain are ink behind the content, turned with the sheet. The holes' drawing is exactly the page's box (it adds no bleed of its own); but a page that fills the window is turned by up to 0.35 degrees and its far corners swing a few px past the window's edge, so give a full-width page a container with `overflow-x-clip` (and 8 px of side padding, which keeps its shadow) or lay it square with `tilt={false}`.",
       props: [
         { name: "as", type: '"div" | "main" | "article" | "section" | "form"', default: '"div"', description: "The element. Use `main` when the page is the app's main landmark." },
-        { name: "width", type: '"sm" | "md" | "lg" | "xl" | "full"', default: '"md"', description: "Column width: 32rem, 42rem, 56rem, 72rem or unbounded. Always centred." },
+        { name: "width", type: '"sm" | "md" | "lg" | "xl" | "full"', default: '"md"', description: "Column width: 32rem, 42rem, 56rem, 72rem or unbounded. Always centered." },
         { name: "holes", type: '"start" | "top" | "none" | boolean', default: "false", description: "Punched holes: three down the start edge (mirrored for right-to-left), or two across the top. `true` is `start`. The desk shows through them; the start padding grows to clear them." },
         { name: "reinforced", type: "boolean", default: "false", description: "Gummed reinforcement rings round the holes." },
         { name: "stain", type: "boolean", default: "false", description: "A coffee ring in the lower corner (multiply-printed, faint)." },

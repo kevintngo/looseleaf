@@ -158,7 +158,7 @@ describe("CommandDialog focus", () => {
 })
 
 describe("Command in Windows high contrast", () => {
-  it("the selected row falls back to the system Highlight colours (the swipe's own are replaced there)", async () => {
+  it("the selected row falls back to the system Highlight colors (the swipe's own are replaced there)", async () => {
     renderUI(<Palette />, opts)
     const row = selectedRow() ?? screen.getAllByRole("option")[0]
     expect(row.className).toContain("forced-colors:data-[selected=true]:bg-[color:Highlight]!")

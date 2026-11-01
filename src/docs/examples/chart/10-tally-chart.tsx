@@ -2,7 +2,7 @@ import { TallyChart } from "@/components/ui/chart"
 
 export const meta = {
   title: "Tally chart",
-  description: "Counts as hand-tallied marks: four uprights and a slash across for every five, in the colour of the row. When a row is too long for the width, each mark starts to stand for more and says so.",
+  description: "Counts as hand-tallied marks: four uprights and a slash across for every five, in the color of the row. When a row is too long for the width, each mark starts to stand for more and says so.",
   layout: "stack" as const,
 }
 

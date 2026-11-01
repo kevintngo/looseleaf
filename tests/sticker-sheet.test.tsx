@@ -38,7 +38,7 @@ describe("StickerSheet", () => {
     expect(container.querySelector('[data-slot="sticker-sheet"]')).toHaveTextContent("3 left")
   })
 
-  it("has a default name when there is no title, and can be labelled", () => {
+  it("has a default name when there is no title, and can be labeled", () => {
     const a = renderUI(<Sheet title={undefined} />)
     expect(a.getByRole("group", { name: "Sticker sheet" })).toBeInTheDocument()
     const b = renderUI(<Sheet title={undefined} label="Reward stickers" />)

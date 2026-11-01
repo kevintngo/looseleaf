@@ -88,7 +88,7 @@ const ready = async (n = 5) => {
 }
 
 describe("Carousel structure", () => {
-  it("is a labelled carousel region with Embla's window and track, and slides that are groups", () => {
+  it("is a labeled carousel region with Embla's window and track, and slides that are groups", () => {
     const { getByRole, container } = renderUI(<Demo />)
     const region = getByRole("region", { name: "Notes" })
     expect(region).toHaveAttribute("aria-roledescription", "carousel")
@@ -138,7 +138,7 @@ describe("Carousel structure", () => {
   })
 })
 
-describe("Carousel behaviour", () => {
+describe("Carousel behavior", () => {
   it("Previous is inert on the first slide; Next scrolls, and Previous comes back", async () => {
     const { getByRole, user } = renderUI(<Demo />, opts)
     await ready()

@@ -26,7 +26,7 @@ describe("Handwritten", () => {
     }
   })
 
-  it("words are plain inline text: no layer of their own (WebKit clipped a final d, l or ! of a rotated or faded inline-block), the offset and the lightness are relative and colour", () => {
+  it("words are plain inline text: no layer of their own (WebKit clipped a final d, l or ! of a rotated or faded inline-block), the offset and the lightness are relative and color", () => {
     const { getByTestId } = render(<Handwritten data-testid="h">the quick brown fox</Handwritten>)
     expect(getByTestId("h").querySelector("style")).toBeNull()
     const sheet = document.head.querySelector('style[data-href="ll-handwritten"]')?.textContent ?? ""

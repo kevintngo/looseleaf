@@ -38,7 +38,7 @@ export default {
   a11y: [
     "Confetti is decoration: the pieces are aria-hidden, never focusable, and click-through (pointer-events: none). Say what happened in words too (a toast, a status line): confetti alone tells a screen reader nothing.",
     "Reduced motion (the OS setting, data-motion=\"reduced\", or --ll-motion 0) throws nothing at all: no pieces, no layer.",
-    "Pieces are removed as soon as they have faded, and the layer with them; a burst can be cancelled with the function it returns, and unmounting a Confetti layer clears its pieces.",
+    "Pieces are removed as soon as they have faded, and the layer with them; a burst can be canceled with the function it returns, and unmounting a Confetti layer clears its pieces.",
     "Flight runs on the Web Animations API (off the main thread). Browsers without it simply show nothing.",
   ],
   usage: `import { ConfettiTrigger, confetti } from "@/components/ui/confetti"

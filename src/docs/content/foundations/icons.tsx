@@ -7,7 +7,7 @@ const USAGE = `import { Icon } from "@/components/ui/icon"
 
 <Icon name="trash" />                          // 1em wide (16 px in a button), the 16 px redraw, ink, decorative (aria-hidden)
 <Icon name="trash" size={24} />                // the 24 px master
-<Icon name="bell" size={48} tone="doodle" />   // the drawing with its colour wash
+<Icon name="bell" size={48} tone="doodle" />   // the drawing with its color wash
 <Icon name="trash" label="Delete" />           // meaningful on its own: role="img" and aria-label
 <Icon name="Trash2" />                         // any lucide spelling: Trash2, trash-2, TrashIcon
 
@@ -45,8 +45,8 @@ export default function IconsBody() {
               <strong>Decorative by default.</strong> The svg is <InlineCode>aria-hidden</InlineCode>. Give <InlineCode>label</InlineCode> when the icon is the only thing that says what a control does.
             </li>
             <li>
-              <strong>Ink is the text colour.</strong> In <InlineCode>ui</InlineCode> tone the strokes are <InlineCode>currentColor</InlineCode>, so <InlineCode>text-destructive</InlineCode> or a hover state recolours them.
-              <InlineCode> doodle</InlineCode> tone adds a pale colour wash to the icons that carry one.
+              <strong>Ink is the text color.</strong> In <InlineCode>ui</InlineCode> tone the strokes are <InlineCode>currentColor</InlineCode>, so <InlineCode>text-destructive</InlineCode> or a hover state recolors them.
+              <InlineCode> doodle</InlineCode> tone adds a pale color wash to the icons that carry one.
             </li>
             <li>
               <strong>Right to left.</strong> Direction glyphs (chevrons, arrows, panels) turn themselves around in a right-to-left page. <InlineCode>flip</InlineCode> mirrors an icon whose art allows it.

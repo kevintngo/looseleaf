@@ -1,8 +1,8 @@
 import { Ribbon } from "@/components/ui/ribbon"
 
 export const meta = {
-  title: "Variants and colours",
-  description: "Banner (folded tails), swallow (a V notch at both ends) and flag (square at the start). The colours are the ones ink stays readable on; `paper` is a plain white ribbon.",
+  title: "Variants and colors",
+  description: "Banner (folded tails), swallow (a V notch at both ends) and flag (square at the start). The colors are the ones ink stays readable on; `paper` is a plain white ribbon.",
   layout: "center" as const,
 }
 

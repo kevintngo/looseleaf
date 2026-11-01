@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 export const meta = {
   title: "Data table",
   description:
-    "Sorting, selection and pagination with plain React state and no extra dependency. A selected row is a highlighter swipe (`data-state=\"selected\"`), the sorted column says so with `aria-sort` and an arrow, and the header checkbox goes half-ticked when only some rows are chosen. Coloured pencil text is 4.7:1 on paper but about 4:1 on the full swipe, so a chosen row writes its status in ink.",
+    "Sorting, selection and pagination with plain React state and no extra dependency. A selected row is a highlighter swipe (`data-state=\"selected\"`), the sorted column says so with `aria-sort` and an arrow, and the header checkbox goes half-ticked when only some rows are chosen. Colored pencil text is 4.7:1 on paper but about 4:1 on the full swipe, so a chosen row writes its status in ink.",
   layout: "stack" as const,
 }
 

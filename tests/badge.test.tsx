@@ -51,7 +51,7 @@ describe("Badge structure", () => {
     }
   })
 
-  it("badgeVariants is layout only: no colours, no rounding, no border", () => {
+  it("badgeVariants is layout only: no colors, no rounding, no border", () => {
     for (const variant of badgeVariantList) expect(badgeVariants({ variant })).not.toMatch(/\brounded|\bbg-|\bborder\b|(?<!text-)\bshadow-|\bring/)
     expect(badgeVariants({ size: "sm" })).toContain("h-5")
     expect(badgeVariants({ size: "lg" })).toContain("h-7")
@@ -301,7 +301,7 @@ describe("badgeRecipe", () => {
     expect(run({ variant: "link", hoverable: true }).parts.hover).toMatch(/data-part="swipe"/)
   })
 
-  it("draws sane markup at many sizes, densities, tiers and tones (no NaN, only var(--ll-*) colours)", () => {
+  it("draws sane markup at many sizes, densities, tiers and tones (no NaN, only var(--ll-*) colors)", () => {
     for (const [w, h] of [
       [20, 20],
       [40, 20],

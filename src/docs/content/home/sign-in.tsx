@@ -1,19 +1,10 @@
-import { lazy, useEffect, useRef, useState, type FormEvent } from "react"
+import { useEffect, useRef, useState, type FormEvent } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Icon } from "@/components/ui/icon"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { LazyOnView } from "./lazy-on-view"
-import type { DecoItem } from "./deco"
-
-const Deco = lazy(() => import("./deco"))
-
-const DECO: readonly DecoItem[] = [
-  { kind: "stamp", name: "stamp-member", size: 92, rotate: -8, className: "top-9 -right-6" },
-  { kind: "sticker", name: "rocket", size: 88, rotate: 10, className: "-right-5 -bottom-9 sm:-right-7" },
-]
 
 export default function SignIn() {
   const [done, setDone] = useState(false)
@@ -28,7 +19,7 @@ export default function SignIn() {
   }
 
   return (
-    <Card data-home="sign-in" stock="paper" tape="both" tapeKind="washi-dots" seed="home-sign-in" className="relative w-full max-w-md gap-5 py-7">
+    <Card data-home="sign-in" stock="paper" tape="both" tapeKind="masking" seed="home-sign-in" className="relative w-full max-w-md gap-5 py-7 @4xl:justify-self-end">
       <CardHeader>
         <CardTitle className="text-4xl">Welcome back</CardTitle>
         <CardDescription>sign in to pick up where you left off.</CardDescription>
@@ -69,9 +60,6 @@ export default function SignIn() {
           </span>
         </CardFooter>
       </form>
-      <LazyOnView height={0} slip={false} delay={700} className="contents">
-        <Deco items={DECO} />
-      </LazyOnView>
     </Card>
   )
 }

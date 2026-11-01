@@ -109,7 +109,7 @@ describe("Popover roles and parts", () => {
     expect(await screen.findByRole("dialog")).toHaveAttribute("data-slot", "popover-content")
   })
 
-  it("pin sticks a push-pin through the top edge (any colour); tape holds it with a strip", async () => {
+  it("pin sticks a push-pin through the top edge (any color); tape holds it with a strip", async () => {
     const { unmount } = renderUI(<Demo defaultOpen content={{ pin: true }} />, opts)
     const pop = await screen.findByRole("dialog")
     expect(pop.querySelector('svg[data-slot="fastener"]')).toHaveAttribute("data-kind", "pin")

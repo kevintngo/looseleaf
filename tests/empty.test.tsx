@@ -103,7 +103,7 @@ describe("Empty drawing", () => {
     expectInkLayers(container, { kinds: ["frame"], absolute: true, layers: ["rest"] })
   })
 
-  it("does not mistake border-dashed or a border colour for `border`", () => {
+  it("does not mistake border-dashed or a border color for `border`", () => {
     const { container } = render(<Sample className="border-dashed border-ink" />)
     expect(container.querySelector("svg")).toBeNull()
   })

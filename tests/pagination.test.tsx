@@ -58,7 +58,7 @@ function Demo({ current = 2, onPage }: { current?: number; onPage?: (n: number) 
 }
 
 describe("Pagination", () => {
-  it("is a navigation landmark labelled pagination, with a list of items (upstream's anatomy and slots)", () => {
+  it("is a navigation landmark labeled pagination, with a list of items (upstream's anatomy and slots)", () => {
     const { getByRole, container } = renderUI(<Demo />)
     const nav = getByRole("navigation", { name: "pagination" })
     expect(nav).toHaveAttribute("data-slot", "pagination")
@@ -93,7 +93,7 @@ describe("Pagination", () => {
     expect(one).not.toHaveAttribute("data-active", "true")
   })
 
-  it("Previous and Next are labelled links with a drawn chevron, and their words hide on a phone", () => {
+  it("Previous and Next are labeled links with a drawn chevron, and their words hide on a phone", () => {
     const { getByRole } = renderUI(<Demo />)
     const prev = getByRole("link", { name: "Go to previous page" })
     const next = getByRole("link", { name: "Go to next page" })

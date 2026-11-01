@@ -26,7 +26,7 @@ export default {
   ],
   a11y: [
     "The words are ordinary text: selectable, copyable, found by search. The line is aria-hidden and pointer-events-none.",
-    "Until the drawing exists (no JavaScript, first paint) and in Windows high contrast, the browser's own text-decoration underline is shown in the pen's colour.",
+    "Until the drawing exists (no JavaScript, first paint) and in Windows high contrast, the browser's own text-decoration underline is shown in the pen's color.",
     "Do not use it as the only sign of a link: put it on a real <a> with asChild (links keep their native focus ring) or keep the link's own underline.",
     "Reduced motion (or data-motion=\"reduced\") zeroes the draw-on.",
   ],

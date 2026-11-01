@@ -50,11 +50,11 @@ function TicketStub({ className, style, ...props }: React.ComponentProps<"aside"
 }
 
 function TicketTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="ticket-title" className={cn("text-2xl leading-none tracking-[0.14em] uppercase", className)} {...props} />
+  return <div data-slot="ticket-title" className={cn("text-2xl leading-none", className)} {...props} />
 }
 
 function TicketDescription({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="ticket-description" className={cn("text-sm tracking-wider uppercase", className)} {...props} />
+  return <div data-slot="ticket-description" className={cn("text-sm", className)} {...props} />
 }
 
 function TicketNumber({ className, ...props }: React.ComponentProps<"div">) {

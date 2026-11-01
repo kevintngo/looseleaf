@@ -5,7 +5,7 @@ export default {
   title: "Typewriter",
   category: "Typography",
   description:
-    "Text that types itself in the typewriter face, with an inked caret. Keys land at uneven speeds and hold at commas and full stops; several phrases can go one under the other or be typed, held and backspaced in turn.",
+    "Text that types itself in the typewriter face, with an inked caret. Keys land at uneven speeds and hold at commas and periods; several phrases can go one under the other or be typed, held and backspaced in turn.",
   status: "new",
   parts: [
     {

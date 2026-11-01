@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { ConfettiTrigger } from "@/components/ui/confetti"
 
 export const meta = {
-  title: "Ring, streamers, one colour",
+  title: "Ring, streamers, one color",
   description: "spread 360 sends a ring; shapes and colors narrow the pieces. A Valentine's burst of pink dots and stars.",
   layout: "center" as const,
   height: 260,

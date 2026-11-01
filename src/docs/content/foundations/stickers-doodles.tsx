@@ -23,7 +23,7 @@ export default function StickersDoodlesBody() {
         <DoodleShelf />
         <Prose>
           <p>
-            A doodle has no white border (that would make it a sticker), one flat fill in register, and at most two stationery colours. Below 72 px it is <strong>redrawn</strong> with its silhouette and one
+            A doodle has no white border (that would make it a sticker), one flat fill in register, and at most two stationery colors. Below 72 px it is <strong>redrawn</strong> with its silhouette and one
             identifying detail, because a 96 px drawing shrunk to 48 px is mud. Turn a doodle with <InlineCode>rotate</InlineCode>; corner flourishes are drawn for the top left and turned by you.
           </p>
         </Prose>
@@ -33,7 +33,7 @@ export default function StickersDoodlesBody() {
         <StickerShelf />
         <Prose>
           <p>
-            Stickers are the loud end of the set: saturated stationery colours are allowed here, and only in the decoration layer, so the real interface stays calm. The shadow is a CSS filter, never a blur inside the drawing. The
+            Stickers are the loud end of the set: saturated stationery colors are allowed here, and only in the decoration layer, so the real interface stays calm. The shadow is a CSS filter, never a blur inside the drawing. The
             white border is one fat stroke of the silhouette, so any shape gets a border that follows it. Stickers are decorative unless you pass <InlineCode>label</InlineCode>.
           </p>
         </Prose>

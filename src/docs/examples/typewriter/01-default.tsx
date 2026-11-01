@@ -2,7 +2,7 @@ import { Typewriter } from "@/components/ui/typewriter"
 
 export const meta = {
   title: "Default",
-  description: "It waits until it is on screen, then types at an uneven pace, holding at the comma and the full stop.",
+  description: "It waits until it is on screen, then types at an uneven pace, holding at the comma and the period.",
   layout: "stack" as const,
   height: 160,
 }

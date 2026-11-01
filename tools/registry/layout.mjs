@@ -30,7 +30,7 @@ export const LIB_ITEM_INFO = {
   },
   'ink-paper-textures': {
     title: 'Ink paper textures',
-    description: 'Baked paper, fibre, linen and kraft tiles (base64 PNG inside a .ts file). The ink engine imports them; a bundler drops the tiles an app never draws.',
+    description: 'Baked paper, fiber, linen and kraft tiles (base64 PNG inside a .ts file). The ink engine imports them; a bundler drops the tiles an app never draws.',
   },
   'ink-grain-textures': {
     title: 'Ink grain textures',

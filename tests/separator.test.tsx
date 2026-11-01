@@ -118,12 +118,12 @@ describe("Separator with a label", () => {
     expect(a).not.toBe(b)
   })
 
-  it("vertical labelled separators stack", () => {
+  it("vertical labeled separators stack", () => {
     const { container } = render(<Separator orientation="vertical">or</Separator>)
     expect(container.querySelector("[data-slot=separator]")).toHaveClass("data-[orientation=vertical]:flex-col")
   })
 
-  it("has no axe violations: plain, real, labelled, vertical, every variant", async () => {
+  it("has no axe violations: plain, real, labeled, vertical, every variant", async () => {
     const { container } = render(
       <div>
         <Separator />
@@ -194,7 +194,7 @@ describe("separatorRecipe", () => {
     for (const variant of separatorVariantList) expect(run({ variant, orientation: "horizontal" }, 200, 2).layers).toEqual(["rest"])
   })
 
-  it("draws sane markup at many lengths, both orientations, densities and tiers (no NaN, only var(--ll-*) colours)", () => {
+  it("draws sane markup at many lengths, both orientations, densities and tiers (no NaN, only var(--ll-*) colors)", () => {
     for (const len of [4, 12, 40, 200, 600, 1400]) {
       for (const orientation of ["horizontal", "vertical"] as const) {
         for (const density of ["comfortable", "compact", "calm"] as const) {

@@ -5,7 +5,7 @@ import { visitors } from "./_data"
 
 export const meta = {
   title: "Radar: multiple",
-  description: "Two shapes on one web, each washed in its colour and shaded with its own pencil pattern.",
+  description: "Two shapes on one web, each washed in its color and shaded with its own pencil pattern.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

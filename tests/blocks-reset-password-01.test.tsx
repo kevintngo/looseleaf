@@ -22,7 +22,7 @@ const first = () => document.querySelector<HTMLInputElement>('input[autocomplete
 const second = () => document.querySelectorAll<HTMLInputElement>('input[autocomplete="new-password"]')[1]!
 
 describe("reset-password-01", () => {
-  it("has two labelled password fields with their own toggles", async () => {
+  it("has two labeled password fields with their own toggles", async () => {
     const { user, getByLabelText, getByRole } = form()
     expect(getByLabelText("New password", { selector: "input" })).toBe(first())
     expect(getByLabelText("Confirm new password", { selector: "input" })).toBe(second())

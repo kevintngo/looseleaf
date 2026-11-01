@@ -19,7 +19,7 @@ export default function Features01({ variant = "cards", title = "Everything a go
       <div className="px-4 py-14 @xl:px-8 @xl:py-20">
         <div className="mx-auto max-w-6xl">
           <header className="mx-auto max-w-2xl text-center">
-            <p className="font-type text-sm tracking-[0.18em] text-ink-soft uppercase">What&rsquo;s inside</p>
+            <p className="font-type text-sm text-ink-soft">What&rsquo;s inside</p>
             <Lettering as="h2" id={titleId} size="lg" tone="sky" wobble={0.4} seed={`features-${variant}`} className="mt-3">
               {title}
             </Lettering>

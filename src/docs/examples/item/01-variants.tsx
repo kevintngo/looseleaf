@@ -46,7 +46,7 @@ export default function Example() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Preferences</ItemTitle>
-          <ItemDescription>Density, motion and the colour of the desk.</ItemDescription>
+          <ItemDescription>Density, motion and the color of the desk.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">

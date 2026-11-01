@@ -12,7 +12,7 @@ beforeEach(() => {
 afterEach(() => restore())
 
 describe("footer-01 block", () => {
-  it("is the page footer (contentinfo) with three labelled navigations", () => {
+  it("is the page footer (contentinfo) with three labeled navigations", () => {
     const { getByRole } = renderUI(<Footer01 />)
     expect(getByRole("contentinfo")).toBeInTheDocument()
     for (const col of COLUMNS) {
@@ -26,7 +26,7 @@ describe("footer-01 block", () => {
     const total = COLUMNS.reduce((n, c) => n + c.links.length, 0)
     expect(getAllByRole("link").length).toBeGreaterThanOrEqual(total + 6)
     expect(getByRole("heading", { level: 2, name: "Resources" })).toBeInTheDocument()
-    expect(getByRole("link", { name: "Help centre" })).toHaveAttribute("href", "#help-centre")
+    expect(getByRole("link", { name: "Help center" })).toHaveAttribute("href", "#help-center")
   })
 
   it("names the icon-only social links", () => {

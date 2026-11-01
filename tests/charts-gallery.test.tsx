@@ -302,7 +302,7 @@ describe("bar", () => {
     expect(container.querySelector("[data-slot=chart-live]")?.textContent).toMatch(/Desktop \d+/)
   })
 
-  it("gives every browser its own series, colour and pencil pattern", () => {
+  it("gives every browser its own series, color and pencil pattern", () => {
     const { container } = mount("bar-mixed")
     expect(summaryOf(container)).toContain("5 series")
     expect(tableRows(container)).toHaveLength(5)
@@ -386,7 +386,7 @@ describe("line", () => {
 })
 
 describe("pie and donut", () => {
-  it("leaves the percentages off the simple pie and puts them on the labelled one", () => {
+  it("leaves the percentages off the simple pie and puts them on the labeled one", () => {
     const simple = mount("pie-simple")
     expect(labelsOf(simple.container)).not.toMatch(/%/)
     simple.unmount()

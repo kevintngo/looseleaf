@@ -18,9 +18,9 @@ type EdgeChoice = "sold" | EdgeKind | "mixed"
 
 const EDGE_INFO: Record<EdgeChoice, string> = {
   sold: "Every stock is cut the way it is sold: the order pad is torn along its top, receipts are pinked, parchment is deckled, a guest check is perforated. Everything else is a guillotine cut.",
-  cut: "Guillotine: half a pixel of wander and no fibres. It is pure CSS (stock colour, baked tooth, lit gradient, umber shadow), so an ordinary card costs no SVG at all.",
-  torn: "Hand-torn: three scales of wander and a pale rim where the fibres stand out. The sheet draws its outline once and fills it with the same tiles.",
-  deckle: "Rag paper: like torn, but softer, with a wider fringe of loose fibre.",
+  cut: "Guillotine: half a pixel of wander and no fibers. It is pure CSS (stock color, baked tooth, lit gradient, umber shadow), so an ordinary card costs no SVG at all.",
+  torn: "Hand-torn: three scales of wander and a pale rim where the fibers stand out. The sheet draws its outline once and fills it with the same tiles.",
+  deckle: "Rag paper: like torn, but softer, with a wider fringe of loose fiber.",
   crimp: "Napkin and tissue: a fine crinkle along the edge and a faint fringe.",
   zig: "Pinking shears: a regular sawtooth. Receipts and tickets.",
   perf: "A perforation: round bites at a fixed pitch. Guest checks and tear-off strips.",
@@ -78,7 +78,7 @@ function StockExplorer() {
 
 function StockTable() {
   return (
-    <TableScroll label="Every stock, with its colour, tooth, shadow, default edge, printed rules and tilt">
+    <TableScroll label="Every stock, with its color, tooth, shadow, default edge, printed rules and tilt">
       <table className="w-full min-w-[40rem] border-collapse text-[15px]">
         <caption className="sr-only">The nineteen stocks</caption>
         <thead>
@@ -309,7 +309,7 @@ function TapeShelf() {
             </li>
           ))}
         </ul>
-        <ul role="list" aria-label="Washi tape in the eight accent colours" className="m-0 flex list-none flex-wrap gap-x-4 gap-y-3 p-0">
+        <ul role="list" aria-label="Washi tape in the eight accent colors" className="m-0 flex list-none flex-wrap gap-x-4 gap-y-3 p-0">
           {ACCENTS.map((c, i) => (
             <li key={c}>
               <Tape kind={(["washi-dots", "washi-stripes", "washi-zigzag", "washi-gingham"] as const)[i % 4]} color={c} length={70} height={22} seed={`washi:${c}`} />
@@ -354,11 +354,11 @@ function FastenerShelf() {
 const TILE_NOTE: Record<PaperTileName, string> = {
   relief: "Cold-press tooth, lit from the upper left. Big sheets: paper, card, napkin, parchment.",
   slip: "Fine tooth. Slips, index cards, sticky notes, graph and check stocks.",
-  fibre: "Light and dark fibres with faint plant flecks. Sparse, so the file is tiny.",
-  cloud: "A slow tonal mottling drawn very large, so a page never looks evenly grey.",
+  fibre: "Light and dark fibers with faint plant flecks. Sparse, so the file is tiny.",
+  cloud: "A slow tonal mottling drawn very large, so a page never looks evenly gray.",
   kraft: "Fibrous, with a machine direction. Kraft only.",
   mottle: "Dyed-cloth mottling for the desk.",
-  linen: "Plain-weave bookcloth over the desk colour.",
+  linen: "Plain-weave bookcloth over the desk color.",
 }
 
 function Tiles() {
@@ -403,7 +403,7 @@ export default function PaperPage() {
       <Section id="sheet" title="A sheet is a recipe">
         <Prose>
           <p>
-            Nothing on the desk is a flat rectangle. A sheet is a <strong>stock colour</strong>, a baked <strong>tooth</strong> tile lit from the upper left, an <strong>edge</strong>, and a short warm
+            Nothing on the desk is a flat rectangle. A sheet is a <strong>stock color</strong>, a baked <strong>tooth</strong> tile lit from the upper left, an <strong>edge</strong>, and a short warm
             <strong> shadow</strong> in umber. Only the sheet turns, by less than two degrees; the words on it never do. Paper looks right only against something darker than itself, so the
             pages below sit on the desk.
           </p>
@@ -414,7 +414,7 @@ export default function PaperPage() {
         </Prose>
       </Section>
 
-      <Section id="stocks" title="Nineteen stocks, seven edges" description="Pick an edge and every stock is cut that way. The stocks differ in colour, tooth, shadow and the rules printed on them, not just in paint.">
+      <Section id="stocks" title="Nineteen stocks, seven edges" description="Pick an edge and every stock is cut that way. The stocks differ in color, tooth, shadow and the rules printed on them, not just in paint.">
         <StockExplorer />
         <StockTable />
       </Section>
@@ -423,7 +423,7 @@ export default function PaperPage() {
         <Builder />
       </Section>
 
-      <Section id="shadows" title="Shadows" description="Warm umber, short, with a negative spread so only the soft part peeks out under the sheet. Never grey. Nine stacks, one multiplier.">
+      <Section id="shadows" title="Shadows" description="Warm umber, short, with a negative spread so only the soft part peeks out under the sheet. Never gray. Nine stacks, one multiplier.">
         <Shadows />
       </Section>
 
@@ -441,7 +441,7 @@ export default function PaperPage() {
 
       <Section id="props" title="Tape and fasteners" description="Small objects that hold a sheet to the desk. They are intrinsic drawings: complete in the server HTML, with no measuring, and hidden in calm density.">
         <Section id="tape" level={3} title="Tape">
-          <Demo label="Seven kinds of tape, four ends, eight colours" surface="desk">
+          <Demo label="Seven kinds of tape, four ends, eight colors" surface="desk">
             <TapeShelf />
           </Demo>
         </Section>
@@ -452,7 +452,7 @@ export default function PaperPage() {
         </Section>
       </Section>
 
-      <Section id="texture" title="Texture notes" description="There are no filters and no noise at runtime. The tooth is seven baked, seamless tiles, embedded as base64 in a generated module and laid over any stock colour.">
+      <Section id="texture" title="Texture notes" description="There are no filters and no noise at runtime. The tooth is seven baked, seamless tiles, embedded as base64 in a generated module and laid over any stock color.">
         <Demo label="The baked paper and desk tiles, enlarged">
           <Tiles />
         </Demo>
@@ -485,7 +485,7 @@ export default function PaperPage() {
         <Prose>
           <p>
             The periods are unrelated (192, 240 and 720 px for paper), so the layers never line up into a visible lattice. Each sheet gets seeded offsets, so no two sheets share a grid. Saturated
-            sticky notes lay a veil of their own colour over the tooth, or orange and pink would read as plaster.
+            sticky notes lay a veil of their own color over the tooth, or orange and pink would read as plaster.
           </p>
         </Prose>
       </Section>
@@ -493,7 +493,7 @@ export default function PaperPage() {
       <Related
         items={[
           foundation("pens", "Pens", "The ink that goes on the paper."),
-          foundation("colour", "Colour", "The stock colours and their contrast."),
+          foundation("color", "Color", "The stock colors and their contrast."),
           foundation("density", "Density", "Calm: flat, cut, hairline shadow."),
           component("paper", "Paper", "Every prop, with a11y notes."),
           component("card", "Card", "Paper with shadcn's layout."),

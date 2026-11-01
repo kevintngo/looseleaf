@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 export const meta = {
   title: "Bar chart",
-  description: "Bars coloured in with a marker that misses the outline a little, numbers on top, and the best day circled by hand. Hover or press the arrow keys: a highlighter lights the column and a slip of paper names it.",
+  description: "Bars colored in with a marker that misses the outline a little, numbers on top, and the best day circled by hand. Hover or press the arrow keys: a highlighter lights the column and a slip of paper names it.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

@@ -4,7 +4,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 export const meta = {
   title: "Disabled",
   description:
-    "Official `toggle-group-disabled`: `disabled` on the group disables every item. The items are drawn as dashed pencil grey, and none of them can be focused or toggled.",
+    "Official `toggle-group-disabled`: `disabled` on the group disables every item. The items are drawn as dashed pencil gray, and none of them can be focused or toggled.",
   layout: "center" as const,
 }
 

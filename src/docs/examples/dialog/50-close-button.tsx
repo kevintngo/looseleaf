@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 export const meta = {
   title: "Share link",
   description:
-    "shadcn's `dialog-close-button`, written the same way: a read-only field, a footer aligned to the start and a Close button inside DialogClose. The corner x is still there; this one is the labelled way out.",
+    "shadcn's `dialog-close-button`, written the same way: a read-only field, a footer aligned to the start and a Close button inside DialogClose. The corner x is still there; this one is the labeled way out.",
   layout: "center" as const,
 }
 

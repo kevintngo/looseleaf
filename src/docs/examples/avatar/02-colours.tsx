@@ -1,9 +1,9 @@
 import { Avatar, AvatarBadge, AvatarFallback } from "@/components/ui/avatar"
 
 export const meta = {
-  title: "Colour from the name",
+  title: "Color from the name",
   description:
-    "Give `AvatarFallback` a `name` and it makes the initials, picks one of eight stationery colours from the name (the same person is the same colour everywhere) and lets a screen reader hear the full name instead of two letters. `ring` picks the pen of the loop, and `\"none\"` draws no loop for long lists.",
+    "Give `AvatarFallback` a `name` and it makes the initials, picks one of eight stationery colors from the name (the same person is the same color everywhere) and lets a screen reader hear the full name instead of two letters. `ring` picks the pen of the loop, and `\"none\"` draws no loop for long lists.",
   layout: "center" as const,
 }
 

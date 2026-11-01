@@ -39,7 +39,7 @@ export default function Newsletter01({ onSubscribe }: Newsletter01Props) {
       <div className="px-8 py-14 @xl:py-20">
         <div className="mx-auto grid max-w-5xl items-center gap-x-14 gap-y-6 @3xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
           <Paper stock="paper" tilt={false} tape="corner" tapeKind="washi-dots" seed="newsletter-card" className="px-6 py-8 @xl:px-9 @xl:py-10">
-            <p className="font-type text-sm tracking-[0.18em] text-pencil-text uppercase">The Sunday letter</p>
+            <p className="font-type text-sm text-pencil-text">The Sunday letter</p>
             <Lettering as="h2" id={titleId} size="md" tone="marker" wobble={0.4} seed="newsletter-title" className="mt-3">
               One short letter, every Sunday
             </Lettering>

@@ -21,7 +21,7 @@ export default {
         { name: "mode / defaultMode / onModeChange", type: '"draw" | "type"', default: '"draw"', description: "Draw with a pointer or type the name." },
         { name: "typedFallback", type: "boolean", default: "true", description: "Offer \"Type instead\": the name is hand-lettered as outlines (no font needed in the exported image). Also the way in for people who cannot draw." },
         { name: "penColor / pen", type: 'SketchColor / "brush" | "felt"', default: '"ink-you" / "brush"', description: "The brush swells on down-strokes like a fountain pen; the felt keeps an even line." },
-        { name: "format", type: '"svg" | "png"', default: '"svg"', description: "png is rasterised in the browser through a canvas; where that is not possible the svg is kept." },
+        { name: "format", type: '"svg" | "png"', default: '"svg"', description: "png is rasterized in the browser through a canvas; where that is not possible the svg is kept." },
         { name: "width / height", type: "number", default: "480 / 180", description: "Canvas units; the pad scales to its container." },
       ],
     },
@@ -32,10 +32,10 @@ export default {
   ],
   a11y: [
     "The canvas is a named application (\"Signature\"); the same keyboard drawing as Sketchpad works: arrows move a cursor, Space puts the pen down and lifts it. Typing the name is the accessible alternative and is one button away.",
-    "Type mode replaces the canvas by an image named \"Signature, typed: Ada Lovelace\" and a text field labelled \"Type your full name\".",
+    "Type mode replaces the canvas by an image named \"Signature, typed: Ada Lovelace\" and a text field labeled \"Type your full name\".",
     "Required: a visually hidden text input holds the value so the browser's own validation and message apply; the failure also shows a role=\"alert\" line and moves focus to the canvas (the name field in type mode).",
-    "The baseline turns red pencil when invalid, and the message says why (colour is never the only cue).",
-    "Windows high contrast keeps the ink colours of the strokes; the sheet gets a real border.",
+    "The baseline turns red pencil when invalid, and the message says why (color is never the only cue).",
+    "Windows high contrast keeps the ink colors of the strokes; the sheet gets a real border.",
   ],
   usage: `import { SignaturePad } from "@/components/ui/signature-pad"
 

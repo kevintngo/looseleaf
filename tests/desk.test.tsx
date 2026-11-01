@@ -133,7 +133,7 @@ describe("Desk objects", () => {
     expect(html("calm")).toBeTruthy()
   })
 
-  it("has no axe violations, with objects and a labelled landmark", async () => {
+  it("has no axe violations, with objects and a labeled landmark", async () => {
     const { container } = renderUI(
       <Desk as="main" objects aria-label="workspace">
         <h1>Monday</h1>
@@ -156,7 +156,7 @@ describe("Desk objects", () => {
 })
 
 describe("pencil", () => {
-  it("is deterministic, clean, with a length and a colour of its own", () => {
+  it("is deterministic, clean, with a length and a color of its own", () => {
     const a = pencil("p", { length: 190 })
     expect(a.svg).toBe(pencil("p", { length: 190 }).svg)
     expect(a.svg).not.toBe(pencil("q", { length: 190 }).svg)

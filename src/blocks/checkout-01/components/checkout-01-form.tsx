@@ -162,7 +162,7 @@ export function Checkout01Form({ form, id, onSubmit, shipping }: Props) {
                   name="postcode"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Postcode</FormLabel>
+                      <FormLabel>Postal code</FormLabel>
                       <FormControl>
                         <Input autoComplete="postal-code" placeholder="1100-148" {...field} />
                       </FormControl>

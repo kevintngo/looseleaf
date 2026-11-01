@@ -16,7 +16,7 @@ import {
 export const meta = {
   title: "Header and footer",
   description:
-    "Official `sidebar-header` and `sidebar-footer` in one pad: a workspace switcher on top whose menu opens downward at the width of its button, and an account menu at the bottom that opens upward (`side=\"top\"`). While a menu is open its button keeps the highlighter, where shadcn tints it with the accent colour.",
+    "Official `sidebar-header` and `sidebar-footer` in one pad: a workspace switcher on top whose menu opens downward at the width of its button, and an account menu at the bottom that opens upward (`side=\"top\"`). While a menu is open its button keeps the highlighter, where shadcn tints it with the accent color.",
   layout: "full" as const,
   height: 360,
   stage: "desk" as const,

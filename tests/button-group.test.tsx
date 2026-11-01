@@ -137,7 +137,7 @@ describe("ButtonGroupText and ButtonGroupSeparator", () => {
   })
 })
 
-describe("ButtonGroup behaviour and accessibility", () => {
+describe("ButtonGroup behavior and accessibility", () => {
   it("Tab moves through the buttons in order and each keeps its own click", async () => {
     const onClick = vi.fn()
     const { getAllByRole, user } = renderUI(

@@ -73,7 +73,7 @@ function Basic(props: Partial<React.ComponentProps<typeof BarChart>> = {}) {
 }
 
 describe("ChartContainer", () => {
-  it("is the chart frame with shadcn's data-slot and colour variables", () => {
+  it("is the chart frame with shadcn's data-slot and color variables", () => {
     const { container } = renderUI(<ChartContainer config={config}>{null}</ChartContainer>)
     const root = container.querySelector("[data-slot=chart]") as HTMLElement
     expect(root).toBeTruthy()
@@ -82,14 +82,14 @@ describe("ChartContainer", () => {
     expect(css).toContain("--color-desktop: var(--chart-1)")
     expect(css).toContain("--color-mobile: var(--chart-2)")
   })
-  it("switches a themed colour with the .dark selector", () => {
+  it("switches a themed color with the .dark selector", () => {
     const themed = { a: { label: "A", theme: { light: "#111", dark: "#eee" } } } satisfies ChartConfig
     const { container } = renderUI(<ChartContainer config={themed}>{null}</ChartContainer>)
     const css = container.querySelector("style")!.textContent!
     expect(css).toContain("--color-a: #111")
     expect(css).toMatch(/\.dark \[data-chart=[^\]]+\] \{\s*--color-a: #eee/)
   })
-  it("paints the ink slot with an explicit colour one level below, so it never refers to itself", () => {
+  it("paints the ink slot with an explicit color one level below, so it never refers to itself", () => {
     const { container } = renderUI(<ChartContainer config={config}>{null}</ChartContainer>)
     const body = container.querySelector("[data-slot=chart-body]") as HTMLElement
     expect(body.style.getPropertyValue("--ll-marker")).toBe("var(--color-desktop)")
@@ -203,7 +203,7 @@ describe("accessibility", () => {
     await user.click(getByRole("button", { name: "Mobile" }))
     await axeCheck(container)
   })
-  it("empty and loading charts are labelled images, not widgets", async () => {
+  it("empty and loading charts are labeled images, not widgets", async () => {
     const empty = renderUI(<ChartContainer config={config}><BarChart data={[]} xKey="month" series={["desktop"]} label="Visitors" emptyText="Nothing yet" /></ChartContainer>)
     const img = within(empty.container).getByRole("img", { name: "Visitors" })
     expect(img).toHaveAttribute("data-state", "empty")
@@ -502,7 +502,7 @@ describe("legend", () => {
     await user.click(getByRole("button", { name: "Mobile" }))
     expect(container.querySelector('svg[data-ink="chart"]')!.innerHTML).toBe(before)
   })
-  it("keeps a series' pattern when its neighbour is hidden", async () => {
+  it("keeps a series' pattern when its neighbor is hidden", async () => {
     const { user, getByRole, container } = renderUI(<Basic />)
     const plot = () => container.querySelector('svg[data-ink="chart"]') as SVGElement
     const colours = () => plot().querySelectorAll('[data-part="fill"] path').length
@@ -769,7 +769,7 @@ describe("density, motion, direction", () => {
     expect(getByRole("application")).toHaveAttribute("dir", "ltr")
     expect(container.querySelector("[data-slot=chart-legend]")).toBeTruthy()
   })
-  it("hides the drawing and shows the table in forced colours (by class)", () => {
+  it("hides the drawing and shows the table in forced colors (by class)", () => {
     const { container, getByRole } = renderUI(<Basic />)
     expect(getByRole("application")).toHaveClass("forced-colors:hidden")
     expect(container.querySelector("[data-slot=chart-labels]")).toHaveClass("forced-colors:hidden")

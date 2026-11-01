@@ -3,7 +3,7 @@ import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from "@/components/u
 export const meta = {
   title: "Photo and initials",
   description:
-    "A picture circled by hand, and what shows while there is none: initials on a disc of marker whose colour is chosen from the name. The four sizes are `sm`, `default`, `lg` and `xl`; `AvatarBadge` puts a status dot on the corner.",
+    "A picture circled by hand, and what shows while there is none: initials on a disc of marker whose color is chosen from the name. The four sizes are `sm`, `default`, `lg` and `xl`; `AvatarBadge` puts a status dot on the corner.",
   layout: "center" as const,
 }
 

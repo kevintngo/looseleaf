@@ -284,13 +284,13 @@ describe("corkboard drawing", () => {
     expect(small.length).toBeLessThan(24000)
   })
 
-  it("calm density is a flat cork colour", () => {
+  it("calm density is a flat cork color", () => {
     const calm = run(corkBoardRecipe, { frame: CORK_FRAME }, { w: 300, h: 200 }, "calm").parts.rest ?? ""
     expect(calm).not.toContain("<pattern")
     expect(calm).toContain("var(--ll-kraft)")
   })
 
-  it("the pin is a small drawing in the colour asked for", () => {
+  it("the pin is a small drawing in the color asked for", () => {
     const pin = run(corkPinRecipe, { color: "tomato" }, { w: 24, h: 24 }).parts.rest ?? ""
     expect(pin).toContain("var(--ll-tomato)")
     expect(pin.length).toBeLessThan(4000)

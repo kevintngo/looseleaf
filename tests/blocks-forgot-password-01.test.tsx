@@ -20,7 +20,7 @@ const form = (props: Partial<React.ComponentProps<typeof ForgotPasswordForm>> = 
 const send = { name: "Send reset link" }
 
 describe("forgot-password-01", () => {
-  it("has one labelled field, one button and a way back", () => {
+  it("has one labeled field, one button and a way back", () => {
     const { getByLabelText, getByRole } = form()
     expect(getByLabelText("Email")).toHaveAttribute("autocomplete", "email")
     expect(getByRole("button", send)).toHaveAttribute("type", "submit")

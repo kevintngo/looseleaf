@@ -12,7 +12,7 @@ const HERO = ["bell", "calendar", "settings", "search", "eye", "pencil", "heart"
 
 export function IconStrip() {
   return (
-    <Stage layout="center" label="A few of the icons, with their colour washes">
+    <Stage layout="center" label="A few of the icons, with their color washes">
       <ul role="list" className="m-0 flex list-none flex-wrap items-center justify-center gap-x-7 gap-y-5 p-0 text-ink">
         {HERO.filter((id) => ICON_BY_ID.has(id)).map((id) => (
           <li key={id}>

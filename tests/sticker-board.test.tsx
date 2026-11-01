@@ -78,14 +78,14 @@ describe("StickerBoard structure", () => {
     expect(item(container, "done-1").style.rotate).toBe("10deg")
   })
 
-  it("lays a sticker out by its centre, and stacks by z", () => {
+  it("lays a sticker out by its center, and stacks by z", () => {
     const { container } = renderUI(<Board />)
     expect(at(item(container, "rocket-1"))).toEqual([200, 150])
     expect(item(container, "rocket-1").style.zIndex).toBe("1")
     expect(item(container, "done-1").style.zIndex).toBe("2")
   })
 
-  it("is sized by the visible sticker and scaled around its centre", () => {
+  it("is sized by the visible sticker and scaled around its center", () => {
     const { container } = renderUI(<Board />)
     const face = stickerFace("done", 96, "done-1")!
     const el = item(container, "done-1")
@@ -280,7 +280,7 @@ describe("StickerBoard keyboard", () => {
     expect(item(container, "rocket-2")).toHaveAttribute("data-selected")
   })
 
-  it("keeps the centre on the canvas, or the whole sticker with bounds=inside", async () => {
+  it("keeps the center on the canvas, or the whole sticker with bounds=inside", async () => {
     const { container, user } = renderUI(<Board defaultValue={[{ ...START[0], x: 4, y: 4 }]} />)
     sized(container)
     const a = item(container, "rocket-1")
@@ -349,7 +349,7 @@ describe("StickerBoard pointer", () => {
     expect(Number(a.style.zIndex)).toBeGreaterThan(100)
   })
 
-  it("keeps the centre on the canvas", () => {
+  it("keeps the center on the canvas", () => {
     const onValueChange = vi.fn()
     const { container } = renderUI(<Board onValueChange={onValueChange} />)
     sized(container)
@@ -381,7 +381,7 @@ describe("StickerBoard pointer", () => {
     expect(onValueChange).not.toHaveBeenCalled()
   })
 
-  it("the turn ring turns it about its centre, Shift snaps to 15 degrees", () => {
+  it("the turn ring turns it about its center, Shift snaps to 15 degrees", () => {
     const onValueChange = vi.fn()
     const { container } = renderUI(<Board onValueChange={onValueChange} />)
     sized(container)
@@ -398,7 +398,7 @@ describe("StickerBoard pointer", () => {
     expect(onValueChange).toHaveBeenCalledWith(expect.arrayContaining([expect.objectContaining({ id: "rocket-1", rot: 75 })]))
   })
 
-  it("the size square scales with the distance from the centre, inside the limits", () => {
+  it("the size square scales with the distance from the center, inside the limits", () => {
     const onValueChange = vi.fn()
     const { container } = renderUI(<Board onValueChange={onValueChange} />)
     sized(container)

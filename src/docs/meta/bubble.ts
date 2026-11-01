@@ -5,7 +5,7 @@ export default {
   title: "Bubble",
   category: "Chat",
   description:
-    "A chat bubble drawn like a person draws one: a single felt-tip stroke round a pillowy box, a solid fill (blue for what you send, grey or highlighter for the rest) and a tail on the sender's side. Also a folded note or a sticky note.",
+    "A chat bubble drawn like a person draws one: a single felt-tip stroke round a pillowy box, a solid fill (blue for what you send, gray or highlighter for the rest) and a tail on the sender's side. Also a folded note or a sticky note.",
   status: "new",
   upstream: "bubble",
   parts: [
@@ -45,9 +45,9 @@ export default {
   a11y: [
     "A bubble is a plain div (as upstream); the drawing is an aria-hidden svg with pointer-events none, so it never affects selection, find-in-page or screen readers.",
     "Ink on the marker fill is 4.6:1 (the drawn fill is darker), on the highlighter and paper variants 8:1 or more. Muted text on paper is 8.9:1.",
-    "An interactive bubble is a real `button` or `a` through asChild; it gets the drawn focus ring on :focus-visible and the hover drop-lines, and keeps native keyboard behaviour.",
+    "An interactive bubble is a real `button` or `a` through asChild; it gets the drawn focus ring on :focus-visible and the hover drop-lines, and keeps native keyboard behavior.",
     "The tail follows the reading direction (it is on the right in right-to-left) and is a separate part, so it can be hidden without redrawing.",
-    "Density `calm` draws hairline pencil outlines with a flat wash (the tail included); forced colours replace the drawing with a real outline.",
+    "Density `calm` draws hairline pencil outlines with a flat wash (the tail included); forced colors replace the drawing with a real outline.",
     "Difference from upstream: the body is drawn, so `bg-*`, `border-*` and `rounded-*` classes on `BubbleContent` (or `*:data-[slot=bubble-content]:bg-*` on `Bubble`) paint a plain CSS box behind the ink instead of restyling it. Choose the look with `variant`, `pen` and `shape`.",
   ],
   usage: `import { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from "@/components/ui/bubble"

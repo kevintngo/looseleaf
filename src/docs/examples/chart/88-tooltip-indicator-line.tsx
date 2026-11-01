@@ -4,7 +4,7 @@ import { activity, weekday } from "./_data"
 
 export const meta = {
   title: "Tooltip: line indicator",
-  description: "`indicator=\"line\"` gives each row a narrow bar in the series colour and pencil pattern.",
+  description: "`indicator=\"line\"` gives each row a narrow bar in the series color and pencil pattern.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

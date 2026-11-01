@@ -1320,7 +1320,7 @@
       "name": "font-kevin-sans",
       "type": "registry:theme",
       "title": "Kevin Sans",
-      "description": "Kevin Sans, the hand of every Looseleaf label, title and stamp: one family tuned for three roles (font-hand, font-script, font-type), loaded from the Looseleaf site.",
+      "description": "Kevin Sans, the hand of every Looseleaf label, title and stamp: one family tuned for three roles (font-hand, font-script, font-type). The ink engine loads it from the Looseleaf site the first time a component draws, unless the page already has it.",
       "categories": [
         "fonts"
       ],
@@ -1330,9 +1330,6 @@
           "font-script": "\"Kevin Sans Script\", \"Kevin Sans\", \"Bradley Hand\", cursive",
           "font-type": "\"Kevin Sans Type\", \"Kevin Sans\", \"Bradley Hand\", cursive"
         }
-      },
-      "css": {
-        "@import url(\"https://kevintngo.github.io/looseleaf/fonts/kevin-sans.css\")": {}
       }
     },
     {
@@ -1805,7 +1802,7 @@
       "name": "ink-paper-textures",
       "type": "registry:lib",
       "title": "Ink paper textures",
-      "description": "Baked paper, fibre, linen and kraft tiles (base64 PNG inside a .ts file). The ink engine imports them; a bundler drops the tiles an app never draws.",
+      "description": "Baked paper, fiber, linen and kraft tiles (base64 PNG inside a .ts file). The ink engine imports them; a bundler drops the tiles an app never draws.",
       "files": [
         {
           "path": "src/lib/ink/textures-paper.generated.ts",
@@ -2082,7 +2079,7 @@
       "name": "accordion",
       "type": "registry:ui",
       "title": "Accordion",
-      "description": "Ruled rows that open. Each row sits on a hand-pulled pencil rule; a hovered row gets a highlighter swipe, and an opened row turns its chevron over, writes a margin brace beside its text and lets the words soak in. Radix behaviour and keyboard support are untouched.",
+      "description": "Ruled rows that open. Each row sits on a hand-pulled pencil rule; a hovered row gets a highlighter swipe, and an opened row turns its chevron over, writes a margin brace beside its text and lets the words soak in. Radix behavior and keyboard support are untouched.",
       "categories": [
         "Layout"
       ],
@@ -2117,8 +2114,8 @@
         ],
         "a11y": [
           "The WAI-ARIA accordion pattern from Radix: each trigger is a button with `aria-expanded` and `aria-controls` inside a heading; Enter and Space toggle; ArrowDown, ArrowUp, Home and End move between triggers.",
-          "The panel is a `region` labelled by its trigger. Closed panels are removed from the accessibility tree.",
-          "The chevron, the rules, the swipe and the brace are aria-hidden and pointer-events: none. State is told by aria-expanded and the turned chevron, not by colour.",
+          "The panel is a `region` labeled by its trigger. Closed panels are removed from the accessibility tree.",
+          "The chevron, the rules, the swipe and the brace are aria-hidden and pointer-events: none. State is told by aria-expanded and the turned chevron, not by color.",
           "Keyboard focus draws a blue felt ring round the row; hover-only decoration never carries meaning. Windows high contrast hides the drawings and uses the browser's own focus ring.",
           "Reduced motion (the OS setting or data-motion=\"reduced\") opens rows at once and shows the brace finished.",
           "Right-to-left layouts mirror the brace and text indent; the chevron is symmetric."
@@ -2198,7 +2195,7 @@
       "name": "alert",
       "type": "registry:ui",
       "title": "Alert",
-      "description": "A message on a slip of paper, drawn in felt tip. Default and destructive as upstream, plus info, success, warning and a sticky-note variant. Each tone has its own pattern in the margin as well as its own colour, and a 16 px icon put first is circled in the tone's marker.",
+      "description": "A message on a slip of paper, drawn in felt tip. Default and destructive as upstream, plus info, success, warning and a sticky-note variant. Each tone has its own pattern in the margin as well as its own color, and a 16 px icon put first is circled in the tone's marker.",
       "categories": [
         "Feedback"
       ],
@@ -2233,10 +2230,10 @@
         ],
         "a11y": [
           "`role=\"alert\"`: assertive live region, announced when it appears. For content that is on the page from the start, override with `role=\"status\"` or `role=\"note\"`.",
-          "Tone is told by pattern and icon as well as colour: hatching (destructive), a double rule (info), a marker strip (success), a highlighter panel (warning). Destructive text is red on a paper slip with the faintest red wash, 4.6:1 (the description is not dimmed as upstream's is).",
+          "Tone is told by pattern and icon as well as color: hatching (destructive), a double rule (info), a marker strip (success), a highlighter panel (warning). Destructive text is red on a paper slip with the faintest red wash, 4.6:1 (the description is not dimmed as upstream's is).",
           "The box, the margin marks and the circle round the icon are aria-hidden and pointer-events: none. The icon is decorative unless you give it a `label`.",
           "Buttons and links inside an alert are their own hosts with their own focus rings.",
-          "Calm density draws a single pencil loop and one rule in the tone's colour; Windows high contrast replaces the drawing with a real border."
+          "Calm density draws a single pencil loop and one rule in the tone's color; Windows high contrast replaces the drawing with a real border."
         ],
         "usage": "import { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function Example() {\n  return (\n    <Alert variant=\"destructive\">\n      <Icon name=\"circle-alert\" />\n      <AlertTitle>Unable to process your payment.</AlertTitle>\n      <AlertDescription>Please verify your billing information and try again.</AlertDescription>\n    </Alert>\n  )\n}",
         "parts": [
@@ -2370,7 +2367,7 @@
           "carousel"
         ],
         "a11y": [
-          "Layout only: no role, no name, no keyboard behaviour. Give the image inside it real alt text, or an empty alt if it is decoration.",
+          "Layout only: no role, no name, no keyboard behavior. Give the image inside it real alt text, or an empty alt if it is decoration.",
           "The frames in the examples (a Polaroid's white border, tape, a pin) are decoration and hidden from assistive tech; the caption is real text.",
           "A ratio box has no minimum height, so it collapses to nothing in a container that has no width: give the parent one."
         ],
@@ -2462,7 +2459,7 @@
         "a11y": [
           "AttachmentProgress is a `role=\"progressbar\"` with `aria-valuenow`/`min`/`max` (none while indeterminate). Inside an attachment it is named by the AttachmentTitle unless you give it an `aria-label` or `aria-labelledby`; on its own it needs one.",
           "An AttachmentTrigger covers the attachment and is the tab stop; the Action buttons above it (z-20) stay separately focusable. Label both: the file name is not enough for 'Remove'.",
-          "The state is never only colour: error is red pencil plus a red message plus (for you) a retry action; idle is dashed; done carries a clip.",
+          "The state is never only color: error is red pencil plus a red message plus (for you) a retry action; idle is dashed; done carries a clip.",
           "Sheets, outlines, clips and tape are aria-hidden and take no pointer events. Calm density hides the clip and the tape and traces a plain hairline.",
           "Error text is red on slip (4.8:1); titles are ink on slip (14:1).",
           "A finished chip carries a paper clip over its end. With no action beside it the content keeps clear of the clip (extra end padding), so a long title truncates before it, not under it."
@@ -2486,7 +2483,7 @@
       "name": "avatar",
       "type": "registry:ui",
       "title": "Avatar",
-      "description": "A face, circled in felt tip. The picture is circled by a hand-drawn loop; without one the initials sit on a disc of marker in a stationery colour chosen from the name. A status dot goes on the corner, and a group overlaps its faces and ends in a sketched \"+3\".",
+      "description": "A face, circled in felt tip. The picture is circled by a hand-drawn loop; without one the initials sit on a disc of marker in a stationery color chosen from the name. A status dot goes on the corner, and a group overlaps its faces and ends in a sketched \"+3\".",
       "categories": [
         "Data display"
       ],
@@ -2520,9 +2517,9 @@
         ],
         "a11y": [
           "The loop, the disc and the dot are aria-hidden decoration. Give the picture an `alt` (or `alt=\"\"` next to the name in text), and give AvatarFallback a `name` so the person is read out instead of two letters.",
-          "Colour is never the only carrier: the initials say who, and the badge needs its own text for its meaning (online, busy). The initials are ink on a 62% marker, 5.5:1 or better on all eight colours.",
+          "Color is never the only carrier: the initials say who, and the badge needs its own text for its meaning (online, busy). The initials are ink on a 62% marker, 5.5:1 or better on all eight colors.",
           "An avatar is not interactive. Wrap it in a Button or link yourself, and the hand-drawn loop then sits inside that control's focus ring.",
-          "The same name is always the same colour on the server and in the browser (a hash of the trimmed, lower-cased name), so nothing changes at hydration.",
+          "The same name is always the same color on the server and in the browser (a hash of the trimmed, lower-cased name), so nothing changes at hydration.",
           "Windows high contrast removes the drawings and keeps the picture or initials."
         ],
         "usage": "import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from \"@/components/ui/avatar\"\n\nexport function Example() {\n  return (\n    <AvatarGroup>\n      <Avatar>\n        <AvatarImage src=\"/ada.png\" alt=\"Ada Lovelace\" />\n        <AvatarFallback name=\"Ada Lovelace\" />\n        <AvatarBadge status=\"online\" />\n      </Avatar>\n      <Avatar>\n        <AvatarFallback name=\"Jo Okafor\" />\n      </Avatar>\n      <AvatarGroupCount>+3</AvatarGroupCount>\n    </AvatarGroup>\n  )\n}",
@@ -2575,7 +2572,7 @@
           "table"
         ],
         "a11y": [
-          "A badge is plain inline text in a span: it is read in reading order with what is around it. Give a status badge words (\"Beta\"), never only a colour or a mark.",
+          "A badge is plain inline text in a span: it is read in reading order with what is around it. Give a status badge words (\"Beta\"), never only a color or a mark.",
           "A tally is decoration for the eye; the number is real text in the DOM (visually hidden), so `<Badge tally count={7}>` reads as \"7\".",
           "Ink on the marker fill is 4.6:1, on the highlighter 12:1; destructive is told apart by its hatch and its word as well as its red.",
           "As a link (asChild), the badge keeps the link's role and href, takes keyboard focus and draws the blue felt ring; hover adds a drop-line, a swipe or an underline and is off on touch screens.",
@@ -2639,7 +2636,7 @@
       "name": "bookmark",
       "type": "registry:ui",
       "title": "Bookmark",
-      "description": "A ribbon bookmark you can press. Unpressed, a dashed pencil ghost of a ribbon marks the place; pressed, the woven, edge-stitched cloth ribbon hangs there in its colour and casts a short shadow. It is a Toggle underneath, so `aria-pressed`, Space and Enter come for free. `BookmarkRibbon` is the same ribbon as a page marker with no behaviour.",
+      "description": "A ribbon bookmark you can press. Unpressed, a dashed pencil ghost of a ribbon marks the place; pressed, the woven, edge-stitched cloth ribbon hangs there in its color and casts a short shadow. It is a Toggle underneath, so `aria-pressed`, Space and Enter come for free. `BookmarkRibbon` is the same ribbon as a page marker with no behavior.",
       "categories": [
         "Paper"
       ],
@@ -2674,8 +2671,8 @@
         ],
         "a11y": [
           "Bookmark is a real toggle button: it announces \"pressed\" or \"not pressed\", it is reached by Tab and pressed with Space or Enter. Give it a name that says what it saves (\"Save this article\"); the name does not change with the state, `aria-pressed` does.",
-          "The ribbon, its stitching and its ghost are aria-hidden decoration, so the state is never carried by colour alone: `aria-pressed` and the ghost-versus-ribbon shape (dashed outline versus a filled tail) both tell it. Focus shows the standard focus ring around the box.",
-          "The hit area is 44 x 60 px with its extension (24 px minimum). Windows high contrast replaces the drawing with a button outline, and a pressed bookmark fills with the system highlight colour so the state is still visible; `aria-pressed` follows either way."
+          "The ribbon, its stitching and its ghost are aria-hidden decoration, so the state is never carried by color alone: `aria-pressed` and the ghost-versus-ribbon shape (dashed outline versus a filled tail) both tell it. Focus shows the standard focus ring around the box.",
+          "The hit area is 44 x 60 px with its extension (24 px minimum). Windows high contrast replaces the drawing with a button outline, and a pressed bookmark fills with the system highlight color so the state is still visible; `aria-pressed` follows either way."
         ],
         "usage": "import { Bookmark, BookmarkRibbon } from \"@/components/ui/bookmark\"\n\n<Card className=\"relative\">\n  <Bookmark className=\"absolute -top-1 end-6\" defaultPressed onPressedChange={save}>\n    Save this article\n  </Bookmark>\n  …\n</Card>\n\n<Paper className=\"relative\"><BookmarkRibbon tone=\"grape\" className=\"absolute -top-1 end-8\" /></Paper>",
         "parts": [
@@ -2767,9 +2764,9 @@
           "tabs"
         ],
         "a11y": [
-          "Landmark and list semantics as in the WAI-ARIA breadcrumb pattern: `nav` labelled \"breadcrumb\" holding an ordered list; the current page carries `aria-current=\"page\"` (and, as upstream, `role=\"link\"` with `aria-disabled` since it goes nowhere).",
+          "Landmark and list semantics as in the WAI-ARIA breadcrumb pattern: `nav` labeled \"breadcrumb\" holding an ordered list; the current page carries `aria-current=\"page\"` (and, as upstream, `role=\"link\"` with `aria-disabled` since it goes nowhere).",
           "Separators and the ellipsis glyph are hidden from assistive technology; the ellipsis keeps an `sr-only` \"More\", and the button you wrap it in needs its own name (\"Toggle menu\").",
-          "The underline and the highlighter are decoration with no pointer events and never move the text. Links keep the theme's focus ring; the current page is bold and underlined, so it does not depend on colour."
+          "The underline and the highlighter are decoration with no pointer events and never move the text. Links keep the theme's focus ring; the current page is bold and underlined, so it does not depend on color."
         ],
         "usage": "import {\n  Breadcrumb,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbList,\n  BreadcrumbPage,\n  BreadcrumbSeparator,\n} from \"@/components/ui/breadcrumb\"\n\nexport function Example() {\n  return (\n    <Breadcrumb>\n      <BreadcrumbList>\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"/\">Home</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbLink href=\"/components\">Components</BreadcrumbLink>\n        </BreadcrumbItem>\n        <BreadcrumbSeparator />\n        <BreadcrumbItem>\n          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>\n        </BreadcrumbItem>\n      </BreadcrumbList>\n    </Breadcrumb>\n  )\n}",
         "parts": [
@@ -2787,7 +2784,7 @@
       "name": "bubble",
       "type": "registry:ui",
       "title": "Bubble",
-      "description": "A chat bubble drawn like a person draws one: a single felt-tip stroke round a pillowy box, a solid fill (blue for what you send, grey or highlighter for the rest) and a tail on the sender's side. Also a folded note or a sticky note.",
+      "description": "A chat bubble drawn like a person draws one: a single felt-tip stroke round a pillowy box, a solid fill (blue for what you send, gray or highlighter for the rest) and a tail on the sender's side. Also a folded note or a sticky note.",
       "categories": [
         "Chat"
       ],
@@ -2827,9 +2824,9 @@
         "a11y": [
           "A bubble is a plain div (as upstream); the drawing is an aria-hidden svg with pointer-events none, so it never affects selection, find-in-page or screen readers.",
           "Ink on the marker fill is 4.6:1 (the drawn fill is darker), on the highlighter and paper variants 8:1 or more. Muted text on paper is 8.9:1.",
-          "An interactive bubble is a real `button` or `a` through asChild; it gets the drawn focus ring on :focus-visible and the hover drop-lines, and keeps native keyboard behaviour.",
+          "An interactive bubble is a real `button` or `a` through asChild; it gets the drawn focus ring on :focus-visible and the hover drop-lines, and keeps native keyboard behavior.",
           "The tail follows the reading direction (it is on the right in right-to-left) and is a separate part, so it can be hidden without redrawing.",
-          "Density `calm` draws hairline pencil outlines with a flat wash (the tail included); forced colours replace the drawing with a real outline.",
+          "Density `calm` draws hairline pencil outlines with a flat wash (the tail included); forced colors replace the drawing with a real outline.",
           "Difference from upstream: the body is drawn, so `bg-*`, `border-*` and `rounded-*` classes on `BubbleContent` (or `*:data-[slot=bubble-content]:bg-*` on `Bubble`) paint a plain CSS box behind the ink instead of restyling it. Choose the look with `variant`, `pen` and `shape`."
         ],
         "usage": "import { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from \"@/components/ui/bubble\"\n\nexport function Example() {\n  return (\n    <BubbleGroup>\n      <Bubble variant=\"muted\">\n        <BubbleContent>Can you add tags to my notes?</BubbleContent>\n      </Bubble>\n      <Bubble variant=\"default\" align=\"end\">\n        <BubbleContent>Yes, small ones.</BubbleContent>\n        <BubbleReactions>+1</BubbleReactions>\n      </Bubble>\n    </BubbleGroup>\n  )\n}\n\n<Bubble shape=\"note\"><BubbleContent paper={{ tilt: -1.5 }}>meet me at four</BubbleContent></Bubble>",
@@ -2845,7 +2842,7 @@
       "name": "button-group",
       "type": "registry:ui",
       "title": "Button Group",
-      "description": "Buttons, fields and printed cells joined into one row (or column) that share their seams: the edge two neighbours have in common is drawn once, by the one before, or by a pencil separator you put between them.",
+      "description": "Buttons, fields and printed cells joined into one row (or column) that share their seams: the edge two neighbors have in common is drawn once, by the one before, or by a pencil separator you put between them.",
       "categories": [
         "Actions"
       ],
@@ -2881,9 +2878,9 @@
           "dropdown-menu"
         ],
         "a11y": [
-          "The group is role=group: give it an aria-label when the buttons alone do not say what they belong to. It adds no keyboard behaviour of its own; Tab visits each control in order (use ToggleGroup for one tab stop with arrow keys).",
+          "The group is role=group: give it an aria-label when the buttons alone do not say what they belong to. It adds no keyboard behavior of its own; Tab visits each control in order (use ToggleGroup for one tab stop with arrow keys).",
           "A separator between buttons is decorative (role=none); the buttons keep their own names and states.",
-          "A focused child is lifted above its neighbours and keeps its whole blue felt ring; in Windows high contrast the drawing is replaced by each control's real border.",
+          "A focused child is lifted above its neighbors and keeps its whole blue felt ring; in Windows high contrast the drawing is replaced by each control's real border.",
           "ButtonGroupText is plain text: give an input it labels a real label (use asChild with <label htmlFor>) or an aria-label."
         ],
         "usage": "import { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator, ButtonGroupText } from \"@/components/ui/button-group\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function Example() {\n  return (\n    <div className=\"flex flex-col gap-4\">\n      <ButtonGroup aria-label=\"Range\">\n        <Button variant=\"outline\">Years</Button>\n        <Button variant=\"outline\">Months</Button>\n        <Button variant=\"outline\">Days</Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\">Copy</Button>\n        <ButtonGroupSeparator />\n        <Button variant=\"secondary\">Paste</Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <ButtonGroupText>https://</ButtonGroupText>\n        <Input aria-label=\"Host\" placeholder=\"example.com\" />\n        <Button>Go</Button>\n      </ButtonGroup>\n    </div>\n  )\n}",
@@ -3136,9 +3133,9 @@
           "scroll-area"
         ],
         "a11y": [
-          "The APG carousel pattern: a labelled region (`aria-roledescription=\"carousel\"`), slides that are groups (`aria-roledescription=\"slide\"`; give each an `aria-label` such as \"3 of 7\" when the position matters), and previous / next buttons with names. A polite live region says \"Slide 2 of 5\" as it changes.",
+          "The APG carousel pattern: a labeled region (`aria-roledescription=\"carousel\"`), slides that are groups (`aria-roledescription=\"slide\"`; give each an `aria-label` such as \"3 of 7\" when the position matters), and previous / next buttons with names. A polite live region says \"Slide 2 of 5\" as it changes.",
           "The arrow keys along the carousel's axis (Left and Right, mirrored in RTL; Up and Down when vertical) move it from anywhere inside it: on a button, a link or a slide. They are left alone while you are typing in a field (the caret's), when a widget inside a slide has already used the key (a radio group, tabs, a slider, a menu opened from a slide) and when a modifier is held (Alt+Left is the browser's Back). Your own `onKeyDown` on the Carousel runs first. Previous and next are ordinary buttons in the tab order.",
-          "The tally is a tablist with one tab stop (the current stroke); when the arrow keys move the carousel while focus is on it, focus goes along to the new current stroke. Strokes stay together in their group of five when the row wraps, and the tally clips its own drawings so they add no scroll area to the page. Each stroke is 24 by 32 px, is named \"Go to slide n\" and is marked with `aria-selected`; the current one is also bolder, taller and blue, so it does not rely on colour alone.",
+          "The tally is a tablist with one tab stop (the current stroke); when the arrow keys move the carousel while focus is on it, focus goes along to the new current stroke. Strokes stay together in their group of five when the row wraps, and the tally clips its own drawings so they add no scroll area to the page. Each stroke is 24 by 32 px, is named \"Go to slide n\" and is marked with `aria-selected`; the current one is also bolder, taller and blue, so it does not rely on color alone.",
           "Swipe and drag are Embla's. Nothing moves by itself. Reduced motion does not change Embla's scroll animation (configure `duration` in `opts` if you want it shorter)."
         ],
         "usage": "import { Card, CardContent } from \"@/components/ui/card\"\nimport { Carousel, CarouselContent, CarouselDots, CarouselItem, CarouselNext, CarouselPrevious } from \"@/components/ui/carousel\"\n\nexport function Example() {\n  return (\n    <div className=\"mx-12 max-w-xs\">\n      <Carousel aria-label=\"Notes\">\n        <CarouselContent>\n          {Array.from({ length: 7 }, (_, i) => (\n            <CarouselItem key={i}>\n              <Card>\n                <CardContent className=\"grid aspect-square place-items-center font-script text-5xl\">{i + 1}</CardContent>\n              </Card>\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselPrevious />\n        <CarouselNext />\n        <CarouselDots />\n      </Carousel>\n    </div>\n  )\n}",
@@ -3157,7 +3154,7 @@
       "name": "chart",
       "type": "registry:ui",
       "title": "Chart",
-      "description": "Charts drawn by hand: bars coloured in with a marker, felt lines, pencil-shaded areas, pies, radars, dials, sparklines, tally marks and calendar heat maps. Real text on a real DOM, a keyboard cursor, a tooltip on a slip of paper, a legend that switches series off, a table for screen readers, and a pencil pattern on every series so colour is never the only channel.",
+      "description": "Charts drawn by hand: bars colored in with a marker, felt lines, pencil-shaded areas, pies, radars, dials, sparklines, tally marks and calendar heat maps. Real text on a real DOM, a keyboard cursor, a tooltip on a slip of paper, a legend that switches series off, a table for screen readers, and a pencil pattern on every series so color is never the only channel.",
       "categories": [
         "Charts"
       ],
@@ -3255,7 +3252,7 @@
         "a11y": [
           "Every chart is one tab stop with arrow-key navigation. The drawing is a `role=\"application\"` with an accessible name, a role description (\"bar chart\") and a spoken summary; left and right move between data points (up and down between series, or between rows for sideways bars and grids), Home and End jump to the first and last, Escape closes the tooltip. The current point is announced through a polite live region.",
           "Each chart ships its data as a visually hidden table (a caption, column and row headers) next to the drawing. Charts that are pictures (empty, loading, static sparklines) are `role=\"img\"` with the same summary; a gauge is `role=\"meter\"` with a value, a minimum, a maximum and a text.",
-          "Colour is never the only channel: every series has a pencil pattern (hatching, dots, cross-hatching, rules, scribble) on its marks, and lines have a marker shape and a dash pattern. The legend and the tooltip show the same swatch as the drawing. Legend entries are buttons with `aria-pressed`.",
+          "Color is not the only channel: every series is named in the legend and the tooltip, values are announced, and lines have a marker shape and a dash pattern. Filled marks are solid color; set `patterns` to add hatching, dots, cross-hatching, rules and scribble, which also switch on by themselves in forced-colors mode. Legend entries are buttons with `aria-pressed`.",
           "All chart text is DOM text in the hand fonts at 12 px or more (15 px script in the default density). Ink on paper is 14:1; muted tick labels 8.9:1. The pointer never has to be used: everything the tooltip shows is in the live region and the table.",
           "Reduced motion removes the wipe-on, the pulse and the cursor slide. In Windows high contrast the drawing is replaced by the data table. Calm density draws hairlines, no fill offset and 12 px hand text for dense screens. The plot always runs left to right (a time axis does not mirror); the legend and the words on the tooltip follow the page direction."
         ],
@@ -3288,7 +3285,7 @@
       "name": "checkbox",
       "type": "registry:ui",
       "title": "Checkbox",
-      "description": "A hand-drawn box you tick. Checking fills it with solid marker and writes a heavy felt tick over it, stroke by stroke; a dash means partly checked. Radix behaviour, keyboard and form support are untouched.",
+      "description": "A hand-drawn box you tick. Checking fills it with solid marker and writes a heavy felt tick over it, stroke by stroke; a dash means partly checked. Radix behavior, keyboard and form support are untouched.",
       "categories": [
         "Forms"
       ],
@@ -3388,7 +3385,7 @@
       "name": "clipboard",
       "type": "registry:ui",
       "title": "Clipboard",
-      "description": "A board with a spring clip holding a sheet of paper. The board is one drawn sheet (hardboard with the grain of its fibre, or coloured plastic; a bevel lit from the upper left) that turns and casts its own shadow; the chrome clip is drawn over the paper it holds. The sheet is real DOM: put a form, a checklist or notes on it.",
+      "description": "A board with a spring clip holding a sheet of paper. The board is one drawn sheet (hardboard with the grain of its fiber, or colored plastic; a bevel lit from the upper left) that turns and casts its own shadow; the chrome clip is drawn over the paper it holds. The sheet is real DOM: put a form, a checklist or notes on it.",
       "categories": [
         "Paper"
       ],
@@ -3421,7 +3418,7 @@
         ],
         "a11y": [
           "The board and the clip are aria-hidden decoration (the clip is an intrinsic `prop` drawn over the paper, with no pointer events); everything on the paper is ordinary content. Make the paper a `form`, `section` or `article` with a label when it means more than a block of text.",
-          "Ink on the paper is 14:1. The paper is drawn on cream even on a coloured board, so contrast never depends on the board's colour. The clip hides in calm density; the tilt is zero there.",
+          "Ink on the paper is 14:1. The paper is drawn on cream even on a colored board, so contrast never depends on the board's color. The clip hides in calm density; the tilt is zero there.",
           "Windows high contrast replaces the board with an outline; the paper keeps its own."
         ],
         "usage": "import { Clipboard, ClipboardPaper } from \"@/components/ui/clipboard\"\n\n<Clipboard tone=\"teal\">\n  <ClipboardPaper as=\"form\" aria-label=\"Sign-in sheet\">\n    <h3 className=\"font-script text-3xl font-bold\">Visitors</h3>\n    …\n  </ClipboardPaper>\n</Clipboard>",
@@ -3435,7 +3432,7 @@
       "name": "code-block",
       "type": "registry:ui",
       "title": "Code block",
-      "description": "A typed slip taped to the page: the file name in a typewriter face, the code on a two-colour ribbon (red keywords and numbers, black for the rest), line numbers in the margin and a diff mode where removed lines are struck through in red pencil and added ones ticked in green. Ships its own small lexer for tsx, ts, jsx, js, css, json and bash.",
+      "description": "A typed slip taped to the page: the file name in a typewriter face, the code on a two-color ribbon (red keywords and numbers, black for the rest), line numbers in the margin and a diff mode where removed lines are struck through in red pencil and added ones ticked in green. Ships its own small lexer for tsx, ts, jsx, js, css, json and bash.",
       "categories": [
         "Chat"
       ],
@@ -3473,7 +3470,7 @@
           "The scrolling body is a tab stop (`tabindex=0`) so a keyboard user can scroll long lines; on :focus-visible a blue ring is drawn round it.",
           "Diff lines are `ins` and `del` elements with a visually hidden 'Added:' / 'Removed:'; the tick and the strike are aria-hidden and never the only signal. Git's `\\ No newline at end of file` is read as a note, not as code.",
           "Contrast: ink on the slip 14:1, red ribbon 4.8:1, graphite comments and line numbers 5.9:1. Reduced motion changes nothing (there is no animation but the copied tick).",
-          "Forced colours: the drawn rule and the ring step aside for real outlines; the strike and tick keep the text colour."
+          "Forced colors: the drawn rule and the ring step aside for real outlines; the strike and tick keep the text color."
         ],
         "usage": "import { CodeBlock } from \"@/components/ui/code-block\"\n\nexport function Example() {\n  return (\n    <CodeBlock\n      filename=\"src/notes/filter.ts\"\n      language=\"ts\"\n      lineNumbers\n      code={`export const shown = picked.size\n  ? notes.filter((n) => n.tags.some((t) => picked.has(t)))\n  : notes`}\n    />\n  )\n}\n\n<CodeBlock diff filename=\"filter.ts\" language=\"ts\" code={patch} />",
         "parts": [
@@ -3716,7 +3713,7 @@
         "a11y": [
           "Confetti is decoration: the pieces are aria-hidden, never focusable, and click-through (pointer-events: none). Say what happened in words too (a toast, a status line): confetti alone tells a screen reader nothing.",
           "Reduced motion (the OS setting, data-motion=\"reduced\", or --ll-motion 0) throws nothing at all: no pieces, no layer.",
-          "Pieces are removed as soon as they have faded, and the layer with them; a burst can be cancelled with the function it returns, and unmounting a Confetti layer clears its pieces.",
+          "Pieces are removed as soon as they have faded, and the layer with them; a burst can be canceled with the function it returns, and unmounting a Confetti layer clears its pieces.",
           "Flight runs on the Web Animations API (off the main thread). Browsers without it simply show nothing."
         ],
         "usage": "import { ConfettiTrigger, confetti } from \"@/components/ui/confetti\"\nimport { Button } from \"@/components/ui/button\"\n\nexport function Example() {\n  return (\n    <ConfettiTrigger asChild>\n      <Button>Celebrate</Button>\n    </ConfettiTrigger>\n  )\n}\n\nexport function FromAHandler() {\n  return <Button onClick={(event) => confetti({ origin: event.currentTarget, count: 120 })}>Celebrate</Button>\n}",
@@ -3766,7 +3763,7 @@
           "Up and Down move (disabled rows are skipped), Home and End jump, typing a letter jumps to the next row that starts with it, ArrowRight opens a sub-menu and ArrowLeft closes it, Enter or Space chooses, Escape closes.",
           "A context menu must never be the only way to reach an action: put the same actions on a visible control (a DropdownMenu on a button) as well.",
           "The highlight follows the keyboard as well as the pointer (`data-highlighted`); a row with keyboard focus also gets a bar of blue felt at its start edge. Ticks, dots, chevrons and the pencil boxes are aria-hidden drawings; keycaps are real `kbd` elements.",
-          "Rows are 32 px high (28 compact and calm). Portalled content repeats the InkProvider's data-density, data-motion and data-theme; with reduced motion it appears without the slide and zoom. In forced-colors mode the highlighted row takes the system highlight colours."
+          "Rows are 32 px high (28 compact and calm). Portalled content repeats the InkProvider's data-density, data-motion and data-theme; with reduced motion it appears without the slide and zoom. In forced-colors mode the highlighted row takes the system highlight colors."
         ],
         "usage": "import {\n  ContextMenu,\n  ContextMenuContent,\n  ContextMenuItem,\n  ContextMenuSeparator,\n  ContextMenuShortcut,\n  ContextMenuTrigger,\n} from \"@/components/ui/context-menu\"\n\nexport function Example() {\n  return (\n    <ContextMenu>\n      <ContextMenuTrigger className=\"grid h-40 w-72 place-items-center\">Right click here</ContextMenuTrigger>\n      <ContextMenuContent className=\"w-56\">\n        <ContextMenuItem>\n          Back <ContextMenuShortcut>⌘[</ContextMenuShortcut>\n        </ContextMenuItem>\n        <ContextMenuItem>Reload</ContextMenuItem>\n        <ContextMenuSeparator />\n        <ContextMenuItem variant=\"destructive\">Delete</ContextMenuItem>\n      </ContextMenuContent>\n    </ContextMenu>\n  )\n}",
         "parts": [
@@ -3826,7 +3823,7 @@
           "Arrow keys move the focused note by 8 px (Shift 32 px), R turns it 4 degrees clockwise (Shift+R back, limited to 24), Enter or Space brings it to the front. Notes stay inside the cork.",
           "Where a note ended up is announced politely, once, after the last key press (\"Call mum at 56, 30.\").",
           "Pointer: notes are picked up anywhere except on links, buttons, inputs and elements marked data-corkboard-nodrag, so a note can hold controls. Escape while dragging with the keyboard focus on the note puts it back.",
-          "The focus ring is drawn round the note; it never depends on colour alone. Windows high contrast gives the note a real outline.",
+          "The focus ring is drawn round the note; it never depends on color alone. Windows high contrast gives the note a real outline.",
           "Reduced motion: no lift animation, the pin does not pop. Calm density: notes lie flat and the pins are left out.",
           "Resizing: a layout saved on a wide board is drawn inside a narrower one (a note is pulled back in as the cork changes size), while the stored positions are left alone, so widening the board again puts everything where it was saved.",
           "Every note is a tab stop, so a board of fifty notes is fifty Tab presses: keep boards to a handful of notes, or put the board behind a skip link. Touch: a note is touch-action none (a drag on it never scrolls the page), the cork around the notes still scrolls."
@@ -3885,10 +3882,10 @@
         "a11y": [
           "The typed field is a plain text input (give it a Label or `aria-label`); the calendar button has its own name (\"Choose date\") and `aria-expanded`, and the slip is a named dialog holding the Calendar, whose keyboard model is react-day-picker's (arrows, Home/End, PageUp/PageDown, Enter/Space).",
           "ArrowDown in the field opens the calendar; Escape closes it and puts focus back on the button; with unsent text Escape drops it. Enter or leaving the field reads what you typed. Pressing Enter on a date that cannot be read does not submit the form it sits in.",
-          "An unreadable or disallowed date sets `aria-invalid` (and draws the red box) until the next edit, so the error is not only in colour: the box is also dashed-red with a bang.",
+          "An unreadable or disallowed date sets `aria-invalid` (and draws the red box) until the next edit, so the error is not only in color: the box is also dashed-red with a bang.",
           "With `typeable={false}` the field is one button (`aria-haspopup=\"dialog\"`, `aria-expanded`) whose text is the date or the placeholder.",
           "A single frame draws the focus ring for whichever part has focus (input or calendar button). The slip repeats the InkProvider's density, motion and theme and sits above dialogs, so a DatePicker inside a Dialog works.",
-          "Presets are Buttons in a labelled group; ranges are announced by the Calendar's day names (\"selected\")."
+          "Presets are Buttons in a labeled group; ranges are announced by the Calendar's day names (\"selected\")."
         ],
         "usage": "import * as React from \"react\"\nimport { DatePicker } from \"@/components/ui/date-picker\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function Example() {\n  const [date, setDate] = React.useState<Date | undefined>()\n  return (\n    <div className=\"grid w-64 gap-2\">\n      <Label htmlFor=\"due\">Due date</Label>\n      <DatePicker id=\"due\" value={date} onValueChange={setDate} />\n    </div>\n  )\n}",
         "parts": [
@@ -4182,11 +4179,11 @@
           "kbd"
         ],
         "a11y": [
-          "Radix DropdownMenu: the trigger has aria-haspopup=menu, aria-expanded and aria-controls; the content is role=menu labelled by the trigger. Rows are menuitem, menuitemcheckbox (aria-checked) and menuitemradio.",
+          "Radix DropdownMenu: the trigger has aria-haspopup=menu, aria-expanded and aria-controls; the content is role=menu labeled by the trigger. Rows are menuitem, menuitemcheckbox (aria-checked) and menuitemradio.",
           "Enter, Space and ArrowDown on the trigger open it with the first row highlighted (ArrowUp opens nothing). Up and Down move (pass `loop` to the content to wrap), Home and End jump, typing a letter jumps to the next row that starts with it, ArrowRight opens a sub-menu and ArrowLeft closes it, Enter or Space chooses, Escape closes and returns focus to the trigger. Disabled rows are skipped.",
           "The highlight follows the keyboard as well as the pointer (`data-highlighted`) and is the focus indicator: dark text on the highlighter is 12:1, and because the highlighter itself is faint against the slip, a row with keyboard focus also gets a bar of blue felt at its start edge. A destructive row's cue is the word, the red glyph and the hatch.",
           "Ticks, dots, chevrons and the pencil boxes are aria-hidden drawings. Keycaps are real `kbd` elements; the command glyph carries the name Command.",
-          "Rows are 32 px high (28 compact and calm). Nothing depends on hover. Portalled content repeats the InkProvider's data-density, data-motion and data-theme; with reduced motion it appears without the slide and zoom. In forced-colors mode the ticks keep the system text colour and the highlighted row takes the system highlight colours."
+          "Rows are 32 px high (28 compact and calm). Nothing depends on hover. Portalled content repeats the InkProvider's data-density, data-motion and data-theme; with reduced motion it appears without the slide and zoom. In forced-colors mode the ticks keep the system text color and the highlighted row takes the system highlight colors."
         ],
         "usage": "import { Button } from \"@/components/ui/button\"\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuLabel,\n  DropdownMenuSeparator,\n  DropdownMenuShortcut,\n  DropdownMenuTrigger,\n} from \"@/components/ui/dropdown-menu\"\n\nexport function Example() {\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant=\"outline\">Open</Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent className=\"w-56\">\n        <DropdownMenuLabel>My account</DropdownMenuLabel>\n        <DropdownMenuItem>\n          Profile <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>\n        </DropdownMenuItem>\n        <DropdownMenuItem>Billing</DropdownMenuItem>\n        <DropdownMenuSeparator />\n        <DropdownMenuItem variant=\"destructive\">Log out</DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}",
         "parts": [
@@ -4245,9 +4242,9 @@
         ],
         "a11y": [
           "The drop target is a `<label>` round a real `<input type=\"file\">`: the input is a tab stop (visually hidden, never `display: none`), Enter and Space open the picker natively, the label's text is its name (override with `inputProps['aria-label']`), and a screen reader user never needs drag and drop.",
-          "Keyboard focus shows the blue ring round the whole patch (the input is inside the labelled host). Drag state is only visual: the drop works for pointer users, the picker for everyone.",
+          "Keyboard focus shows the blue ring round the whole patch (the input is inside the labeled host). Drag state is only visual: the drop works for pointer users, the picker for everyone.",
           "Refusals are announced: `DropzoneRejections` is a `role=\"alert\"` with one line per file and reason. The list is a named `<ul>`; each remove button is named \"Remove <file>\" and hands the focus to the zone when its row goes; a progress line is a `progressbar` with `aria-valuenow`.",
-          "The state is never colour alone: over is a thicker blue stitch on yellow with Stubby carrying a parcel; invalid is red stitches, `aria-invalid` and the alert; disabled is pale stitches and a disabled input.",
+          "The state is never color alone: over is a thicker blue stitch on yellow with Stubby carrying a parcel; invalid is red stitches, `aria-invalid` and the alert; disabled is pale stitches and a disabled input.",
           "Reduced motion stops the wiggle and the icon's lift. Windows high contrast draws a real dashed border (solid while a file is over).",
           "Touch: the whole patch is the target (at least 160 px tall by default, 128 compact, 96 calm); rows are 40 px with a 28 px remove target."
         ],
@@ -4422,7 +4419,7 @@
         "a11y": [
           "Field is a role=group; a FieldLabel is a real <label> (use htmlFor + id), so a click on it focuses or toggles the control. Wrap radios and checkboxes in a FieldSet with a FieldLegend so the group has a name.",
           "FieldError is role=\"alert\": it is announced when it appears. Point the control at it with aria-describedby and set aria-invalid, so the control's own box turns red as well (hue is never the only cue: the message, the wavy underline and the bang of the field say it too).",
-          "A choice card is one big label: clicking anywhere on it toggles its control, and the checked state is shown by the wash and the felt box, not by colour alone (the radio or checkbox inside shows it too). In Windows high contrast the checked card becomes a Highlight block.",
+          "A choice card is one big label: clicking anywhere on it toggles its control, and the checked state is shown by the wash and the felt box, not by color alone (the radio or checkbox inside shows it too). In Windows high contrast the checked card becomes a Highlight block.",
           "Disabling: set `data-disabled=\"true\"` on the Field (the label goes graphite) AND `disabled` on the control. A `disabled` FieldSet disables the controls natively, but the drawn controls choose their dashed disabled drawing from their own props (or their root's), not from an ancestor fieldset: pass `disabled` to each.",
           "`responsive` uses a container query on the FieldGroup, so it reacts to the width of the form, not of the screen.",
           "Right-to-left: everything uses logical properties; the error underline is symmetric."
@@ -4499,7 +4496,7 @@
       "name": "folder",
       "type": "registry:ui",
       "title": "Folder",
-      "description": "A manila file folder that is also a set of tabs: a row of paper tabs standing on a sheet of the same paper. The active tab is the folder's own colour and runs down into the body, so tab and folder are one piece; the others stand a little lower and darker. It is Radix Tabs underneath.",
+      "description": "A manila file folder that is also a set of tabs: a row of paper tabs standing on a sheet of the same paper. The active tab is the folder's own color and runs down into the body, so tab and folder are one piece; the others stand a little lower and darker. It is Radix Tabs underneath.",
       "categories": [
         "Paper"
       ],
@@ -4536,8 +4533,8 @@
         ],
         "a11y": [
           "Radix Tabs gives the whole pattern: `tablist` / `tab` / `tabpanel` roles, `aria-selected`, `aria-controls`, roving focus with arrow keys, Home and End (Left and Right swap in RTL), and a disabled tab skipped by the keyboard.",
-          "The drawn tab paper, the crease and the shadows are aria-hidden. The active tab is also `aria-selected` and bold, so it never depends on colour alone. Tab text is ink: 9:1 on the manila, 7.5:1 on a tab standing behind it.",
-          "Windows high contrast replaces the drawn tabs with bordered buttons (the tabs carry a real border until their drawing exists and in forced colours), and the active tab fills with the system highlight colour. The open panel is a tab stop and shows the standard focus ring."
+          "The drawn tab paper, the crease and the shadows are aria-hidden. The active tab is also `aria-selected` and bold, so it never depends on color alone. Tab text is ink: 9:1 on the manila, 7.5:1 on a tab standing behind it.",
+          "Windows high contrast replaces the drawn tabs with bordered buttons (the tabs carry a real border until their drawing exists and in forced colors), and the active tab fills with the system highlight color. The open panel is a tab stop and shows the standard focus ring."
         ],
         "usage": "import { Folder, FolderContent, FolderTab, FolderTabs } from \"@/components/ui/folder\"\n\n<Folder defaultValue=\"inbox\">\n  <FolderTabs aria-label=\"Mail\">\n    <FolderTab value=\"inbox\">Inbox</FolderTab>\n    <FolderTab value=\"drafts\">Drafts</FolderTab>\n  </FolderTabs>\n  <FolderContent value=\"inbox\">Three letters are waiting.</FolderContent>\n  <FolderContent value=\"drafts\">Two drafts.</FolderContent>\n</Folder>",
         "parts": [
@@ -4587,7 +4584,7 @@
           "FormLabel is a real <label for>, FormControl puts the same id on the control, and aria-describedby points at the description and (while invalid) the message; aria-invalid is set for you.",
           "FormMessage is a <p> that appears next to the control with its id in aria-describedby, so a screen reader reads it with the control when focus arrives. Wrap it in an element with role=\"alert\" (or use Field's FieldError) if you want it announced the moment it appears.",
           "Not every control can be named by FormLabel's `for`: a Slider (role=slider on a span) or a Rating (a radiogroup) needs `aria-labelledby` pointing at an `id` you give the FormLabel, or an `aria-label`. FormControl's id, aria-describedby and aria-invalid do reach a Slider's thumb, a Rating's group and a RadioGroup's group (whose radios turn red).",
-          "Errors do not rely on colour alone: the message text, the wavy underline and the control's own drawn state (red box, a bang on text fields) all say it.",
+          "Errors do not rely on color alone: the message text, the wavy underline and the control's own drawn state (red box, a bang on text fields) all say it.",
           "Validation timing is react-hook-form's (`mode`: onSubmit by default, onChange, onBlur ...); the drawn components do not re-render their ink when it changes, only their state layers.",
           "Windows high contrast: the ink is replaced by real borders, and the message gets a wavy text underline."
         ],
@@ -4647,7 +4644,7 @@
       "name": "highlight",
       "type": "registry:ui",
       "title": "Highlight",
-      "description": "A highlighter swipe behind real words. The phrase stays text you can select and copy; the swipe follows it line by line when it wraps, in yellow or any stationery colour, and can draw itself on as it scrolls into view.",
+      "description": "A highlighter swipe behind real words. The phrase stays text you can select and copy; the swipe follows it line by line when it wraps, in yellow or any stationery color, and can draw itself on as it scrolls into view.",
       "categories": [
         "Marks"
       ],
@@ -4683,7 +4680,7 @@
         "a11y": [
           "The words are ordinary text: selectable, copyable, found by search, read in order. The swipe is aria-hidden and pointer-events-none, so it never takes a click or a selection.",
           "It is a <mark>, so assistive technology that announces highlighted text still does. Text on the swipe stays ink on a translucent tint (about 12:1 on the yellow).",
-          "Before the first measure, without JavaScript and in Windows high contrast you get the browser's own <mark> background (system Mark colours in high contrast). With animate the swipe is only drawn once scripts run.",
+          "Before the first measure, without JavaScript and in Windows high contrast you get the browser's own <mark> background (system Mark colors in high contrast). With animate the swipe is only drawn once scripts run.",
           "Reduced motion (or data-motion=\"reduced\") zeroes the draw-on: the swipe simply appears."
         ],
         "usage": "import { Highlight } from \"@/components/ui/highlight\"\n\nexport function Example() {\n  return (\n    <p>\n      The good bits get <Highlight>a swipe of yellow</Highlight> so I can find them again.\n    </p>\n  )\n}",
@@ -4775,8 +4772,8 @@
         ],
         "a11y": [
           "Decorative by default: `aria-hidden=\"true\"` and `focusable=\"false\"`. Pass `label` when the icon is the only content of a control, or name the control instead.",
-          "Ink is `currentColor`, so text colour utilities and forced-colors mode work; icons are kept in forced-colors mode.",
-          "Status icons differ by silhouette, not only by colour: a triangle warns, an octagon stops, a ring informs, an arc waits."
+          "Ink is `currentColor`, so text color utilities and forced-colors mode work; icons are kept in forced-colors mode.",
+          "Status icons differ by silhouette, not only by color: a triangle warns, an octagon stops, a ring informs, an arc waits."
         ],
         "usage": "import { Icon } from \"@/components/ui/icon\"\n\nexport function Example() {\n  return (\n    <button className=\"inline-flex items-center gap-2\">\n      <Icon name=\"trash\" />\n      Delete\n    </button>\n  )\n}",
         "parts": [
@@ -4788,7 +4785,7 @@
       "name": "index-card",
       "type": "registry:ui",
       "title": "Index card",
-      "description": "A 3 x 5 card of cream stock with a red header rule and blue lines every 30 px. Header, body and footer parts lay out on the printed rules; the card can have its rod hole punched at the foot, a coloured flag stuck over its edge, and a pile of cards behind it.",
+      "description": "A 3 x 5 card of cream stock with a red header rule and blue lines every 30 px. Header, body and footer parts lay out on the printed rules; the card can have its rod hole punched at the foot, a colored flag stuck over its edge, and a pile of cards behind it.",
       "categories": [
         "Paper"
       ],
@@ -4933,7 +4930,7 @@
         "a11y": [
           "There is one real `<input>` (not six), so name it with a Label (`htmlFor` on the id you pass) or `aria-label`. Screen readers read the code as typed; the boxes are decoration (their drawings are `aria-hidden`).",
           "Typing, Backspace, arrow keys, selection, paste and SMS autofill (`autocomplete=\"one-time-code\"`) are the browser's own; a `pattern` filters what can be typed or pasted. Password managers get room for their badge (`pushPasswordManagerStrategy`).",
-          "`aria-invalid` is set on the input when `invalid` is; the boxes turn red with a drawn pencil box, not only a colour change, and a message (`role=\"alert\"`) is yours to add.",
+          "`aria-invalid` is set on the input when `invalid` is; the boxes turn red with a drawn pencil box, not only a color change, and a message (`role=\"alert\"`) is yours to add.",
           "The active box has a drawn blue ring and a caret; in Windows high contrast it gets a real Highlight outline. The blink stops under reduced motion (and `data-motion=\"reduced\"`).",
           "Form reset: the code lives in the package's own state, so `<button type=\"reset\">` does not clear it; control the value (`value` + `onChange`) and clear it in your own reset handler.",
           "Touch: boxes are 40 x 48 px (36 x 40 compact, 32 x 36 calm; on a phone card they narrow to about 38 px, never below 24), and the invisible input covers the whole row, so a tap anywhere focuses it."
@@ -4988,7 +4985,7 @@
           "aria-invalid, disabled and readOnly are the real attributes; the drawing follows them. Pair aria-invalid with aria-describedby pointing at the error text.",
           "Focus draws a blue felt ring (3:1 or better against paper) when the input is focused by keyboard or click (text fields always match :focus-visible). Before the drawing exists and in Windows high contrast the browser's own outline and a real border are used.",
           "The drawing is aria-hidden, pointer-events: none and never focusable. Typed text is blue felt on paper (7:1), placeholders are graphite (6.8:1), disabled text is graphite on a pale wash.",
-          "16 px text on every screen size, so iOS does not zoom on focus. Number spinners, the search clear button and the password reveal of Edge are removed; the keyboard behaviour (arrow keys, Escape) is untouched.",
+          "16 px text on every screen size, so iOS does not zoom on focus. Number spinners, the search clear button and the password reveal of Edge are removed; the keyboard behavior (arrow keys, Escape) is untouched.",
           "Reduced motion: no fade, no wobble; the field has no hover tilt at all."
         ],
         "usage": "import { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function Example() {\n  return (\n    <div className=\"grid w-full max-w-sm gap-2\">\n      <Label htmlFor=\"email\">Email</Label>\n      <Input id=\"email\" type=\"email\" placeholder=\"you@example.com\" />\n      <Input className=\"pl-9\" aria-label=\"Search\" type=\"search\" />\n    </div>\n  )\n}",
@@ -5039,7 +5036,7 @@
           "avatar"
         ],
         "a11y": [
-          "ItemGroup is role=list and every Item inside it is role=listitem (upstream leaves that to you, and axe reports the group otherwise). An asChild link or button is wrapped in a listitem, so it keeps its own role, name and keyboard behaviour.",
+          "ItemGroup is role=list and every Item inside it is role=listitem (upstream leaves that to you, and axe reports the group otherwise). An asChild link or button is wrapped in a listitem, so it keeps its own role, name and keyboard behavior.",
           "A link or button row is one big hit area. Its focus mark is a plain 2 px blue outline, not the drawn felt ring of a Button (a row carries no drawing, so its ring is CSS too); hover is a highlighter swipe that is also visible without its hue (the swipe changes the background's lightness), and is off on touch screens.",
           "The drawing (outline, rules, wash) is decoration in CSS: it has no role, cannot take focus and does not change layout. In Windows high contrast it becomes a real 1 px border and a real rule.",
           "Muted text is 8.9:1 on paper; the description is clamped to two lines, so put anything essential in the title."
@@ -5095,7 +5092,7 @@
         "a11y": [
           "Kbd is the semantic <kbd> element: screen readers read the text as it is written. Write words for modifier keys when the symbol would be read unhelpfully (\"Ctrl\" rather than an icon), or give an icon-only key an Icon with a label (aria-label is not allowed on a bare <kbd>).",
           "Decorative by nature: it is not focusable and has no role. The press animation is pointer feedback only; nothing depends on it.",
-          "Muted graphite on paper is 8.9:1. Inside a Tooltip or a menu the label and the drawing take that surface's text colour.",
+          "Muted graphite on paper is 8.9:1. Inside a Tooltip or a menu the label and the drawing take that surface's text color.",
           "Calm density draws a plain pencil box without the thickness; reduced motion removes the press transition."
         ],
         "usage": "import { Kbd, KbdGroup } from \"@/components/ui/kbd\"\n\nexport function Example() {\n  return (\n    <div className=\"flex flex-col items-start gap-3\">\n      <p>\n        Press <Kbd>Esc</Kbd> to close.\n      </p>\n      <KbdGroup>\n        <Kbd>Ctrl</Kbd>\n        <span>+</span>\n        <Kbd>K</Kbd>\n      </KbdGroup>\n    </div>\n  )\n}",
@@ -5143,8 +5140,8 @@
           "bookmark"
         ],
         "a11y": [
-          "A tag is a `div`: put text in it. As a link or button (`asChild`) it keeps its native role, focus and keyboard behaviour; the drawing is aria-hidden decoration and the swing is a hover-only, reduced-motion-aware nicety (none in calm density).",
-          "Information carried by the twine colour or the eyelet must also be in text. Ink on kraft, paper and the sticky stocks is at least 9:1; the price is a red darkened with ink and reads at least 4.9:1 on all of them.",
+          "A tag is a `div`: put text in it. As a link or button (`asChild`) it keeps its native role, focus and keyboard behavior; the drawing is aria-hidden decoration and the swing is a hover-only, reduced-motion-aware nicety (none in calm density).",
+          "Information carried by the twine color or the eyelet must also be in text. Ink on kraft, paper and the sticky stocks is at least 9:1; the price is a red darkened with ink and reads at least 4.9:1 on all of them.",
           "The tilt is zero in calm density; Windows high contrast replaces the drawing with a real outline around the box (the string is not shown)."
         ],
         "usage": "import { LabelTag, LabelTagDescription, LabelTagPrice, LabelTagTitle } from \"@/components/ui/label-tag\"\n\n<LabelTag twine=\"tomato\">\n  <LabelTagTitle>Sale</LabelTagTitle>\n  <LabelTagDescription>while stocks last</LabelTagDescription>\n  <LabelTagPrice>12.00</LabelTagPrice>\n</LabelTag>\n\n<LabelTag asChild shape=\"round\"><a href=\"/new\"><LabelTagTitle>New</LabelTagTitle></a></LabelTag>",
@@ -5202,7 +5199,7 @@
       "name": "lettering",
       "type": "registry:ui",
       "title": "Lettering",
-      "description": "Display titles in the script font with a riso print look: ink with a second colour printed a hair off register. Pure CSS text-shadow, so the words are real text at any size. No gradients, no filters.",
+      "description": "Display titles in the script font with a riso print look: ink with a second color printed a hair off register. Pure CSS text-shadow, so the words are real text at any size. No gradients, no filters.",
       "categories": [
         "Typography"
       ],
@@ -5226,7 +5223,7 @@
           "quote"
         ],
         "a11y": [
-          "A real heading (or the element you choose): headings keep their level and outline. The offset colour is decoration; the ink text has 14:1 contrast on paper.",
+          "A real heading (or the element you choose): headings keep their level and outline. The offset color is decoration; the ink text has 14:1 contrast on paper.",
           "Use one Lettering as the page's h1 at most; for repeated display text prefer p or span.",
           "The riso offset is a text-shadow, so it scales with the text, follows the density knob (calm = none) and disappears in Windows high contrast."
         ],
@@ -5275,7 +5272,7 @@
         ],
         "a11y": [
           "Markers are plain divs (as upstream). Inside a `role=\"log\"` transcript a separator is announced as its words: 'Today', 'New messages'.",
-          "Nothing is conveyed by the drawing alone: the unread state is the words, and colour is backed by the asterisk and the highlighter swipe.",
+          "Nothing is conveyed by the drawing alone: the unread state is the words, and color is backed by the asterisk and the highlighter swipe.",
           "Use `asChild` with a `button` to make 'New messages' a control; the drawn focus ring is the button's own.",
           "Difference from upstream: `markerVariants` gives the layout only. The lines of `separator` and `border` are drawn parts of `Marker` (a pseudo-element cannot hold a drawing), so applying the variants to your own element draws no line.",
           "Ink lines are 3:1 or more against paper; the words are muted text at 8.9:1 (ink on the highlighter swipe 12:1)."
@@ -5292,7 +5289,7 @@
       "name": "marquee",
       "type": "registry:ui",
       "title": "Marquee",
-      "description": "A ticker written on a strip of washi tape. The text runs along it, fades at the ends, stops while you point at it or focus inside it, and has a pause button. With reduced motion it is a still strip with the text centred.",
+      "description": "A ticker written on a strip of washi tape. The text runs along it, fades at the ends, stops while you point at it or focus inside it, and has a pause button. With reduced motion it is a still strip with the text centered.",
       "categories": [
         "Interactive"
       ],
@@ -5325,7 +5322,7 @@
         "a11y": [
           "Only the first copy of the text is exposed; every repeat is aria-hidden and inert, so a screen reader reads the ticker once and Tab does not visit links twice.",
           "It pauses on hover and while focus is inside it (WCAG 2.2.2), and the pause button has aria-pressed. The button is on by default; do not remove it for a ticker that moves for more than five seconds.",
-          "Reduced motion (the OS setting or data-motion=\"reduced\"): the animation is off, the repeats are hidden and the one copy is centred on the tape.",
+          "Reduced motion (the OS setting or data-motion=\"reduced\"): the animation is off, the repeats are hidden and the one copy is centered on the tape.",
           "Put the words that matter in the first copy in the DOM order you want them read; the ticker itself is role=\"marquee\", which assistive technology treats as a non-live region.",
           "Ink on the default orange washi is 7:1 and on the dotted and gingham tapes above 6:1. The text is 24 px semibold script with a paper halo (a CSS text-shadow), so it holds on patterned tape; keep phrases short, and use `masking` when the words are long.",
           "A short phrase on a wide screen is repeated as often as it takes to fill the band (at most 48 copies, all but the first hidden and inert)."
@@ -5419,7 +5416,7 @@
           "Radix Menubar: role=menubar with menuitem titles (aria-haspopup, aria-expanded). Left and Right (mirrored in RTL) move between titles; Enter, Space or ArrowDown opens a menu with its first row highlighted (ArrowUp on a title opens nothing). Once one is open, hovering another title or pressing Left or Right from a plain row switches menus.",
           "Inside a menu: Up and Down move (disabled rows are skipped), Home and End jump, typing a letter jumps to the next row that starts with it, ArrowRight opens a sub-menu and ArrowLeft closes it, Enter or Space chooses, Escape closes and returns focus to the title. The bar is one tab stop.",
           "The strip and its ruler are aria-hidden decoration with no pointer events; the titles keep a 28 px hit box. The highlight follows the keyboard as well as the pointer, and keyboard focus on a title also shows the theme's blue focus ring; inside a menu the row with keyboard focus gets a bar of blue felt at its start edge.",
-          "Ticks, dots, chevrons and pencil boxes are aria-hidden drawings; keycaps are real `kbd` elements. Portalled content repeats the InkProvider's data-density, data-motion and data-theme. In forced-colors mode the strip gives way to a real outline and the hovered, focused or open title takes the system highlight colours."
+          "Ticks, dots, chevrons and pencil boxes are aria-hidden drawings; keycaps are real `kbd` elements. Portalled content repeats the InkProvider's data-density, data-motion and data-theme. In forced-colors mode the strip gives way to a real outline and the hovered, focused or open title takes the system highlight colors."
         ],
         "usage": "import {\n  Menubar,\n  MenubarContent,\n  MenubarItem,\n  MenubarMenu,\n  MenubarSeparator,\n  MenubarShortcut,\n  MenubarTrigger,\n} from \"@/components/ui/menubar\"\n\nexport function Example() {\n  return (\n    <Menubar>\n      <MenubarMenu>\n        <MenubarTrigger>File</MenubarTrigger>\n        <MenubarContent>\n          <MenubarItem>\n            New tab <MenubarShortcut>⌘T</MenubarShortcut>\n          </MenubarItem>\n          <MenubarItem>New window</MenubarItem>\n          <MenubarSeparator />\n          <MenubarItem>Print…</MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n    </Menubar>\n  )\n}",
         "parts": [
@@ -5446,7 +5443,7 @@
       "name": "message-scroller",
       "type": "registry:ui",
       "title": "Message scroller",
-      "description": "The scrolling transcript of a chat: it opens on the newest message, sticks to the bottom while a reply streams and lets go the moment you scroll up, pins your new message to the top so the reply grows beneath it, holds your place when older messages are added above, and wakes a \"jump to latest\" button when there is more below. Same parts and hooks as shadcn's message scroller, with the behaviour written in, so no extra package.",
+      "description": "The scrolling transcript of a chat: it opens on the newest message, sticks to the bottom while a reply streams and lets go the moment you scroll up, pins your new message to the top so the reply grows beneath it, holds your place when older messages are added above, and wakes a \"jump to latest\" button when there is more below. Same parts and hooks as shadcn's message scroller, with the behavior written in, so no extra package.",
       "categories": [
         "Chat"
       ],
@@ -5474,13 +5471,13 @@
           "scroll-area"
         ],
         "a11y": [
-          "The viewport is a labelled `region` and a tab stop, so a keyboard user can scroll with the arrows, Page keys, Home and End; the transcript inside it is a `role=\"log\"`, which announces additions politely.",
+          "The viewport is a labeled `region` and a tab stop, so a keyboard user can scroll with the arrows, Page keys, Home and End; the transcript inside it is a `role=\"log\"`, which announces additions politely.",
           "Taking over is detected from wheel, touch and scroll keys going toward the start, and from a dragged scrollbar (a scroll the scroller did not make itself; a press on the container, not on a message, while your message is pinned): following and pinning stop immediately and never fight the reader. Scrolling toward the end while you are already there changes nothing, so a stream keeps being followed.",
           "The jump button is `inert` (not focusable, not clickable) while there is nowhere to jump, and has a visually hidden label. Pressing it hands the keyboard to the transcript, so the arrows and Page keys carry on from there instead of restarting at the top of the page.",
           "Every word a streaming reply adds is an addition to the `log`, and a screen reader would read the reply piece by piece. While it streams pass `aria-live=\"off\"` to `MessageScrollerContent` and announce the finished reply once from a separate `role=\"status\"` (the examples do); the `TypingIndicator` covers \"someone is writing\".",
           "Smooth scrolling and the button's slide are decoration: with `prefers-reduced-motion` (or a `data-motion=\"reduced\"` ancestor) the durations collapse and the jump button scrolls instantly, even though it asks for `smooth`.",
           "The focus ring of the viewport (it is a tab stop) is drawn just inside its edge, because the fade mask would cut a ring drawn outside it.",
-          "The page fades at an edge only while there is more to scroll there; the fade is a CSS mask, not a colour."
+          "The page fades at an edge only while there is more to scroll there; the fade is a CSS mask, not a color."
         ],
         "usage": "import {\n  MessageScroller,\n  MessageScrollerButton,\n  MessageScrollerContent,\n  MessageScrollerItem,\n  MessageScrollerProvider,\n  MessageScrollerViewport,\n} from \"@/components/ui/message-scroller\"\n\nexport function Transcript({ messages }: { messages: Array<{ id: string; mine: boolean; text: string }> }) {\n  return (\n    <MessageScrollerProvider autoScroll>\n      <MessageScroller className=\"h-[480px]\">\n        <MessageScrollerViewport>\n          <MessageScrollerContent>\n            {messages.map((m) => (\n              <MessageScrollerItem key={m.id} messageId={m.id} scrollAnchor={m.mine}>\n                {m.text}\n              </MessageScrollerItem>\n            ))}\n          </MessageScrollerContent>\n        </MessageScrollerViewport>\n        <MessageScrollerButton />\n      </MessageScroller>\n    </MessageScrollerProvider>\n  )\n}",
         "parts": [
@@ -5631,7 +5628,7 @@
         "a11y": [
           "It is a native select: role=combobox / listbox, the platform's keyboard (arrows, typeahead, Enter, Escape), its own mobile picker, autofill and form value. Nothing is re-implemented.",
           "Label it with a Label (`htmlFor` + `id`) or `aria-label`. A first option with an empty value reads as a placeholder (graphite text) when it is selected.",
-          "The frame follows the select's own state: keyboard focus draws the blue ring, `aria-invalid` the red box, `disabled` the dashed one. The popup itself cannot be styled by any library; only its colours and font are asked for.",
+          "The frame follows the select's own state: keyboard focus draws the blue ring, `aria-invalid` the red box, `disabled` the dashed one. The popup itself cannot be styled by any library; only its colors and font are asked for.",
           "The chevron is decorative (aria-hidden) and does not take the pointer, so the whole box opens the list. Windows high contrast replaces the ink by a real border.",
           "Right-to-left: the chevron cell, the divider tick and the bang are on the start side."
         ],
@@ -5687,7 +5684,7 @@
         "a11y": [
           "Radix NavigationMenu: a `nav` landmark (give it `aria-label`), a list of items, triggers with `aria-expanded` and `aria-controls`. It is a disclosure pattern, not `role=menu`: panels hold ordinary links.",
           "Hover (with intent delay), click and Enter or Space open a panel; Escape closes it and returns focus to its trigger. Left and Right (mirrored in RTL) move between triggers and links, ArrowDown from an open trigger steps into the panel, and Tab moves through the panel's links and on. Focus leaving the menu closes it.",
-          "The current page is `aria-current=\"page\"` and a filled tab, so it does not depend on colour. The sketches, the pencil line, the underline and the highlighter are aria-hidden decoration with no pointer events. Tabs are 36 px high (32 compact, 28 calm).",
+          "The current page is `aria-current=\"page\"` and a filled tab, so it does not depend on color. The sketches, the pencil line, the underline and the highlighter are aria-hidden decoration with no pointer events. Tabs are 36 px high (32 compact, 28 calm).",
           "Touch: a tap opens a panel (hover is not needed). Reduced motion removes the drop, the slide between panels and the underline's glide. In forced-colors mode the drawings give way to real outlines."
         ],
         "usage": "import {\n  NavigationMenu,\n  NavigationMenuContent,\n  NavigationMenuIndicator,\n  NavigationMenuItem,\n  NavigationMenuLink,\n  NavigationMenuList,\n  NavigationMenuTrigger,\n} from \"@/components/ui/navigation-menu\"\n\nexport function Example() {\n  return (\n    <NavigationMenu aria-label=\"Main\">\n      <NavigationMenuList>\n        <NavigationMenuItem>\n          <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>\n          <NavigationMenuContent>\n            <ul className=\"grid w-72 gap-1\">\n              <li>\n                <NavigationMenuLink href=\"/docs\">Introduction</NavigationMenuLink>\n              </li>\n              <li>\n                <NavigationMenuLink href=\"/docs/install\">Installation</NavigationMenuLink>\n              </li>\n            </ul>\n          </NavigationMenuContent>\n        </NavigationMenuItem>\n        <NavigationMenuItem>\n          <NavigationMenuLink href=\"/docs\" active>\n            Docs\n          </NavigationMenuLink>\n        </NavigationMenuItem>\n        <NavigationMenuIndicator />\n      </NavigationMenuList>\n    </NavigationMenu>\n  )\n}",
@@ -5841,7 +5838,7 @@
           "table"
         ],
         "a11y": [
-          "A `nav` landmark labelled \"pagination\" holding a list of links. The current page has `aria-current=\"page\"`; it is also bold-on-highlighter, so it does not rely on colour.",
+          "A `nav` landmark labeled \"pagination\" holding a list of links. The current page has `aria-current=\"page\"`; it is also bold-on-highlighter, so it does not rely on color.",
           "Previous and Next carry `aria-label`s that name their destination, so they read the same when the word is hidden on a phone. Give number links an accessible name of their own when the bare number is ambiguous (`aria-label=\"Page 3\"`).",
           "A disabled link is `aria-disabled`, removed from the tab order and drawn as the dashed alternative; its click is prevented and your `onClick` is not called.",
           "Each link is at least 36 px square (32 compact, 28 calm), a tab stop with the theme's drawn blue focus ring. Being plain anchors, they work without JavaScript and with any router."
@@ -5893,11 +5890,11 @@
           "dialog"
         ],
         "a11y": [
-          "A CSS sheet brings the tooth tiles of its stock itself (one deduplicated `<style>` per tile, in the server HTML too), so it needs no provider. Saturated sticky notes lay a veil of their own colour over the tooth, so orange and pink read as paper, not plaster.",
+          "A CSS sheet brings the tooth tiles of its stock itself (one deduplicated `<style>` per tile, in the server HTML too), so it needs no provider. Saturated sticky notes lay a veil of their own color over the tooth, so orange and pink read as paper, not plaster.",
           "The sheet, its rules, tape and fasteners are decoration: the drawing is aria-hidden, pointer-events: none and never focusable. Paper adds no role; give it one (`as=\"article\"`, `role=\"region\"` with a label) when the content deserves it.",
           "Text is ink on paper (14:1 on paper, 9.4:1 on kraft, at least 9:1 on every sticky note) and stays upright: only the sheet and its rules turn.",
           "Tilt is clamped to --ll-tilt-max and is zero in calm density and in reduced-motion contexts that set it; props are hidden in calm density.",
-          "In Windows high contrast the drawn svg (fibre fringe, edge line) steps aside and the host gets a real 1px outline; the paper stays cut to its edge, and tape stays visible."
+          "In Windows high contrast the drawn svg (fiber fringe, edge line) steps aside and the host gets a real 1px outline; the paper stays cut to its edge, and tape stays visible."
         ],
         "usage": "import { Paper } from \"@/components/ui/paper\"\n\nexport function Note() {\n  return (\n    <Paper stock=\"index-card\" tape=\"both\" className=\"w-72 p-6\">\n      <h3 className=\"font-script text-2xl font-bold\">Buy more ink</h3>\n      <p>Black, blue, and one red for corrections.</p>\n    </Paper>\n  )\n}\n\n<Paper edge={{ bottom: \"torn\" }} fastener=\"pin\" className=\"p-6\">…</Paper>",
         "parts": [
@@ -6062,7 +6059,7 @@
       "name": "progress",
       "type": "registry:ui",
       "title": "Progress",
-      "description": "A bar somebody hatched in pencil and is colouring in with a marker. The marker is one full-length pass revealed by a CSS clip up to the value, so changing the value is a transition, not a redraw. Without a value it becomes a scribble sliding across. Radix Progress underneath.",
+      "description": "A bar somebody hatched in pencil and is coloring in with a marker. The marker is one full-length pass revealed by a CSS clip up to the value, so changing the value is a transition, not a redraw. Without a value it becomes a scribble sliding across. Radix Progress underneath.",
       "categories": [
         "Feedback"
       ],
@@ -6220,7 +6217,7 @@
       "name": "radio-group",
       "type": "registry:ui",
       "title": "Radio Group",
-      "description": "Pick exactly one. Each choice is a hand-circled ring; picking it colours the dot in with a terracotta blot and writes a felt spiral into it. Radix Radio Group underneath: roving focus, arrow keys, form value, orientation and direction.",
+      "description": "Pick exactly one. Each choice is a hand-circled ring; picking it colors the dot in with a terracotta blot and writes a felt spiral into it. Radix Radio Group underneath: roving focus, arrow keys, form value, orientation and direction.",
       "categories": [
         "Forms"
       ],
@@ -6259,7 +6256,7 @@
           "Label each radio with <Label htmlFor>, wrap it, or use aria-label. A Label beside it is a peer: peer-disabled dims it, and hovering the row (a `group/field`) or the label right after the radio lights the ring's hover overlay.",
           "The hit area reaches 8 px past the ring on every side (an ::after, so layout never moves): 32 px for the 16 px ring.",
           "Keyboard focus draws a blue felt ring; the drawing is aria-hidden, pointer-events: none and never focusable. Windows high contrast replaces it by a real border and the Indicator shows a real dot.",
-          "The chosen state is a filled dot, not only a colour: a bold blot with a dark spiral. Reduced motion shows the finished dot at once.",
+          "The chosen state is a filled dot, not only a color: a bold blot with a dark spiral. Reduced motion shows the finished dot at once.",
           "Right-to-left needs nothing: the ring is symmetric and every offset is logical. Pass `dir=\"rtl\"` to mirror the arrow keys."
         ],
         "usage": "import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nexport function Example() {\n  return (\n    <RadioGroup defaultValue=\"comfortable\" aria-label=\"Density\">\n      <div className=\"flex items-center gap-3\">\n        <RadioGroupItem value=\"default\" id=\"r1\" />\n        <Label htmlFor=\"r1\">Default</Label>\n      </div>\n      <div className=\"flex items-center gap-3\">\n        <RadioGroupItem value=\"comfortable\" id=\"r2\" />\n        <Label htmlFor=\"r2\">Comfortable</Label>\n      </div>\n    </RadioGroup>\n  )\n}",
@@ -6469,7 +6466,7 @@
       "name": "ribbon",
       "type": "registry:ui",
       "title": "Ribbon",
-      "description": "A ribbon label: a band of coloured paper with words on it, folded ends and all. For a section heading, a New flag on a card, a price label or a call to action.",
+      "description": "A ribbon label: a band of colored paper with words on it, folded ends and all. For a section heading, a New flag on a card, a price label or a call to action.",
       "categories": [
         "Marks"
       ],
@@ -6503,7 +6500,7 @@
         ],
         "a11y": [
           "The words are real DOM text on a plain span; the drawing is aria-hidden, ignores the pointer and never affects layout.",
-          "With asChild the ribbon is whatever you gave it: a link or a button, with its own role, keyboard behaviour and name. Focus-visible draws a blue ring round the whole ribbon, tails included.",
+          "With asChild the ribbon is whatever you gave it: a link or a button, with its own role, keyboard behavior and name. Focus-visible draws a blue ring round the whole ribbon, tails included.",
           "Ink text on each offered tone is at least 4.5:1 (marker 4.6 on its drawn fill, lemon and highlighter 12+). Windows high contrast hides the drawing and gives the element a real outline.",
           "Hover lifts a link ribbon 1 px, draws a drop-line under it and underlines its words, so it is visible without hue. Reduced motion makes the lift instant. Calm density draws a hairline outline and a single-pass fill."
         ],
@@ -6599,7 +6596,7 @@
           "Native scrolling: wheel, touch, keyboard (arrows, Space, PageUp/PageDown, Home/End) and scrollbar-less devices all work; the mark is an overlay for pointers and never the only way to scroll.",
           "A scroll region with nothing focusable in it is reachable by keyboard in current browsers; the viewport draws a blue ring inside its edge when focused. If yours is not, give the content `tabIndex={0}` and a name.",
           "The gutter and thumb are aria-hidden drawings; the thumb can be dragged and the gutter clicked, as in Radix.",
-          "Windows high contrast draws the thumb in the system text colour. Reduced motion removes the fade.",
+          "Windows high contrast draws the thumb in the system text color. Reduced motion removes the fade.",
           "Right-to-left content puts the vertical mark on the left: pass `dir=\"rtl\"` to the root, as Radix asks."
         ],
         "usage": "import { ScrollArea } from \"@/components/ui/scroll-area\"\n\nexport function Example() {\n  return (\n    <ScrollArea className=\"h-72 w-48\" bleed>\n      <div className=\"p-4\">{/* long content */}</div>\n    </ScrollArea>\n  )\n}",
@@ -6724,7 +6721,7 @@
       "name": "separator",
       "type": "registry:ui",
       "title": "Separator",
-      "description": "A rule that visually or semantically separates content, drawn by hand: pencil, ledger dashes, a squiggle, dots, a strip of tape, a running stitch or a torn edge of paper. Horizontal or vertical, with an optional centred label.",
+      "description": "A rule that visually or semantically separates content, drawn by hand: pencil, ledger dashes, a squiggle, dots, a strip of tape, a running stitch or a torn edge of paper. Horizontal or vertical, with an optional centered label.",
       "categories": [
         "Layout"
       ],
@@ -6759,7 +6756,7 @@
           "tape"
         ],
         "a11y": [
-          "Decorative by default (role=none), like shadcn: use decorative={false} only for a real thematic break, and give a labelled non-decorative separator an aria-label, since children of role=separator are presentational.",
+          "Decorative by default (role=none), like shadcn: use decorative={false} only for a real thematic break, and give a labeled non-decorative separator an aria-label, since children of role=separator are presentational.",
           "A vertical separator that is not decorative gets aria-orientation=vertical from Radix.",
           "The drawing is aria-hidden and pointer-events: none. Until it exists, and in Windows high contrast, the rule is a plain 1 px line.",
           "Tape, stitched and torn are decoration; nothing about the meaning of a divider ever depends on them."
@@ -6878,7 +6875,7 @@
         ],
         "a11y": [
           "The sidebar adds no landmark of its own: wrap it in a `nav` (or give it `aria-label` on the Sidebar's container) so screen readers can find it. The rows are ordinary buttons and links in a list; `isActive` on a link (`asChild`) or a sub-menu button sets `aria-current=\"page\"` for you (pass your own to override; a plain button gets none); the drawing is decoration.",
-          "Ctrl or Cmd + B toggles it from anywhere; the SidebarTrigger is a labelled button (\"Toggle Sidebar\"). The rail is not a tab stop. On phones the pad opens in a Sheet: a dialog named \"Sidebar\" that traps focus, closes with Escape or a tap on the scrim and gives focus back to whatever opened it (Radix only does that for its own Trigger, so the Sidebar remembers the opener itself). Growing the window past the phone width closes the sheet, so it does not come back by itself when the window shrinks again. Ctrl/Cmd+B is left alone when something nearer (a rich-text editor's Bold) has already handled the key.",
+          "Ctrl or Cmd + B toggles it from anywhere; the SidebarTrigger is a labeled button (\"Toggle Sidebar\"). The rail is not a tab stop. On phones the pad opens in a Sheet: a dialog named \"Sidebar\" that traps focus, closes with Escape or a tap on the scrim and gives focus back to whatever opened it (Radix only does that for its own Trigger, so the Sidebar remembers the opener itself). Growing the window past the phone width closes the sheet, so it does not come back by itself when the window shrinks again. Ctrl/Cmd+B is left alone when something nearer (a rich-text editor's Bold) has already handled the key.",
           "Keyboard focus on a row shows the highlighter and the theme's blue focus ring. Every row is at least 28 px high (32 by default); collapsed rows are 32 px squares, named by their tooltip and their text (keep the label in a `span` so it stays in the accessible name).",
           "When it collapses to icons the labels are hidden with CSS only, so the accessible names stay. Tooltips appear on hover and keyboard focus, never on touch.",
           "The torn edge, ruled lines, binder clip, bracket and sub-menu line are aria-hidden decoration with no pointer events. In forced-colors mode the clip is hidden and the drawings give way to real outlines. Reduced motion collapses the slide of the pad and the fade of the labels.",
@@ -6952,10 +6949,10 @@
         ],
         "a11y": [
           "The canvas is a named application (\"Signature\"); the same keyboard drawing as Sketchpad works: arrows move a cursor, Space puts the pen down and lifts it. Typing the name is the accessible alternative and is one button away.",
-          "Type mode replaces the canvas by an image named \"Signature, typed: Ada Lovelace\" and a text field labelled \"Type your full name\".",
+          "Type mode replaces the canvas by an image named \"Signature, typed: Ada Lovelace\" and a text field labeled \"Type your full name\".",
           "Required: a visually hidden text input holds the value so the browser's own validation and message apply; the failure also shows a role=\"alert\" line and moves focus to the canvas (the name field in type mode).",
-          "The baseline turns red pencil when invalid, and the message says why (colour is never the only cue).",
-          "Windows high contrast keeps the ink colours of the strokes; the sheet gets a real border."
+          "The baseline turns red pencil when invalid, and the message says why (color is never the only cue).",
+          "Windows high contrast keeps the ink colors of the strokes; the sheet gets a real border."
         ],
         "usage": "import { SignaturePad } from \"@/components/ui/signature-pad\"\n\nexport function Example() {\n  return (\n    <form onSubmit={(e) => { e.preventDefault(); console.log(new FormData(e.currentTarget).get(\"signature\")) }}>\n      <SignaturePad name=\"signature\" required />\n      <button type=\"submit\">Sign</button>\n    </form>\n  )\n}",
         "parts": [
@@ -7050,7 +7047,7 @@
           "A skeleton is an empty element, invisible to assistive tech, as shadcn's. Mark the region that is loading with aria-busy=\"true\" (and a status or a visually hidden \"Loading\" for screen readers), and remove the skeletons when the content arrives.",
           "Nothing in it is interactive or focusable; the boil is decoration, and a page of skeletons never announces anything.",
           "Reduced motion (the OS setting or the in-app calm-ink setting) and calm density hold the first frame still.",
-          "In Windows high contrast the drawing is replaced by a dashed system-colour outline.",
+          "In Windows high contrast the drawing is replaced by a dashed system-color outline.",
           "The masks need CSS mask-image (every current browser); the stylesheet is injected with <style href precedence>, so React 19 hoists it, dedupes it and includes it in server HTML."
         ],
         "usage": "import { Skeleton } from \"@/components/ui/skeleton\"\n\nexport function Example() {\n  return (\n    <div className=\"flex items-center gap-4\" aria-busy=\"true\">\n      <Skeleton className=\"size-12 rounded-full\" />\n      <div className=\"flex flex-col gap-2\">\n        <Skeleton className=\"h-4 w-[250px]\" />\n        <Skeleton className=\"h-4 w-[200px]\" />\n      </div>\n    </div>\n  )\n}",
@@ -7102,9 +7099,9 @@
           "Keyboard drawing: arrow keys move a cursor (Shift = 32 units, Alt = 2), Space or Enter puts the pen down (\"Pen down.\") and lifts it (\"Stroke added.\"), Escape cancels the stroke or hides the cursor. Leaving the canvas lifts the pen.",
           "Focus: Undo, Redo and Clear disable themselves when they have nothing left to do; if one of them had focus, focus moves to the canvas instead of falling to the top of the page. Every part composes its own `onClick` with the built-in action (call `event.preventDefault()` to cancel it).",
           "Shortcuts on the focused canvas: F felt, B brush, P pencil, M marker, H highlighter, E eraser (only tools that are offered), [ and ] change the width, Ctrl/Cmd+Z undo, Ctrl/Cmd+Shift+Z or Ctrl+Y redo.",
-          "Tools, colours and widths are radio groups (Radix): Tab enters a group, arrow keys move and select. Every swatch has a colour name; toolbar buttons are at least 28 px with a bigger hit area.",
+          "Tools, colors and widths are radio groups (Radix): Tab enters a group, arrow keys move and select. Every swatch has a color name; toolbar buttons are at least 28 px with a bigger hit area.",
           "Adding, erasing, undoing and clearing are announced politely (\"Stroke added. 3 strokes.\").",
-          "Windows high contrast: the strokes keep their own colours (forced-color-adjust: none), the toolbar gets real outlines. Reduced motion: replay shows the finished drawing at once.",
+          "Windows high contrast: the strokes keep their own colors (forced-color-adjust: none), the toolbar gets real outlines. Reduced motion: replay shows the finished drawing at once.",
           "Touch: the canvas sets touch-action: none so drawing never scrolls the page. That also means a canvas that fills the screen on a phone traps the scroll: leave a margin around it, or put it in a tab or dialog. Palm rejection: a finger is ignored for 1.5 s after the pen was last seen near the screen (and a palm that got there first is dropped when the pen lands), so a person who switches between pencil and finger is never locked out.",
           "Scale: a stroke is stored as thinned points (samples closer than 0.8 units are held back) and drawn by the pen as ribbons, which is about 15 to 30 KB of svg for a hundred points and up to 1 MB for a very long scribble; the finished markup is cached (bounded by size, 24 MB) and a live stroke is previewed with at most 480 points. A page with many hundreds of long strokes belongs in the replay/export flow (toSVG), not in a live canvas."
         ],
@@ -7210,7 +7207,7 @@
           "popover"
         ],
         "a11y": [
-          "Sonner renders a polite aria-live region (`aria-label=\"Notifications alt+T\"`); Alt+T focuses it so a keyboard user can reach the toasts, and hovering or focusing pauses the timers. Each type is its own icon shape and paper (guest check, pink, yellow, blue sticky), so colour is never the only signal.",
+          "Sonner renders a polite aria-live region (`aria-label=\"Notifications alt+T\"`); Alt+T focuses it so a keyboard user can reach the toasts, and hovering or focusing pauses the timers. Each type is its own icon shape and paper (guest check, pink, yellow, blue sticky), so color is never the only signal.",
           "Action and cancel are real buttons at least 24 px tall; the close button is named \"Close toast\". Keep toast text short and never put the only copy of an error in a toast that disappears: pair it with an inline message.",
           "Swipe to dismiss is a pointer shortcut only (sonner); every toast also closes with its close button, its action, its timer or `toast.dismiss()`.",
           "The toss-in uses the theme's `ll-toss` (`ll-drop` when the stack is not on the right) and collapses to nothing with reduced motion. In `calm` density the slips lose their tilt, tape and pin.",
@@ -7228,7 +7225,7 @@
       "name": "spinner",
       "type": "registry:ui",
       "title": "Spinner",
-      "description": "A pencil that will not stop scribbling: a hand-wound spiral whose line is drawn and undrawn round and round, in the colour of the text around it. Still, and whole, when motion is reduced. Stubby can write instead, in three frames like a flip book.",
+      "description": "A pencil that will not stop scribbling: a hand-wound spiral whose line is drawn and undrawn round and round, in the color of the text around it. Still, and whole, when motion is reduced. Stubby can write instead, in three frames like a flip book.",
       "categories": [
         "Feedback"
       ],
@@ -7262,9 +7259,9 @@
         ],
         "a11y": [
           "Like shadcn's, it is role=status with aria-label=\"Loading\": a polite live region that announces its name when it appears. Put a visible word next to it when you can (\"Saving...\").",
-          "The drawing is aria-hidden. It uses the current text colour, so it is as visible as the text next to it (in a disabled button that is the disabled text colour).",
+          "The drawing is aria-hidden. It uses the current text color, so it is as visible as the text next to it (in a disabled button that is the disabled text color).",
           "Reduced motion (the OS setting, or the in-app calm-ink setting) stops the slide and shows the whole scribble, standing still; Stubby holds his last frame, the finished scribble.",
-          "In Windows high contrast the drawing is kept (it is art, not a border) and takes the system text colour."
+          "In Windows high contrast the drawing is kept (it is art, not a border) and takes the system text color."
         ],
         "usage": "import { Button } from \"@/components/ui/button\"\nimport { Spinner } from \"@/components/ui/spinner\"\n\nexport function Example() {\n  return (\n    <div className=\"flex items-center gap-6\">\n      <Spinner />\n      <Spinner className=\"size-8\" aria-label=\"Fetching your notes\" />\n      <Button disabled>\n        <Spinner />\n        Saving\n      </Button>\n      <Spinner variant=\"loops\" />\n      <Spinner variant=\"write\" />\n    </div>\n  )\n}",
         "parts": [
@@ -7321,7 +7318,7 @@
       "name": "stamp-button",
       "type": "registry:ui",
       "title": "Stamp button",
-      "description": "A button that is a rubber stamp: a wooden knob on an inked die, in the colour of the impression it will leave. Press it and APPROVED, PAID or VOID lands on the page with a thump. The stamps on a page are JSON, so they can be state.",
+      "description": "A button that is a rubber stamp: a wooden knob on an inked die, in the color of the impression it will leave. Press it and APPROVED, PAID or VOID lands on the page with a thump. The stamps on a page are JSON, so they can be state.",
       "categories": [
         "Actions"
       ],
@@ -7363,7 +7360,7 @@
           "Each impression is an image named by its words (role=img, \"Approved\"), so the stamped state is in the reading order; a polite status line says \"Approved stamped.\" once per strike.",
           "Only a stamp struck now lands with the thump: impressions restored from saved JSON, a defaultValue or the server's markup are simply on the page, so a reload does not stamp everything again. The thump is an enter animation on the impression and a 2 px give on the page; with reduced motion (the OS setting, data-motion=\"reduced\", or the provider) the impression simply appears and the page holds still.",
           "The drawn tool is decoration (aria-hidden); its label is DOM text on the die at 4.5:1 or better; focus draws a ring round the whole tool, knob included. Windows high contrast hides the drawing and gives the button a real outline.",
-          "Do not carry the decision by colour alone: the impression says the word, and the label says what pressing does."
+          "Do not carry the decision by color alone: the impression says the word, and the label says what pressing does."
         ],
         "usage": "import { StampButton, StampSurface } from \"@/components/ui/stamp-button\"\n\nexport function Example() {\n  return (\n    <StampSurface className=\"relative w-96 p-6\">\n      <h3>Invoice 2026-031</h3>\n      <StampButton stamp=\"stamp-approved\" onStamp={() => approve()}>\n        Approve\n      </StampButton>\n    </StampSurface>\n  )\n}",
         "parts": [
@@ -7558,7 +7555,7 @@
           "Pressing a sticker with the mouse does not move the focus out of the search field, so with closeOnSelect off the arrow keys keep working between picks.",
           "Each option is named by its sticker (\"Rocket\"); the count of matches is announced politely as you type (\"12 stickers.\", \"No stickers found.\").",
           "The category chips are toggle buttons (aria-pressed) in their own tab stop; clicking one returns focus to the field. The row scrolls sideways on a narrow popover.",
-          "The highlighted sticker is shown by a highlighter swipe behind it, a small turn and the peeled corner, not by colour alone. Windows high contrast keeps the stickers (intrinsic art).",
+          "The highlighted sticker is shown by a highlighter swipe behind it, a small turn and the peeled corner, not by color alone. Windows high contrast keeps the stickers (intrinsic art).",
           "The empty state has a status line and Stubby with a magnifier."
         ],
         "usage": "import { Button } from \"@/components/ui/button\"\nimport { StickerPicker, StickerPickerContent, StickerPickerTrigger } from \"@/components/ui/sticker-picker\"\n\nexport function Example() {\n  return (\n    <StickerPicker onSelect={(sticker) => attach(sticker.name)}>\n      <StickerPickerTrigger asChild>\n        <Button variant=\"outline\">Add sticker</Button>\n      </StickerPickerTrigger>\n      <StickerPickerContent />\n    </StickerPicker>\n  )\n}",
@@ -7610,7 +7607,7 @@
           "What came off is announced politely (\"Rocket peeled off.\", \"Rocket stuck back on.\"); the title shows how many are left.",
           "While a sticker is in the hand the sheet rises above the rest of the page, so it can be carried over a board that comes after it in the source.",
           "Dragging is a mouse and pen extra: touch never starts a drag (the page keeps scrolling), a tap peels. Every drag has a click or key equivalent, and releasing a drag near where it started springs the sticker back without peeling it.",
-          "The kiss-cut outlines and the printing are decoration (aria-hidden, no pointer events); the focus ring is drawn round the whole slot and never depends on colour alone.",
+          "The kiss-cut outlines and the printing are decoration (aria-hidden, no pointer events); the focus ring is drawn round the whole slot and never depends on color alone.",
           "Reduced motion: no flight or curl animation, the sticker is simply gone or back. Calm density: no sheen, no crop marks.",
           "Windows high contrast keeps the stickers and outlines (intrinsic art)."
         ],
@@ -7668,7 +7665,7 @@
       "name": "sticky-note",
       "type": "registry:ui",
       "title": "Sticky note",
-      "description": "A square of coloured paper with a gum band, turned a little more than a page. Five pads, any size, written in marker. It can curl a corner, hang from a pin or a strip of tape, and grow a tick box that is ticked with a felt pen.",
+      "description": "A square of colored paper with a gum band, turned a little more than a page. Five pads, any size, written in marker. It can curl a corner, hang from a pin or a strip of tape, and grow a tick box that is ticked with a felt pen.",
       "categories": [
         "Paper"
       ],
@@ -7702,7 +7699,7 @@
         ],
         "a11y": [
           "A note is a plain `div`. Give it `role=\"note\"` or `as`-like semantics through props when it means more (for instance `role=\"group\"` with an `aria-label` in a board of notes).",
-          "The gum band, curl, pin and tape are aria-hidden decoration. The tick box is drawing only unless you pass `onDoneChange`, and then it is a real checkbox (named by `doneLabel`, Space toggles, `aria-checked` follows `done`). A done note without it says \"Done.\" to screen readers through hidden text; either way it is struck through, so meaning never rests on colour or the drawing alone.",
+          "The gum band, curl, pin and tape are aria-hidden decoration. The tick box is drawing only unless you pass `onDoneChange`, and then it is a real checkbox (named by `doneLabel`, Space toggles, `aria-checked` follows `done`). A done note without it says \"Done.\" to screen readers through hidden text; either way it is struck through, so meaning never rests on color or the drawing alone.",
           "Ink on every pad is at least 9:1; struck-through text switches to ink-soft (5.8:1 or better). Tilt is zero in calm density.",
           "Sticky text is real DOM and wraps at any size (`break-words`), so a note resized by its container never clips."
         ],
@@ -7803,7 +7800,7 @@
         ],
         "a11y": [
           "role=\"switch\" with aria-checked true or false. Space and Enter toggle it, Tab focuses it (Radix). Label it with <Label htmlFor>, wrap it, or use aria-label.",
-          "State is not carried by colour alone: off shows a pencil o at the end and the thumb at the start, on shows a felt bar and the thumb at the end.",
+          "State is not carried by color alone: off shows a pencil o at the end and the thumb at the start, on shows a felt bar and the thumb at the end.",
           "The hit area is 8 px larger than the track on every side (an ::after, so layout never moves). The track is 24 px tall at the default size, 20 px small with the enlarged hit area.",
           "A Label beside it is a peer: peer-disabled dims it, and hovering the row (a `group/field`) or the label right after it lights the switch's hover overlay.",
           "Keyboard focus draws a blue felt ring; the drawing is aria-hidden, pointer-events: none and never focusable. Windows high contrast replaces the ink by a real border, a Highlight fill when on and a solid thumb.",
@@ -7852,9 +7849,9 @@
         "a11y": [
           "Real table semantics: table, rowgroup, columnheader, row, cell. Nothing is drawn inside the table elements; the rules and swipes are painted with CSS pseudo-elements and are invisible to assistive technology.",
           "Mark the sorted column with `aria-sort=\"ascending\" | \"descending\"` on its TableHead and put a `<button>` inside it (see the data table example); mark chosen rows with `data-state=\"selected\"` and give their checkbox an accessible name.",
-          "Windows high contrast replaces the painted rules and swipe with real cell borders and the system highlight colours.",
+          "Windows high contrast replaces the painted rules and swipe with real cell borders and the system highlight colors.",
           "Hover only lights the swipe on pointers that can hover (and a row with an open menu, `aria-expanded`, stays lit). Reduced motion removes the fade.",
-          "Contrast on the swipe: ink is 11:1 on the full (selected) swipe, but green and red pencil text drop to about 4:1 there (4.7:1 on paper). Write status words in ink on selectable rows, as the data table example does, or keep coloured text out of them.",
+          "Contrast on the swipe: ink is 11:1 on the full (selected) swipe, but green and red pencil text drop to about 4:1 there (4.7:1 on paper). Write status words in ink on selectable rows, as the data table example does, or keep colored text out of them.",
           "Calm density (`data-density=\"calm\"`) draws straight hairline rules, a plain bold header and a flat swipe, for dense data."
         ],
         "usage": "import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from \"@/components/ui/table\"\n\nexport function Example() {\n  return (\n    <Table>\n      <TableCaption>A list of your recent invoices.</TableCaption>\n      <TableHeader>\n        <TableRow>\n          <TableHead>Invoice</TableHead>\n          <TableHead className=\"text-end\">Amount</TableHead>\n        </TableRow>\n      </TableHeader>\n      <TableBody>\n        <TableRow data-state=\"selected\">\n          <TableCell className=\"font-bold\">INV001</TableCell>\n          <TableCell className=\"text-end\">$250.00</TableCell>\n        </TableRow>\n      </TableBody>\n    </Table>\n  )\n}",
@@ -7874,7 +7871,7 @@
       "name": "tabs",
       "type": "registry:ui",
       "title": "Tabs",
-      "description": "Index-divider tabs: the active one is lifted and filled with highlighter, and the pencil baseline breaks under it. Also a hairline `line` style with a blue felt underline, and vertical binder tabs. Radix behaviour and roving focus are untouched.",
+      "description": "Index-divider tabs: the active one is lifted and filled with highlighter, and the pencil baseline breaks under it. Also a hairline `line` style with a blue felt underline, and vertical binder tabs. Radix behavior and roving focus are untouched.",
       "categories": [
         "Navigation"
       ],
@@ -7958,7 +7955,7 @@
         ],
         "a11y": [
           "role=\"img\" with aria-label set to the number (or your label): a screen reader hears \"7\", not seven strokes. Add the counted thing in visible text nearby.",
-          "The marks are the only place the number is shown as a drawing, so the svg is kept in Windows high contrast (as system colours).",
+          "The marks are the only place the number is shown as a drawing, so the svg is kept in Windows high contrast (as system colors).",
           "Right-to-left pages start the first bundle on the right.",
           "Reduced motion zeroes the wipe."
         ],
@@ -7997,7 +7994,7 @@
         ],
         "a11y": [
           "Tape is decoration: aria-hidden, focusable=false, pointer-events: none. Never put the only copy of information on it; a label written on tape is real text next to (not inside) the svg.",
-          "Tape keeps its colours in Windows high contrast (it is an intrinsic ink kind).",
+          "Tape keeps its colors in Windows high contrast (it is an intrinsic ink kind).",
           "Its tilt collapses to zero in calm density."
         ],
         "usage": "import { Tape } from \"@/components/ui/tape\"\n\n<div className=\"relative w-64 p-6\">\n  <Tape kind=\"washi-dots\" className=\"absolute -top-3 left-6\" />\n  …content\n</div>",
@@ -8043,7 +8040,7 @@
         "a11y": [
           "The stub is role=\"button\" named by its text (or `label`) and described by \"Press Enter or Space to tear it off along the dotted line, or pull it away with a pointer\". Enter and Space tear it; pointer dragging is an extra, never the only way.",
           "When it comes off the status line says \"Torn off.\" politely, once; the stub then leaves the tab order and the accessibility tree.",
-          "Pointer: pull at least half way (or all the way) to tear; a shorter pull springs back; a tap tears; a cancelled pointer springs back.",
+          "Pointer: pull at least half way (or all the way) to tear; a shorter pull springs back; a tap tears; a canceled pointer springs back.",
           "Focus: when the stub is torn off with the keyboard, focus moves to the ticket itself (it becomes programmatically focusable, with no ring), so Tab carries on from the ticket instead of restarting at the top of the page. Keys typed in something inside the stub never tear it.",
           "Reduced motion: the stub does not swing or fall, it is simply gone. Right-to-left layouts put the stub on the left and pull it that way.",
           "The perforation and the scissors are decoration (aria-hidden). Calm density leaves the scissors out and keeps the dashes."
@@ -8197,7 +8194,7 @@
           "Roving focus by Radix: the group is one tab stop, the arrow keys (left and right, or up and down when vertical) move between items and loop, Home and End jump to the ends, Space and Enter press.",
           "single is announced as a radio group with checked items; multiple as a toolbar of pressed buttons. Give the group an aria-label and every icon-only item its own.",
           "On is never told by hue alone: a filled body sits under the item, and (separate items) a solid box replaces the whisper box.",
-          "The focus ring is drawn on the item and lifted above its neighbours; Windows high contrast falls back to real borders and the browser's focus ring.",
+          "The focus ring is drawn on the item and lifted above its neighbors; Windows high contrast falls back to real borders and the browser's focus ring.",
           "In right-to-left layouts the seams move to the other edge; the drawing is mirrored by the recipe, not by CSS."
         ],
         "usage": "import { Icon } from \"@/components/ui/icon\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function Example() {\n  return (\n    <ToggleGroup type=\"single\" variant=\"outline\" defaultValue=\"list\" aria-label=\"View\">\n      <ToggleGroupItem value=\"list\" aria-label=\"List\">\n        <Icon name=\"list\" />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"grid\" aria-label=\"Grid\">\n        <Icon name=\"layout-grid\" />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"menu\" aria-label=\"Compact\">\n        <Icon name=\"menu\" />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}",
@@ -8211,7 +8208,7 @@
       "name": "toggle",
       "type": "registry:ui",
       "title": "Toggle",
-      "description": "A two-state button that stays down: a whisper of pencil box at rest, and a highlighter body that snaps into register when it is on. Same Radix behaviour and variants as shadcn.",
+      "description": "A two-state button that stays down: a whisper of pencil box at rest, and a highlighter body that snaps into register when it is on. Same Radix behavior and variants as shadcn.",
       "categories": [
         "Actions"
       ],
@@ -8249,7 +8246,7 @@
           "An icon-only toggle needs a name: pass aria-label (\"Bold\"). Keep the label the same when the state changes, and let aria-pressed say on or off.",
           "On is never told by hue alone: the toggle gains a solid fine-liner box and a filled body, and the drawn body sits under the label at 12:1 (highlighter) or 4.6:1 (marker).",
           "Keyboard focus draws the blue felt ring (3:1 against paper and desk); Windows high contrast swaps the drawing for a real border and the browser's own pressed styling.",
-          "aria-invalid draws the box in red pencil (again over the body when the toggle is down), so the cue is a line and not only a colour.",
+          "aria-invalid draws the box in red pencil (again over the body when the toggle is down), so the cue is a line and not only a color.",
           "Reduced motion removes the settle, the hover tilt and the snap."
         ],
         "usage": "import { Toggle } from \"@/components/ui/toggle\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function Example() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Toggle aria-label=\"Toggle visibility\">\n        <Icon name=\"eye\" />\n      </Toggle>\n      <Toggle variant=\"outline\" defaultPressed>\n        <Icon name=\"bell\" />\n        Follow\n      </Toggle>\n    </div>\n  )\n}",
@@ -8312,7 +8309,7 @@
       "name": "typewriter",
       "type": "registry:ui",
       "title": "Typewriter",
-      "description": "Text that types itself in the typewriter face, with an inked caret. Keys land at uneven speeds and hold at commas and full stops; several phrases can go one under the other or be typed, held and backspaced in turn.",
+      "description": "Text that types itself in the typewriter face, with an inked caret. Keys land at uneven speeds and hold at commas and periods; several phrases can go one under the other or be typed, held and backspaced in turn.",
       "categories": [
         "Typography"
       ],
@@ -8434,8 +8431,8 @@
         ],
         "a11y": [
           "Real elements with their real semantics: h1 to h4, p, ul/ol, blockquote, code. Nothing here changes the outline or the reading order.",
-          "Body text is the hand at 17 px in ink on paper (14:1); muted text is the muted-foreground token (4.5:1 or better on paper and on the desk); links are blue felt (7:1) and bold with a thick underline, never colour alone.",
-          "The hand-drawn heading rule is a baked alpha mask painted by ::after; browsers without mask support keep a plain pencil border. Windows high contrast paints the rule with system text colour.",
+          "Body text is the hand at 17 px in ink on paper (14:1); muted text is the muted-foreground token (4.5:1 or better on paper and on the desk); links are blue felt (7:1) and bold with a thick underline, never color alone.",
+          "The hand-drawn heading rule is a baked alpha mask painted by ::after; browsers without mask support keep a plain pencil border. Windows high contrast paints the rule with system text color.",
           "Line length is capped at 64 characters in Prose; long words wrap and code blocks scroll sideways (a table wider than the column needs a scrolling wrapper of its own)."
         ],
         "usage": "import { H1, Lead, P, InlineCode, Prose } from \"@/components/ui/typography\"\n\nexport function Article() {\n  return (\n    <article>\n      <H1>Notes on keeping a notebook</H1>\n      <Lead>A small argument you have with yourself.</Lead>\n      <P>Run <InlineCode>npm run notes</InlineCode> to see them.</P>\n    </article>\n  )\n}\n\nexport function Markdown({ html }: { html: string }) {\n  return <Prose dangerouslySetInnerHTML={{ __html: html }} />\n}",
@@ -8495,7 +8492,7 @@
         ],
         "a11y": [
           "The words are ordinary text: selectable, copyable, found by search. The line is aria-hidden and pointer-events-none.",
-          "Until the drawing exists (no JavaScript, first paint) and in Windows high contrast, the browser's own text-decoration underline is shown in the pen's colour.",
+          "Until the drawing exists (no JavaScript, first paint) and in Windows high contrast, the browser's own text-decoration underline is shown in the pen's color.",
           "Do not use it as the only sign of a link: put it on a real <a> with asChild (links keep their native focus ring) or keep the link's own underline.",
           "Reduced motion (or data-motion=\"reduced\") zeroes the draw-on."
         ],
@@ -9569,8 +9566,8 @@
     {
       "name": "landing-hero-02",
       "type": "registry:block",
-      "title": "Landing hero, centred",
-      "description": "A centred riso headline, two buttons, and the product on a taped page: a checklist you can tick (the bar, the tally and a stamp follow), margin notes and Stubby peeking over the edge. Looks right on paper or on the desk.",
+      "title": "Landing hero, centered",
+      "description": "A centered riso headline, two buttons, and the product on a taped page: a checklist you can tick (the bar, the tally and a stamp follow), margin notes and Stubby peeking over the edge. Looks right on paper or on the desk.",
       "categories": [
         "marketing"
       ],
@@ -9604,7 +9601,7 @@
           "target": "@components/blocks/landing-hero-02/page.tsx"
         }
       ],
-      "docs": "Installed the \"Landing hero, centred\" block into your components directory under blocks/landing-hero-02/.\nImport it: import LandingHero02 from \"<your components alias>/blocks/landing-hero-02/page\"",
+      "docs": "Installed the \"Landing hero, centered\" block into your components directory under blocks/landing-hero-02/.\nImport it: import LandingHero02 from \"<your components alias>/blocks/landing-hero-02/page\"",
       "meta": {
         "tags": [
           "marketing",
@@ -9948,7 +9945,7 @@
       "name": "newsletter-01",
       "type": "registry:block",
       "title": "Newsletter sign-up",
-      "description": "A taped card with a labelled email field and a button, beside a kraft envelope that holds a sample letter. A bad address is flagged under the field; a good one opens the envelope and stamps it SUBSCRIBED. Looks right on paper or on the desk.",
+      "description": "A taped card with a labeled email field and a button, beside a kraft envelope that holds a sample letter. A bad address is flagged under the field; a good one opens the envelope and stamps it SUBSCRIBED. Looks right on paper or on the desk.",
       "categories": [
         "marketing"
       ],

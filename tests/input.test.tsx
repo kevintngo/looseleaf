@@ -367,7 +367,7 @@ describe("Input as a form control", () => {
     expect(container.querySelector("input")?.className).toMatch(/file:/)
   })
 
-  it("is labelled by a real <label htmlFor>", async () => {
+  it("is labeled by a real <label htmlFor>", async () => {
     const { getByLabelText, user } = renderUI(
       <>
         <label htmlFor="who">Who</label>
@@ -473,7 +473,7 @@ describe("inputRecipe", () => {
     expect(run({ readOnly: true }).layers).toEqual(["rest"])
   })
 
-  it("draws sane markup at every width, density and tier (no NaN, only var(--ll-*) colours)", () => {
+  it("draws sane markup at every width, density and tier (no NaN, only var(--ll-*) colors)", () => {
     for (const w of [16, 44, 72, 120, 260, 480, 900]) {
       for (const density of ["comfortable", "compact", "calm"] as const) {
         for (const tier of ["lo", "hi"] as const) {

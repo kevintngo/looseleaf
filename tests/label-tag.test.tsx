@@ -135,7 +135,7 @@ describe("LabelTag", () => {
 describe("labelTagRecipe", () => {
   const p: LabelTagParams = { stock: "kraft", shape: "price", string: 44, twine: "natural", eyelet: "brass" }
 
-  it("is deterministic per seed, differs across seeds, clean at every size, density, tier, shape and colour", () => {
+  it("is deterministic per seed, differs across seeds, clean at every size, density, tier, shape and color", () => {
     const a = run(labelTagRecipe, p, 128, 170)
     expect(a.parts.rest).toBe(run(labelTagRecipe, p, 128, 170).parts.rest)
     expect(a.parts.rest).not.toBe(run(labelTagRecipe, p, 128, 170, { seed: "x" }).parts.rest)

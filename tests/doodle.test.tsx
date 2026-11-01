@@ -5,7 +5,7 @@ import { doodles } from "@/lib/ink/art/doodles"
 import { axeCheck, expectInkLayers, renderUI } from "./helpers"
 
 describe("Doodle", () => {
-  it("is intrinsic, decorative ink; aria-hidden unless labelled", async () => {
+  it("is intrinsic, decorative ink; aria-hidden unless labeled", async () => {
     const { container, rerender, getByRole } = renderUI(<Doodle name="star" />)
     const svg = container.querySelector("svg")!
     expect(svg).toHaveAttribute("data-slot", "doodle")
@@ -24,7 +24,7 @@ describe("Doodle", () => {
     expect(at(96)).not.toMatch(/NaN|undefined|Infinity/)
   })
 
-  it("draws its accent colours in doodle tone (ink is --ll-ink, not currentColor)", () => {
+  it("draws its accent colors in doodle tone (ink is --ll-ink, not currentColor)", () => {
     const html = renderToString(<Doodle name="flower" size={96} />)
     expect(html).toContain("var(--ll-bubblegum)")
     expect(html).toContain("var(--ll-ink)")

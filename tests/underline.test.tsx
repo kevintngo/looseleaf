@@ -22,7 +22,7 @@ describeTextMark({
 })
 
 describe("Underline specifics", () => {
-  it("exposes the kind, and its fallback is the browser's underline in the pen's colour", () => {
+  it("exposes the kind, and its fallback is the browser's underline in the pen's color", () => {
     const { getByText } = render(<Underline kind="wavy" tone="blue">wavy</Underline>)
     const el = getByText("wavy")
     expect(el).toHaveAttribute("data-kind", "wavy")

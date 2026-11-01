@@ -26,8 +26,8 @@
     ],
     "a11y": [
       "Decorative by default: `aria-hidden=\"true\"` and `focusable=\"false\"`. Pass `label` when the icon is the only content of a control, or name the control instead.",
-      "Ink is `currentColor`, so text colour utilities and forced-colors mode work; icons are kept in forced-colors mode.",
-      "Status icons differ by silhouette, not only by colour: a triangle warns, an octagon stops, a ring informs, an arc waits."
+      "Ink is `currentColor`, so text color utilities and forced-colors mode work; icons are kept in forced-colors mode.",
+      "Status icons differ by silhouette, not only by color: a triangle warns, an octagon stops, a ring informs, an arc waits."
     ],
     "usage": "import { Icon } from \"@/components/ui/icon\"\n\nexport function Example() {\n  return (\n    <button className=\"inline-flex items-center gap-2\">\n      <Icon name=\"trash\" />\n      Delete\n    </button>\n  )\n}",
     "parts": [

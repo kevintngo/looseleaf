@@ -16,7 +16,7 @@ const PRINCIPLES = [
   { title: "Drop-in", text: "Same part names, props and data-slot values as shadcn/ui, on Radix. Swap a file, keep your JSX." },
   {
     title: "Drawn, not styled",
-    text: "Lines have pressure, fills miss the outline a little, paper has tooth. Every stroke is seeded, so server and client draw the same thing.",
+    text: "Lines have pressure, fills sit inside their outlines, paper has tooth. Every stroke is seeded, so server and client draw the same thing.",
   },
   { title: "Practical", text: "Keyboard support, AA text, real focus rings, reduced motion, three densities. Charm is a dial you can turn down." },
 ] as const

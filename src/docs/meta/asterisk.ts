@@ -14,7 +14,7 @@ export default {
         "A <span> holding the drawn mark. Children come first and the mark follows them: <Asterisk>fine print</Asterisk>. The glyph is intrinsic art (kept in Windows high contrast) drawn once per seed.",
       props: [
         { name: "mark", type: '"asterisk" | "star" | "dagger" | "double-dagger"', default: '"asterisk"', description: "Which mark." },
-        { name: "tone", type: '"red" | "ink" | "blue" | "pencil"', default: '"red"', description: "The pen colour of the mark." },
+        { name: "tone", type: '"red" | "ink" | "blue" | "pencil"', default: '"red"', description: "The pen color of the mark." },
         { name: "label", type: "string", description: "The accessible name (\"footnote 1\"). Without it the mark is decoration and hidden from assistive technology." },
         { name: "href", type: "string", description: "Turns the mark into a link to the footnote. Its accessible name is `label`, or \"footnote\"." },
         { name: "seed", type: "string | number", description: "Pins the hand of the strokes." },

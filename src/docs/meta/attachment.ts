@@ -43,7 +43,7 @@ export default {
   a11y: [
     "AttachmentProgress is a `role=\"progressbar\"` with `aria-valuenow`/`min`/`max` (none while indeterminate). Inside an attachment it is named by the AttachmentTitle unless you give it an `aria-label` or `aria-labelledby`; on its own it needs one.",
     "An AttachmentTrigger covers the attachment and is the tab stop; the Action buttons above it (z-20) stay separately focusable. Label both: the file name is not enough for 'Remove'.",
-    "The state is never only colour: error is red pencil plus a red message plus (for you) a retry action; idle is dashed; done carries a clip.",
+    "The state is never only color: error is red pencil plus a red message plus (for you) a retry action; idle is dashed; done carries a clip.",
     "Sheets, outlines, clips and tape are aria-hidden and take no pointer events. Calm density hides the clip and the tape and traces a plain hairline.",
     "Error text is red on slip (4.8:1); titles are ink on slip (14:1).",
     "A finished chip carries a paper clip over its end. With no action beside it the content keeps clear of the clip (extra end padding), so a long title truncates before it, not under it.",

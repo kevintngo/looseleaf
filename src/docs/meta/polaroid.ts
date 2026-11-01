@@ -24,7 +24,7 @@ export default {
         { name: "seed", type: "string | number", description: "Pins the hand of the drawing." },
       ],
     },
-    { name: "PolaroidCaption", description: "A `figcaption` in the foot: script font at 26 px, centred, balanced, at least 3 rem high." },
+    { name: "PolaroidCaption", description: "A `figcaption` in the foot: script font at 26 px, centered, balanced, at least 3 rem high." },
   ],
   a11y: [
     "Give a real photograph its `alt` text as usual; the figure and figcaption name it for assistive technology. A drawn scene is decoration unless you pass `label`.",

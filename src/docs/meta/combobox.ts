@@ -81,16 +81,16 @@ export default {
       name: "ComboboxChips",
       description: "The field of a `multiple` combobox: a pencil box that holds one removable tag per chosen value and the input. Click anywhere in it to type; Backspace in the empty input takes the last tag back. It is the anchor of the list.",
       props: [
-        { name: "tone", type: '"hi" | "sky" | "grass" | "bubblegum" | "auto"', default: '"hi"', description: "Colour of the tags; `auto` gives each value its own, from its text." },
+        { name: "tone", type: '"hi" | "sky" | "grass" | "bubblegum" | "auto"', default: '"hi"', description: "Color of the tags; `auto` gives each value its own, from its text." },
         { name: "renderChip", type: "(value, label) => ReactNode", description: "Draw the tags yourself." },
       ],
     },
     {
       name: "ComboboxChip",
-      description: "One removable tag: a hang-tag drawn with its pointed end, a punched hole and a solid highlighter (or stationery-colour) body, each a little different. The x is a real button named 'Remove <label>' that wears the highlighter on hover.",
+      description: "One removable tag: a hang-tag drawn with its pointed end, a punched hole and a solid highlighter (or stationery-color) body, each a little different. The x is a real button named 'Remove <label>' that wears the highlighter on hover.",
       props: [
         { name: "value", type: "string", description: "The value the x removes. Optional, as upstream: a text child is the value when this is not given." },
-        { name: "tone", type: '"hi" | "sky" | "grass" | "bubblegum"', default: '"hi"', description: "Colour of the body." },
+        { name: "tone", type: '"hi" | "sky" | "grass" | "bubblegum"', default: '"hi"', description: "Color of the body." },
         { name: "showRemove", type: "boolean", default: "true", description: "Leave the x out." },
       ],
     },

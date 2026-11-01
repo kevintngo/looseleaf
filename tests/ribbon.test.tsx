@@ -73,7 +73,7 @@ describe("Ribbon", () => {
     expect(getByRole("button", { name: "Shop" })).toHaveAttribute("data-slot", "ribbon")
   })
 
-  it("asChild draws inside the child element and keeps its behaviour", async () => {
+  it("asChild draws inside the child element and keeps its behavior", async () => {
     const onClick = vi.fn()
     const { getByRole, user } = renderUI(
       <Ribbon asChild>

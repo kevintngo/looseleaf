@@ -13,7 +13,7 @@ import {
 
 export const meta = {
   title: "Your own toolbar",
-  description: "The parts compose. A pencil-and-eraser sketchbook on graph paper, four colours, taped to the desk, with a plot already begun.",
+  description: "The parts compose. A pencil-and-eraser sketchbook on graph paper, four colors, taped to the desk, with a plot already begun.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

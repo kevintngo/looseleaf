@@ -237,7 +237,7 @@ describe("ItemGroup and the list semantics", () => {
 describe("item stylesheet", () => {
   const css = itemCss()
 
-  it("is built once and has every frame of every tile as a data-URI alpha shape with no colour of its own", () => {
+  it("is built once and has every frame of every tile as a data-URI alpha shape with no color of its own", () => {
     expect(itemCss()).toBe(css)
     for (const kind of ["eh", "ev", "ru"]) {
       for (let f = 0; f < ITEM_FRAMES; f++) {

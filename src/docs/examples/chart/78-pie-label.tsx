@@ -5,7 +5,7 @@ import { browsers } from "./_data"
 
 export const meta = {
   title: "Pie: label",
-  description: "The default: every slice is labelled with its share, written round the outside in the script hand.",
+  description: "The default: every slice is labeled with its share, written round the outside in the script hand.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

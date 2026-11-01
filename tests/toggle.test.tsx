@@ -97,7 +97,7 @@ describe("Toggle structure", () => {
   })
 })
 
-describe("Toggle behaviour", () => {
+describe("Toggle behavior", () => {
   it("toggles by click, Space and Enter; uncontrolled", async () => {
     const onPressedChange = vi.fn()
     const { getByRole, user } = renderUI(
@@ -300,7 +300,7 @@ describe("toggleRecipe", () => {
     expect(run({}).parts.checked).toMatch(/data-part="fill" style="--mx:-?[\d.]+;--my:-?[\d.]+"/)
   })
 
-  it("draws sane markup at many boxes, densities, tiers, tones and joins (no NaN, only var(--ll-*) colours)", () => {
+  it("draws sane markup at many boxes, densities, tiers, tones and joins (no NaN, only var(--ll-*) colors)", () => {
     for (const [w, h] of [
       [24, 24],
       [28, 28],

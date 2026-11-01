@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 export const meta = {
   title: "Area chart",
-  description: "The space under the line is washed with the series colour and shaded in pencil: hatching, dots, cross-hatching. Stacked areas add up; the tooltip lists every layer.",
+  description: "The space under the line is washed with the series color and shaded in pencil: hatching, dots, cross-hatching. Stacked areas add up; the tooltip lists every layer.",
   layout: "stack" as const,
   stage: "desk" as const,
 }

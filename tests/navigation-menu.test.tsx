@@ -77,7 +77,7 @@ function Demo({ root, indicator = false }: { root?: Partial<React.ComponentProps
 const layers = (el: Element) => Array.from(el.querySelectorAll(":scope > svg[data-ink] > g[data-layer]")).map((g) => g.getAttribute("data-layer"))
 
 describe("NavigationMenu strip", () => {
-  it("is a labelled nav with upstream's slots; the list stands its tabs on a pencil line it hosts", () => {
+  it("is a labeled nav with upstream's slots; the list stands its tabs on a pencil line it hosts", () => {
     const { container, getByRole } = renderUI(<Demo />)
     const nav = getByRole("navigation", { name: "Main" })
     expect(nav).toHaveAttribute("data-slot", "navigation-menu")

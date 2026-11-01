@@ -23,9 +23,9 @@ export const KINDS: ReadonlyArray<{ id: EventKind; label: string; dot: string }>
 export const kindOf = (id: EventKind) => KINDS.find((k) => k.id === id) ?? KINDS[0]
 
 export const events: PlannerEvent[] = [
-  { id: "e1", title: "Watercolour class", date: "2026-09-03", start: "18:30", end: "20:30", kind: "home", notes: "Bring the small brushes." },
+  { id: "e1", title: "Watercolor class", date: "2026-09-03", start: "18:30", end: "20:30", kind: "home", notes: "Bring the small brushes." },
   { id: "e2", title: "Kiln day", date: "2026-09-10", start: "09:00", end: "13:00", kind: "studio", notes: "" },
-  { id: "e3", title: "Dinner with the neighbours", date: "2026-09-12", start: "19:30", end: "22:00", kind: "friends", notes: "We are bringing the tart." },
+  { id: "e3", title: "Dinner with the neighbors", date: "2026-09-12", start: "19:30", end: "22:00", kind: "friends", notes: "We are bringing the tart." },
   { id: "e4", title: "Dentist", date: "2026-09-16", start: "08:30", end: "09:15", kind: "home", notes: "" },
   { id: "e5", title: "Order the boxes", date: "2026-09-21", start: "11:00", end: "11:30", kind: "errands", notes: "" },
   { id: "e6", title: "Studio stand-up", date: "2026-09-25", start: "09:30", end: "10:00", kind: "studio", notes: "Price tags, sticker sheet, newsletter." },

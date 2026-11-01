@@ -63,7 +63,7 @@ export const transactions: Transaction[] = [
   { id: 14, date: "2026-09-10", description: "Internet", account: "Checking", category: "Bills", cents: -4900, status: "cleared" },
   { id: 15, date: "2026-09-08", description: "Whole Foods", account: "Card", category: "Groceries", cents: -10250, status: "cleared" },
   { id: 16, date: "2026-09-05", description: "Ramen night", account: "Card", category: "Eating out", cents: -6000, status: "cleared" },
-  { id: 17, date: "2026-09-03", description: "Watercolour set", account: "Card", category: "Fun", cents: -3600, status: "cleared" },
+  { id: 17, date: "2026-09-03", description: "Watercolor set", account: "Card", category: "Fun", cents: -3600, status: "cleared" },
   { id: 18, date: "2026-09-02", description: "Rent", account: "Checking", category: "Rent", cents: -145000, status: "cleared" },
   { id: 19, date: "2026-09-01", description: "Phone plan", account: "Checking", category: "Bills", cents: -6400, status: "cleared" },
   { id: 20, date: "2026-09-01", description: "Garden club dues", account: "Checking", category: "Fun", cents: -1200, status: "cleared" },

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "clipboard",
   "title": "Clipboard",
-  "description": "A board with a spring clip holding a sheet of paper. The board is one drawn sheet (hardboard with the grain of its fibre, or coloured plastic; a bevel lit from the upper left) that turns and casts its own shadow; the chrome clip is drawn over the paper it holds. The sheet is real DOM: put a form, a checklist or notes on it.",
+  "description": "A board with a spring clip holding a sheet of paper. The board is one drawn sheet (hardboard with the grain of its fiber, or colored plastic; a bevel lit from the upper left) that turns and casts its own shadow; the chrome clip is drawn over the paper it holds. The sheet is real DOM: put a form, a checklist or notes on it.",
   "registryDependencies": [
     "https://kevintngo.github.io/looseleaf/r/ink.json",
     "https://kevintngo.github.io/looseleaf/r/ink-paper.json",
@@ -34,7 +34,7 @@
     ],
     "a11y": [
       "The board and the clip are aria-hidden decoration (the clip is an intrinsic `prop` drawn over the paper, with no pointer events); everything on the paper is ordinary content. Make the paper a `form`, `section` or `article` with a label when it means more than a block of text.",
-      "Ink on the paper is 14:1. The paper is drawn on cream even on a coloured board, so contrast never depends on the board's colour. The clip hides in calm density; the tilt is zero there.",
+      "Ink on the paper is 14:1. The paper is drawn on cream even on a colored board, so contrast never depends on the board's color. The clip hides in calm density; the tilt is zero there.",
       "Windows high contrast replaces the board with an outline; the paper keeps its own."
     ],
     "usage": "import { Clipboard, ClipboardPaper } from \"@/components/ui/clipboard\"\n\n<Clipboard tone=\"teal\">\n  <ClipboardPaper as=\"form\" aria-label=\"Sign-in sheet\">\n    <h3 className=\"font-script text-3xl font-bold\">Visitors</h3>\n    …\n  </ClipboardPaper>\n</Clipboard>",

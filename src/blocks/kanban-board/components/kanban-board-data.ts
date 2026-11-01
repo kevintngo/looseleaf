@@ -30,7 +30,7 @@ export const notes: Note[] = [
   { id: "n4", title: "Book the courier", label: "Admin", who: "Sam Reyes", column: "todo" },
   { id: "n5", title: "Print the price tags", detail: "Kraft card, two hundred of them.", label: "Shop", who: "Ada Lovelace", due: "Sep 27", column: "doing" },
   { id: "n6", title: "Draw the sticker sheet", detail: "Nine stickers. One of them is a snail.", label: "Design", who: "Mika Kobayashi", due: "Sep 27", column: "doing" },
-  { id: "n7", title: "Fix the postcode field at checkout", label: "Admin", who: "Sam Reyes", column: "doing" },
+  { id: "n7", title: "Fix the postal code field at checkout", label: "Admin", who: "Sam Reyes", column: "doing" },
   { id: "n8", title: "Choose the paper stock", label: "Design", who: "Jo Okafor", column: "done" },
   { id: "n9", title: "Name the new notebook", detail: "It is called Margin.", label: "Words", who: "Jo Okafor", column: "done" },
   { id: "n10", title: "Order the shipping boxes", label: "Admin", who: "Sam Reyes", column: "done" },

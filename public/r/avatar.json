@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "avatar",
   "title": "Avatar",
-  "description": "A face, circled in felt tip. The picture is circled by a hand-drawn loop; without one the initials sit on a disc of marker in a stationery colour chosen from the name. A status dot goes on the corner, and a group overlaps its faces and ends in a sketched \"+3\".",
+  "description": "A face, circled in felt tip. The picture is circled by a hand-drawn loop; without one the initials sit on a disc of marker in a stationery color chosen from the name. A status dot goes on the corner, and a group overlaps its faces and ends in a sketched \"+3\".",
   "dependencies": [
     "radix-ui"
   ],
@@ -35,9 +35,9 @@
     ],
     "a11y": [
       "The loop, the disc and the dot are aria-hidden decoration. Give the picture an `alt` (or `alt=\"\"` next to the name in text), and give AvatarFallback a `name` so the person is read out instead of two letters.",
-      "Colour is never the only carrier: the initials say who, and the badge needs its own text for its meaning (online, busy). The initials are ink on a 62% marker, 5.5:1 or better on all eight colours.",
+      "Color is never the only carrier: the initials say who, and the badge needs its own text for its meaning (online, busy). The initials are ink on a 62% marker, 5.5:1 or better on all eight colors.",
       "An avatar is not interactive. Wrap it in a Button or link yourself, and the hand-drawn loop then sits inside that control's focus ring.",
-      "The same name is always the same colour on the server and in the browser (a hash of the trimmed, lower-cased name), so nothing changes at hydration.",
+      "The same name is always the same color on the server and in the browser (a hash of the trimmed, lower-cased name), so nothing changes at hydration.",
       "Windows high contrast removes the drawings and keeps the picture or initials."
     ],
     "usage": "import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage } from \"@/components/ui/avatar\"\n\nexport function Example() {\n  return (\n    <AvatarGroup>\n      <Avatar>\n        <AvatarImage src=\"/ada.png\" alt=\"Ada Lovelace\" />\n        <AvatarFallback name=\"Ada Lovelace\" />\n        <AvatarBadge status=\"online\" />\n      </Avatar>\n      <Avatar>\n        <AvatarFallback name=\"Jo Okafor\" />\n      </Avatar>\n      <AvatarGroupCount>+3</AvatarGroupCount>\n    </AvatarGroup>\n  )\n}",

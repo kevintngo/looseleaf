@@ -38,7 +38,7 @@ export default {
         { name: "inset", type: "boolean", default: "false", description: "Lines the text up with rows that carry a tick or an icon." },
         { name: "variant", type: '"default" | "destructive"', default: '"default"', description: "Destructive is red, and its highlight is a red pencil hatch (a pattern, not only a hue)." },
         { name: "onSelect", type: "(event: Event) => void", description: "Runs when it is chosen; call `event.preventDefault()` to keep the menu open." },
-        { name: "disabled", type: "boolean", default: "false", description: "Pencil-grey, skipped by the arrow keys, cannot be chosen." },
+        { name: "disabled", type: "boolean", default: "false", description: "Pencil-gray, skipped by the arrow keys, cannot be chosen." },
       ],
     },
     {
@@ -61,11 +61,11 @@ export default {
     { name: "DropdownMenuSubContent", description: "The sub-menu's own slip, set down beside its row with its first row level with the one that opened it (`alignOffset` -4, the slip's padding). Takes the same paper props as the content." },
   ],
   a11y: [
-    "Radix DropdownMenu: the trigger has aria-haspopup=menu, aria-expanded and aria-controls; the content is role=menu labelled by the trigger. Rows are menuitem, menuitemcheckbox (aria-checked) and menuitemradio.",
+    "Radix DropdownMenu: the trigger has aria-haspopup=menu, aria-expanded and aria-controls; the content is role=menu labeled by the trigger. Rows are menuitem, menuitemcheckbox (aria-checked) and menuitemradio.",
     "Enter, Space and ArrowDown on the trigger open it with the first row highlighted (ArrowUp opens nothing). Up and Down move (pass `loop` to the content to wrap), Home and End jump, typing a letter jumps to the next row that starts with it, ArrowRight opens a sub-menu and ArrowLeft closes it, Enter or Space chooses, Escape closes and returns focus to the trigger. Disabled rows are skipped.",
     "The highlight follows the keyboard as well as the pointer (`data-highlighted`) and is the focus indicator: dark text on the highlighter is 12:1, and because the highlighter itself is faint against the slip, a row with keyboard focus also gets a bar of blue felt at its start edge. A destructive row's cue is the word, the red glyph and the hatch.",
     "Ticks, dots, chevrons and the pencil boxes are aria-hidden drawings. Keycaps are real `kbd` elements; the command glyph carries the name Command.",
-    "Rows are 32 px high (28 compact and calm). Nothing depends on hover. Portalled content repeats the InkProvider's data-density, data-motion and data-theme; with reduced motion it appears without the slide and zoom. In forced-colors mode the ticks keep the system text colour and the highlighted row takes the system highlight colours.",
+    "Rows are 32 px high (28 compact and calm). Nothing depends on hover. Portalled content repeats the InkProvider's data-density, data-motion and data-theme; with reduced motion it appears without the slide and zoom. In forced-colors mode the ticks keep the system text color and the highlighted row takes the system highlight colors.",
   ],
   usage: `import { Button } from "@/components/ui/button"
 import {

@@ -26,7 +26,7 @@ describe("testimonials-01 block", () => {
     for (const name of ["Priya Nair", "Tomas Berg", "Lena Fischer", "Omar Haddad", "Yuki Tanaka", "Kofi Mensah"]) expect(container).toHaveTextContent(name)
   })
 
-  it("every note sits in a figure or a labelled quotation, on its own kind of paper", () => {
+  it("every note sits in a figure or a labeled quotation, on its own kind of paper", () => {
     const { container } = renderUI(<Testimonials01 />)
     const stocks = Array.from(container.querySelectorAll("[data-stock]")).map((p) => p.getAttribute("data-stock"))
     expect(stocks).toEqual(expect.arrayContaining(["sticky-yellow", "sticky-pink", "napkin", "photo", "index-card", "paper"]))

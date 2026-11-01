@@ -1,9 +1,9 @@
 import { useRef } from "react"
-import { Mascot } from "@/components/ui/mascot"
 import { Fastener } from "@/components/ui/paper"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Sidebar, useSidebar } from "@/components/ui/sidebar"
 import { SideNav } from "./SideNav"
+import { LogoMark } from "./LogoMark"
 
 export function NavPad() {
   return (
@@ -47,7 +47,7 @@ export function MobileNav() {
         }}
       >
         <SheetHeader className="flex-row items-center gap-2 pb-0">
-          <Mascot pose="wave" size={44} />
+          <LogoMark size={34} />
           <SheetTitle>Menu</SheetTitle>
           <SheetDescription className="sr-only">The pages of the documentation.</SheetDescription>
         </SheetHeader>

@@ -2,7 +2,7 @@ import { Seal } from "@/components/ui/seal"
 
 export const meta = {
   title: "Seals",
-  description: "A scalloped seal, a starburst, a rosette with a ribbon hanging from it, a medal, a shield, a plate and a tag: one generator, eight shapes, any stationery colour.",
+  description: "A scalloped seal, a starburst, a rosette with a ribbon hanging from it, a medal, a shield, a plate and a tag: one generator, eight shapes, any stationery color.",
   layout: "center" as const,
   stage: "desk" as const,
 }

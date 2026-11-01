@@ -136,7 +136,7 @@ describe("ToggleGroup structure", () => {
   })
 })
 
-describe("ToggleGroup behaviour", () => {
+describe("ToggleGroup behavior", () => {
   it("single: one item is on; clicking another moves it; clicking the on one clears it (uncontrolled)", async () => {
     const onValueChange = vi.fn()
     const { getAllByRole, user } = renderUI(<Single onValueChange={onValueChange} />)

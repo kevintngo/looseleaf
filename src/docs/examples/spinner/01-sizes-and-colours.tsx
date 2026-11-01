@@ -1,9 +1,9 @@
 import { Spinner } from "@/components/ui/spinner"
 
 export const meta = {
-  title: "Sizes and colours",
+  title: "Sizes and colors",
   description:
-    "Size it with size-*; the scribble is redrawn for the size (fewer, wider turns when it is small). It draws in whatever text colour it sits in. With reduced motion on, every one of these stands still, whole.",
+    "Size it with size-*; the scribble is redrawn for the size (fewer, wider turns when it is small). It draws in whatever text color it sits in. With reduced motion on, every one of these stands still, whole.",
   layout: "stack" as const,
 }
 

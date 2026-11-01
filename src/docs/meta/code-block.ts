@@ -5,7 +5,7 @@ export default {
   title: "Code block",
   category: "Chat",
   description:
-    "A typed slip taped to the page: the file name in a typewriter face, the code on a two-colour ribbon (red keywords and numbers, black for the rest), line numbers in the margin and a diff mode where removed lines are struck through in red pencil and added ones ticked in green. Ships its own small lexer for tsx, ts, jsx, js, css, json and bash.",
+    "A typed slip taped to the page: the file name in a typewriter face, the code on a two-color ribbon (red keywords and numbers, black for the rest), line numbers in the margin and a diff mode where removed lines are struck through in red pencil and added ones ticked in green. Ships its own small lexer for tsx, ts, jsx, js, css, json and bash.",
   status: "new",
   parts: [
     {
@@ -42,7 +42,7 @@ export default {
     "The scrolling body is a tab stop (`tabindex=0`) so a keyboard user can scroll long lines; on :focus-visible a blue ring is drawn round it.",
     "Diff lines are `ins` and `del` elements with a visually hidden 'Added:' / 'Removed:'; the tick and the strike are aria-hidden and never the only signal. Git's `\\ No newline at end of file` is read as a note, not as code.",
     "Contrast: ink on the slip 14:1, red ribbon 4.8:1, graphite comments and line numbers 5.9:1. Reduced motion changes nothing (there is no animation but the copied tick).",
-    "Forced colours: the drawn rule and the ring step aside for real outlines; the strike and tick keep the text colour.",
+    "Forced colors: the drawn rule and the ring step aside for real outlines; the strike and tick keep the text color.",
   ],
   usage: `import { CodeBlock } from "@/components/ui/code-block"
 

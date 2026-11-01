@@ -179,7 +179,7 @@ export interface AxisFrame {
   y1: number
 }
 
-export function drawGrid(ink: Ink, positions: number[], frame: AxisFrame, vertical: boolean, calm: boolean): void {
+export function drawGrid(ink: Ink, positions: number[], frame: AxisFrame, vertical: boolean): void {
   for (const p of positions) {
     if (vertical) {
       if (Math.abs(p - frame.y1) < 1.5) continue

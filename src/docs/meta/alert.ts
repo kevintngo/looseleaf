@@ -5,7 +5,7 @@ export default {
   title: "Alert",
   category: "Feedback",
   description:
-    "A message on a slip of paper, drawn in felt tip. Default and destructive as upstream, plus info, success, warning and a sticky-note variant. Each tone has its own pattern in the margin as well as its own colour, and a 16 px icon put first is circled in the tone's marker.",
+    "A message on a slip of paper, drawn in felt tip. Default and destructive as upstream, plus info, success, warning and a sticky-note variant. Each tone has its own pattern in the margin as well as its own color, and a 16 px icon put first is circled in the tone's marker.",
   status: "stable",
   upstream: "alert",
   parts: [
@@ -29,10 +29,10 @@ export default {
   ],
   a11y: [
     "`role=\"alert\"`: assertive live region, announced when it appears. For content that is on the page from the start, override with `role=\"status\"` or `role=\"note\"`.",
-    "Tone is told by pattern and icon as well as colour: hatching (destructive), a double rule (info), a marker strip (success), a highlighter panel (warning). Destructive text is red on a paper slip with the faintest red wash, 4.6:1 (the description is not dimmed as upstream's is).",
+    "Tone is told by pattern and icon as well as color: hatching (destructive), a double rule (info), a marker strip (success), a highlighter panel (warning). Destructive text is red on a paper slip with the faintest red wash, 4.6:1 (the description is not dimmed as upstream's is).",
     "The box, the margin marks and the circle round the icon are aria-hidden and pointer-events: none. The icon is decorative unless you give it a `label`.",
     "Buttons and links inside an alert are their own hosts with their own focus rings.",
-    "Calm density draws a single pencil loop and one rule in the tone's colour; Windows high contrast replaces the drawing with a real border.",
+    "Calm density draws a single pencil loop and one rule in the tone's color; Windows high contrast replaces the drawing with a real border.",
   ],
   usage: `import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Icon } from "@/components/ui/icon"

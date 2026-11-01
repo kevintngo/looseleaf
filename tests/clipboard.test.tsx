@@ -160,7 +160,7 @@ describe("clipboard recipes", () => {
     expect(c.svg.length).toBeLessThan(4000)
   })
 
-  it("a coloured plastic board is gone round with a felt tip (it would read as a clean vector otherwise); hardboard and calm density are not", () => {
+  it("a colored plastic board is gone round with a felt tip (it would read as a clean vector otherwise); hardboard and calm density are not", () => {
     const felt = (params: { tone: BoardTone }, density: "comfortable" | "calm" = "comfortable") => run(clipboardBoardRecipe, params, 420, 600, { density }).parts.rest!
     expect(felt({ tone: "teal" })).toContain("ll-felt")
     expect(felt({ tone: "hardboard" })).not.toContain("ll-felt")

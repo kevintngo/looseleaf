@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "marquee",
   "title": "Marquee",
-  "description": "A ticker written on a strip of washi tape. The text runs along it, fades at the ends, stops while you point at it or focus inside it, and has a pause button. With reduced motion it is a still strip with the text centred.",
+  "description": "A ticker written on a strip of washi tape. The text runs along it, fades at the ends, stops while you point at it or focus inside it, and has a pause button. With reduced motion it is a still strip with the text centered.",
   "registryDependencies": [
     "https://kevintngo.github.io/looseleaf/r/doodle.json",
     "https://kevintngo.github.io/looseleaf/r/ink.json",
@@ -34,7 +34,7 @@
     "a11y": [
       "Only the first copy of the text is exposed; every repeat is aria-hidden and inert, so a screen reader reads the ticker once and Tab does not visit links twice.",
       "It pauses on hover and while focus is inside it (WCAG 2.2.2), and the pause button has aria-pressed. The button is on by default; do not remove it for a ticker that moves for more than five seconds.",
-      "Reduced motion (the OS setting or data-motion=\"reduced\"): the animation is off, the repeats are hidden and the one copy is centred on the tape.",
+      "Reduced motion (the OS setting or data-motion=\"reduced\"): the animation is off, the repeats are hidden and the one copy is centered on the tape.",
       "Put the words that matter in the first copy in the DOM order you want them read; the ticker itself is role=\"marquee\", which assistive technology treats as a non-live region.",
       "Ink on the default orange washi is 7:1 and on the dotted and gingham tapes above 6:1. The text is 24 px semibold script with a paper halo (a CSS text-shadow), so it holds on patterned tape; keep phrases short, and use `masking` when the words are long.",
       "A short phrase on a wide screen is repeated as often as it takes to fill the band (at most 48 copies, all but the first hidden and inert)."

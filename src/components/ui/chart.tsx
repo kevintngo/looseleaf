@@ -145,6 +145,20 @@ function inferSeries(rows: readonly Row[], xKey: string, config: ChartConfig | u
   return keys
 }
 
+const FORCED = "(forced-colors: active)"
+
+function useForcedColors(): boolean {
+  return React.useSyncExternalStore(
+    (notify) => {
+      const q = typeof window === "undefined" ? undefined : window.matchMedia?.(FORCED)
+      q?.addEventListener?.("change", notify)
+      return () => q?.removeEventListener?.("change", notify)
+    },
+    () => typeof window !== "undefined" && !!window.matchMedia?.(FORCED)?.matches,
+    () => false,
+  )
+}
+
 type ChartContainerProps = React.ComponentProps<"div"> & {
   config: ChartConfig
   patterns?: boolean | "auto"
@@ -159,7 +173,7 @@ function ChartContainer({
   className,
   children,
   config,
-  patterns = "auto",
+  patterns,
   hiddenSeries,
   defaultHiddenSeries,
   onHiddenSeriesChange,
@@ -184,8 +198,10 @@ function ChartContainer({
     [hidden, hiddenList, controlled, onHiddenSeriesChange],
   )
   const keys = React.useMemo(() => drawnKeys(config), [config])
+  const forced = useForcedColors()
+  const look = patterns ?? (forced ? "auto" : false)
   const size = initialDimension ? ([initialDimension.width, initialDimension.height] as const) : undefined
-  const value = React.useMemo<ChartContextProps>(() => ({ id: chartId, config, keys, hidden, toggle, patterns, store, size }), [chartId, config, keys, hidden, toggle, patterns, store, size?.[0], size?.[1]]) // eslint-disable-line react-hooks/exhaustive-deps
+  const value = React.useMemo<ChartContextProps>(() => ({ id: chartId, config, keys, hidden, toggle, patterns: look, store, size }), [chartId, config, keys, hidden, toggle, look, store, size?.[0], size?.[1]]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const slotVars = React.useMemo(() => {
     const v: Record<string, string> = {}

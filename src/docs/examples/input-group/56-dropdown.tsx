@@ -5,7 +5,7 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "
 export const meta = {
   title: "Dropdowns",
   description:
-    "shadcn's `input-group-dropdown`: a menu opened from a button inside the box, once as an ellipsis icon and once as a labelled `Search In...` with a chevron. The menu drops from the button; the box stays put.",
+    "shadcn's `input-group-dropdown`: a menu opened from a button inside the box, once as an ellipsis icon and once as a labeled `Search In...` with a chevron. The menu drops from the button; the box stays put.",
   layout: "center" as const,
   height: 320,
 }

@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 export const meta = {
   title: "Login",
   description:
-    "The shadcn demo: a title, a description, a link tucked into CardAction, a form of two labelled fields with a \"forgot\" link beside the second label, and a footer of two full-width buttons. Nothing is drawn but the paper, the fields and the buttons.",
+    "The shadcn demo: a title, a description, a link tucked into CardAction, a form of two labeled fields with a \"forgot\" link beside the second label, and a footer of two full-width buttons. Nothing is drawn but the paper, the fields and the buttons.",
   layout: "stack" as const,
 }
 

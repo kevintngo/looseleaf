@@ -70,7 +70,7 @@ describe("kanban-board block", () => {
     const { user } = renderUI(<KanbanBoard />, opts)
     await user.click(move("Order washi tape for the box", "Doing"))
     expect(titles("To do")).not.toContain("Order washi tape for the box")
-    expect(titles("Doing")).toEqual(["Print the price tags", "Draw the sticker sheet", "Fix the postcode field at checkout", "Order washi tape for the box"])
+    expect(titles("Doing")).toEqual(["Print the price tags", "Draw the sticker sheet", "Fix the postal code field at checkout", "Order washi tape for the box"])
     expect(status()).toHaveTextContent("Moved “Order washi tape for the box” to Doing. Doing has 4 notes.")
     expect(move("Order washi tape for the box", "Done")).toHaveFocus()
   })

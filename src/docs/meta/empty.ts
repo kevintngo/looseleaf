@@ -12,7 +12,7 @@ export default {
     {
       name: "Empty",
       description:
-        "A centred column (gap 6, padding 24, 48 from `md`). Add `border` to `className` and the CSS border becomes a hand-drawn dashed frame with corner ticks; without it nothing is drawn.",
+        "A centered column (gap 6, padding 24, 48 from `md`). Add `border` to `className` and the CSS border becomes a hand-drawn dashed frame with corner ticks; without it nothing is drawn.",
       props: [{ name: "seed", type: "string | number", description: "Pins the hand of the frame. Default: derived from useId()." }],
     },
     { name: "EmptyHeader", description: "The column of media, title and description (max 24 rem)." },
@@ -32,7 +32,7 @@ export default {
     },
     { name: "EmptyTitle", description: "The headline, in the script font at 26 px." },
     { name: "EmptyDescription", description: "Muted explanation; a link inside it is blue and underlined." },
-    { name: "EmptyContent", description: "Actions and anything else below the header: a column, centred, max 24 rem." },
+    { name: "EmptyContent", description: "Actions and anything else below the header: a column, centered, max 24 rem." },
   ],
   a11y: [
     "Empty is a plain group of divs, as upstream; the title is not a heading unless you make it one (put an `<h2>` inside `EmptyTitle`, or give the Empty a role and a name).",

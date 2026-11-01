@@ -36,10 +36,10 @@
     ],
     "a11y": [
       "The canvas is a named application (\"Signature\"); the same keyboard drawing as Sketchpad works: arrows move a cursor, Space puts the pen down and lifts it. Typing the name is the accessible alternative and is one button away.",
-      "Type mode replaces the canvas by an image named \"Signature, typed: Ada Lovelace\" and a text field labelled \"Type your full name\".",
+      "Type mode replaces the canvas by an image named \"Signature, typed: Ada Lovelace\" and a text field labeled \"Type your full name\".",
       "Required: a visually hidden text input holds the value so the browser's own validation and message apply; the failure also shows a role=\"alert\" line and moves focus to the canvas (the name field in type mode).",
-      "The baseline turns red pencil when invalid, and the message says why (colour is never the only cue).",
-      "Windows high contrast keeps the ink colours of the strokes; the sheet gets a real border."
+      "The baseline turns red pencil when invalid, and the message says why (color is never the only cue).",
+      "Windows high contrast keeps the ink colors of the strokes; the sheet gets a real border."
     ],
     "usage": "import { SignaturePad } from \"@/components/ui/signature-pad\"\n\nexport function Example() {\n  return (\n    <form onSubmit={(e) => { e.preventDefault(); console.log(new FormData(e.currentTarget).get(\"signature\")) }}>\n      <SignaturePad name=\"signature\" required />\n      <button type=\"submit\">Sign</button>\n    </form>\n  )\n}",
     "parts": [

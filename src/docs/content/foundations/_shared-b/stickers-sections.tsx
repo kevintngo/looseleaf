@@ -290,8 +290,8 @@ export function SealLab() {
           <Setting label="Shape">
             <Choice label="Seal shape" value={variant} onChange={setVariant} options={sealVariantList.map((v) => ({ value: v, label: v }))} />
           </Setting>
-          <Setting label="Colour" hint="Ink on tomato and grape is 3.95 to 1: keep the words large, or pick another colour.">
-            <Choice label="Seal colour" value={tone} onChange={setTone} options={TONES.map((v) => ({ value: v, label: v }))} />
+          <Setting label="Color" hint="Ink on tomato and grape is 3.95 to 1: keep the words large, or pick another color.">
+            <Choice label="Seal color" value={tone} onChange={setTone} options={TONES.map((v) => ({ value: v, label: v }))} />
           </Setting>
           <div className="flex flex-wrap items-end gap-4">
             <TextField label="Words" value={text} onChange={setText} maxLength={10} placeholder="BEST" />

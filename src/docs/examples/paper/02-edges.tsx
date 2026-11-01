@@ -2,7 +2,7 @@ import { Paper } from "@/components/ui/paper"
 
 export const meta = {
   title: "Edges",
-  description: "A plain cut is pure CSS. Torn, deckled, pinked, perforated and scalloped edges draw their outline once, with a fringe of torn fibres.",
+  description: "A plain cut is pure CSS. Torn, deckled, pinked, perforated and scalloped edges draw their outline once, with a fringe of torn fibers.",
   layout: "stack" as const,
   stage: "desk" as const,
 }
