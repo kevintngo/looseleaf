@@ -286,7 +286,7 @@ describe("component page", () => {
     const block = await screen.findByRole("group", { name: "Code: examples/button/01-basic.tsx" })
     expect(block.textContent).toBe(trimmed(basicSource))
     expect(block.querySelectorAll('[data-slot="code-line"]').length).toBe(trimmed(basicSource).split("\n").length)
-    expect(block.querySelector(".text-red")).not.toBeNull()
+    expect(block.querySelector('[class~="text-(--ll-code-keyword)"]')).not.toBeNull()
     expect(document.getElementById(code.getAttribute("aria-controls")!)!.firstElementChild).not.toHaveAttribute("hidden")
     expect(document.getElementById(preview.getAttribute("aria-controls")!)!.firstElementChild).toHaveAttribute("hidden")
 
