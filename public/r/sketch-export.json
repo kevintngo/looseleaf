@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sketch-export",
+  "title": "Sketch Export",
+  "description": "Shared Looseleaf helpers: sketch-export.",
+  "files": [
+    {
+      "path": "src/lib/sketch-export.ts",
+      "content": "export function svgToPngDataUrl(svgDataUrl: string, width: number, height: number, scale = 2): Promise<string | null> {\n  return new Promise((done) => {\n    if (typeof document === \"undefined\" || typeof Image === \"undefined\") return done(null)\n    const img = new Image()\n    const giveUp = setTimeout(() => done(null), 4000)\n    img.onload = () => {\n      clearTimeout(giveUp)\n      try {\n        const canvas = document.createElement(\"canvas\")\n        canvas.width = Math.max(1, Math.round(width * scale))\n        canvas.height = Math.max(1, Math.round(height * scale))\n        const g = canvas.getContext(\"2d\")\n        if (!g) return done(null)\n        g.drawImage(img, 0, 0, canvas.width, canvas.height)\n        done(canvas.toDataURL(\"image/png\"))\n      } catch {\n        done(null)\n      }\n    }\n    img.onerror = () => {\n      clearTimeout(giveUp)\n      done(null)\n    }\n    img.src = svgDataUrl\n  })\n}\n",
+      "type": "registry:lib",
+      "target": "@lib/sketch-export.ts"
+    }
+  ],
+  "type": "registry:lib"
+}

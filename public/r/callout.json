@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "callout",
+  "title": "Callout",
+  "description": "A note in the margin: a few handwritten words and a hand arrow pointing at the thing they are about. It is an ordinary box, so put it where it belongs with a class: float it into the margin, absolutely position it, or drop it in a grid cell.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/arrow.json",
+    "https://kevintngo.github.io/looseleaf/r/handwritten.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-mark-ink.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/callout.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Arrow } from \"@/components/ui/arrow\"\nimport { Handwritten } from \"@/components/ui/handwritten\"\nimport { useMarkPhase } from \"@/hooks/use-mark-ink\"\nimport { useMergedRef } from \"@/lib/ink/react\"\nimport type { ArrowCurve, ArrowDirection, ArrowHead } from \"@/lib/ink/recipes/arrow-ink\"\nimport type { MarkPen, MarkWeight } from \"@/lib/ink/recipes/text-marks-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst LAYOUT: Record<ArrowDirection, string> = {\n  right: \"flex-row items-center\",\n  left: \"flex-row-reverse items-center\",\n  down: \"flex-col items-center\",\n  up: \"flex-col-reverse items-center\",\n  \"down-right\": \"flex-row items-start\",\n  \"down-left\": \"flex-row-reverse items-start\",\n  \"up-right\": \"flex-row items-end\",\n  \"up-left\": \"flex-row-reverse items-end\",\n}\n\nfunction Callout({\n  direction = \"left\",\n  curve = \"curved\",\n  head = \"v\",\n  tone = \"blue\",\n  weight = \"regular\",\n  bend = \"up\",\n  arrow = true,\n  arrowClassName,\n  animate = false,\n  show = true,\n  delay,\n  seed,\n  className,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<\"span\"> & {\n  direction?: ArrowDirection\n  curve?: ArrowCurve\n  head?: ArrowHead\n  tone?: MarkPen\n  weight?: MarkWeight\n  bend?: \"up\" | \"down\"\n  arrow?: boolean\n  arrowClassName?: string\n  animate?: boolean\n  show?: boolean\n  delay?: number\n  seed?: string | number\n}) {\n  const { phaseRef, phaseProps } = useMarkPhase({ animate, show })\n  const arrowEl = arrow ? (\n    <Arrow\n      aria-hidden\n      direction={direction}\n      curve={curve}\n      head={head}\n      tone={tone}\n      weight={weight}\n      bend={bend}\n      animate={animate}\n      show={show}\n      delay={(delay ?? 0) + 250}\n      seed={seed === undefined ? undefined : `${seed}:arrow`}\n      className={cn(\"h-10 w-14\", arrowClassName)}\n    />\n  ) : null\n  const vertical = direction === \"up\" || direction === \"down\"\n  return (\n    <span\n      data-slot=\"callout\"\n      role=\"note\"\n      ref={useMergedRef<HTMLElement>(phaseRef, ref as React.Ref<HTMLElement> | undefined)}\n      {...phaseProps}\n      className={cn(\n        \"group/callout inline-flex gap-1.5 data-[mark=off]:hidden\",\n        LAYOUT[direction],\n        vertical && \"gap-0.5\",\n        className,\n      )}\n      {...props}\n    >\n      <Handwritten\n        as=\"span\"\n        seed={seed}\n        data-slot=\"callout-text\"\n        style={animate && delay ? ({ transitionDelay: `${delay}ms` } as React.CSSProperties) : undefined}\n        className={cn(\n          \"max-w-[16ch] font-script text-[22px] leading-[1.05] text-ink-you\",\n          animate && \"transition-opacity duration-(--ll-dur-sheet) ease-out group-data-[mark=idle]/callout:opacity-0\",\n          vertical && \"max-w-[22ch] text-center\",\n        )}\n      >\n        {children}\n      </Handwritten>\n      {arrowEl}\n    </span>\n  )\n}\n\nexport { Callout }\n",
+      "type": "registry:ui",
+      "target": "@ui/callout.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "arrow",
+      "annotate",
+      "handwritten",
+      "bracket"
+    ],
+    "a11y": [
+      "role=\"note\": announced as a note. The words are real text; the arrow is aria-hidden.",
+      "A margin note should add to the page, not carry it: keep the essential information in the main text.",
+      "The margin pattern (`float-end clear-end -me-56 w-48`) needs room in the page's padding; below the md breakpoint hide it (`max-md:hidden`) or let it flow.",
+      "Per-word jitter is switched off by calm density and reduced motion; the arrow draws on with the same rules as Arrow."
+    ],
+    "usage": "import { Callout } from \"@/components/ui/callout\"\n\nexport function Example() {\n  return (\n    <p className=\"pe-56\">\n      The good bits get a swipe of yellow.\n      <Callout className=\"float-end clear-end -me-56 w-48\">the best line</Callout>\n    </p>\n  )\n}",
+    "parts": [
+      "Callout"
+    ]
+  },
+  "categories": [
+    "Marks"
+  ],
+  "type": "registry:ui"
+}

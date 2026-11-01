@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hover-card",
+  "title": "Hover Card",
+  "description": "A small polaroid that appears when you rest the pointer on a link or move keyboard focus to it: photo stock with a thick lower margin for handwriting, a degree or two of tilt, and tape if you like. A preview for sighted pointer users, never the only home of anything.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/hover-card.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { HoverCard as HoverCardPrimitive } from \"radix-ui\"\n\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { useInk, useInkScope, useInkSeed, useMergedRef } from \"@/lib/ink/react\"\nimport { hoverCardMediaRecipe } from \"@/lib/ink/recipes/hover-card-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction HoverCard({ ...props }: React.ComponentProps<typeof HoverCardPrimitive.Root>) {\n  return <HoverCardPrimitive.Root data-slot=\"hover-card\" {...props} />\n}\n\nfunction HoverCardTrigger({ ...props }: React.ComponentProps<typeof HoverCardPrimitive.Trigger>) {\n  return <HoverCardPrimitive.Trigger data-slot=\"hover-card-trigger\" {...props} />\n}\n\nfunction HoverCardContent({\n  className,\n  align = \"center\",\n  sideOffset = 8,\n  collisionPadding = 8,\n  stock = \"photo\",\n  edge,\n  tilt = true,\n  tape = false,\n  seed: seedProp,\n  children,\n  ...props\n}: React.ComponentProps<typeof HoverCardPrimitive.Content> & Pick<PaperProps, \"stock\" | \"edge\" | \"tilt\" | \"tape\" | \"seed\">) {\n  const scope = useInkScope()\n  const seed = useInkSeed(seedProp)\n  return (\n    <HoverCardPrimitive.Portal data-slot=\"hover-card-portal\">\n      <HoverCardPrimitive.Content asChild align={align} sideOffset={sideOffset} collisionPadding={collisionPadding} {...props}>\n        <Paper\n          data-slot=\"hover-card-content\"\n          stock={stock}\n          edge={edge}\n          tilt={tilt}\n          tape={tape}\n          rules=\"none\"\n          seed={seed}\n          {...scope}\n          className={cn(\n            \"z-(--ll-z-popover) w-64 max-w-[calc(100vw-1rem)] origin-(--radix-hover-card-content-transform-origin) p-2.5 pb-4 text-popover-foreground outline-hidden compact:p-2 calm:p-2\",\n            \"duration-(--ll-dur-pop) data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2\",\n            \"data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95\",\n            className\n          )}\n        >\n          {children}\n        </Paper>\n      </HoverCardPrimitive.Content>\n    </HoverCardPrimitive.Portal>\n  )\n}\n\nfunction HoverCardMedia({ className, seed: seedProp, children, ref, ...props }: React.ComponentProps<\"div\"> & { seed?: string | number }) {\n  const seed = useInkSeed(seedProp)\n  const { hostRef, hostProps, node } = useInk({ recipe: hoverCardMediaRecipe, params: {}, kind: \"frame\", seed })\n  return (\n    <div\n      data-slot=\"hover-card-media\"\n      ref={useMergedRef<HTMLElement>(hostRef, ref as React.Ref<HTMLElement> | undefined)}\n      {...hostProps}\n      className={cn(\"relative isolate grid h-28 place-items-center bg-paper-shade/60 p-2 *:[img]:size-full *:[img]:object-cover\", className)}\n      {...props}\n    >\n      {node}\n      {children}\n    </div>\n  )\n}\n\nfunction HoverCardCaption({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"hover-card-caption\" className={cn(\"mt-2.5 px-1 font-script text-[1.4rem] leading-tight text-foreground\", className)} {...props} />\n}\n\nexport { HoverCard, HoverCardTrigger, HoverCardContent, HoverCardMedia, HoverCardCaption }\n",
+      "type": "registry:ui",
+      "target": "@ui/hover-card.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/hover-card-ink.ts",
+      "content": "import { seg } from '@/lib/ink/geom'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { box } from '@/lib/ink/shapes'\n\nexport const hoverCardMediaRecipe = defineRecipe<Record<string, never>>({\n  id: 'hover-card-media',\n  kind: 'frame',\n  layers: ['rest'],\n  pad: 6,\n  draw(ink, { w, h }, _params, ctx) {\n    ink.layer('rest', () => {\n      box(ink, 1, 1, w - 2, h - 2, { pen: ctx.calm ? 'pencil.fine' : 'pencil', style: 'four', corner: 2 })\n      if (ctx.calm) return\n      ink.stroke(seg(4, 4.6, w - 5, 4.2, 0.4, Math.max(4, Math.round(w / 40))), 'pencil', { simple: true, width: 1.7, alpha: 0.32, start: 'soft', end: 'soft', wobble: 0.5 })\n      ink.stroke(seg(4.4, 4, 4.2, h - 5, 0.4, Math.max(4, Math.round(h / 40))), 'pencil', { simple: true, width: 1.7, alpha: 0.32, start: 'soft', end: 'soft', wobble: 0.5 })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/hover-card-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "hover-card",
+    "related": [
+      "popover",
+      "tooltip",
+      "card",
+      "paper"
+    ],
+    "a11y": [
+      "Radix HoverCard opens on pointer hover and on keyboard focus of the trigger, closes on blur and on Escape, and lets the pointer travel from the trigger into the card. It is not announced to screen readers as a dialog: treat it as a preview of information that is also available by following the link.",
+      "Touch: hover cards never open on a tap (Radix ignores touch pointers). The trigger must work on its own as a link; use a Popover when the content needs to be reachable on a phone.",
+      "The recess frame and tape are aria-hidden decoration. Give the media an accessible name if it carries meaning.",
+      "Portalled content repeats the InkProvider's `data-density`, `data-motion` and `data-theme`; with reduced motion it appears without the zoom."
+    ],
+    "usage": "import { HoverCard, HoverCardCaption, HoverCardContent, HoverCardMedia, HoverCardTrigger } from \"@/components/ui/hover-card\"\nimport { Button } from \"@/components/ui/button\"\nimport { Doodle } from \"@/components/ui/doodle\"\n\nexport function Example() {\n  return (\n    <HoverCard>\n      <HoverCardTrigger asChild>\n        <Button variant=\"link\" asChild>\n          <a href=\"https://kevintngo.github.io/looseleaf\">@looseleaf</a>\n        </Button>\n      </HoverCardTrigger>\n      <HoverCardContent tape=\"top\">\n        <HoverCardMedia>\n          <Doodle name=\"flower\" size={88} />\n        </HoverCardMedia>\n        <HoverCardCaption>@looseleaf</HoverCardCaption>\n        <p className=\"px-1 text-sm text-muted-foreground\">shadcn/ui, drawn by hand.</p>\n      </HoverCardContent>\n    </HoverCard>\n  )\n}",
+    "parts": [
+      "HoverCard",
+      "HoverCardTrigger",
+      "HoverCardContent",
+      "HoverCardMedia",
+      "HoverCardCaption"
+    ]
+  },
+  "categories": [
+    "Overlays"
+  ],
+  "type": "registry:ui"
+}

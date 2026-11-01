@@ -1,0 +1,68 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "select",
+  "title": "Select",
+  "description": "A drop-down field. The trigger is a pencil box with a tick before its chevron; the list is a slip of paper set down over or under it, where the row you are on gets the highlighter and the chosen row is bold with a blue tick. Radix Select underneath: typeahead, keyboard, form value, item-aligned or popper placement.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/separator.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/select.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Select as SelectPrimitive } from \"radix-ui\"\n\nimport { Icon } from \"@/components/ui/icon\"\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { useInk, useInkScope, useMergedRef } from \"@/lib/ink/react\"\nimport { selectRecipe } from \"@/lib/ink/recipes/select-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst SelectDisabledContext = React.createContext(false)\n\nfunction Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>) {\n  return (\n    <SelectDisabledContext.Provider value={!!props.disabled}>\n      <SelectPrimitive.Root data-slot=\"select\" {...props} />\n    </SelectDisabledContext.Provider>\n  )\n}\n\nfunction SelectGroup({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Group>) {\n  return <SelectPrimitive.Group data-slot=\"select-group\" className={cn(\"scroll-my-1\", className)} {...props} />\n}\n\nfunction SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.Value>) {\n  return <SelectPrimitive.Value data-slot=\"select-value\" {...props} />\n}\n\nfunction SelectTrigger({\n  className,\n  size = \"default\",\n  seed,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<typeof SelectPrimitive.Trigger> & {\n  size?: \"sm\" | \"default\"\n  seed?: string | number\n}) {\n  const invalid = props[\"aria-invalid\"] === true || props[\"aria-invalid\"] === \"true\"\n  const disabled = React.useContext(SelectDisabledContext) || !!props.disabled\n  const { hostRef, hostProps, node } = useInk({\n    recipe: selectRecipe,\n    params: { disabled, invalid },\n    kind: \"field\",\n    seed,\n    still: true,\n  })\n  return (\n    <SelectPrimitive.Trigger\n      data-slot=\"select-trigger\"\n      data-size={size}\n      ref={useMergedRef<HTMLButtonElement>(hostRef, ref)}\n      {...hostProps}\n      className={cn(\n        \"group/select-trigger relative isolate flex h-9 w-fit items-center justify-between gap-2 ps-3 text-start font-hand text-base whitespace-nowrap text-(--ll-input-ink) compact:h-8 calm:h-7 calm:text-[15px] data-[size=sm]:h-8 data-[size=sm]:text-[15px] compact:data-[size=sm]:h-7 disabled:cursor-not-allowed disabled:text-pencil-text data-[placeholder]:text-(--ll-placeholder) forced-colors:aria-invalid:underline forced-colors:aria-invalid:decoration-wavy\",\n        \"*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:min-w-0 *:data-[slot=select-value]:flex-1 *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not(.absolute):not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {node}\n      {children}\n      <SelectPrimitive.Icon\n        data-slot=\"select-icon\"\n        className=\"grid h-full w-8 shrink-0 place-items-center text-ink-soft transition-transform duration-(--ll-dur-pop) ease-pop group-data-[state=open]/select-trigger:rotate-180 group-disabled/select-trigger:text-pencil-text\"\n      >\n        <Icon name=\"chevron-down\" size={16} />\n      </SelectPrimitive.Icon>\n    </SelectPrimitive.Trigger>\n  )\n}\n\nfunction SelectContent({\n  className,\n  children,\n  position = \"item-aligned\",\n  align = \"center\",\n  stock = \"slip\",\n  edge,\n  tilt = true,\n  tape,\n  seed,\n  ...props\n}: React.ComponentProps<typeof SelectPrimitive.Content> & Pick<PaperProps, \"stock\" | \"edge\" | \"tilt\" | \"tape\" | \"seed\">) {\n  const scope = useInkScope()\n  return (\n    <SelectPrimitive.Portal>\n      <SelectPrimitive.Content asChild position={position} align={align} {...props}>\n        <Paper\n          data-slot=\"select-content\"\n          stock={stock}\n          edge={edge}\n          tilt={tilt}\n          tape={tape}\n          rules=\"none\"\n          seed={seed}\n          {...scope}\n          className={cn(\n            \"z-(--ll-z-popover) max-h-(--radix-select-content-available-height) min-w-32 origin-(--radix-select-content-transform-origin) text-popover-foreground outline-hidden\",\n            \"duration-(--ll-dur-pop) data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2\",\n            \"data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95\",\n            position === \"popper\" && \"data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1\",\n            className\n          )}\n        >\n          <SelectScrollUpButton />\n          <SelectPrimitive.Viewport\n            className={cn(\n              \"p-1 compact:p-0.5 calm:p-0.5\",\n              position === \"popper\" && \"h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width) scroll-my-1\"\n            )}\n          >\n            {children}\n          </SelectPrimitive.Viewport>\n          <SelectScrollDownButton />\n        </Paper>\n      </SelectPrimitive.Content>\n    </SelectPrimitive.Portal>\n  )\n}\n\nfunction SelectLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Label>) {\n  return (\n    <SelectPrimitive.Label\n      data-slot=\"select-label\"\n      className={cn(\"px-2 py-1.5 font-type text-sm tracking-wide text-ink-muted\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SelectItem({ className, children, ...props }: React.ComponentProps<typeof SelectPrimitive.Item>) {\n  return (\n    <SelectPrimitive.Item\n      data-slot=\"select-item\"\n      className={cn(\n        \"relative flex min-h-8 w-full cursor-default items-center gap-2 py-1.5 ps-2 pe-8 font-hand text-base outline-hidden select-none compact:min-h-7 compact:py-1 calm:min-h-7 calm:py-1 calm:text-[15px]\",\n        \"data-[highlighted]:ll-swipe data-[state=checked]:font-bold data-[disabled]:pointer-events-none data-[disabled]:text-pencil-text\",\n        \"[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not(.absolute):not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2\",\n        className\n      )}\n      {...props}\n    >\n      <span data-slot=\"select-item-indicator\" className=\"absolute end-2 flex size-4 items-center justify-center\">\n        <SelectPrimitive.ItemIndicator className=\"flex animate-[ll-wipe_var(--ll-dur-sheet)_var(--ll-ease-out)_both]\">\n          <Icon name=\"check\" size={16} className=\"text-ink-you forced-colors:text-[CanvasText]\" />\n        </SelectPrimitive.ItemIndicator>\n      </span>\n      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>\n    </SelectPrimitive.Item>\n  )\n}\n\nfunction SelectSeparator({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Separator>) {\n  return (\n    <SelectPrimitive.Separator asChild {...props}>\n      <Separator data-slot=\"select-separator\" className={cn(\"pointer-events-none -mx-1 my-1.5 w-auto\", className)} />\n    </SelectPrimitive.Separator>\n  )\n}\n\nfunction SelectScrollUpButton({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>) {\n  return (\n    <SelectPrimitive.ScrollUpButton\n      data-slot=\"select-scroll-up-button\"\n      className={cn(\"flex cursor-default items-center justify-center py-1 text-ink-soft\", className)}\n      {...props}\n    >\n      <Icon name=\"chevron-up\" size={16} />\n    </SelectPrimitive.ScrollUpButton>\n  )\n}\n\nfunction SelectScrollDownButton({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ScrollDownButton>) {\n  return (\n    <SelectPrimitive.ScrollDownButton\n      data-slot=\"select-scroll-down-button\"\n      className={cn(\"flex cursor-default items-center justify-center py-1 text-ink-soft\", className)}\n      {...props}\n    >\n      <Icon name=\"chevron-down\" size={16} />\n    </SelectPrimitive.ScrollDownButton>\n  )\n}\n\nexport {\n  Select,\n  SelectContent,\n  SelectGroup,\n  SelectItem,\n  SelectLabel,\n  SelectScrollDownButton,\n  SelectScrollUpButton,\n  SelectSeparator,\n  SelectTrigger,\n  SelectValue,\n}\n",
+      "type": "registry:ui",
+      "target": "@ui/select.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/select-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { drawSelectFrame } from '@/lib/ink/recipes/select-frame-ink'\n\nexport interface SelectParams {\n  disabled?: boolean\n  invalid?: boolean\n}\n\nexport const selectRecipe = defineRecipe<SelectParams>({\n  id: 'select',\n  kind: 'field',\n  layers: ['rest', 'hover', 'focus', 'open', 'invalid', 'disabled'],\n  lazy: ['focus', 'hover'],\n  pad: 12,\n  draw(ink, box, params, ctx) {\n    drawSelectFrame(ink, box, { ...params, openable: true }, ctx)\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/select-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "select",
+    "related": [
+      "native-select",
+      "input",
+      "field",
+      "popover",
+      "dropdown-menu"
+    ],
+    "a11y": [
+      "The trigger is a role=combobox button with aria-expanded and aria-controls; the list is a role=listbox with role=option items (aria-selected on the chosen one). Radix handles everything else.",
+      "Enter, Space, ArrowDown and ArrowUp open it. Arrow keys, Home and End move the highlight, letters jump by typeahead, Enter or Space chooses, Escape closes and puts focus back on the trigger.",
+      "Give the trigger a name with a Label (`htmlFor` + `id`) or `aria-label`; SelectValue's text becomes its value.",
+      "With `name` (or inside a form) Radix keeps a hidden native select in sync, so the value is in FormData and `required` blocks the submit.",
+      "The drawing is aria-hidden and never takes the pointer. The highlight does not depend on hue alone: the row also sits on a highlighter shape and the chosen row is bold with a tick. In Windows high contrast the trigger gets a real border.",
+      "Portalled content repeats the InkProvider's `data-density`, `data-motion` and `data-theme`, and sits above dialogs so a Select inside a Dialog works. Reduced motion shows the list without the slide and zoom.",
+      "Right-to-left: the chevron cell, the divider tick and the bang move to the start of the field, and the tick of the chosen row follows."
+    ],
+    "usage": "import { Label } from \"@/components/ui/label\"\nimport { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from \"@/components/ui/select\"\n\nexport function Example() {\n  return (\n    <div className=\"grid gap-2\">\n      <Label htmlFor=\"pen\">Pen</Label>\n      <Select defaultValue=\"felt\">\n        <SelectTrigger id=\"pen\" className=\"w-[190px]\">\n          <SelectValue placeholder=\"Pick a pen\" />\n        </SelectTrigger>\n        <SelectContent position=\"popper\">\n          <SelectItem value=\"felt\">Felt tip</SelectItem>\n          <SelectItem value=\"pencil\">Pencil</SelectItem>\n          <SelectItem value=\"marker\">Marker</SelectItem>\n        </SelectContent>\n      </Select>\n    </div>\n  )\n}",
+    "parts": [
+      "Select",
+      "SelectTrigger",
+      "SelectValue",
+      "SelectContent",
+      "SelectGroup",
+      "SelectLabel",
+      "SelectItem",
+      "SelectSeparator",
+      "SelectScrollUpButton",
+      "SelectScrollDownButton"
+    ]
+  },
+  "categories": [
+    "Forms"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,2 @@
+export const paperTile =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGO49/DhfwAIRQNKY4hcNQAAAABJRU5ErkJggg=="

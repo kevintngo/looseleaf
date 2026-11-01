@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-04",
+  "title": "Sidebar 04",
+  "description": "A floating sidebar with submenus: the pad is set down on the desk with a margin all round and turned a little, 19rem wide, and the page beside it is a second sheet. Mirrors shadcn's sidebar-04. At its best on the desk; on plain paper it still reads as two sheets.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-04/components/sidebar-04-app-sidebar.tsx",
+      "content": "import * as React from \"react\"\n\nimport { SidebarBrand } from \"@/components/blocks/sidebar-shared/sidebar-brand\"\nimport { docsNav } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport {\n  Sidebar,\n  SidebarContent,\n  SidebarGroup,\n  SidebarHeader,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarMenuSub,\n  SidebarMenuSubButton,\n  SidebarMenuSubItem,\n} from \"@/components/ui/sidebar\"\n\nexport function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {\n  return (\n    <Sidebar variant=\"floating\" role=\"navigation\" aria-label=\"Field guide\" {...props}>\n      <SidebarHeader>\n        <SidebarBrand title=\"Field guide\" subtitle=\"v1.0.0\" icon=\"book-open\" />\n      </SidebarHeader>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarMenu className=\"gap-2\">\n            {docsNav.map((section) => (\n              <SidebarMenuItem key={section.title}>\n                <SidebarMenuButton asChild>\n                  <a href={section.url} className=\"font-bold\">\n                    {section.title}\n                  </a>\n                </SidebarMenuButton>\n                {section.items.length ? (\n                  <SidebarMenuSub>\n                    {section.items.map((item) => (\n                      <SidebarMenuSubItem key={item.title}>\n                        <SidebarMenuSubButton asChild isActive={item.isActive}>\n                          <a href={item.url}>{item.title}</a>\n                        </SidebarMenuSubButton>\n                      </SidebarMenuSubItem>\n                    ))}\n                  </SidebarMenuSub>\n                ) : null}\n              </SidebarMenuItem>\n            ))}\n          </SidebarMenu>\n        </SidebarGroup>\n      </SidebarContent>\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-04/components/sidebar-04-app-sidebar.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-04/page.tsx",
+      "content": "import * as React from \"react\"\n\nimport { AppSidebar } from \"@/components/blocks/sidebar-04/components/sidebar-04-app-sidebar\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { docsTrail } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { PageBody, PageHeader, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  return (\n    <SidebarProvider className={c.provider} style={{ \"--sidebar-width\": \"19rem\" } as React.CSSProperties}>\n      <AppSidebar className={c.sidebar} />\n      <PageSheet className={c.inset}>\n        <PageHeader crumbs={docsTrail} />\n        <PageBody title=\"Margins\" kicker=\"Writing on paper\">\n          <PageNote title=\"Two sheets on one desk\" pose=\"sketch\">\n            The pad floats, the page rests. Nothing is stuck down. On a phone the pad slides in over the page instead.\n          </PageNote>\n        </PageBody>\n      </PageSheet>\n    </SidebarProvider>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-04/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "floating",
+      "submenu"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 04\" block into your components directory under blocks/sidebar-04/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-04/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

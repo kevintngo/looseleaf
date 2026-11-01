@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "testimonials-01",
+  "title": "Testimonials wall",
+  "description": "Six quotations on six kinds of paper: sticky notes, a torn page, a polaroid, a napkin and an index card, pinned, taped and clipped, under a star rating. Looks right on paper or on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/index-card.json",
+    "https://kevintngo.github.io/looseleaf/r/lettering.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/napkin.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/polaroid.json",
+    "https://kevintngo.github.io/looseleaf/r/quote.json",
+    "https://kevintngo.github.io/looseleaf/r/rating.json",
+    "https://kevintngo.github.io/looseleaf/r/sticky-note.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/testimonials-01/components/testimonials-01-wall.tsx",
+      "content": "import { IndexCard, IndexCardContent, IndexCardFooter, IndexCardHeader, IndexCardTitle } from \"@/components/ui/index-card\"\nimport { Napkin, NapkinContent } from \"@/components/ui/napkin\"\nimport { Paper } from \"@/components/ui/paper\"\nimport { Polaroid, PolaroidCaption, PolaroidImage } from \"@/components/ui/polaroid\"\nimport { Quote, QuoteAttribution, QuoteText } from \"@/components/ui/quote\"\nimport { StickyNote } from \"@/components/ui/sticky-note\"\n\nconst author = (name: string, role: string) => (\n  <>\n    <span className=\"font-bold text-ink\">{name}</span>, {role}\n  </>\n)\n\nfunction Testimonials01Wall() {\n  return (\n    <ul role=\"list\" className=\"grid list-none items-start gap-x-8 gap-y-14 @2xl:grid-cols-2 @4xl:grid-cols-3\" data-slot=\"testimonials-wall\">\n      <li>\n        <StickyNote as=\"figure\" color=\"yellow\" fastener=\"pin\" seed=\"t-priya\" className=\"mx-auto w-full max-w-64\">\n          <blockquote className=\"flex-1 text-2xl leading-[1.15]\">&ldquo;I stopped losing meeting notes. That&rsquo;s it. That&rsquo;s the review.&rdquo;</blockquote>\n          <figcaption className=\"pt-2 font-hand text-[15px] leading-snug text-ink-soft\">{author(\"Priya Nair\", \"ops lead at Kiln\")}</figcaption>\n        </StickyNote>\n      </li>\n\n      <li className=\"@4xl:mt-10\">\n        <Paper stock=\"paper\" edge={{ bottom: \"torn\" }} tape=\"corner\" tapeKind=\"masking\" seed=\"t-tomas\" className=\"mx-auto w-full max-w-sm px-8 pt-10 pb-9\">\n          <Quote>\n            <QuoteText size=\"md\">We moved forty people off three different tools in a week. Nobody asked to go back, which has never happened before.</QuoteText>\n            <QuoteAttribution>{author(\"Tomas Berg\", \"COO at Northwind Ink\")}</QuoteAttribution>\n          </Quote>\n        </Paper>\n      </li>\n\n      <li>\n        <Polaroid as=\"figure\" tape=\"top\" tapeKind=\"washi-dots\" seed=\"t-lena\" className=\"mx-auto w-full max-w-64\">\n          <PolaroidImage scene=\"sea\" seed=\"t-sea\" />\n          <PolaroidCaption className=\"flex-col gap-1\">\n            <blockquote>&ldquo;finally, a place we all write&rdquo;</blockquote>\n            <span className=\"font-hand text-sm leading-tight font-normal text-ink-soft\">{author(\"Lena Fischer\", \"Brindle\")}</span>\n          </PolaroidCaption>\n        </Polaroid>\n      </li>\n\n      <li>\n        <Napkin as=\"figure\" fold=\"quarter\" stain seed=\"t-omar\" className=\"mx-auto w-full max-w-72\">\n          <NapkinContent>\n            <blockquote>&ldquo;We run the whole caf&eacute; off one page. The tape is a nice touch.&rdquo;</blockquote>\n          </NapkinContent>\n          <figcaption className=\"font-hand text-[15px] leading-snug text-ink-soft\">{author(\"Omar Haddad\", \"owner, The Tea Room\")}</figcaption>\n        </Napkin>\n      </li>\n\n      <li className=\"@4xl:mt-10\">\n        <StickyNote as=\"figure\" color=\"pink\" tape=\"top\" tapeKind=\"washi-stripes\" seed=\"t-yuki\" className=\"mx-auto w-full max-w-64\">\n          <blockquote className=\"flex-1 text-2xl leading-[1.15]\">&ldquo;It looks like something a person made, and works like something a team built.&rdquo;</blockquote>\n          <figcaption className=\"pt-2 font-hand text-[15px] leading-snug text-ink-soft\">{author(\"Yuki Tanaka\", \"designer at Loom & Lantern\")}</figcaption>\n        </StickyNote>\n      </li>\n\n      <li>\n        <IndexCard as=\"figure\" seed=\"t-kofi\" fastener=\"clip\" className=\"mx-auto min-h-0\">\n          <IndexCardHeader>\n            <IndexCardTitle>Kofi says</IndexCardTitle>\n          </IndexCardHeader>\n          <IndexCardContent>\n            <blockquote>&ldquo;Search finds the thing I half-remember. It&rsquo;s witchcraft, honestly.&rdquo;</blockquote>\n          </IndexCardContent>\n          <IndexCardFooter>\n            <figcaption>{author(\"Kofi Mensah\", \"founder, Salt Studio\")}</figcaption>\n          </IndexCardFooter>\n        </IndexCard>\n      </li>\n    </ul>\n  )\n}\n\nexport { Testimonials01Wall }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/testimonials-01/components/testimonials-01-wall.tsx"
+    },
+    {
+      "path": "src/blocks/testimonials-01/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Lettering } from \"@/components/ui/lettering\"\nimport { Rating } from \"@/components/ui/rating\"\nimport { Testimonials01Wall } from \"@/components/blocks/testimonials-01/components/testimonials-01-wall\"\n\nexport default function Testimonials01() {\n  const titleId = React.useId()\n  return (\n    <section aria-labelledby={titleId} className=\"@container w-full\">\n      <div className=\"px-8 py-14 @xl:py-20\">\n        <div className=\"mx-auto max-w-6xl\">\n          <header className=\"mx-auto flex max-w-2xl flex-col items-center text-center [--ll-blend:normal]\">\n            <Lettering as=\"h2\" id={titleId} size=\"lg\" tone=\"tangerine\" wobble={0.4} seed=\"testimonials-title\">\n              Kind words, pinned up\n            </Lettering>\n            <div className=\"mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1\">\n              <Rating readOnly value={5} aria-label=\"Rated 4.9 out of 5\" />\n              <p className=\"text-lg text-ink-soft\">\n                <span className=\"ll-num font-bold text-ink\">4.9</span> average from 2,300 reviews\n              </p>\n            </div>\n          </header>\n\n          <div className=\"mt-14 @xl:mt-16\">\n            <Testimonials01Wall />\n          </div>\n\n          <p className=\"mt-14 text-center [--ll-blend:normal]\">\n            <Button asChild variant=\"outline\">\n              <a href=\"#reviews\">\n                Read all the reviews\n                <Icon name=\"arrow-right\" className=\"rtl:-scale-x-100\" />\n              </a>\n            </Button>\n          </p>\n        </div>\n      </div>\n    </section>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/testimonials-01/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "marketing",
+      "testimonials",
+      "social proof"
+    ]
+  },
+  "docs": "Installed the \"Testimonials wall\" block into your components directory under blocks/testimonials-01/.\nImport it: import Testimonials01 from \"<your components alias>/blocks/testimonials-01/page\"",
+  "categories": [
+    "marketing"
+  ],
+  "type": "registry:block"
+}

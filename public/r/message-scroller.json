@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "message-scroller",
+  "title": "Message scroller",
+  "description": "The scrolling transcript of a chat: it opens on the newest message, sticks to the bottom while a reply streams and lets go the moment you scroll up, pins your new message to the top so the reply grows beneath it, holds your place when older messages are added above, and wakes a \"jump to latest\" button when there is more below. Same parts and hooks as shadcn's message scroller, with the behaviour written in, so no extra package.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/message-scroller-primitive.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/message-scroller.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport {\n  MessageScroller as MessageScrollerPrimitive,\n  useMessageScroller,\n  useMessageScrollerScrollable,\n  useMessageScrollerVisibility,\n} from \"@/lib/message-scroller-primitive\"\nimport { cn } from \"@/lib/utils\"\n\nfunction MessageScrollerProvider(props: React.ComponentProps<typeof MessageScrollerPrimitive.Provider>) {\n  return <MessageScrollerPrimitive.Provider {...props} />\n}\n\nfunction MessageScroller({ className, ...props }: React.ComponentProps<typeof MessageScrollerPrimitive.Root>) {\n  return <MessageScrollerPrimitive.Root data-slot=\"message-scroller\" className={cn(\"group/message-scroller relative flex size-full min-h-0 flex-col\", className)} {...props} />\n}\n\nfunction MessageScrollerViewport({ className, ...props }: React.ComponentProps<typeof MessageScrollerPrimitive.Viewport>) {\n  return (\n    <MessageScrollerPrimitive.Viewport\n      data-slot=\"message-scroller-viewport\"\n      className={cn(\n        \"size-full min-h-0 min-w-0 overflow-y-auto overscroll-contain [--fade-b:0px] [--fade-t:0px] [mask-image:linear-gradient(to_bottom,transparent,black_var(--fade-t),black_calc(100%-var(--fade-b)),transparent)] [scrollbar-gutter:stable] [scrollbar-width:thin] group-data-[scrollable~=end]/message-scroller:[--fade-b:28px] group-data-[scrollable~=start]/message-scroller:[--fade-t:20px] data-autoscrolling:[scrollbar-width:none] focus-visible:-outline-offset-3\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MessageScrollerContent({ className, ...props }: React.ComponentProps<typeof MessageScrollerPrimitive.Content>) {\n  return <MessageScrollerPrimitive.Content data-slot=\"message-scroller-content\" className={cn(\"flex h-max min-h-full flex-col gap-5 px-4 py-4\", className)} {...props} />\n}\n\nfunction MessageScrollerItem({ className, scrollAnchor = false, ...props }: React.ComponentProps<typeof MessageScrollerPrimitive.Item>) {\n  return <MessageScrollerPrimitive.Item data-slot=\"message-scroller-item\" scrollAnchor={scrollAnchor} className={cn(\"min-w-0 shrink-0\", className)} {...props} />\n}\n\nfunction MessageScrollerButton({\n  direction = \"end\",\n  className,\n  children,\n  render,\n  variant = \"secondary\",\n  size = \"icon-sm\",\n  ...props\n}: React.ComponentProps<typeof MessageScrollerPrimitive.Button> & Pick<React.ComponentProps<typeof Button>, \"variant\" | \"size\">) {\n  return (\n    <MessageScrollerPrimitive.Button\n      data-slot=\"message-scroller-button\"\n      data-direction={direction}\n      data-variant={variant}\n      data-size={size}\n      direction={direction}\n      className={cn(\n        \"absolute inset-s-1/2 z-(--ll-z-raised) -translate-x-1/2 transition-[translate,scale,opacity] duration-(--ll-dur-sheet) ease-settle data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0 data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[direction=end]:bottom-4 data-[direction=end]:data-[active=false]:translate-y-full data-[direction=start]:top-4 data-[direction=start]:data-[active=false]:-translate-y-full rtl:translate-x-1/2 data-[direction=start]:[&_svg]:rotate-180\",\n        className\n      )}\n      render={render ?? <Button variant={variant} size={size} />}\n      {...props}\n    >\n      {children ?? (\n        <>\n          <Icon name=\"arrow-down\" />\n          <span className=\"sr-only\">{direction === \"end\" ? \"Scroll to end\" : \"Scroll to start\"}</span>\n        </>\n      )}\n    </MessageScrollerPrimitive.Button>\n  )\n}\n\nexport {\n  MessageScrollerProvider,\n  MessageScroller,\n  MessageScrollerViewport,\n  MessageScrollerContent,\n  MessageScrollerItem,\n  MessageScrollerButton,\n  useMessageScroller,\n  useMessageScrollerScrollable,\n  useMessageScrollerVisibility,\n}\n",
+      "type": "registry:ui",
+      "target": "@ui/message-scroller.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "upstream": "message-scroller",
+    "related": [
+      "message",
+      "bubble",
+      "prompt-input",
+      "marker",
+      "scroll-area"
+    ],
+    "a11y": [
+      "The viewport is a labelled `region` and a tab stop, so a keyboard user can scroll with the arrows, Page keys, Home and End; the transcript inside it is a `role=\"log\"`, which announces additions politely.",
+      "Taking over is detected from wheel, touch and scroll keys going toward the start, and from a dragged scrollbar (a scroll the scroller did not make itself; a press on the container, not on a message, while your message is pinned): following and pinning stop immediately and never fight the reader. Scrolling toward the end while you are already there changes nothing, so a stream keeps being followed.",
+      "The jump button is `inert` (not focusable, not clickable) while there is nowhere to jump, and has a visually hidden label. Pressing it hands the keyboard to the transcript, so the arrows and Page keys carry on from there instead of restarting at the top of the page.",
+      "Every word a streaming reply adds is an addition to the `log`, and a screen reader would read the reply piece by piece. While it streams pass `aria-live=\"off\"` to `MessageScrollerContent` and announce the finished reply once from a separate `role=\"status\"` (the examples do); the `TypingIndicator` covers \"someone is writing\".",
+      "Smooth scrolling and the button's slide are decoration: with `prefers-reduced-motion` (or a `data-motion=\"reduced\"` ancestor) the durations collapse and the jump button scrolls instantly, even though it asks for `smooth`.",
+      "The focus ring of the viewport (it is a tab stop) is drawn just inside its edge, because the fade mask would cut a ring drawn outside it.",
+      "The page fades at an edge only while there is more to scroll there; the fade is a CSS mask, not a colour."
+    ],
+    "usage": "import {\n  MessageScroller,\n  MessageScrollerButton,\n  MessageScrollerContent,\n  MessageScrollerItem,\n  MessageScrollerProvider,\n  MessageScrollerViewport,\n} from \"@/components/ui/message-scroller\"\n\nexport function Transcript({ messages }: { messages: Array<{ id: string; mine: boolean; text: string }> }) {\n  return (\n    <MessageScrollerProvider autoScroll>\n      <MessageScroller className=\"h-[480px]\">\n        <MessageScrollerViewport>\n          <MessageScrollerContent>\n            {messages.map((m) => (\n              <MessageScrollerItem key={m.id} messageId={m.id} scrollAnchor={m.mine}>\n                {m.text}\n              </MessageScrollerItem>\n            ))}\n          </MessageScrollerContent>\n        </MessageScrollerViewport>\n        <MessageScrollerButton />\n      </MessageScroller>\n    </MessageScrollerProvider>\n  )\n}",
+    "parts": [
+      "MessageScrollerProvider",
+      "MessageScroller",
+      "MessageScrollerViewport",
+      "MessageScrollerContent",
+      "MessageScrollerItem",
+      "MessageScrollerButton",
+      "useMessageScroller",
+      "useMessageScrollerScrollable",
+      "useMessageScrollerVisibility"
+    ]
+  },
+  "categories": [
+    "Chat"
+  ],
+  "type": "registry:ui"
+}

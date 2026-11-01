@@ -1,0 +1,54 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-06",
+  "title": "Sidebar 06",
+  "description": "A sidebar with submenus as dropdowns: each section opens its pages in a menu beside the pad, and a little sign-up card is tucked into the foot. Mirrors shadcn's sidebar-06. Looks right on the desk and on plain paper.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/card.json",
+    "https://kevintngo.github.io/looseleaf/r/dropdown-menu.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/label.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-06/components/sidebar-06-app-sidebar.tsx",
+      "content": "import * as React from \"react\"\n\nimport { NavMain } from \"@/components/blocks/sidebar-06/components/sidebar-06-nav-main\"\nimport { SidebarOptInForm } from \"@/components/blocks/sidebar-06/components/sidebar-06-opt-in-form\"\nimport { SidebarBrand } from \"@/components/blocks/sidebar-shared/sidebar-brand\"\nimport { docsNav } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from \"@/components/ui/sidebar\"\n\nexport function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {\n  return (\n    <Sidebar role=\"navigation\" aria-label=\"Field guide\" {...props}>\n      <SidebarHeader>\n        <SidebarBrand title=\"Field guide\" subtitle=\"v1.0.0\" icon=\"book-open\" />\n      </SidebarHeader>\n      <SidebarContent>\n        <NavMain items={docsNav} />\n      </SidebarContent>\n      <SidebarFooter>\n        <div className=\"p-1 [@media(max-height:34rem)]:hidden\">\n          <SidebarOptInForm />\n        </div>\n      </SidebarFooter>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-06/components/sidebar-06-app-sidebar.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-06/components/sidebar-06-nav-main.tsx",
+      "content": "\"use client\"\n\nimport type { NavSection } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from \"@/components/ui/dropdown-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from \"@/components/ui/sidebar\"\n\nexport function NavMain({ items }: { items: NavSection[] }) {\n  const { isMobile } = useSidebar()\n\n  return (\n    <SidebarGroup>\n      <SidebarMenu>\n        {items.map((section) => {\n          const holdsCurrent = section.items.some((item) => item.isActive)\n          return (\n            <SidebarMenuItem key={section.title}>\n              <DropdownMenu>\n                <DropdownMenuTrigger asChild>\n                  <SidebarMenuButton isActive={holdsCurrent} aria-current={holdsCurrent ? \"true\" : undefined} className=\"data-[state=open]:ll-swipe\">\n                    {section.title}\n                    <Icon name=\"ellipsis\" className=\"ms-auto\" />\n                  </SidebarMenuButton>\n                </DropdownMenuTrigger>\n                {section.items.length ? (\n                  <DropdownMenuContent side={isMobile ? \"bottom\" : \"right\"} align={isMobile ? \"end\" : \"start\"} className=\"min-w-56\">\n                    {section.items.map((item) => (\n                      <DropdownMenuItem asChild key={item.title}>\n                        <a href={item.url} aria-current={item.isActive ? \"page\" : undefined} className={item.isActive ? \"font-bold\" : undefined}>\n                          {item.title}\n                          {item.isActive ? <Icon name=\"check\" className=\"ms-auto\" /> : null}\n                        </a>\n                      </DropdownMenuItem>\n                    ))}\n                  </DropdownMenuContent>\n                ) : null}\n              </DropdownMenu>\n            </SidebarMenuItem>\n          )\n        })}\n      </SidebarMenu>\n    </SidebarGroup>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-06/components/sidebar-06-nav-main.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-06/components/sidebar-06-opt-in-form.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Label } from \"@/components/ui/label\"\nimport { SidebarInput } from \"@/components/ui/sidebar\"\n\nexport function SidebarOptInForm({ onSubmit }: { onSubmit?: (email: string) => void }) {\n  const id = React.useId()\n  const [sent, setSent] = React.useState(false)\n  const [error, setError] = React.useState<string | null>(null)\n\n  return (\n    <Card className=\"gap-2 py-4\">\n      <CardHeader className=\"px-4\">\n        <CardTitle className=\"text-xl\">Get the postcard</CardTitle>\n        <CardDescription>A short note on new pens and papers, every other Friday. Only ink, no spam.</CardDescription>\n      </CardHeader>\n      <CardContent className=\"px-4\">\n        {sent ? (\n          <p role=\"status\" className=\"font-hand text-sm text-green\">\n            Thank you! Watch your mailbox on Friday.\n          </p>\n        ) : (\n          <form\n            className=\"grid gap-2.5\"\n            noValidate\n            onSubmit={(event) => {\n              event.preventDefault()\n              const value = new FormData(event.currentTarget).get(\"email\")\n              const email = typeof value === \"string\" ? value.trim() : \"\"\n              if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {\n                setError(\"That does not look like an email address yet.\")\n                return\n              }\n              setError(null)\n              onSubmit?.(email)\n              setSent(true)\n            }}\n          >\n            <Label htmlFor={id} className=\"sr-only\">\n              Email address\n            </Label>\n            <SidebarInput\n              id={id}\n              name=\"email\"\n              type=\"email\"\n              autoComplete=\"email\"\n              required\n              placeholder=\"you@example.com\"\n              aria-invalid={error ? true : undefined}\n              aria-describedby={error ? `${id}-error` : undefined}\n              onChange={() => error && setError(null)}\n            />\n            {error ? (\n              <p id={`${id}-error`} role=\"alert\" className=\"font-hand text-sm text-red\">\n                {error}\n              </p>\n            ) : null}\n            <Button size=\"sm\" className=\"w-full\" type=\"submit\">\n              Subscribe\n            </Button>\n          </form>\n        )}\n      </CardContent>\n    </Card>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-06/components/sidebar-06-opt-in-form.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-06/page.tsx",
+      "content": "import { AppSidebar } from \"@/components/blocks/sidebar-06/components/sidebar-06-app-sidebar\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { docsTrail } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { PageBody, PageHeader, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  return (\n    <SidebarProvider className={c.provider}>\n      <AppSidebar className={c.sidebar} />\n      <PageSheet className={c.inset}>\n        <PageHeader crumbs={docsTrail} bordered className=\"overflow-x-clip\" />\n        <PageBody title=\"Margins\" kicker=\"Writing on paper\">\n          <PageNote title=\"Pick a section\" pose=\"point\">\n            Each heading on the pad opens a small menu of its pages. Choose one and it lands here.\n          </PageNote>\n        </PageBody>\n      </PageSheet>\n    </SidebarProvider>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-06/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "dropdown",
+      "form"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 06\" block into your components directory under blocks/sidebar-06/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-06/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

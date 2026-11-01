@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "handwritten",
+  "title": "Handwritten",
+  "description": "Text that looks written, not typeset: every word sits a hair off the baseline and a touch lighter, by a seeded amount. The words stay real inline text; code, links and forms inside are left exactly as typed.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/handwritten.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { makeRng } from \"@/lib/ink/rng\"\nimport { useDensity, useInkSeed } from \"@/lib/ink/react\"\nimport { cn } from \"@/lib/utils\"\n\nconst SKIP = new Set([\"code\", \"pre\", \"kbd\", \"samp\", \"var\", \"a\", \"svg\", \"math\", \"textarea\", \"input\", \"select\", \"button\", \"script\", \"style\", \"img\", \"video\", \"audio\", \"canvas\", \"iframe\"])\n\nconst CSS = `[data-written] .ll-w{display:inline;position:relative;translate:none;rotate:none;opacity:1;padding-inline-end:0;margin-inline-end:0;top:calc(var(--jy,0px)*var(--ll-jitter-k,1));color:color-mix(in srgb,currentColor calc((1 - (1 - var(--jo,1))*var(--ll-jitter-k,1))*100%),transparent)}`\n\ninterface Walk {\n  n: number\n  seed: string\n  k: number\n}\n\nfunction word(text: string, w: Walk): React.ReactNode {\n  const r = makeRng(w.seed).fork(w.n)\n  const i = w.n++\n  const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v))\n  const style = {\n    \"--jy\": `${clamp(r.gauss(0, 0.55) * 1.5 * w.k, 1.6).toFixed(2)}px`,\n    \"--jr\": `${clamp(r.gauss(0, 0.6) * 1.4 * w.k, 1.7).toFixed(2)}deg`,\n    \"--jo\": (1 - r.range(0, 0.12) * w.k).toFixed(2),\n  } as React.CSSProperties\n  return (\n    <span key={i} className=\"ll-w [text-decoration:inherit]\" style={style}>\n      {text}\n    </span>\n  )\n}\n\nfunction walk(children: React.ReactNode, w: Walk): React.ReactNode[] {\n  return React.Children.toArray(children).map((node, at) => {\n    if (typeof node === \"string\" || typeof node === \"number\") {\n      const words = String(node)\n        .split(/(\\s+)/)\n        .map((part) => (part === \"\" ? null : /^\\s+$/.test(part) ? part : word(part, w)))\n      return <React.Fragment key={`t${at}`}>{words}</React.Fragment>\n    }\n    if (!React.isValidElement<{ children?: React.ReactNode; \"data-handwritten\"?: string }>(node) || node.props[\"data-handwritten\"] === \"off\") return node\n    const walked = node.type === React.Fragment || (typeof node.type === \"string\" && !SKIP.has(node.type))\n    if (!walked || node.props.children == null) return node\n    return React.cloneElement(node, undefined, ...walk(node.props.children, w))\n  })\n}\n\nfunction Handwritten({\n  as: Comp = \"span\",\n  strength = 1,\n  seed,\n  className,\n  children,\n  ...props\n}: Omit<React.ComponentProps<\"span\">, \"ref\"> & {\n  as?: React.ElementType\n  strength?: number\n  seed?: string | number\n  ref?: React.Ref<HTMLElement>\n}) {\n  const id = useInkSeed(seed)\n  const density = useDensity()\n  const k = Math.max(0, strength) * (density === \"compact\" ? 0.7 : 1)\n  return (\n    <Comp data-slot=\"handwritten\" data-written={k > 0 ? \"\" : undefined} className={cn(k > 0 && \"ll-hand-jitter\", className)} {...props}>\n      {k > 0 ? (\n        <style href=\"ll-handwritten\" precedence=\"low\">\n          {CSS}\n        </style>\n      ) : null}\n      {k > 0 ? walk(children, { n: 0, seed: `hw|${id}`, k }) : children}\n    </Comp>\n  )\n}\n\nexport { Handwritten }\n",
+      "type": "registry:ui",
+      "target": "@ui/handwritten.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "lettering",
+      "callout",
+      "signature",
+      "typography"
+    ],
+    "a11y": [
+      "The text is unchanged: words are inline spans with real spaces between them, so it wraps, selects, copies and is read as ordinary text.",
+      "Elements that must stay exact are skipped: code, pre, kbd, samp, var, links, buttons, inputs, media. Add data-handwritten=\"off\" to any element to opt it (and everything in it) out.",
+      "A text-decoration on the element (underline, line-through) is passed on to every word. For a drawn line use Underline or Strike around the text instead: they follow the words when they wrap.",
+      "Calm density and reduced motion switch the effect off in CSS (--ll-jitter-k = 0); compact writes it lighter. Never apply it to long reading text: it is for notes, captions, labels and titles."
+    ],
+    "usage": "import { Handwritten } from \"@/components/ui/handwritten\"\n\nexport function Example() {\n  return (\n    <Handwritten as=\"p\" className=\"font-script text-2xl\">\n      ask sam about the pond, and bring the big umbrella!\n    </Handwritten>\n  )\n}",
+    "parts": [
+      "Handwritten"
+    ]
+  },
+  "categories": [
+    "Typography"
+  ],
+  "type": "registry:ui"
+}

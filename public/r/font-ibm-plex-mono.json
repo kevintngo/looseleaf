@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-ibm-plex-mono",
+  "title": "IBM Plex Mono",
+  "description": "IBM Plex Mono for code, kbd and numbers (font-mono).",
+  "dependencies": [
+    "@fontsource/ibm-plex-mono"
+  ],
+  "css": {
+    "@import \"@fontsource/ibm-plex-mono/500.css\"": {}
+  },
+  "categories": [
+    "fonts"
+  ],
+  "type": "registry:font",
+  "font": {
+    "family": "\"IBM Plex Mono\", ui-monospace, \"SF Mono\", Menlo, monospace",
+    "provider": "google",
+    "import": "IBM_Plex_Mono",
+    "variable": "--font-mono",
+    "weight": [
+      "400",
+      "500"
+    ],
+    "subsets": [
+      "latin"
+    ],
+    "selector": "code, kbd, samp, pre",
+    "dependency": "@fontsource/ibm-plex-mono"
+  }
+}

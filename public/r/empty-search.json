@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-search",
+  "title": "Empty search",
+  "description": "A contacts list with a live search. When nothing matches, Stubby comes out with his magnifying glass, quotes the words back, and offers to clear the box or try a search that works. Looks right on paper or on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/avatar.json",
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/card.json",
+    "https://kevintngo.github.io/looseleaf/r/empty.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/input-group.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/empty-search/components/empty-search-people.tsx",
+      "content": "import { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\n\ntype EmptySearchPerson = { name: string; role: string }\n\nconst PEOPLE: EmptySearchPerson[] = [\n  { name: \"Ada Lovelace\", role: \"Editor, London\" },\n  { name: \"Jo Okafor\", role: \"Illustrator, Lagos\" },\n  { name: \"Mika Kobayashi\", role: \"Bookbinder, Osaka\" },\n  { name: \"Sam Reyes\", role: \"Printer, Lisbon\" },\n  { name: \"Priya Nair\", role: \"Operations, Pune\" },\n  { name: \"Tomas Berg\", role: \"Finance, Malmö\" },\n]\n\nfunction findPeople(query: string, people: EmptySearchPerson[] = PEOPLE): EmptySearchPerson[] {\n  const q = query.trim().toLowerCase()\n  if (!q) return people\n  return people.filter((p) => p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q))\n}\n\nfunction EmptySearchList({ people }: { people: EmptySearchPerson[] }) {\n  return (\n    <ul className=\"grid list-none gap-1\" aria-label=\"Contacts\">\n      {people.map((p) => (\n        <li key={p.name} className=\"flex items-center gap-3 py-1.5\">\n          <Avatar>\n            <AvatarFallback name={p.name} />\n          </Avatar>\n          <div className=\"min-w-0\">\n            <p className=\"truncate text-[17px] leading-6 font-bold\">{p.name}</p>\n            <p className=\"truncate text-sm leading-5 text-ink-muted\">{p.role}</p>\n          </div>\n        </li>\n      ))}\n    </ul>\n  )\n}\n\nexport { EmptySearchList, PEOPLE, findPeople }\nexport type { EmptySearchPerson }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/empty-search/components/empty-search-people.tsx"
+    },
+    {
+      "path": "src/blocks/empty-search/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\nimport { EmptySearchList, PEOPLE, findPeople } from \"@/components/blocks/empty-search/components/empty-search-people\"\n\nconst SUGGESTIONS = [\"Ada\", \"Printer\", \"Lagos\"]\n\ntype EmptySearchProps = {\n  defaultQuery?: string\n}\n\nexport default function EmptySearch({ defaultQuery = \"ghost pepper\" }: EmptySearchProps) {\n  const titleId = React.useId()\n  const inputRef = React.useRef<HTMLInputElement>(null)\n  const [query, setQuery] = React.useState(defaultQuery)\n  const people = findPeople(query)\n  const set = (value: string) => {\n    setQuery(value)\n    inputRef.current?.focus()\n  }\n\n  return (\n    <section aria-labelledby={titleId} className=\"@container w-full\">\n      <div className=\"px-8 py-10 @xl:py-14\">\n        <Card tape=\"corner\" tapeKind=\"masking\" seed=\"empty-search\" className=\"mx-auto max-w-2xl\">\n          <CardHeader>\n            <CardTitle>\n              <h2 id={titleId}>Contacts</h2>\n            </CardTitle>\n            <CardDescription>{PEOPLE.length} people in your address book</CardDescription>\n          </CardHeader>\n\n          <CardContent className=\"grid gap-4\">\n            <InputGroup>\n              <InputGroupAddon>\n                <Icon name=\"search\" />\n              </InputGroupAddon>\n              <InputGroupInput ref={inputRef} type=\"search\" aria-label=\"Search contacts\" placeholder=\"Search by name or place\" value={query} onChange={(e) => setQuery(e.target.value)} />\n              {query ? (\n                <InputGroupAddon align=\"inline-end\">\n                  <InputGroupButton type=\"button\" size=\"icon-xs\" aria-label=\"Clear search\" onClick={() => set(\"\")}>\n                    <Icon name=\"x\" />\n                  </InputGroupButton>\n                </InputGroupAddon>\n              ) : null}\n            </InputGroup>\n\n            <p role=\"status\" className=\"sr-only\">\n              {people.length === 0 ? \"No results.\" : `${people.length} ${people.length === 1 ? \"person\" : \"people\"} found.`}\n            </p>\n\n            {people.length > 0 ? (\n              <EmptySearchList people={people} />\n            ) : (\n              <Empty className=\"border border-dashed\">\n                <EmptyHeader>\n                  <EmptyMedia pose=\"search\" size={120} />\n                  <EmptyTitle className=\"wrap-anywhere\">No results for &ldquo;{query.trim()}&rdquo;</EmptyTitle>\n                  <EmptyDescription>Nobody is called that. Check the spelling, or try a shorter word.</EmptyDescription>\n                </EmptyHeader>\n                <EmptyContent>\n                  <Button type=\"button\" onClick={() => set(\"\")}>\n                    Clear search\n                  </Button>\n                  <div className=\"mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-2\">\n                    <span className=\"text-sm text-ink-muted\">Try</span>\n                    {SUGGESTIONS.map((s) => (\n                      <Button key={s} type=\"button\" variant=\"outline\" size=\"sm\" onClick={() => set(s)}>\n                        {s}\n                      </Button>\n                    ))}\n                  </div>\n                </EmptyContent>\n              </Empty>\n            )}\n          </CardContent>\n        </Card>\n      </div>\n    </section>\n  )\n}\n\nexport type { EmptySearchProps }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/empty-search/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "empty state",
+      "search",
+      "stubby",
+      "input group"
+    ]
+  },
+  "docs": "Installed the \"Empty search\" block into your components directory under blocks/empty-search/.\nImport it: import EmptySearch from \"<your components alias>/blocks/empty-search/page\"",
+  "categories": [
+    "feedback"
+  ],
+  "type": "registry:block"
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "announcement-bar",
+  "title": "Announcement bar",
+  "description": "A strip of kraft paper taped across the top of the page: a New ribbon, one sentence, a link and a dismiss button. Looks right on paper or on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/mascot.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/ribbon.json",
+    "https://kevintngo.github.io/looseleaf/r/tape.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/announcement-bar/components/announcement-bar-header.tsx",
+      "content": "import { Button } from \"@/components/ui/button\"\nimport { Mascot } from \"@/components/ui/mascot\"\n\nconst links = [\"Product\", \"Pricing\", \"Notes\", \"Sign in\"]\n\nfunction AnnouncementBarHeader() {\n  return (\n    <header className=\"flex items-center justify-between gap-4 px-6 py-5 [--ll-blend:normal]\">\n      <a href=\"#top\" className=\"flex items-center gap-2 font-script text-3xl leading-none font-bold text-ink\">\n        <Mascot pose=\"idle\" size={32} />\n        penmark\n      </a>\n      <nav aria-label=\"Main\" className=\"hidden items-center gap-6 text-base text-ink @lg:flex\">\n        {links.map((l) => (\n          <a key={l} href={`#${l.toLowerCase().replace(/\\s+/g, \"-\")}`} className=\"underline-offset-4 hover:underline\">\n            {l}\n          </a>\n        ))}\n      </nav>\n      <Button size=\"sm\">Start free</Button>\n    </header>\n  )\n}\n\nexport { AnnouncementBarHeader }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/announcement-bar/components/announcement-bar-header.tsx"
+    },
+    {
+      "path": "src/blocks/announcement-bar/components/announcement-bar-strip.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Paper } from \"@/components/ui/paper\"\nimport { Ribbon } from \"@/components/ui/ribbon\"\nimport { Tape } from \"@/components/ui/tape\"\nimport { cn } from \"@/lib/utils\"\n\ntype AnnouncementBarStripProps = Omit<React.ComponentProps<\"section\">, \"children\"> & {\n  label?: string\n  message: React.ReactNode\n  linkLabel?: string\n  href?: string\n  onDismiss?: () => void\n}\n\nfunction AnnouncementBarStrip({ className, label = \"New\", message, linkLabel = \"Read the notes\", href = \"#announcement\", onDismiss, ...props }: AnnouncementBarStripProps) {\n  return (\n    <div className=\"px-4 pt-6\">\n      <Paper\n        as=\"section\"\n        stock=\"kraft\"\n        tilt={false}\n        shadow=\"slip\"\n        aria-label=\"Announcement\"\n        data-slot=\"announcement-bar\"\n        className={cn(\"px-12 py-2.5\", className)}\n        {...props}\n      >\n        <Tape kind=\"washi-stripes\" color=\"tangerine\" length={52} height={18} angle={-32} className=\"absolute -top-2.5 -start-3 rtl:rotate-[32deg]!\" />\n        <Tape kind=\"washi-stripes\" color=\"tangerine\" length={52} height={18} angle={32} className=\"absolute -top-2.5 -end-3 rtl:rotate-[-32deg]!\" />\n        <div className=\"relative z-(--ll-z-raised) flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center text-[15px] leading-6 text-ink\">\n          <Ribbon variant=\"flag\" tone=\"hi\" size=\"sm\">\n            {label}\n          </Ribbon>\n          <p className=\"text-balance\">{message}</p>\n          <Button asChild variant=\"link\" size=\"sm\" className=\"text-link-hover hover:text-ink\">\n            <a href={href}>\n              {linkLabel}\n              <Icon name=\"arrow-right\" className=\"rtl:-scale-x-100\" />\n            </a>\n          </Button>\n        </div>\n        {onDismiss ? (\n          <Button\n            type=\"button\"\n            variant=\"ghost\"\n            size=\"icon-sm\"\n            aria-label=\"Dismiss announcement\"\n            onClick={onDismiss}\n            className=\"absolute inset-y-0 end-2 z-(--ll-z-raised) my-auto\"\n          >\n            <Icon name=\"x\" />\n          </Button>\n        ) : null}\n      </Paper>\n    </div>\n  )\n}\n\nexport { AnnouncementBarStrip }\nexport type { AnnouncementBarStripProps }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/announcement-bar/components/announcement-bar-strip.tsx"
+    },
+    {
+      "path": "src/blocks/announcement-bar/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { AnnouncementBarHeader } from \"@/components/blocks/announcement-bar/components/announcement-bar-header\"\nimport { AnnouncementBarStrip } from \"@/components/blocks/announcement-bar/components/announcement-bar-strip\"\n\nexport default function AnnouncementBarBlock() {\n  const [open, setOpen] = React.useState(true)\n  const strip = React.useRef<HTMLElement>(null)\n  const bringBack = React.useRef<HTMLButtonElement>(null)\n  const handOver = React.useRef(false)\n  React.useEffect(() => {\n    if (!handOver.current) return\n    handOver.current = false\n    if (open) strip.current?.focus()\n    else bringBack.current?.focus()\n  }, [open])\n  const toggle = (next: boolean) => {\n    handOver.current = true\n    setOpen(next)\n  }\n\n  return (\n    <div className=\"@container w-full\">\n      {open ? (\n        <AnnouncementBarStrip\n          ref={strip}\n          tabIndex={-1}\n          message=\"Penmark 2.0 is here: tape you can peel, and pages that turn.\"\n          linkLabel=\"Read the notes\"\n          href=\"#notes\"\n          onDismiss={() => toggle(false)}\n          className=\"outline-none\"\n        />\n      ) : (\n        <div className=\"flex justify-center px-3 pt-3\">\n          <Button ref={bringBack} type=\"button\" variant=\"link\" size=\"sm\" onClick={() => toggle(true)}>\n            Bring the announcement back\n          </Button>\n        </div>\n      )}\n      <AnnouncementBarHeader />\n    </div>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/announcement-bar/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "marketing",
+      "banner",
+      "ribbon"
+    ]
+  },
+  "docs": "Installed the \"Announcement bar\" block into your components directory under blocks/announcement-bar/.\nImport it: import AnnouncementBarBlock from \"<your components alias>/blocks/announcement-bar/page\"",
+  "categories": [
+    "marketing"
+  ],
+  "type": "registry:block"
+}

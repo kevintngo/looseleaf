@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "squiggle",
+  "title": "Squiggle",
+  "description": "A hand-drawn divider: a wave, a zig-zag, a row of loops, scallops, dashes or dots, drawn to fit whatever width or height you give it. Same semantics as a separator.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-mark-ink.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/squiggle.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { MARK_REVEAL, useMarkPhase } from \"@/hooks/use-mark-ink\"\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { squiggleRecipe, type SquiggleKind } from \"@/lib/ink/recipes/squiggle-ink\"\nimport type { MarkPen, MarkWeight } from \"@/lib/ink/recipes/text-marks-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Squiggle({\n  kind = \"wavy\",\n  orientation = \"horizontal\",\n  decorative = true,\n  tone = \"ink\",\n  weight = \"regular\",\n  animate = false,\n  show = true,\n  delay,\n  seed,\n  className,\n  style,\n  ref,\n  ...props\n}: Omit<React.ComponentProps<\"div\">, \"children\"> & {\n  kind?: SquiggleKind\n  orientation?: \"horizontal\" | \"vertical\"\n  decorative?: boolean\n  tone?: MarkPen\n  weight?: MarkWeight\n  animate?: boolean\n  show?: boolean\n  delay?: number\n  seed?: string | number\n}) {\n  const { hostRef, hostProps, node } = useInk({ recipe: squiggleRecipe, params: { kind, orientation, tone, weight, animate }, kind: \"squiggle\", seed })\n  const { phaseRef, phaseProps } = useMarkPhase({ animate, show })\n  const ready = !!node && show\n  return (\n    <div\n      data-slot=\"squiggle\"\n      data-kind={kind}\n      data-orientation={orientation}\n      role={decorative ? \"none\" : \"separator\"}\n      aria-orientation={decorative ? undefined : orientation}\n      ref={useMergedRef<HTMLElement>(hostRef, phaseRef, ref as React.Ref<HTMLElement> | undefined)}\n      {...(ready ? hostProps : {})}\n      {...phaseProps}\n      style={{ ...(animate ? ({ \"--ll-draw-delay\": `${delay ?? 0}ms` } as React.CSSProperties) : undefined), ...style }}\n      className={cn(\"relative isolate shrink-0 outline-none\", orientation === \"horizontal\" ? \"h-4 w-full\" : \"h-full min-h-8 w-4\", animate && MARK_REVEAL, className)}\n      {...props}\n    >\n      {ready ? node : null}\n    </div>\n  )\n}\n\nexport { Squiggle }\n",
+      "type": "registry:ui",
+      "target": "@ui/squiggle.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/squiggle-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { markRevealId, revealMark } from '@/lib/ink/recipes/mark-reveal-ink'\nimport { markPen, STRUCTURAL_DRY, type MarkPen, type MarkWeight } from '@/lib/ink/recipes/text-marks-ink'\nimport { squiggleLines } from '@/lib/ink/shapes'\nimport type { Line, Pt } from '@/lib/ink/types'\n\nexport type SquiggleKind = 'wavy' | 'zigzag' | 'loops' | 'scallops' | 'dashes' | 'dots'\n\nexport interface SquiggleParams {\n  kind: SquiggleKind\n  orientation: 'horizontal' | 'vertical'\n  tone: MarkPen\n  weight: MarkWeight\n  animate?: boolean\n}\n\nexport const SQUIGGLE_KINDS: readonly SquiggleKind[] = ['wavy', 'zigzag', 'loops', 'scallops', 'dashes', 'dots']\n\nexport const squiggleRecipe = defineRecipe<SquiggleParams>({\n  id: 'squiggle',\n  kind: 'squiggle',\n  layers: ['rest'],\n  pad: 8,\n  draw(ink, { w, h }, p, ctx) {\n    const vertical = p.orientation === 'vertical'\n    const L = vertical ? h : w\n    const T = vertical ? w : h\n    const { pen, width } = markPen(p.tone, p.weight, 18)\n    const rng = ink.next('squiggle')\n    const y = T / 2\n    const amp = Math.max(1.6, Math.min(T * 0.32, 5))\n    const x0 = 2, x1 = L - 2\n    const lines: Line[] = []\n    const so = { end: 'flick' as const, wobble: 0.5, speed: 1.15, simple: L > 220 }\n    const pull = (pts: Pt[], o = so) => lines.push({ pts, o })\n    if (p.kind === 'wavy') {\n      lines.push(...squiggleLines(rng, x0, y, x1 - x0, { h: Math.max(8, T), amp: amp / 3 }).map((l) => ({ ...l, o: { ...l.o, simple: L > 220 } })))\n    } else if (p.kind === 'zigzag') {\n      const pitch = Math.max(9, amp * 3.4)\n      const pts: Pt[] = []\n      let x = x0, up = rng.chance(0.5)\n      while (x <= x1) {\n        pts.push([x, y + (up ? -amp : amp) * rng.range(0.75, 1.1)])\n        x += pitch * rng.range(0.85, 1.15)\n        up = !up\n      }\n      pull(pts, { ...so, poly: true, round: 0.7 } as typeof so)\n    } else if (p.kind === 'loops') {\n      const pitch = Math.max(12, amp * 4.2), r = pitch * 0.42\n      const pts: Pt[] = []\n      const n = Math.max(6, Math.round((x1 - x0) / pitch))\n      for (let i = 0; i <= n * 14; i++) {\n        const s = i / 14\n        const th = s * Math.PI * 2\n        pts.push([x0 + ((x1 - x0) / n) * s - r * Math.sin(th) * 0.9 + rng.gauss(0, 0.05), y - r * 0.55 * Math.cos(th) * (1 + 0.05 * Math.sin(s * 2.3))])\n      }\n      pull(pts)\n    } else if (p.kind === 'scallops') {\n      const pitch = Math.max(16, amp * 5.2)\n      const n = Math.max(3, Math.round((x1 - x0) / pitch))\n      const pts: Pt[] = []\n      for (let i = 0; i < n; i++) {\n        const a = x0 + ((x1 - x0) / n) * i, b = x0 + ((x1 - x0) / n) * (i + 1)\n        for (let k = i ? 1 : 0; k <= 8; k++) {\n          const t = k / 8\n          pts.push([a + (b - a) * t + rng.gauss(0, 0.15), y + amp * 1.0 - Math.sin(Math.PI * t) * amp * 2.1 * rng.range(0.92, 1.06)])\n        }\n      }\n      pull(pts)\n    } else if (p.kind === 'dashes') {\n      let x = x0 + rng.range(0, 4)\n      while (x < x1 - 4) {\n        const len = rng.range(6, 11)\n        lines.push({ pts: [[x, y + rng.gauss(0, 0.5)], [Math.min(x1, x + len), y + rng.gauss(0, 0.6)]], o: { start: 'soft', end: 'soft', wobble: 0.4, simple: true } })\n        x += len + rng.range(5, 9)\n      }\n    } else {\n      let x = x0 + 3\n      while (x < x1) {\n        const r = rng.range(0.9, 1.5) * (p.weight === 'brush' ? 1.5 : 1)\n        lines.push({ pts: [[x, y + rng.gauss(0, 0.5)], [x + r * 0.6, y + rng.gauss(0, 0.5) + 0.4]], o: { start: 'pool', end: 'pool', wobble: 0.2, simple: true, width: 1.7 } })\n        x += rng.range(9, 13)\n      }\n    }\n    ink.layer('rest', () => {\n      const draw = () => {\n        if (p.animate) revealMark(ink, { id: markRevealId(ctx.seed, 's'), lines, pen, box: { w: L, h: T }, pad: 10, width, opts: { dry: STRUCTURAL_DRY }, revealWidth: Math.max(6, T * 0.8) })\n        else ink.lines(lines, pen, { width, dry: STRUCTURAL_DRY })\n      }\n      if (vertical) ink.group({ transform: `translate(${w} 0) rotate(90)` }, draw)\n      else draw()\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/squiggle-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "upstream": "separator",
+    "related": [
+      "separator",
+      "underline",
+      "bracket"
+    ],
+    "a11y": [
+      "Decorative by default (role=\"none\"), like Radix's Separator; pass decorative={false} to expose it as a separator (with aria-orientation) between sections that really are distinct.",
+      "The drawing is aria-hidden and pointer-events-none; it is redrawn when the box is resized. Windows high contrast hides it (a decorative divider loses nothing).",
+      "Cost grows with length: about 3 KB for 420 px in a single pull; keep very long dividers (over 1200 px) to `dots` or `dashes`."
+    ],
+    "usage": "import { Squiggle } from \"@/components/ui/squiggle\"\n\nexport function Example() {\n  return (\n    <div>\n      <p>Before.</p>\n      <Squiggle kind=\"loops\" tone=\"blue\" className=\"my-4\" />\n      <p>After.</p>\n    </div>\n  )\n}",
+    "parts": [
+      "Squiggle"
+    ]
+  },
+  "categories": [
+    "Marks"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,65 @@
+:root {
+  --ll-paper: #f8f5ee;
+  --ll-paper-shade: #ece6da;
+  --ll-slip: #fbf8f1;
+  --ll-ink: #2a2420;
+  --ll-ink-you: #2c4f9e;
+  --ll-pencil: #66615a;
+  --ll-red: #b23a28;
+  --ll-orange: #e0784b;
+  --ll-hi: rgb(245 223 107);
+  --ll-grain: none;
+  --ll-tilt: 0deg;
+
+  --background: var(--ll-paper);
+  --foreground: var(--ll-ink);
+  --card: #fbf6e9;
+  --card-foreground: var(--ll-ink);
+  --popover: var(--ll-slip);
+  --popover-foreground: var(--ll-ink);
+  --primary: var(--ll-ink-you);
+  --primary-foreground: var(--ll-slip);
+  --secondary: var(--ll-paper-shade);
+  --secondary-foreground: var(--ll-ink);
+  --muted: var(--ll-paper-shade);
+  --muted-foreground: var(--ll-pencil);
+  --accent: color-mix(in oklab, var(--ll-hi) 55%, var(--ll-paper));
+  --accent-foreground: var(--ll-ink);
+  --destructive: var(--ll-red);
+  --destructive-foreground: var(--ll-slip);
+  --border: color-mix(in oklab, var(--ll-ink) 45%, var(--ll-paper));
+  --input: color-mix(in oklab, var(--ll-ink) 45%, var(--ll-paper));
+  --ring: var(--ll-ink-you);
+  --chart-1: oklch(0.5 0.14 260);
+  --chart-2: oklch(0.52 0.15 145);
+  --chart-3: oklch(0.55 0.16 35);
+  --chart-4: hsl(28 80% 36%);
+  --chart-5: oklch(0.5 0.15 330);
+  --sidebar: var(--ll-paper-shade);
+  --sidebar-foreground: var(--ll-ink);
+  --sidebar-primary: var(--ll-ink-you);
+  --sidebar-primary-foreground: var(--ll-slip);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--ll-ink);
+}
+
+.dark {
+  --ll-paper: #292623;
+  --ll-paper-shade: #33302c;
+  --ll-slip: #322e2a;
+  --ll-ink: #e6dccb;
+  --ll-ink-you: #9db8f2;
+  --ll-pencil: #b3a99a;
+  --ll-red: #f0907f;
+  --card: #2f2b27;
+  --primary-foreground: #1d1b19;
+  --destructive-foreground: #1d1b19;
+  --accent: color-mix(in oklab, var(--ll-hi) 22%, var(--ll-paper));
+  --border: color-mix(in oklab, var(--ll-ink) 40%, var(--ll-paper));
+  --input: color-mix(in oklab, var(--ll-ink) 40%, var(--ll-paper));
+  --chart-1: oklch(0.72 0.12 260);
+  --chart-2: oklch(0.75 0.14 145);
+  --chart-3: oklch(0.75 0.14 45);
+  --chart-4: hsl(38 85% 62%);
+  --chart-5: oklch(0.75 0.13 330);
+}

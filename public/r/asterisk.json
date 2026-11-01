@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "asterisk",
+  "title": "Asterisk",
+  "description": "Hand-drawn footnote marks: an asterisk, a star, a dagger or a double dagger, in red pencil, sized like a superscript after the word they belong to. Give it a label and an href and it links to the footnote.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-art.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/asterisk.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport type { ArtDef } from \"@/lib/ink/art/types\"\nimport { drawSkeleton, memo } from \"@/lib/ink/art-draw\"\nimport { useEnsureInkDefs, useInkSeed } from \"@/lib/ink/react\"\nimport { cn } from \"@/lib/utils\"\n\nexport type AsteriskMark = \"asterisk\" | \"star\" | \"dagger\" | \"double-dagger\"\n\nconst MARKS: Record<AsteriskMark, ArtDef> = {\n  asterisk: {\n    kind: \"icon\",\n    grid: 24,\n    parts: [\n      [\"s\", \"M12.3 3.6 L11.7 20.4\", 1.3],\n      [\"s\", \"M4.4 7.9 L19.6 16.3\", 1.3],\n      [\"s\", \"M19.1 7.5 L5.2 16.6\", 1.3],\n    ],\n    small: [\n      [\"s\", \"M12.4 3 L11.6 21\", 1.1],\n      [\"s\", \"M3.5 7.4 L20.3 16.8\", 1.1],\n      [\"s\", \"M20 7 L4.4 17\", 1.1],\n    ],\n  },\n  star: {\n    kind: \"icon\",\n    grid: 24,\n    parts: [[\"s\", \"M12.2 3.1 L14.8 9.3 L21.3 9.9 L16.4 14.3 L17.9 20.7 L12.1 17.3 L6.3 20.8 L7.7 14.3 L2.8 9.8 L9.4 9.3 L12.5 3.9\", 1.15]],\n    small: [[\"s\", \"M12.2 2.6 L15 9 L21.6 9.7 L16.7 14.2 L18.2 21 L12.1 17.5 L5.9 21.1 L7.4 14.2 L2.4 9.6 L9.2 9 L12.6 3.4\", 1.05]],\n  },\n  dagger: {\n    kind: \"icon\",\n    grid: 24,\n    parts: [\n      [\"s\", \"M12.1 2.9 L11.8 21.3\", 1.3],\n      [\"s\", \"M7.7 8.3 L16.4 7.8\", 1.3],\n    ],\n    small: [\n      [\"s\", \"M12.2 2.4 L11.8 21.8\", 1.15],\n      [\"s\", \"M6.9 8.4 L17.2 7.9\", 1.15],\n    ],\n  },\n  \"double-dagger\": {\n    kind: \"icon\",\n    grid: 24,\n    parts: [\n      [\"s\", \"M12.1 2.9 L11.8 21.3\", 1.3],\n      [\"s\", \"M7.7 7.6 L16.4 7.2\", 1.3],\n      [\"s\", \"M8.1 13.9 L15.9 14.3\", 1.3],\n    ],\n    small: [\n      [\"s\", \"M12.2 2.4 L11.8 21.8\", 1.15],\n      [\"s\", \"M6.9 7.6 L17.2 7.1\", 1.15],\n      [\"s\", \"M7.4 14.2 L16.8 14.6\", 1.15],\n    ],\n  },\n}\n\nconst TONES = { red: \"text-red\", ink: \"text-ink\", blue: \"text-ink-you\", pencil: \"text-pencil-text\" } as const\n\nfunction Asterisk({\n  mark = \"asterisk\",\n  tone = \"red\",\n  label,\n  href,\n  seed,\n  className,\n  children,\n  ...props\n}: Omit<React.ComponentProps<\"span\">, \"ref\"> & {\n  mark?: AsteriskMark\n  tone?: keyof typeof TONES\n  label?: string\n  href?: string\n  seed?: string | number\n}) {\n  useEnsureInkDefs()\n  const s = useInkSeed(seed)\n  const def = MARKS[mark] ?? MARKS.asterisk\n  const res = memo(`asterisk|${mark}|${s}`, () => drawSkeleton(def, 16, `${s}|${mark}`, { tone: \"ui\", kind: \"icon\" }))\n  const glyph = (\n    <svg\n      data-ink=\"icon\"\n      aria-hidden=\"true\"\n      focusable=\"false\"\n      viewBox={`0 0 ${res.w} ${res.h}`}\n      className={cn(\"pointer-events-none inline-block size-[0.8em] shrink-0 overflow-visible align-[0.4em]\", TONES[tone])}\n      dangerouslySetInnerHTML={{ __html: res.svg }}\n    />\n  )\n  if (href) {\n    return (\n      <span data-slot=\"asterisk\" data-mark={mark} className={cn(\"inline\", className)} {...props}>\n        {children}\n        <a href={href} aria-label={label ?? \"footnote\"} className=\"relative after:absolute after:-inset-1.5 [&>svg]:transition-transform [&>svg]:duration-(--ll-dur-hover) hover:[&>svg]:scale-125\">\n          {glyph}\n        </a>\n      </span>\n    )\n  }\n  const named = label ? ({ role: \"img\", \"aria-label\": label } as const) : ({ \"aria-hidden\": true } as const)\n  return (\n    <span data-slot=\"asterisk\" data-mark={mark} className={cn(\"inline\", className)} {...props}>\n      {children}\n      <span {...named}>{glyph}</span>\n    </span>\n  )\n}\n\nexport { Asterisk }\n",
+      "type": "registry:ui",
+      "target": "@ui/asterisk.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "label",
+      "annotate",
+      "tally"
+    ],
+    "a11y": [
+      "Decorative by default (aria-hidden). With `label` it is role=\"img\" with that name; with `label` and `href` it is a real link (its hit area is 24 px or more).",
+      "A footnote mark points at a footnote: keep the footnote in text, and link the two (`href=\"#fn1\"` here and an id on the note).",
+      "Sized in em, so it follows the text it sits in. Kept in Windows high contrast as a drawn glyph."
+    ],
+    "usage": "import { Asterisk } from \"@/components/ui/asterisk\"\n\nexport function Example() {\n  return (\n    <p>\n      Free shipping<Asterisk label=\"footnote 1\" href=\"#fn1\" />\n    </p>\n  )\n}",
+    "parts": [
+      "Asterisk"
+    ]
+  },
+  "categories": [
+    "Marks"
+  ],
+  "type": "registry:ui"
+}

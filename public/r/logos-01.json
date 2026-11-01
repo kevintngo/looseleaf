@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "logos-01",
+  "title": "Logo tickers on washi tape",
+  "description": "Two strips of washi tape with customer names in their own type, running in opposite directions, one pause button for both; a plain wrapped list replaces them for reduced motion. Looks right on paper or on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/marquee.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/logos-01/components/logos-01-names.tsx",
+      "content": "import { cn } from \"@/lib/utils\"\n\nconst LOGOS = [\n  { name: \"Oatmeal & Co.\", className: \"font-script text-3xl font-bold\" },\n  { name: \"KILN\", className: \"font-type text-xl tracking-[0.35em]\" },\n  { name: \"paperwork bros\", className: \"font-hand text-xl font-bold lowercase\" },\n  { name: \"Northwind Ink\", className: \"font-script text-3xl font-bold italic\" },\n  { name: \"The Tea Room\", className: \"font-type text-lg tracking-wide\" },\n  { name: \"Brindle\", className: \"font-script text-3xl font-normal\" },\n  { name: \"LOOM & LANTERN\", className: \"font-mono text-sm font-semibold tracking-[0.25em]\" },\n  { name: \"salt studio\", className: \"font-hand text-xl font-normal lowercase\" },\n] as const\n\ntype Logo = (typeof LOGOS)[number]\n\nfunction Logos01Name({ logo, className }: { logo: Logo; className?: string }) {\n  return <span className={cn(\"whitespace-nowrap\", logo.className, className)}>{logo.name}</span>\n}\n\nexport { LOGOS, Logos01Name }\nexport type { Logo }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/logos-01/components/logos-01-names.tsx"
+    },
+    {
+      "path": "src/blocks/logos-01/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Marquee, MarqueeItem } from \"@/components/ui/marquee\"\nimport { LOGOS, Logos01Name } from \"@/components/blocks/logos-01/components/logos-01-names\"\n\nconst ROW_A = LOGOS.slice(0, 4)\nconst ROW_B = LOGOS.slice(4)\n\nexport default function Logos01() {\n  const titleId = React.useId()\n  const [paused, setPaused] = React.useState(false)\n  return (\n    <section aria-labelledby={titleId} className=\"@container w-full\">\n      <div className=\"px-4 py-14 @xl:px-8 @xl:py-20\">\n        <div className=\"mx-auto max-w-5xl\">\n          <h2 id={titleId} className=\"text-center font-type text-sm tracking-[0.18em] text-ink-soft uppercase\">\n            Kept on desks at\n          </h2>\n\n          <div className=\"mt-8 grid gap-3 motion-reduce:hidden [[data-motion=reduced]_&]:hidden\">\n            <Marquee label=\"Teams that use Penmark\" tape=\"washi-stripes\" color=\"tangerine\" speed={46} paused={paused} onPausedChange={setPaused} seed=\"logos-a\">\n              {ROW_A.map((logo) => (\n                <MarqueeItem key={logo.name}>\n                  <Logos01Name logo={logo} />\n                </MarqueeItem>\n              ))}\n            </Marquee>\n            <Marquee label=\"More teams that use Penmark\" tape=\"washi-gingham\" color=\"sky\" direction=\"end\" speed={38} paused={paused} controls={false} seed=\"logos-b\">\n              {ROW_B.map((logo) => (\n                <MarqueeItem key={logo.name}>\n                  <Logos01Name logo={logo} />\n                </MarqueeItem>\n              ))}\n            </Marquee>\n          </div>\n\n          <ul\n            aria-label=\"Teams that use Penmark\"\n            className=\"mt-8 hidden list-none flex-wrap items-center justify-center gap-x-10 gap-y-4 text-ink motion-reduce:flex [[data-motion=reduced]_&]:flex\"\n          >\n            {LOGOS.map((logo) => (\n              <li key={logo.name}>\n                <Logos01Name logo={logo} />\n              </li>\n            ))}\n          </ul>\n        </div>\n      </div>\n    </section>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/logos-01/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "marketing",
+      "logos",
+      "social proof",
+      "marquee"
+    ]
+  },
+  "docs": "Installed the \"Logo tickers on washi tape\" block into your components directory under blocks/logos-01/.\nImport it: import Logos01 from \"<your components alias>/blocks/logos-01/page\"",
+  "categories": [
+    "marketing"
+  ],
+  "type": "registry:block"
+}

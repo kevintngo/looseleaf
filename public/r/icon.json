@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "icon",
+  "title": "Icon",
+  "description": "Every glyph in Looseleaf is a hand-drawn felt-tip icon, redrawn at each size so a 16 px chevron is a chevron and not a shrunken 24 px one. It takes lucide names, so a shadcn snippet keeps working.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-art.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-icons.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/icon.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { useEnsureInkDefs, useIconSize } from \"@/lib/ink/react\"\nimport { icons, resolveIconName, type IconName } from \"@/lib/ink/art/icons\"\nimport { drawSkeleton, memo } from \"@/lib/ink/art-draw\"\nimport type { ArtAccent, ArtDef } from \"@/lib/ink/art/types\"\n\nfunction sizeFromClass(className?: string): number | undefined {\n  if (!className) return undefined\n  const m = /(?:^|\\s)size-(?:(\\d+(?:\\.\\d+)?)|\\[(\\d+(?:\\.\\d+)?)px\\])(?=\\s|$)/.exec(className)\n  if (!m) return undefined\n  return m[2] ? Number(m[2]) : Number(m[1]) * 4\n}\n\nconst MISSING: ArtDef = {\n  grid: 24,\n  kind: \"icon\",\n  parts: [\n    [\"s\", \"M4.6 4.8 L19.3 4.5 L19.5 19.2 L4.4 19.5 Z\", 0.9],\n    [\"s\", \"M9.4 9.6 Q9.6 7.4 12.1 7.4 Q14.7 7.5 14.6 9.7 Q14.5 11.4 12.3 12.3 L12.1 14\", 1.1],\n    [\"d\", 12, 16.8, 1.1],\n  ],\n}\n\nconst UI_WEIGHT = 1.12\nconst UI_WEIGHT_MAX_PX = 20\nconst iconNib = (def: ArtDef, px: number): number => Math.min(3.4, Math.max(1.45, px * (def.nibK ?? 0.068)))\n\nfunction Icon({\n  name,\n  size,\n  tone = \"ui\",\n  accent,\n  seed,\n  label,\n  flip,\n  weight,\n  className,\n  style,\n  ...props\n}: Omit<React.ComponentProps<\"svg\">, \"name\" | \"children\" | \"viewBox\"> & {\n  name: IconName | (string & {})\n  size?: number\n  tone?: \"ui\" | \"doodle\"\n  accent?: ArtAccent\n  seed?: string | number\n  label?: string\n  flip?: boolean | \"x\" | \"y\"\n  weight?: number\n}) {\n  useEnsureInkDefs()\n  const contextSize = useIconSize()\n  const id = resolveIconName(name)\n  const known = (icons as Record<string, ArtDef>)[id]\n  const def = known ?? MISSING\n  const explicit = size ?? sizeFromClass(className) ?? contextSize\n  const px = Math.max(8, Math.round(explicit ?? 16))\n  const k = weight ?? (tone === \"ui\" && px <= UI_WEIGHT_MAX_PX ? UI_WEIGHT : 1)\n  const res = memo(`icon|${id}|${px}|${tone}|${accent ?? \"\"}|${seed ?? \"\"}|${k}`, () =>\n    drawSkeleton(def, px, seed ?? id, { tone, accent, kind: \"icon\", ...(k === 1 ? {} : { nib: iconNib(def, px) * k }) })\n  )\n  const axis = flip === true ? \"x\" : flip\n  return (\n    <svg\n      data-slot=\"icon\"\n      data-ink=\"icon\"\n      data-icon={id}\n      data-missing={known ? undefined : \"\"}\n      aria-hidden={label ? undefined : true}\n      role={label ? \"img\" : undefined}\n      aria-label={label}\n      focusable=\"false\"\n      viewBox={`0 0 ${res.w} ${res.h}`}\n      width={size || contextSize ? px : \"1em\"}\n      height={size || contextSize ? px : \"1em\"}\n      style={size || contextSize ? { width: px, height: px, ...style } : style}\n      className={cn(\n        \"pointer-events-none shrink-0 overflow-visible\",\n        def.rtl === \"flip\" && \"rtl:-scale-x-100\",\n        def.mirror && axis === \"x\" && \"-scale-x-100\",\n        def.mirror && axis === \"y\" && \"-scale-y-100\",\n        className\n      )}\n      dangerouslySetInnerHTML={{ __html: res.svg }}\n      {...props}\n    />\n  )\n}\n\nexport { Icon }\nexport type { IconName }\n",
+      "type": "registry:ui",
+      "target": "@ui/icon.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "doodle",
+      "sticker",
+      "button"
+    ],
+    "a11y": [
+      "Decorative by default: `aria-hidden=\"true\"` and `focusable=\"false\"`. Pass `label` when the icon is the only content of a control, or name the control instead.",
+      "Ink is `currentColor`, so text colour utilities and forced-colors mode work; icons are kept in forced-colors mode.",
+      "Status icons differ by silhouette, not only by colour: a triangle warns, an octagon stops, a ring informs, an arc waits."
+    ],
+    "usage": "import { Icon } from \"@/components/ui/icon\"\n\nexport function Example() {\n  return (\n    <button className=\"inline-flex items-center gap-2\">\n      <Icon name=\"trash\" />\n      Delete\n    </button>\n  )\n}",
+    "parts": [
+      "Icon"
+    ]
+  },
+  "categories": [
+    "Icons"
+  ],
+  "type": "registry:ui"
+}

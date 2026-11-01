@@ -1,0 +1,54 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "title": "Input",
+  "description": "A one-line text field: a pencil box on paper around a real <input>, with blue felt for what you type. It draws its own hover, focus ring, invalid (red pencil and a !), disabled (dashes) and read-only (printed) states.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/field-class.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/input.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { splitFieldClass } from \"@/lib/field-class\"\nimport { useInk } from \"@/lib/ink/react\"\nimport { inputRecipe } from \"@/lib/ink/recipes/input-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst control =\n  \"h-full w-full min-w-0 flex-1 appearance-none border-0 bg-transparent px-3 py-1 text-[length:inherit] [text-align:inherit] \" +\n  \"file:me-3 file:inline-flex file:h-6 file:items-center file:border-0 file:bg-hi-select file:px-2 file:text-sm file:font-bold file:text-foreground \" +\n  \"disabled:cursor-not-allowed disabled:text-pencil-text aria-invalid:pe-9 forced-colors:aria-invalid:underline forced-colors:aria-invalid:decoration-wavy \" +\n  \"autofill:shadow-[inset_0_0_0_1000px_var(--ll-slip)] autofill:[-webkit-text-fill-color:var(--ll-input-ink)] \" +\n  \"[&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-ms-reveal]:hidden \" +\n  \"[&[type=number]]:[appearance:textfield] \" +\n  \"[&[type=password]:not(:placeholder-shown)]:font-mono [&[type=password]:not(:placeholder-shown)]:tracking-wider\"\n\nconst frame =\n  \"relative isolate flex h-9 w-full min-w-0 items-center font-hand text-base text-(--ll-input-ink) caret-(--ll-caret) compact:h-8 calm:h-7 calm:text-[15px]\"\n\nconst isTrue = (v: unknown) => v === true || v === \"true\"\n\nfunction InputControl({ className, type, ...props }: React.ComponentProps<\"input\">) {\n  return <input type={type} data-slot=\"input\" className={cn(control, className)} {...props} />\n}\n\nfunction Input({\n  className,\n  inputClassName,\n  type,\n  seed,\n  style,\n  ref,\n  ...props\n}: React.ComponentProps<\"input\"> & {\n  inputClassName?: string\n  seed?: string | number\n}) {\n  const { hostRef, hostProps, node } = useInk({\n    recipe: inputRecipe,\n    params: { disabled: !!props.disabled, invalid: isTrue(props[\"aria-invalid\"]), readOnly: !!props.readOnly },\n    kind: \"field\",\n    seed,\n    still: true,\n  })\n  if (type === \"hidden\") return <InputControl type=\"hidden\" ref={ref} {...props} />\n  const split = splitFieldClass(className)\n  return (\n    <span data-slot=\"input-frame\" data-ink-focus=\"within\" ref={hostRef} {...hostProps} style={style} className={cn(frame, split.frame)}>\n      {node}\n      <InputControl type={type} ref={ref} className={cn(split.control, inputClassName)} {...props} />\n    </span>\n  )\n}\n\nexport { Input, InputControl }\n",
+      "type": "registry:ui",
+      "target": "@ui/input.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/input-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { drawFieldFrame } from '@/lib/ink/recipes/field-frame-ink'\n\nexport interface InputParams {\n  disabled?: boolean\n  invalid?: boolean\n  readOnly?: boolean\n}\n\nexport const inputRecipe = defineRecipe<InputParams>({\n  id: 'input',\n  kind: 'field',\n  layers: ['rest', 'hover', 'focus', 'invalid', 'disabled'],\n  lazy: ['focus', 'hover'],\n  pad: 12,\n  draw(ink, box, params, ctx) {\n    drawFieldFrame(ink, box, params, ctx)\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/input-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "input",
+    "related": [
+      "textarea",
+      "label",
+      "input-group",
+      "field",
+      "checkbox"
+    ],
+    "a11y": [
+      "A native <input>: label it with <Label htmlFor>, aria-label or aria-labelledby; type, required, pattern, autocomplete and inputmode work as usual.",
+      "aria-invalid, disabled and readOnly are the real attributes; the drawing follows them. Pair aria-invalid with aria-describedby pointing at the error text.",
+      "Focus draws a blue felt ring (3:1 or better against paper) when the input is focused by keyboard or click (text fields always match :focus-visible). Before the drawing exists and in Windows high contrast the browser's own outline and a real border are used.",
+      "The drawing is aria-hidden, pointer-events: none and never focusable. Typed text is blue felt on paper (7:1), placeholders are graphite (6.8:1), disabled text is graphite on a pale wash.",
+      "16 px text on every screen size, so iOS does not zoom on focus. Number spinners, the search clear button and the password reveal of Edge are removed; the keyboard behaviour (arrow keys, Escape) is untouched.",
+      "Reduced motion: no fade, no wobble; the field has no hover tilt at all."
+    ],
+    "usage": "import { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function Example() {\n  return (\n    <div className=\"grid w-full max-w-sm gap-2\">\n      <Label htmlFor=\"email\">Email</Label>\n      <Input id=\"email\" type=\"email\" placeholder=\"you@example.com\" />\n      <Input className=\"pl-9\" aria-label=\"Search\" type=\"search\" />\n    </div>\n  )\n}",
+    "parts": [
+      "Input",
+      "InputControl"
+    ]
+  },
+  "categories": [
+    "Forms"
+  ],
+  "type": "registry:ui"
+}

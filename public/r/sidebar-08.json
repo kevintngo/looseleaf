@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-08",
+  "title": "Sidebar 08",
+  "description": "An inset sidebar with secondary navigation: the pad has a margin round it and the page becomes a sheet of paper set on the desk beside it. Rows fold open from a chevron, projects keep their menus, support and feedback sit at the foot. Mirrors shadcn's sidebar-08. At its best on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-08/components/sidebar-08-app-sidebar.tsx",
+      "content": "import * as React from \"react\"\n\nimport { BrandTile, BrandText } from \"@/components/blocks/sidebar-shared/sidebar-brand\"\nimport { appNav, appProjects, appSecondary, appUser } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { NavMainFolds, NavProjects, NavSecondary } from \"@/components/blocks/sidebar-shared/sidebar-nav-app\"\nimport { NavUser } from \"@/components/blocks/sidebar-shared/sidebar-user-menu\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from \"@/components/ui/sidebar\"\n\nexport function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {\n  return (\n    <Sidebar variant=\"inset\" role=\"navigation\" aria-label=\"Studio\" {...props}>\n      <SidebarHeader>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\" asChild>\n              <a href=\"#studio\">\n                <BrandTile icon=\"book-open\" />\n                <BrandText title=\"Looseleaf Studio\" subtitle=\"Notebook\" />\n              </a>\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarHeader>\n      <SidebarContent className=\"[&_[data-slot=sidebar-menu-button-mark]]:overflow-visible!\">\n        <NavMainFolds items={appNav} />\n        <NavProjects projects={appProjects} />\n        <NavSecondary items={appSecondary} small className=\"mt-auto\" />\n      </SidebarContent>\n      <SidebarFooter>\n        <NavUser user={appUser} />\n      </SidebarFooter>\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-08/components/sidebar-08-app-sidebar.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-08/page.tsx",
+      "content": "import { AppSidebar } from \"@/components/blocks/sidebar-08/components/sidebar-08-app-sidebar\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { PageBody, PageHeader, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  return (\n    <SidebarProvider className={c.provider}>\n      <AppSidebar className={c.sidebar} />\n      <PageSheet className={c.inset}>\n        <PageHeader crumbs={[{ label: \"Sketchbook\", href: \"#sketchbook\" }, \"Recent\"]} />\n        <PageBody title=\"Recent sketches\" kicker=\"Sketchbook\">\n          <PageNote title=\"Two sheets on the desk\" pose=\"search\">\n            The pad keeps its distance and the page rests beside it; on a phone the pad slides in over it. Fold a row open to look inside.\n          </PageNote>\n        </PageBody>\n      </PageSheet>\n    </SidebarProvider>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-08/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "inset",
+      "app"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 08\" block into your components directory under blocks/sidebar-08/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-08/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

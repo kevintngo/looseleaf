@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "popover",
+  "title": "Popover",
+  "description": "A slip of paper set down next to its trigger. It can be held with a push-pin or a strip of tape, given a hand-drawn arrow to point at what it is about, and cut from any stock. Focus moves into it, Escape puts it away.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-paper.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/popover.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Popover as PopoverPrimitive } from \"radix-ui\"\n\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { PropSvg } from \"@/lib/ink/paper/prop-svg\"\nimport type { Accent } from \"@/lib/ink/paper/props\"\nimport { useDensity, useInkScope, useInkSeed, useInkTier } from \"@/lib/ink/react\"\nimport { pointerMark } from \"@/lib/ink/recipes/overlay-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Popover({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Root>) {\n  return <PopoverPrimitive.Root data-slot=\"popover\" {...props} />\n}\n\nfunction PopoverTrigger({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {\n  return <PopoverPrimitive.Trigger data-slot=\"popover-trigger\" {...props} />\n}\n\nfunction PopoverAnchor({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Anchor>) {\n  return <PopoverPrimitive.Anchor data-slot=\"popover-anchor\" {...props} />\n}\n\nfunction PopoverPointer({ seed }: { seed: string }) {\n  const tier = useInkTier()\n  const calm = useDensity() === \"calm\"\n  const res = React.useMemo(() => pointerMark(`${seed}|pointer`, { tier, calm }), [seed, tier, calm])\n  return (\n    <PopoverPrimitive.Arrow asChild>\n      <PropSvg\n        res={res}\n        kind=\"prop\"\n        data-slot=\"popover-arrow\"\n        width={res.w}\n        height={res.h}\n        viewBox={`0 0 ${res.w} ${res.h}`}\n        preserveAspectRatio=\"xMidYMid meet\"\n        className=\"pointer-events-none\"\n      />\n    </PopoverPrimitive.Arrow>\n  )\n}\n\nfunction useOpenerFocus({ onOpenAutoFocus, onCloseAutoFocus, onInteractOutside }: Pick<React.ComponentProps<typeof PopoverPrimitive.Content>, \"onOpenAutoFocus\" | \"onCloseAutoFocus\" | \"onInteractOutside\">) {\n  const opener = React.useRef<Element | null>(null)\n  const outside = React.useRef(false)\n  return {\n    onOpenAutoFocus(event: Event) {\n      outside.current = false\n      const id = event.target instanceof HTMLElement ? event.target.id : \"\"\n      const hasTrigger = !!id && Array.from(document.querySelectorAll(\"[aria-controls]\")).some((el) => el.getAttribute(\"aria-controls\") === id)\n      opener.current = hasTrigger ? null : document.activeElement\n      onOpenAutoFocus?.(event)\n    },\n    onInteractOutside(event: Parameters<NonNullable<typeof onInteractOutside>>[0]) {\n      outside.current = true\n      onInteractOutside?.(event)\n    },\n    onCloseAutoFocus(event: Event) {\n      onCloseAutoFocus?.(event)\n      const el = opener.current\n      opener.current = null\n      if (event.defaultPrevented || !el || outside.current) return\n      const active = document.activeElement\n      if (active && active !== document.body && active !== el) return\n      if (el instanceof HTMLElement && el !== document.body && el.isConnected) el.focus({ preventScroll: true })\n    },\n  }\n}\n\nfunction PopoverContent({\n  className,\n  align = \"center\",\n  sideOffset = 8,\n  collisionPadding = 8,\n  stock = \"slip\",\n  edge,\n  tilt = true,\n  pin = false,\n  tape = false,\n  arrow = false,\n  seed: seedProp,\n  \"data-slot\": slot = \"popover-content\",\n  children,\n  onOpenAutoFocus,\n  onCloseAutoFocus,\n  onInteractOutside,\n  ...props\n}: React.ComponentProps<typeof PopoverPrimitive.Content> &\n  Pick<PaperProps, \"stock\" | \"edge\" | \"tilt\" | \"tape\" | \"seed\"> & {\n    pin?: boolean | Accent\n    arrow?: boolean\n    \"data-slot\"?: string\n  }) {\n  const scope = useInkScope()\n  const seed = useInkSeed(seedProp)\n  const focus = useOpenerFocus({ onOpenAutoFocus, onCloseAutoFocus, onInteractOutside })\n  return (\n    <PopoverPrimitive.Portal>\n      <PopoverPrimitive.Content asChild align={align} sideOffset={sideOffset} collisionPadding={collisionPadding} {...props} {...focus}>\n        <Paper\n          data-slot={slot}\n          stock={stock}\n          edge={edge}\n          tilt={tilt}\n          tape={tape}\n          fastener={pin ? \"pin\" : false}\n          fastenerTone={typeof pin === \"string\" ? pin : undefined}\n          rules=\"none\"\n          seed={seed}\n          {...scope}\n          className={cn(\n            \"z-(--ll-z-popover) w-72 max-w-[calc(100vw-1rem)] origin-(--radix-popover-content-transform-origin) p-4 text-popover-foreground outline-hidden compact:p-3.5 calm:p-3\",\n            \"data-[side]:[--ll-sheet-shadow:var(--ll-shadow-lift)] data-[side]:calm:[--ll-sheet-shadow:var(--ll-shadow-hair)]\",\n            \"duration-(--ll-dur-pop) data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2\",\n            \"data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95\",\n            className\n          )}\n        >\n          {children}\n          {arrow && <PopoverPointer seed={seed} />}\n        </Paper>\n      </PopoverPrimitive.Content>\n    </PopoverPrimitive.Portal>\n  )\n}\n\nfunction PopoverHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"popover-header\" className={cn(\"flex flex-col gap-1 text-sm\", className)} {...props} />\n}\n\nfunction PopoverTitle({ className, ...props }: React.ComponentProps<\"h2\">) {\n  return <div data-slot=\"popover-title\" className={cn(\"font-script text-[1.4rem] leading-none font-semibold\", className)} {...props} />\n}\n\nfunction PopoverDescription({ className, ...props }: React.ComponentProps<\"p\">) {\n  return <p data-slot=\"popover-description\" className={cn(\"text-muted-foreground\", className)} {...props} />\n}\n\nexport { Popover, PopoverTrigger, PopoverContent, PopoverAnchor, PopoverHeader, PopoverTitle, PopoverDescription }\n",
+      "type": "registry:ui",
+      "target": "@ui/popover.tsx"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "popover",
+    "related": [
+      "hover-card",
+      "tooltip",
+      "dialog",
+      "select"
+    ],
+    "a11y": [
+      "Radix Popover: the trigger has aria-expanded and aria-controls; the content is a role=dialog that needs an accessible name (PopoverTitle wired with `aria-labelledby`, or `aria-label`). Focus moves into it on open, Escape and an outside click close it, and focus returns to the trigger.",
+      "A popover with no trigger (opened by a menu item or a shortcut, positioned by a `PopoverAnchor`) gives the focus back to whoever had it when it opened: Radix only knows the trigger and would drop the focus on the page. It does not when you clicked somewhere else, when the app has already moved the focus on, or when your `onCloseAutoFocus` prevents the default.",
+      "Tab moves out of a non-modal popover into the page as usual; set `modal` on Popover to trap focus.",
+      "The pin, tape and arrow are aria-hidden decoration with no pointer events.",
+      "Touch: works with a tap like any button; nothing depends on hover.",
+      "Portalled content repeats the InkProvider's `data-density`, `data-motion` and `data-theme`. With reduced motion it appears without the slide and zoom."
+    ],
+    "usage": "import { Button } from \"@/components/ui/button\"\nimport { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\nimport { Popover, PopoverContent, PopoverDescription, PopoverHeader, PopoverTitle, PopoverTrigger } from \"@/components/ui/popover\"\n\nexport function Example() {\n  return (\n    <Popover>\n      <PopoverTrigger asChild>\n        <Button variant=\"outline\">Open popover</Button>\n      </PopoverTrigger>\n      <PopoverContent pin className=\"w-80\">\n        <PopoverHeader>\n          <PopoverTitle>Dimensions</PopoverTitle>\n          <PopoverDescription>Set the dimensions for the layer.</PopoverDescription>\n        </PopoverHeader>\n        <Label htmlFor=\"width\">Width</Label>\n        <Input id=\"width\" defaultValue=\"100%\" />\n      </PopoverContent>\n    </Popover>\n  )\n}",
+    "parts": [
+      "Popover",
+      "PopoverTrigger",
+      "PopoverAnchor",
+      "PopoverContent",
+      "PopoverHeader",
+      "PopoverTitle",
+      "PopoverDescription"
+    ]
+  },
+  "categories": [
+    "Overlays"
+  ],
+  "type": "registry:ui"
+}

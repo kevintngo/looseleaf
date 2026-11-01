@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page",
+  "title": "Page",
+  "description": "The app's main paper column: a sheet on the desk with a header, content and a footer. It can be three-hole punched (the desk shows through the holes), torn from a pad, ringed with a coffee stain, and its title is underlined by the same hand that wrote it.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-paper.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/use-paper-object.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { usePaperDecor } from \"@/hooks/use-paper-object\"\nimport type { EdgeSpec } from \"@/lib/ink/paper/edges\"\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { pageRecipe, type PageHoles } from \"@/lib/ink/recipes/page-ink\"\nimport { titleMarkRecipe, type TitleMark } from \"@/lib/ink/recipes/paper-set-ink\"\nimport { cn } from \"@/lib/utils\"\n\ntype PageElement = \"div\" | \"main\" | \"article\" | \"section\" | \"form\"\ntype PageWidth = \"sm\" | \"md\" | \"lg\" | \"xl\" | \"full\"\n\ntype PageProps = Omit<PaperProps, \"as\" | \"edge\"> & {\n  as?: PageElement\n  width?: PageWidth\n  holes?: PageHoles | boolean\n  reinforced?: boolean\n  stain?: boolean\n  torn?: boolean | \"top\" | \"bottom\" | \"both\"\n  edge?: EdgeSpec\n}\n\nconst WIDTH: Record<PageWidth, string> = { sm: \"max-w-lg\", md: \"max-w-2xl\", lg: \"max-w-4xl\", xl: \"max-w-6xl\", full: \"max-w-none\" }\n\nfunction tornEdge(torn: PageProps[\"torn\"]): EdgeSpec | undefined {\n  if (!torn) return undefined\n  if (torn === \"both\") return { top: \"torn\", bottom: \"torn\" }\n  if (torn === \"bottom\") return { bottom: \"torn\" }\n  return { top: \"torn\" }\n}\n\nfunction Page({\n  className,\n  children,\n  ref,\n  as = \"div\",\n  width = \"md\",\n  holes: holesProp = false,\n  reinforced = false,\n  stain = false,\n  torn,\n  edge,\n  tilt,\n  seed,\n  size,\n  style,\n  ...props\n}: PageProps) {\n  const holes: PageHoles = holesProp === true ? \"start\" : holesProp || \"none\"\n  const o = usePaperDecor({\n    recipe: pageRecipe,\n    params: { holes, reinforce: reinforced, stain },\n    kind: \"page\",\n    ref,\n    seed,\n    tilt,\n    tiltMax: 0.35,\n    size,\n    enabled: holes !== \"none\" || stain,\n  })\n  return (\n    <Paper\n      data-slot=\"page\"\n      data-holes={holes === \"none\" ? undefined : holes}\n      as={as}\n      edge={edge ?? tornEdge(torn)}\n      size={size}\n      {...o.paper}\n      {...props}\n      className={cn(\n        o.paper.className,\n        \"mx-auto flex w-full flex-col gap-6 px-6 py-8 text-foreground sm:px-10 sm:py-10 rtl:[&>[data-slot=paper-rules]]:-scale-x-100\",\n        holes === \"start\" && \"ps-14 sm:ps-[4.25rem]\",\n        holes === \"top\" && \"pt-14 sm:pt-16\",\n        WIDTH[width],\n        className,\n      )}\n      style={{ ...o.paper.style, ...style }}\n    >\n      {o.decor}\n      {children}\n    </Paper>\n  )\n}\n\nfunction PageHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"page-header\" className={cn(\"flex flex-col gap-2\", className)} {...props} />\n}\n\ntype PageTitleProps = React.ComponentProps<\"h1\"> & {\n  as?: \"h1\" | \"h2\" | \"h3\" | \"p\" | \"div\"\n  underline?: TitleMark | \"none\"\n  seed?: string | number\n}\n\nfunction PageTitle({ className, children, ref, as = \"h1\", underline = \"single\", seed, ...props }: PageTitleProps) {\n  const Comp = as as React.ElementType\n  const drawn = underline !== \"none\"\n  const { hostRef, hostProps, node } = useInk({ recipe: titleMarkRecipe, params: { kind: drawn ? underline : \"single\" }, kind: \"mark\", seed, still: true })\n  const merged = useMergedRef<HTMLElement>(drawn ? hostRef : undefined, ref as React.Ref<HTMLElement>)\n  return (\n    <Comp\n      data-slot=\"page-title\"\n      ref={merged}\n      {...(drawn && node ? hostProps : {})}\n      className={cn(\"relative isolate w-fit font-script text-[2.6rem] leading-[1.08] font-bold text-balance pb-1.5\", className)}\n      {...props}\n    >\n      {drawn ? node : null}\n      {children}\n    </Comp>\n  )\n}\n\nfunction PageDescription({ className, ...props }: React.ComponentProps<\"p\">) {\n  return <p data-slot=\"page-description\" className={cn(\"max-w-prose text-base text-muted-foreground\", className)} {...props} />\n}\n\nfunction PageContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"page-content\" className={cn(\"flex flex-1 flex-col gap-4\", className)} {...props} />\n}\n\nfunction PageFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"page-footer\" className={cn(\"mt-auto flex items-center justify-between gap-4 pt-2 text-sm text-muted-foreground\", className)} {...props} />\n}\n\nexport { Page, PageHeader, PageTitle, PageDescription, PageContent, PageFooter }\nexport type { PageProps, PageTitleProps }\n",
+      "type": "registry:ui",
+      "target": "@ui/page.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/page-ink.ts",
+      "content": "import { coffeeRing } from '@/lib/ink/paper/props'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { holePunch, mirrorX, num, reinforcement } from '@/lib/ink/recipes/paper-set-ink'\n\nexport type PageHoles = 'none' | 'start' | 'top'\n\nexport interface PageParams {\n  holes: PageHoles\n  reinforce: boolean\n  stain: boolean\n}\n\nexport const PAGE_HOLE = { inset: 22, r: 7.5 } as const\n\nexport function pageHoles(w: number, h: number, holes: PageHoles): Array<[number, number]> {\n  if (holes === 'none') return []\n  if (holes === 'top') {\n    const gap = Math.min(150, Math.max(70, w * 0.2))\n    return [[w / 2 - gap / 2, PAGE_HOLE.inset], [w / 2 + gap / 2, PAGE_HOLE.inset]]\n  }\n  const x = PAGE_HOLE.inset\n  if (h >= 380) return [[x, Math.max(48, h * 0.1136)], [x, h / 2], [x, Math.min(h - 48, h * 0.8864)]]\n  if (h >= 190) return [[x, h * 0.3], [x, h * 0.7]]\n  return [[x, h / 2]]\n}\n\nexport const pageRecipe = defineRecipe<PageParams>({\n  id: 'page-decor',\n  kind: 'page',\n  layers: ['rest'],\n  pad: 0,\n  draw(ink, { w, h }, { holes, reinforce, stain }, ctx) {\n    const r = ink.next('holes')\n    ink.layer('rest', () => {\n      let s = ''\n      if (stain) {\n        const R = Math.min(52, Math.max(26, Math.min(w, h) * 0.09))\n        const ring = coffeeRing(`${ink.seed}|ring`, { radius: R, tier: ink.tier, calm: ctx.calm })\n        s += `<g transform=\"translate(${num(w - R * 2 - Math.min(36, w * 0.06))} ${num(h - R * 2 - Math.min(64, h * 0.1))}) rotate(${num(r.range(-30, 30))} ${num(R)} ${num(R)})\">${ring.svg}</g>`\n      }\n      const pts = pageHoles(w, h, holes)\n      let holeSvg = ''\n      pts.forEach(([x, y], i) => {\n        const rr = PAGE_HOLE.r * (1 + r.gauss(0, 0.025))\n        const cx = x + r.gauss(0, 0.4)\n        const cy = y + r.gauss(0, 0.5)\n        if (reinforce) holeSvg += reinforcement(cx, cy, rr)\n        holeSvg += holePunch(`ll-pg${ink.seed.toString(36)}h${i}`, cx, cy, rr, r.range(-30, 30))\n      })\n      s += holeSvg\n      ink.raw(ctx.dir === 'rtl' && holes === 'start' ? mirrorX(w, s) : s, 'top')\n      if (pts.length) ink.grow([-2, -2, w + 2, h + 2])\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/page-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "paper",
+      "card",
+      "notebook",
+      "desk"
+    ],
+    "a11y": [
+      "Page is a plain element (`div` by default): pass `as=\"main\"` for the main landmark, or `as=\"article\"` / `\"section\"` with a label when it means something.",
+      "PageTitle is a real heading (`h1` by default); its mark, the holes, rings, stain, tape and fasteners are aria-hidden, pointer-events-none decoration.",
+      "Ink on paper is 14:1 and the muted description 8.9:1. The tilt is zero in calm density, and Windows high contrast replaces the drawing with a real outline.",
+      "The start padding grows with `holes` so text never reaches the punch; right-to-left pages get their holes and margin rules on the right."
+    ],
+    "usage": "import { Page, PageContent, PageDescription, PageFooter, PageHeader, PageTitle } from \"@/components/ui/page\"\n\nexport function Example() {\n  return (\n    <Page as=\"main\" holes reinforced>\n      <PageHeader>\n        <PageTitle>Field notes</PageTitle>\n        <PageDescription>A week of small observations.</PageDescription>\n      </PageHeader>\n      <PageContent>…</PageContent>\n      <PageFooter>- 3 -</PageFooter>\n    </Page>\n  )\n}\n\n<Page torn stock=\"slip\" width=\"sm\"><PageTitle underline=\"highlight\">Order pad</PageTitle>…</Page>",
+    "parts": [
+      "Page",
+      "PageHeader",
+      "PageTitle",
+      "PageDescription",
+      "PageContent",
+      "PageFooter"
+    ]
+  },
+  "categories": [
+    "Paper"
+  ],
+  "type": "registry:ui"
+}

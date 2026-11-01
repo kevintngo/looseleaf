@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-group",
+  "title": "Button Group",
+  "description": "Buttons, fields and printed cells joined into one row (or column) that share their seams: the edge two neighbours have in common is drawn once, by the one before, or by a pencil separator you put between them.",
+  "dependencies": [
+    "class-variance-authority",
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/separator.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/button-group.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { Slot } from \"radix-ui\"\n\nimport { Separator } from \"@/components/ui/separator\"\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { buttonGroupTextRecipe } from \"@/lib/ink/recipes/button-group-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst buttonGroupVariants = cva(\n  \"flex w-fit items-stretch has-[>[data-slot=button-group]]:gap-2 [&>*]:focus-visible:relative [&>*]:focus-visible:z-10 [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1 [&>[data-slot=input-frame]]:flex-1 [&>*:has(+[data-slot=button-group-separator])]:[--cl-e:15px] [&>*:not([data-slot=button-group-separator]):not(:first-child)]:[--cl-s:15px]\",\n  {\n    variants: {\n      orientation: {\n        horizontal:\n          \"[&>*:not([data-slot=button-group-separator]):not(:focus-visible):not(:has(:focus-visible))>svg.absolute]:[clip-path:inset(-14px_var(--cl-e,-14px)_-14px_var(--cl-s,-14px))] rtl:[&>*:not([data-slot=button-group-separator]):not(:focus-visible):not(:has(:focus-visible))>svg.absolute]:[clip-path:inset(-14px_var(--cl-s,-14px)_-14px_var(--cl-e,-14px))]\",\n        vertical:\n          \"flex-col [&>*:not([data-slot=button-group-separator]):not(:focus-visible):not(:has(:focus-visible))>svg.absolute]:[clip-path:inset(var(--cl-s,-14px)_-14px_var(--cl-e,-14px)_-14px)]\",\n      },\n    },\n    defaultVariants: {\n      orientation: \"horizontal\",\n    },\n  }\n)\n\nfunction ButtonGroup({\n  className,\n  orientation,\n  ...props\n}: React.ComponentProps<\"div\"> & VariantProps<typeof buttonGroupVariants>) {\n  return (\n    <div\n      role=\"group\"\n      data-slot=\"button-group\"\n      data-orientation={orientation ?? \"horizontal\"}\n      className={cn(buttonGroupVariants({ orientation }), className)}\n      {...props}\n    />\n  )\n}\n\nfunction ButtonGroupText({\n  className,\n  asChild = false,\n  seed,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  asChild?: boolean\n  seed?: string | number\n}) {\n  const { hostRef, hostProps, node } = useInk({ recipe: buttonGroupTextRecipe, params: {}, kind: \"cell\", seed })\n  const shared = {\n    ref: useMergedRef<HTMLElement>(hostRef, ref as React.Ref<HTMLElement> | undefined),\n    ...hostProps,\n    className: cn(\n      \"relative isolate flex min-h-9 items-center gap-2 px-4 font-hand text-base compact:min-h-8 calm:min-h-7 [&_svg]:pointer-events-none [&_svg:not(.absolute):not([class*='size-'])]:size-4\",\n      className\n    ),\n    ...props,\n  }\n  if (asChild) {\n    return (\n      <Slot.Root data-slot=\"button-group-text\" {...shared}>\n        <Slot.Slottable>{children}</Slot.Slottable>\n        {node}\n      </Slot.Root>\n    )\n  }\n  return (\n    <div data-slot=\"button-group-text\" {...shared}>\n      {node}\n      {children}\n    </div>\n  )\n}\n\nfunction ButtonGroupSeparator({\n  className,\n  orientation = \"vertical\",\n  ...props\n}: React.ComponentProps<typeof Separator>) {\n  return (\n    <Separator\n      data-slot=\"button-group-separator\"\n      orientation={orientation}\n      className={cn(\"relative m-0! self-stretch data-[orientation=vertical]:h-auto\", className)}\n      {...props}\n    />\n  )\n}\n\nexport {\n  ButtonGroup,\n  ButtonGroupSeparator,\n  ButtonGroupText,\n  buttonGroupVariants,\n}\n",
+      "type": "registry:ui",
+      "target": "@ui/button-group.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/button-group-ink.ts",
+      "content": "import { wash } from '@/lib/ink/fills'\nimport { roundRectPoly } from '@/lib/ink/geom'\nimport { clamp } from '@/lib/ink/rng'\nimport { box } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\n\nexport const buttonGroupTextRecipe = defineRecipe<Record<string, never>>({\n  id: 'button-group-text',\n  kind: 'cell',\n  layers: ['rest'],\n  pad: 12,\n  draw(ink, { w, h }, _p, ctx) {\n    const r = clamp(h * 0.09, 2.5, 4.4)\n    const inset = clamp(h * 0.06, 1.6, 3)\n    ink.layer('rest', () => {\n      wash(ink, roundRectPoly(inset, inset, w - 2 * inset, h - 2 * inset, r), 'paper-shade', { alpha: 0.95, material: 'wash' })\n      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false, opts: { simple: w > 360 || undefined } })\n      else box(ink, 0, 0, w, h, { pen: 'ink', corner: r, opts: w > 360 ? { simple: true } : undefined })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/button-group-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "button-group",
+    "related": [
+      "button",
+      "toggle-group",
+      "input-group",
+      "separator",
+      "dropdown-menu"
+    ],
+    "a11y": [
+      "The group is role=group: give it an aria-label when the buttons alone do not say what they belong to. It adds no keyboard behaviour of its own; Tab visits each control in order (use ToggleGroup for one tab stop with arrow keys).",
+      "A separator between buttons is decorative (role=none); the buttons keep their own names and states.",
+      "A focused child is lifted above its neighbours and keeps its whole blue felt ring; in Windows high contrast the drawing is replaced by each control's real border.",
+      "ButtonGroupText is plain text: give an input it labels a real label (use asChild with <label htmlFor>) or an aria-label."
+    ],
+    "usage": "import { Button } from \"@/components/ui/button\"\nimport { ButtonGroup, ButtonGroupSeparator, ButtonGroupText } from \"@/components/ui/button-group\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function Example() {\n  return (\n    <div className=\"flex flex-col gap-4\">\n      <ButtonGroup aria-label=\"Range\">\n        <Button variant=\"outline\">Years</Button>\n        <Button variant=\"outline\">Months</Button>\n        <Button variant=\"outline\">Days</Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <Button variant=\"secondary\">Copy</Button>\n        <ButtonGroupSeparator />\n        <Button variant=\"secondary\">Paste</Button>\n      </ButtonGroup>\n      <ButtonGroup>\n        <ButtonGroupText>https://</ButtonGroupText>\n        <Input aria-label=\"Host\" placeholder=\"example.com\" />\n        <Button>Go</Button>\n      </ButtonGroup>\n    </div>\n  )\n}",
+    "parts": [
+      "ButtonGroup",
+      "ButtonGroupText",
+      "ButtonGroupSeparator",
+      "buttonGroupVariants"
+    ]
+  },
+  "categories": [
+    "Actions"
+  ],
+  "type": "registry:ui"
+}

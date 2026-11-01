@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-02",
+  "title": "Sidebar 02",
+  "description": "A sidebar with collapsible sections: each group label is a button that folds its pages away (the chevron turns over), and the page header is a strip of paper that stays at the top while the page scrolls. Mirrors shadcn's sidebar-02. Looks right on the desk and on plain paper.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/collapsible.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-02/components/sidebar-02-app-sidebar.tsx",
+      "content": "import * as React from \"react\"\n\nimport { docsNav, docsVersions } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { SearchForm } from \"@/components/blocks/sidebar-shared/sidebar-search-form\"\nimport { VersionSwitcher } from \"@/components/blocks/sidebar-shared/sidebar-version-switcher\"\nimport { Collapsible, CollapsibleContent, CollapsibleIndicator, CollapsibleTrigger } from \"@/components/ui/collapsible\"\nimport {\n  Sidebar,\n  SidebarContent,\n  SidebarGroup,\n  SidebarGroupContent,\n  SidebarGroupLabel,\n  SidebarHeader,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarRail,\n} from \"@/components/ui/sidebar\"\n\nexport function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {\n  return (\n    <Sidebar role=\"navigation\" aria-label=\"Field guide\" {...props}>\n      <SidebarHeader>\n        <VersionSwitcher versions={docsVersions} defaultVersion={docsVersions[0]!} />\n        <SearchForm />\n      </SidebarHeader>\n      <SidebarContent className=\"gap-0 [&_[data-slot=sidebar-menu-button-mark]]:overflow-visible!\">\n        {docsNav.map((section) => (\n          <Collapsible key={section.title} defaultOpen>\n            <SidebarGroup>\n              <SidebarGroupLabel asChild className=\"w-full text-sm text-sidebar-foreground hover:ll-swipe focus-visible:ll-swipe\">\n                <CollapsibleTrigger>\n                  {section.title}\n                  <CollapsibleIndicator className=\"ms-auto\" />\n                </CollapsibleTrigger>\n              </SidebarGroupLabel>\n              <CollapsibleContent>\n                <SidebarGroupContent>\n                  <SidebarMenu>\n                    {section.items.map((item) => (\n                      <SidebarMenuItem key={item.title}>\n                        <SidebarMenuButton asChild isActive={item.isActive}>\n                          <a href={item.url}>{item.title}</a>\n                        </SidebarMenuButton>\n                      </SidebarMenuItem>\n                    ))}\n                  </SidebarMenu>\n                </SidebarGroupContent>\n              </CollapsibleContent>\n            </SidebarGroup>\n          </Collapsible>\n        ))}\n      </SidebarContent>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-02/components/sidebar-02-app-sidebar.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-02/page.tsx",
+      "content": "import { AppSidebar } from \"@/components/blocks/sidebar-02/components/sidebar-02-app-sidebar\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { docsTrail } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { PageBody, PageHeader, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  return (\n    <SidebarProvider className={c.provider}>\n      <AppSidebar className={c.sidebar} />\n      <PageSheet className={c.inset}>\n        <PageHeader crumbs={docsTrail} sticky bordered className=\"overflow-x-clip\" />\n        <PageBody title=\"Margins\" kicker=\"Writing on paper\">\n          <PageNote title=\"Fold what you are not reading\" pose=\"think\">\n            Every heading on the pad folds shut. Tidy the shelf, and the page you want is one glance away.\n          </PageNote>\n        </PageBody>\n      </PageSheet>\n    </SidebarProvider>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-02/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "navigation",
+      "collapsible"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 02\" block into your components directory under blocks/sidebar-02/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-02/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

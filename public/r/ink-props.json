@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ink-props",
+  "title": "Ink props",
+  "description": "Paper stocks, tape, clips, pins and other desk props for Paper, Card and friends.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink-art.json"
+  ],
+  "files": [
+    {
+      "path": "src/lib/ink/art/props/index.ts",
+      "content": "import type { ArtDef } from '@/lib/ink/art/types'\n\nexport const propBatches = {  } as const\nexport const props = {  } satisfies Record<string, ArtDef>\nexport type PropName = keyof typeof props\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/art/props/index.ts"
+    }
+  ],
+  "type": "registry:lib"
+}

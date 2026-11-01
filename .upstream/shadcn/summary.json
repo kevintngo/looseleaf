@@ -1,0 +1,705 @@
+[
+ {
+  "name": "accordion",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "accordion.tsx"
+  ]
+ },
+ {
+  "name": "alert",
+  "deps": [
+   "cn"
+  ],
+  "reg": [],
+  "files": [
+   "alert.tsx"
+  ]
+ },
+ {
+  "name": "alert-dialog",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [
+   "button"
+  ],
+  "files": [
+   "alert-dialog.tsx"
+  ]
+ },
+ {
+  "name": "aspect-ratio",
+  "deps": [
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "aspect-ratio.tsx"
+  ]
+ },
+ {
+  "name": "attachment",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [
+   "button"
+  ],
+  "files": [
+   "attachment.tsx"
+  ]
+ },
+ {
+  "name": "avatar",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "avatar.tsx"
+  ]
+ },
+ {
+  "name": "badge",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "badge.tsx"
+  ]
+ },
+ {
+  "name": "breadcrumb",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "breadcrumb.tsx"
+  ]
+ },
+ {
+  "name": "bubble",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "bubble.tsx"
+  ]
+ },
+ {
+  "name": "button",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "button.tsx"
+  ]
+ },
+ {
+  "name": "button-group",
+  "deps": [
+   "cn"
+  ],
+  "reg": [
+   "button",
+   "separator"
+  ],
+  "files": [
+   "button-group.tsx"
+  ]
+ },
+ {
+  "name": "calendar",
+  "deps": [
+   "cn",
+   "react-day-picker@latest",
+   "date-fns"
+  ],
+  "reg": [
+   "button"
+  ],
+  "files": [
+   "calendar.tsx"
+  ]
+ },
+ {
+  "name": "card",
+  "deps": [
+   "cn"
+  ],
+  "reg": [],
+  "files": [
+   "card.tsx"
+  ]
+ },
+ {
+  "name": "carousel",
+  "deps": [
+   "cn",
+   "embla-carousel-react"
+  ],
+  "reg": [
+   "button"
+  ],
+  "files": [
+   "carousel.tsx"
+  ]
+ },
+ {
+  "name": "chart",
+  "deps": [
+   "cn",
+   "recharts@3.8.0",
+   "lucide-react"
+  ],
+  "reg": [
+   "card"
+  ],
+  "files": [
+   "chart.tsx"
+  ]
+ },
+ {
+  "name": "checkbox",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "checkbox.tsx"
+  ]
+ },
+ {
+  "name": "collapsible",
+  "deps": [
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "collapsible.tsx"
+  ]
+ },
+ {
+  "name": "combobox",
+  "deps": [
+   "cn",
+   "@base-ui/react"
+  ],
+  "reg": [
+   "button",
+   "input-group"
+  ],
+  "files": [
+   "combobox.tsx"
+  ]
+ },
+ {
+  "name": "command",
+  "deps": [
+   "cn",
+   "cmdk"
+  ],
+  "reg": [
+   "dialog"
+  ],
+  "files": [
+   "command.tsx"
+  ]
+ },
+ {
+  "name": "context-menu",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "context-menu.tsx"
+  ]
+ },
+ {
+  "name": "dialog",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "dialog.tsx"
+  ]
+ },
+ {
+  "name": "direction",
+  "deps": [],
+  "reg": [],
+  "files": [
+   "direction.tsx"
+  ]
+ },
+ {
+  "name": "drawer",
+  "deps": [
+   "cn",
+   "vaul"
+  ],
+  "reg": [],
+  "files": [
+   "drawer.tsx"
+  ]
+ },
+ {
+  "name": "dropdown-menu",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "dropdown-menu.tsx"
+  ]
+ },
+ {
+  "name": "empty",
+  "deps": [
+   "cn"
+  ],
+  "reg": [],
+  "files": [
+   "empty.tsx"
+  ]
+ },
+ {
+  "name": "field",
+  "deps": [
+   "cn"
+  ],
+  "reg": [
+   "label",
+   "separator"
+  ],
+  "files": [
+   "field.tsx"
+  ]
+ },
+ {
+  "name": "form",
+  "deps": [
+   "cn",
+   "radix-ui",
+   "@hookform/resolvers",
+   "zod",
+   "react-hook-form"
+  ],
+  "reg": [
+   "button",
+   "label"
+  ],
+  "files": [
+   "form.tsx"
+  ]
+ },
+ {
+  "name": "hover-card",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "hover-card.tsx"
+  ]
+ },
+ {
+  "name": "input",
+  "deps": [
+   "cn"
+  ],
+  "reg": [],
+  "files": [
+   "input.tsx"
+  ]
+ },
+ {
+  "name": "input-group",
+  "deps": [
+   "cn"
+  ],
+  "reg": [
+   "button",
+   "input",
+   "textarea"
+  ],
+  "files": [
+   "input-group.tsx"
+  ]
+ },
+ {
+  "name": "input-otp",
+  "deps": [
+   "cn",
+   "input-otp"
+  ],
+  "reg": [],
+  "files": [
+   "input-otp.tsx"
+  ]
+ },
+ {
+  "name": "item",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [
+   "separator"
+  ],
+  "files": [
+   "item.tsx"
+  ]
+ },
+ {
+  "name": "kbd",
+  "deps": [
+   "cn"
+  ],
+  "reg": [],
+  "files": [
+   "kbd.tsx"
+  ]
+ },
+ {
+  "name": "label",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "label.tsx"
+  ]
+ },
+ {
+  "name": "marker",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "marker.tsx"
+  ]
+ },
+ {
+  "name": "menubar",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "menubar.tsx"
+  ]
+ },
+ {
+  "name": "message",
+  "deps": [
+   "cn"
+  ],
+  "reg": [],
+  "files": [
+   "message.tsx"
+  ]
+ },
+ {
+  "name": "message-scroller",
+  "deps": [
+   "cn",
+   "@shadcn/react"
+  ],
+  "reg": [
+   "button"
+  ],
+  "files": [
+   "message-scroller.tsx"
+  ]
+ },
+ {
+  "name": "native-select",
+  "deps": [
+   "cn"
+  ],
+  "reg": [],
+  "files": [
+   "native-select.tsx"
+  ]
+ },
+ {
+  "name": "navigation-menu",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "navigation-menu.tsx"
+  ]
+ },
+ {
+  "name": "pagination",
+  "deps": [
+   "cn"
+  ],
+  "reg": [
+   "button"
+  ],
+  "files": [
+   "pagination.tsx"
+  ]
+ },
+ {
+  "name": "popover",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "popover.tsx"
+  ]
+ },
+ {
+  "name": "progress",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "progress.tsx"
+  ]
+ },
+ {
+  "name": "radio-group",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "radio-group.tsx"
+  ]
+ },
+ {
+  "name": "resizable",
+  "deps": [
+   "cn",
+   "react-resizable-panels@^4"
+  ],
+  "reg": [],
+  "files": [
+   "resizable.tsx"
+  ]
+ },
+ {
+  "name": "scroll-area",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "scroll-area.tsx"
+  ]
+ },
+ {
+  "name": "select",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "select.tsx"
+  ]
+ },
+ {
+  "name": "separator",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "separator.tsx"
+  ]
+ },
+ {
+  "name": "sheet",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "sheet.tsx"
+  ]
+ },
+ {
+  "name": "sidebar",
+  "deps": [
+   "cn",
+   "radix-ui",
+   "class-variance-authority",
+   "lucide-react"
+  ],
+  "reg": [
+   "button",
+   "separator",
+   "sheet",
+   "tooltip",
+   "input",
+   "use-mobile",
+   "skeleton"
+  ],
+  "files": [
+   "sidebar.tsx"
+  ]
+ },
+ {
+  "name": "skeleton",
+  "deps": [
+   "cn"
+  ],
+  "reg": [],
+  "files": [
+   "skeleton.tsx"
+  ]
+ },
+ {
+  "name": "slider",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "slider.tsx"
+  ]
+ },
+ {
+  "name": "sonner",
+  "deps": [
+   "sonner",
+   "next-themes"
+  ],
+  "reg": [],
+  "files": [
+   "sonner.tsx"
+  ]
+ },
+ {
+  "name": "spinner",
+  "deps": [
+   "cn",
+   "class-variance-authority"
+  ],
+  "reg": [],
+  "files": [
+   "spinner.tsx"
+  ]
+ },
+ {
+  "name": "switch",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "switch.tsx"
+  ]
+ },
+ {
+  "name": "table",
+  "deps": [
+   "cn"
+  ],
+  "reg": [],
+  "files": [
+   "table.tsx"
+  ]
+ },
+ {
+  "name": "tabs",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "tabs.tsx"
+  ]
+ },
+ {
+  "name": "textarea",
+  "deps": [
+   "cn"
+  ],
+  "reg": [],
+  "files": [
+   "textarea.tsx"
+  ]
+ },
+ {
+  "name": "toggle",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "toggle.tsx"
+  ]
+ },
+ {
+  "name": "toggle-group",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [
+   "toggle"
+  ],
+  "files": [
+   "toggle-group.tsx"
+  ]
+ },
+ {
+  "name": "tooltip",
+  "deps": [
+   "cn",
+   "radix-ui"
+  ],
+  "reg": [],
+  "files": [
+   "tooltip.tsx"
+  ]
+ }
+]

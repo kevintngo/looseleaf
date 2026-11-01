@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "napkin",
+  "title": "Napkin",
+  "description": "A paper napkin to write on: tissue with a pinked edge and a pressed border, folded so it has creases (a valley with a shade on one side and a pale line on the other), optionally ringed by a coffee cup. Notes on it are set in the script font, as if in marker.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-paper.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/use-paper-object.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/napkin.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { usePaperDecor } from \"@/hooks/use-paper-object\"\nimport { napkinRecipe, type NapkinFold } from \"@/lib/ink/recipes/napkin-ink\"\nimport { cn } from \"@/lib/utils\"\n\ntype NapkinProps = Omit<PaperProps, \"stock\" | \"rules\"> & {\n  fold?: NapkinFold\n  stain?: boolean\n}\n\nfunction Napkin({ className, children, ref, fold = \"quarter\", stain = false, seed, tilt, size, style, ...props }: NapkinProps) {\n  const o = usePaperDecor({ recipe: napkinRecipe, params: { fold, stain }, kind: \"napkin\", ref, seed, tilt, tiltMax: 1.2, size, enabled: fold !== \"none\" || stain })\n  return (\n    <Paper\n      data-slot=\"napkin\"\n      data-fold={fold}\n      stock=\"napkin\"\n      rules=\"none\"\n      size={size}\n      {...o.paper}\n      {...props}\n      className={cn(o.paper.className, \"flex min-h-56 w-72 flex-col gap-2 p-9 text-ink\", className)}\n      style={{ ...o.paper.style, ...style }}\n    >\n      {o.decor}\n      {children}\n    </Paper>\n  )\n}\n\nfunction NapkinContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"napkin-content\" className={cn(\"flex-1 font-script text-[1.5rem] leading-[1.15]\", className)} {...props} />\n}\n\nfunction NapkinTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"napkin-title\" className={cn(\"font-script text-[2rem] leading-none font-bold\", className)} {...props} />\n}\n\nfunction NapkinFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"napkin-footer\" className={cn(\"mt-auto text-sm text-ink-soft\", className)} {...props} />\n}\n\nexport { Napkin, NapkinTitle, NapkinContent, NapkinFooter }\nexport type { NapkinProps }\n",
+      "type": "registry:ui",
+      "target": "@ui/napkin.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/napkin-ink.ts",
+      "content": "import { coffeeRing } from '@/lib/ink/paper/props'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { num, pathTag, tok } from '@/lib/ink/recipes/paper-set-ink'\n\nexport type NapkinFold = 'quarter' | 'half' | 'none'\n\nexport interface NapkinParams {\n  fold: NapkinFold\n  stain: boolean\n}\n\nexport const napkinRecipe = defineRecipe<NapkinParams>({\n  id: 'napkin-decor',\n  kind: 'napkin',\n  layers: ['rest'],\n  pad: 4,\n  draw(ink, { w, h }, { fold, stain }, ctx) {\n    const r = ink.next('creases')\n    const id = `ll-nk${ink.seed.toString(36)}`\n    ink.layer('rest', () => {\n      let s = ''\n      const reach = 34\n      const vertical = (x0: number, i: number) => {\n        const j = r.gauss(0, 0.5)\n        s += `<linearGradient id=\"${id}v${i}\" x1=\"1\" y1=\"0\" x2=\"0\" y2=\"0\"><stop offset=\"0\" stop-color=\"${tok('ink')}\" stop-opacity=\".085\"/><stop offset=\"1\" stop-color=\"${tok('ink')}\" stop-opacity=\"0\"/></linearGradient>`\n        s += pathTag(`M${num(x0 - reach)} 0H${num(x0)}V${num(h)}H${num(x0 - reach)}z`, { fill: `url(#${id}v${i})`, transform: `translate(${num(j)} 0)` })\n        s += pathTag(`M${num(x0 + j)} 3L${num(x0 + j + r.gauss(0, 0.6))} ${num(h * 0.5)}L${num(x0 + j)} ${num(h - 3)}`, { stroke: tok('ink'), sw: 0.7, op: 0.2 })\n        s += pathTag(`M${num(x0 + j + 1.2)} 3L${num(x0 + j + 1.2)} ${num(h - 3)}`, { stroke: tok('photo'), sw: 1, op: 0.75 })\n      }\n      const horizontal = (y0: number, i: number) => {\n        const j = r.gauss(0, 0.5)\n        s += `<linearGradient id=\"${id}h${i}\" x1=\"0\" y1=\"1\" x2=\"0\" y2=\"0\"><stop offset=\"0\" stop-color=\"${tok('ink')}\" stop-opacity=\".085\"/><stop offset=\"1\" stop-color=\"${tok('ink')}\" stop-opacity=\"0\"/></linearGradient>`\n        s += pathTag(`M0 ${num(y0 - reach)}H${num(w)}V${num(y0)}H0z`, { fill: `url(#${id}h${i})`, transform: `translate(0 ${num(j)})` })\n        s += pathTag(`M3 ${num(y0 + j)}L${num(w * 0.5)} ${num(y0 + j + r.gauss(0, 0.6))}L${num(w - 3)} ${num(y0 + j)}`, { stroke: tok('ink'), sw: 0.7, op: 0.2 })\n        s += pathTag(`M3 ${num(y0 + j + 1.2)}H${num(w - 3)}`, { stroke: tok('photo'), sw: 1, op: 0.75 })\n      }\n      if (fold === 'quarter') {\n        vertical(w / 2 + r.gauss(0, 0.4), 0)\n        horizontal(h / 2 + r.gauss(0, 0.4), 0)\n      } else if (fold === 'half') horizontal(h / 2 + r.gauss(0, 0.4), 0)\n      if (stain) {\n        const R = Math.min(46, Math.max(24, Math.min(w, h) * 0.13))\n        const ring = coffeeRing(`${ink.seed}|ring`, { radius: R, tier: ink.tier, calm: ctx.calm })\n        s += `<g transform=\"translate(${num(w * 0.58)} ${num(h * 0.56)}) rotate(${num(r.range(-30, 30))} ${num(R)} ${num(R)})\">${ring.svg}</g>`\n      }\n      ink.raw(s, 'top')\n      ink.grow([0, 0, w, h])\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/napkin-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "paper",
+      "sticky-note",
+      "index-card",
+      "receipt"
+    ],
+    "a11y": [
+      "A napkin is a plain `div`; use `as=\"article\"` with a label when it means more. The creases, the stain and the pressed border are aria-hidden decoration.",
+      "Ink on the napkin is 14:1; the footer 9:1. The creases only shade the paper by a few percent, so they never cost contrast. The tilt is zero in calm density."
+    ],
+    "usage": "import { Napkin, NapkinContent, NapkinFooter, NapkinTitle } from \"@/components/ui/napkin\"\n\n<Napkin fold=\"quarter\" stain tape=\"top\">\n  <NapkinTitle>Specials</NapkinTitle>\n  <NapkinContent>soup of the day, a very small pie</NapkinContent>\n  <NapkinFooter>until six</NapkinFooter>\n</Napkin>",
+    "parts": [
+      "Napkin",
+      "NapkinTitle",
+      "NapkinContent",
+      "NapkinFooter"
+    ]
+  },
+  "categories": [
+    "Paper"
+  ],
+  "type": "registry:ui"
+}

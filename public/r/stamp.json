@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stamp",
+  "title": "Stamp",
+  "description": "A rubber stamp: solid ink pressed through a worn pad, double-rule border, typewriter capitals, a slight tilt and sometimes the ghost of a first impression. For APPROVED, PAID, DRAFT and friends.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-art.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-stickers.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/stamp.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { useEnsureInkDefs } from \"@/lib/ink/react\"\nimport { stickers } from \"@/lib/ink/art/stickers\"\nimport { memo, stamp } from \"@/lib/ink/art-draw\"\nimport type { StampGen, StickerDef } from \"@/lib/ink/art/types\"\n\nfunction Stamp({\n  name,\n  text,\n  shape,\n  ink,\n  sub,\n  ring,\n  w,\n  h,\n  size,\n  tilt,\n  ghost,\n  dashed,\n  seed,\n  label,\n  className,\n  style,\n  ...props\n}: Omit<React.ComponentProps<\"svg\">, \"name\" | \"children\" | \"viewBox\"> & {\n  name?: string\n  text?: string\n  shape?: StampGen[\"shape\"]\n  ink?: StampGen[\"ink\"]\n  sub?: string\n  ring?: string\n  w?: number\n  h?: number\n  size?: number\n  tilt?: number\n  ghost?: boolean\n  dashed?: boolean\n  seed?: string | number\n  label?: string\n}) {\n  useEnsureInkDefs()\n  const preset = name ? ((stickers as Record<string, StickerDef>)[name] as StampGen | undefined) : undefined\n  const p = preset && \"gen\" in preset && preset.gen === \"stamp\" ? preset : undefined\n  const t = text ?? p?.text\n  if (!t) return null\n  const sh = shape ?? p?.shape ?? \"rect\"\n  const opts = {\n    ink: ink ?? p?.ink,\n    sub: sub ?? p?.sub,\n    ring: ring ?? p?.ring,\n    w: size ?? w ?? p?.w,\n    h: size ?? h ?? p?.h,\n    tilt: tilt ?? p?.tilt,\n    ghost: ghost ?? p?.ghost,\n    dashed: dashed ?? p?.dashed,\n    stars: p?.stars,\n    wear: p?.wear,\n    seed: seed ?? name ?? t,\n  }\n  const res = memo(`stamp|${t}|${sh}|${JSON.stringify(opts)}`, () => stamp(t, sh, opts))\n  return (\n    <svg\n      data-slot=\"stamp\"\n      data-ink=\"stamp\"\n      data-stamp={name ?? t}\n      role=\"img\"\n      aria-label={label ?? t}\n      focusable=\"false\"\n      viewBox={`0 0 ${res.w} ${res.h}`}\n      width={res.w}\n      height={res.h}\n      style={style}\n      className={cn(\"pointer-events-none shrink-0 overflow-visible\", className)}\n      dangerouslySetInnerHTML={{ __html: res.svg }}\n      {...props}\n    />\n  )\n}\n\nexport { Stamp }\n",
+      "type": "registry:ui",
+      "target": "@ui/stamp.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "sticker",
+      "doodle"
+    ],
+    "a11y": [
+      "The svg is an image named by its text (`role=\"img\"`), so a stamped APPROVED is announced as \"Approved\"."
+    ],
+    "usage": "import { Stamp } from \"@/components/ui/stamp\"\n\nexport function Example() {\n  return <Stamp name=\"stamp-approved\" />\n}",
+    "parts": [
+      "Stamp"
+    ]
+  },
+  "categories": [
+    "Stickers & doodles"
+  ],
+  "type": "registry:ui"
+}

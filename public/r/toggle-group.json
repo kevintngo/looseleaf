@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "toggle-group",
+  "title": "Toggle Group",
+  "description": "A row of toggles that belong together: pick one (alignment) or several (bold, italic, underline). Joined outline items share one hand-drawn box with a pencil seam between them; the highlighter body marks what is on.",
+  "dependencies": [
+    "class-variance-authority",
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/toggle.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/toggle-group.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { type VariantProps } from \"class-variance-authority\"\nimport { Slot, ToggleGroup as ToggleGroupPrimitive } from \"radix-ui\"\n\nimport { toggleVariants } from \"@/components/ui/toggle\"\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { toggleGroupRecipe } from \"@/lib/ink/recipes/toggle-group-ink\"\nimport { toggleRecipe, type ToggleTone } from \"@/lib/ink/recipes/toggle-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst ToggleGroupContext = React.createContext<\n  VariantProps<typeof toggleVariants> & {\n    spacing?: number\n    tone?: ToggleTone\n    vertical?: boolean\n    disabled?: boolean\n    invalid?: boolean\n  }\n>({\n  size: \"default\",\n  variant: \"default\",\n  spacing: 0,\n})\n\nfunction ToggleGroup({\n  className,\n  variant,\n  size,\n  spacing = 0,\n  tone,\n  seed,\n  disabled,\n  orientation,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<typeof ToggleGroupPrimitive.Root> &\n  VariantProps<typeof toggleVariants> & {\n    spacing?: number\n    tone?: ToggleTone\n    seed?: string | number\n  }) {\n  const joinedOutline = spacing === 0 && (variant === \"outline\" || !!disabled)\n  const invalid = !disabled && (props[\"aria-invalid\"] === true || props[\"aria-invalid\"] === \"true\")\n  const { hostRef, hostProps, node } = useInk({\n    recipe: toggleGroupRecipe,\n    params: { joined: joinedOutline, disabled: !!disabled, invalid },\n    kind: \"toggle-group\",\n    seed,\n  })\n  const ctx = React.useMemo(\n    () => ({ variant, size, spacing, tone, vertical: orientation === \"vertical\", disabled: !!disabled, invalid }),\n    [variant, size, spacing, tone, orientation, disabled, invalid]\n  )\n  return (\n    <ToggleGroupPrimitive.Root\n      data-slot=\"toggle-group\"\n      data-variant={variant}\n      data-size={size}\n      data-spacing={spacing}\n      style={{ \"--gap\": spacing } as React.CSSProperties}\n      ref={useMergedRef<HTMLDivElement>(hostRef, ref)}\n      {...hostProps}\n      disabled={disabled}\n      orientation={orientation}\n      className={cn(\n        \"group/toggle-group relative isolate flex w-fit items-center gap-[--spacing(var(--gap))] data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch\",\n        className\n      )}\n      {...(props as React.ComponentProps<typeof ToggleGroupPrimitive.Root>)}\n    >\n      {node}\n      <ToggleGroupContext.Provider value={ctx}>{children}</ToggleGroupContext.Provider>\n    </ToggleGroupPrimitive.Root>\n  )\n}\n\nfunction ToggleGroupItem({\n  className,\n  children,\n  variant,\n  size,\n  seed,\n  asChild,\n  disabled,\n  ref,\n  ...props\n}: React.ComponentProps<typeof ToggleGroupPrimitive.Item> &\n  VariantProps<typeof toggleVariants> & {\n    seed?: string | number\n  }) {\n  const context = React.useContext(ToggleGroupContext)\n  const v = context.variant || variant || \"default\"\n  const s = context.size || size || \"default\"\n  const joined = context.spacing === 0 && (v !== \"outline\" || context.variant === \"outline\")\n  const forced = \"data-focus-visible\" in props\n  const own = props[\"aria-invalid\"]\n  const invalid = own === undefined ? !!context.invalid : own === true || own === \"true\"\n  const { hostRef, hostProps, node } = useInk({\n    recipe: toggleRecipe,\n    params: { variant: v, disabled: !!disabled || !!context.disabled, tone: context.tone, joined, vertical: context.vertical, invalid },\n    kind: \"toggle\",\n    seed,\n    layers: forced ? \"all\" : undefined,\n  })\n  return (\n    <ToggleGroupPrimitive.Item\n      data-slot=\"toggle-group-item\"\n      data-variant={v}\n      data-size={s}\n      data-spacing={context.spacing}\n      data-ink-sink=\"self\"\n      ref={useMergedRef<HTMLButtonElement>(hostRef, ref)}\n      {...hostProps}\n      asChild={asChild}\n      disabled={disabled}\n      className={cn(\n        toggleVariants({ variant: v, size: s }),\n        \"w-auto min-w-0 shrink-0 px-3 focus:z-10 focus-visible:z-10\",\n        \"data-[spacing=0]:first-of-type:[&>svg_[data-part=seam]]:hidden\",\n        className\n      )}\n      {...props}\n    >\n      {!asChild && node}\n      {asChild ? <Slot.Slottable>{children}</Slot.Slottable> : children}\n      {asChild && node}\n    </ToggleGroupPrimitive.Item>\n  )\n}\n\nexport { ToggleGroup, ToggleGroupItem }\n",
+      "type": "registry:ui",
+      "target": "@ui/toggle-group.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/toggle-group-ink.ts",
+      "content": "import { roundRectPoly } from '@/lib/ink/geom'\nimport { wash } from '@/lib/ink/fills'\nimport { clamp } from '@/lib/ink/rng'\nimport { box, dashedBox } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\n\nexport interface ToggleGroupParams {\n  joined: boolean\n  disabled?: boolean\n  invalid?: boolean\n}\n\nexport const toggleGroupRecipe = defineRecipe<ToggleGroupParams>({\n  id: 'toggle-group',\n  kind: 'toggle-group',\n  layers: ['rest', 'disabled'],\n  pad: 12,\n  draw(ink, { w, h }, { joined, disabled, invalid }, ctx) {\n    const calm = ctx.calm\n    if (!joined) return\n    const r = clamp(Math.min(w, h) * 0.09, 2.2, 4.4)\n    if (disabled) {\n      ink.layer('disabled', () => {\n        wash(ink, roundRectPoly(1.6, 1.6, w - 3.2, h - 3.2, r), 'pencil-mark', { alpha: 0.12, material: 'wash' })\n        dashedBox(ink, 0, 0, w, h, { r, pen: 'pencil', opts: { color: 'pencil', width: 1.2 } })\n      })\n      return\n    }\n    const opts = { ...(w > 360 ? { simple: true } : {}), ...(invalid ? { width: 1.2 } : {}) }\n    ink.layer('rest', () =>\n      calm\n        ? box(ink, 0, 0, w, h, { pen: invalid ? 'red.fine' : 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false, opts })\n        : box(ink, 0, 0, w, h, { pen: invalid ? 'red' : 'ink', corner: r, opts })\n    )\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/toggle-group-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "toggle-group",
+    "related": [
+      "toggle",
+      "button-group",
+      "tabs",
+      "radio-group"
+    ],
+    "a11y": [
+      "Roving focus by Radix: the group is one tab stop, the arrow keys (left and right, or up and down when vertical) move between items and loop, Home and End jump to the ends, Space and Enter press.",
+      "single is announced as a radio group with checked items; multiple as a toolbar of pressed buttons. Give the group an aria-label and every icon-only item its own.",
+      "On is never told by hue alone: a filled body sits under the item, and (separate items) a solid box replaces the whisper box.",
+      "The focus ring is drawn on the item and lifted above its neighbours; Windows high contrast falls back to real borders and the browser's focus ring.",
+      "In right-to-left layouts the seams move to the other edge; the drawing is mirrored by the recipe, not by CSS."
+    ],
+    "usage": "import { Icon } from \"@/components/ui/icon\"\nimport { ToggleGroup, ToggleGroupItem } from \"@/components/ui/toggle-group\"\n\nexport function Example() {\n  return (\n    <ToggleGroup type=\"single\" variant=\"outline\" defaultValue=\"list\" aria-label=\"View\">\n      <ToggleGroupItem value=\"list\" aria-label=\"List\">\n        <Icon name=\"list\" />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"grid\" aria-label=\"Grid\">\n        <Icon name=\"layout-grid\" />\n      </ToggleGroupItem>\n      <ToggleGroupItem value=\"menu\" aria-label=\"Compact\">\n        <Icon name=\"menu\" />\n      </ToggleGroupItem>\n    </ToggleGroup>\n  )\n}",
+    "parts": [
+      "ToggleGroup",
+      "ToggleGroupItem"
+    ]
+  },
+  "categories": [
+    "Actions"
+  ],
+  "type": "registry:ui"
+}

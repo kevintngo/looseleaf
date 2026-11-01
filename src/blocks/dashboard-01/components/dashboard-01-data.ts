@@ -1,0 +1,151 @@
+export const REFERENCE_DAY = "2026-09-25"
+
+export const visitorRows: ReadonlyArray<readonly [string, number, number]> = [
+  ["2026-06-27", 143, 255],
+  ["2026-06-28", 171, 259],
+  ["2026-06-29", 256, 185],
+  ["2026-06-30", 270, 154],
+  ["2026-07-01", 323, 165],
+  ["2026-07-02", 243, 220],
+  ["2026-07-03", 359, 182],
+  ["2026-07-04", 175, 325],
+  ["2026-07-05", 174, 298],
+  ["2026-07-06", 340, 197],
+  ["2026-07-07", 244, 191],
+  ["2026-07-08", 341, 189],
+  ["2026-07-09", 301, 210],
+  ["2026-07-10", 280, 180],
+  ["2026-07-11", 202, 253],
+  ["2026-07-12", 134, 285],
+  ["2026-07-13", 250, 196],
+  ["2026-07-14", 301, 246],
+  ["2026-07-15", 401, 169],
+  ["2026-07-16", 250, 252],
+  ["2026-07-17", 262, 214],
+  ["2026-07-18", 144, 305],
+  ["2026-07-19", 135, 288],
+  ["2026-07-20", 260, 223],
+  ["2026-07-21", 340, 174],
+  ["2026-07-22", 291, 210],
+  ["2026-07-23", 335, 247],
+  ["2026-07-24", 377, 251],
+  ["2026-07-25", 165, 245],
+  ["2026-07-26", 190, 321],
+  ["2026-07-27", 354, 223],
+  ["2026-07-28", 345, 172],
+  ["2026-07-29", 347, 216],
+  ["2026-07-30", 356, 259],
+  ["2026-07-31", 279, 249],
+  ["2026-08-01", 202, 358],
+  ["2026-08-02", 214, 386],
+  ["2026-08-03", 269, 263],
+  ["2026-08-04", 423, 201],
+  ["2026-08-05", 323, 264],
+  ["2026-08-06", 427, 288],
+  ["2026-08-07", 277, 279],
+  ["2026-08-08", 195, 321],
+  ["2026-08-09", 169, 367],
+  ["2026-08-10", 340, 207],
+  ["2026-08-11", 297, 262],
+  ["2026-08-12", 452, 273],
+  ["2026-08-13", 303, 183],
+  ["2026-08-14", 370, 244],
+  ["2026-08-15", 223, 347],
+  ["2026-08-16", 177, 422],
+  ["2026-08-17", 453, 214],
+  ["2026-08-18", 341, 289],
+  ["2026-08-19", 288, 267],
+  ["2026-08-20", 374, 248],
+  ["2026-08-21", 328, 191],
+  ["2026-08-22", 188, 268],
+  ["2026-08-23", 160, 309],
+  ["2026-08-24", 415, 251],
+  ["2026-08-25", 488, 196],
+  ["2026-08-26", 478, 240],
+  ["2026-08-27", 462, 227],
+  ["2026-08-28", 324, 215],
+  ["2026-08-29", 168, 369],
+  ["2026-08-30", 166, 423],
+  ["2026-08-31", 327, 254],
+  ["2026-09-01", 305, 261],
+  ["2026-09-02", 468, 305],
+  ["2026-09-03", 446, 232],
+  ["2026-09-04", 427, 328],
+  ["2026-09-05", 172, 280],
+  ["2026-09-06", 239, 375],
+  ["2026-09-07", 324, 272],
+  ["2026-09-08", 497, 215],
+  ["2026-09-09", 423, 220],
+  ["2026-09-10", 354, 280],
+  ["2026-09-11", 423, 309],
+  ["2026-09-12", 268, 387],
+  ["2026-09-13", 188, 435],
+  ["2026-09-14", 499, 273],
+  ["2026-09-15", 491, 346],
+  ["2026-09-16", 528, 276],
+  ["2026-09-17", 341, 352],
+  ["2026-09-18", 412, 243],
+  ["2026-09-19", 181, 303],
+  ["2026-09-20", 182, 455],
+  ["2026-09-21", 384, 319],
+  ["2026-09-22", 351, 231],
+  ["2026-09-23", 393, 315],
+  ["2026-09-24", 403, 298],
+  ["2026-09-25", 498, 265],
+]
+
+export const visitors = visitorRows.map(([date, desktop, mobile]) => ({ date, desktop, mobile }))
+
+export type Section = {
+  id: number
+  header: string
+  type: string
+  status: "Done" | "In Process" | "Not Started"
+  target: string
+  limit: string
+  reviewer: string
+}
+
+export const UNASSIGNED = "Assign reviewer"
+
+export const SECTION_TYPES = ["Cover page", "Table of contents", "Narrative", "Technical content", "Visual", "Legal"] as const
+export const REVIEWERS = ["Eddie Lake", "Jamik Tashpulatov", "Emily Whalen"] as const
+
+export const sections: Section[] = [
+  { id: 1, header: "Cover page", type: "Cover page", status: "In Process", target: "18", limit: "5", reviewer: "Eddie Lake" },
+  { id: 2, header: "Table of contents", type: "Table of contents", status: "Done", target: "29", limit: "24", reviewer: "Eddie Lake" },
+  { id: 3, header: "Executive summary", type: "Narrative", status: "Done", target: "10", limit: "13", reviewer: "Eddie Lake" },
+  { id: 4, header: "Technical approach", type: "Narrative", status: "Done", target: "27", limit: "23", reviewer: "Jamik Tashpulatov" },
+  { id: 5, header: "Design", type: "Narrative", status: "In Process", target: "2", limit: "16", reviewer: "Jamik Tashpulatov" },
+  { id: 6, header: "Capabilities", type: "Narrative", status: "In Process", target: "20", limit: "8", reviewer: "Jamik Tashpulatov" },
+  { id: 7, header: "Integration with existing systems", type: "Narrative", status: "In Process", target: "19", limit: "21", reviewer: "Jamik Tashpulatov" },
+  { id: 8, header: "Innovation and Advantages", type: "Narrative", status: "Done", target: "25", limit: "26", reviewer: UNASSIGNED },
+  { id: 9, header: "Overview of EMR's Innovative Solutions", type: "Technical content", status: "Done", target: "7", limit: "23", reviewer: UNASSIGNED },
+  { id: 10, header: "Advanced Algorithms and Machine Learning", type: "Narrative", status: "Done", target: "30", limit: "28", reviewer: UNASSIGNED },
+  { id: 11, header: "Adaptive Communication Protocols", type: "Narrative", status: "Done", target: "9", limit: "31", reviewer: "Emily Whalen" },
+  { id: 12, header: "Advantages Over Current Technologies", type: "Narrative", status: "Done", target: "12", limit: "0", reviewer: "Emily Whalen" },
+  { id: 13, header: "Past Performance", type: "Narrative", status: "Done", target: "22", limit: "33", reviewer: "Emily Whalen" },
+  { id: 14, header: "Customer Feedback and Satisfaction Levels", type: "Narrative", status: "Done", target: "15", limit: "34", reviewer: "Emily Whalen" },
+  { id: 15, header: "Implementation Challenges and Solutions", type: "Narrative", status: "Done", target: "3", limit: "35", reviewer: "Jamik Tashpulatov" },
+  { id: 16, header: "Security Measures and Data Protection Policies", type: "Narrative", status: "In Process", target: "6", limit: "36", reviewer: UNASSIGNED },
+  { id: 17, header: "Scalability and Future Proofing", type: "Narrative", status: "Done", target: "4", limit: "37", reviewer: UNASSIGNED },
+  { id: 18, header: "Cost-Benefit Analysis", type: "Narrative", status: "Done", target: "14", limit: "38", reviewer: "Eddie Lake" },
+  { id: 19, header: "User Training and Onboarding Experience", type: "Narrative", status: "Done", target: "17", limit: "39", reviewer: "Eddie Lake" },
+  { id: 20, header: "Future Development Roadmap", type: "Narrative", status: "Done", target: "11", limit: "40", reviewer: "Jamik Tashpulatov" },
+  { id: 21, header: "System Architecture Overview", type: "Technical content", status: "In Process", target: "24", limit: "18", reviewer: "Emily Whalen" },
+  { id: 22, header: "Risk Management Plan", type: "Narrative", status: "Not Started", target: "15", limit: "22", reviewer: UNASSIGNED },
+  { id: 23, header: "Compliance Documentation", type: "Legal", status: "Not Started", target: "31", limit: "27", reviewer: "Emily Whalen" },
+  { id: 24, header: "API Documentation", type: "Technical content", status: "Done", target: "8", limit: "12", reviewer: "Jamik Tashpulatov" },
+  { id: 25, header: "User Interface Mockups", type: "Visual", status: "In Process", target: "19", limit: "25", reviewer: "Eddie Lake" },
+]
+
+export const monthly = [
+  { month: "January", desktop: 186, mobile: 80 },
+  { month: "February", desktop: 305, mobile: 200 },
+  { month: "March", desktop: 237, mobile: 120 },
+  { month: "April", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "June", desktop: 214, mobile: 140 },
+]
+
+export const user = { name: "Jo Delacroix", email: "jo@inkwell.example" }

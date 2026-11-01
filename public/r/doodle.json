@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "doodle",
+  "title": "Doodle",
+  "description": "Margin doodles: a star, a sun, a flower, a mushroom. Line-led, with one flat fill in register. Use them in the decoration layer, on empty states and in corners of cards.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-art.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-doodles.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/doodle.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { useEnsureInkDefs } from \"@/lib/ink/react\"\nimport { doodles, type DoodleName } from \"@/lib/ink/art/doodles\"\nimport { drawSkeleton, memo } from \"@/lib/ink/art-draw\"\nimport type { ArtAccent, ArtDef } from \"@/lib/ink/art/types\"\n\nfunction Doodle({\n  name,\n  size = 96,\n  accent,\n  seed,\n  label,\n  rotate,\n  flip,\n  className,\n  style,\n  ...props\n}: Omit<React.ComponentProps<\"svg\">, \"name\" | \"children\" | \"viewBox\"> & {\n  name: DoodleName | (string & {})\n  size?: number\n  accent?: ArtAccent\n  seed?: string | number\n  label?: string\n  rotate?: number\n  flip?: boolean\n}) {\n  useEnsureInkDefs()\n  const def = (doodles as Record<string, ArtDef>)[name]\n  if (!def) return null\n  const px = Math.max(24, Math.round(size))\n  const res = memo(`doodle|${name}|${px}|${accent ?? \"\"}|${seed ?? \"\"}`, () => drawSkeleton(def, px, seed ?? name, { tone: \"doodle\", accent, kind: \"doodle\" }))\n  return (\n    <svg\n      data-slot=\"doodle\"\n      data-ink=\"doodle\"\n      data-doodle={name}\n      aria-hidden={label ? undefined : true}\n      role={label ? \"img\" : undefined}\n      aria-label={label}\n      focusable=\"false\"\n      viewBox={`0 0 ${res.w} ${res.h}`}\n      width={px}\n      height={px}\n      style={rotate ? { rotate: `${rotate}deg`, ...style } : style}\n      className={cn(\"pointer-events-none shrink-0 overflow-visible\", flip && \"-scale-x-100\", className)}\n      dangerouslySetInnerHTML={{ __html: res.svg }}\n      {...props}\n    />\n  )\n}\n\nexport { Doodle }\nexport type { DoodleName }\n",
+      "type": "registry:ui",
+      "target": "@ui/doodle.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "sticker",
+      "icon",
+      "mascot"
+    ],
+    "a11y": [
+      "Decorative by default; give it a `label` only when it carries meaning that the surrounding text does not."
+    ],
+    "usage": "import { Doodle } from \"@/components/ui/doodle\"\n\nexport function Example() {\n  return <Doodle name=\"sun\" size={96} />\n}",
+    "parts": [
+      "Doodle"
+    ]
+  },
+  "categories": [
+    "Stickers & doodles"
+  ],
+  "type": "registry:ui"
+}

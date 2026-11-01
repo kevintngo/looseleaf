@@ -1,0 +1,54 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sticky-note",
+  "title": "Sticky note",
+  "description": "A square of coloured paper with a gum band, turned a little more than a page. Five pads, any size, written in marker. It can curl a corner, hang from a pin or a strip of tape, and grow a tick box that is ticked with a felt pen.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-paper.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/use-paper-object.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/sticky-note.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { usePaperDecor } from \"@/hooks/use-paper-object\"\nimport { stickyNoteRecipe } from \"@/lib/ink/recipes/sticky-note-ink\"\nimport { REVEAL_DASH, REVEAL_WHEN_CHECKED } from \"@/lib/ink/recipes/draw-on-ink\"\nimport { cn } from \"@/lib/utils\"\n\ntype StickyColor = \"yellow\" | \"green\" | \"orange\" | \"pink\" | \"blue\"\n\ntype StickyNoteProps = Omit<PaperProps, \"stock\"> & {\n  color?: StickyColor\n  done?: boolean\n  onDoneChange?: (done: boolean) => void\n  doneLabel?: string\n}\n\nfunction StickyNote({ className, children, ref, color = \"yellow\", done, onDoneChange, doneLabel = \"Done\", seed, tilt, size, style, ...props }: StickyNoteProps) {\n  const tickable = done !== undefined\n  const o = usePaperDecor({ recipe: stickyNoteRecipe, params: {}, kind: \"sticky\", ref, seed, tilt, tiltMax: 1.6, size, enabled: tickable })\n  const el = React.useRef<HTMLElement | null>(null)\n  const seen = React.useRef(done)\n  React.useEffect(() => {\n    if (seen.current === done) return\n    seen.current = done\n    el.current?.setAttribute(\"data-touched\", \"\")\n  }, [done])\n  const setRef = React.useCallback(\n    (node: HTMLElement | null) => {\n      el.current = node\n      return (o.paper.ref as React.RefCallback<HTMLElement>)(node)\n    },\n    [o.paper.ref],\n  )\n  return (\n    <Paper\n      data-slot=\"sticky-note\"\n      data-color={color}\n      data-state={tickable ? (done ? \"checked\" : \"unchecked\") : undefined}\n      stock={`sticky-${color}`}\n      size={size}\n      {...o.paper}\n      ref={setRef}\n      {...props}\n      className={cn(\n        o.paper.className,\n        \"flex min-h-40 w-44 flex-col gap-1 px-4 pt-6 pb-4 font-script text-[1.35rem] leading-[1.15] text-ink break-words\",\n        tickable && [\"pt-8\", REVEAL_DASH, REVEAL_WHEN_CHECKED, \"data-[state=checked]:[&_[data-slot=sticky-note-content]]:line-through data-[state=checked]:[&_[data-slot=sticky-note-content]]:decoration-1\"],\n        className,\n      )}\n      style={{ ...o.paper.style, ...style }}\n    >\n      {o.decor}\n      {tickable && onDoneChange ? (\n        <button\n          type=\"button\"\n          role=\"checkbox\"\n          aria-checked={!!done}\n          aria-label={doneLabel}\n          data-slot=\"sticky-note-check\"\n          onClick={() => onDoneChange(!done)}\n          className=\"absolute end-[3.5px] top-[2.5px] z-(--ll-z-prop) size-8 cursor-pointer rounded-full hover:bg-ink/10\"\n        />\n      ) : tickable && done ? (\n        <span className=\"sr-only\">{doneLabel}. </span>\n      ) : null}\n      {children}\n    </Paper>\n  )\n}\n\nfunction StickyNoteTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"sticky-note-title\" className={cn(\"text-[1.7rem] leading-none font-bold\", className)} {...props} />\n}\n\nfunction StickyNoteContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"sticky-note-content\" className={cn(\"flex-1\", className)} {...props} />\n}\n\nfunction StickyNoteFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"sticky-note-footer\" className={cn(\"mt-auto pt-2 font-hand text-sm text-ink-soft\", className)} {...props} />\n}\n\nexport { StickyNote, StickyNoteTitle, StickyNoteContent, StickyNoteFooter }\nexport type { StickyNoteProps, StickyColor }\n",
+      "type": "registry:ui",
+      "target": "@ui/sticky-note.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/sticky-note-ink.ts",
+      "content": "import { box } from '@/lib/ink/shapes'\nimport { checkLines } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { reveal, revealId } from '@/lib/ink/recipes/draw-on-ink'\nimport { MIRROR } from '@/lib/ink/recipes/paper-set-ink'\n\nexport const STICKY_BOX = { size: 17, inset: 11, top: 10 } as const\n\nexport const stickyNoteRecipe = defineRecipe<Record<string, never>>({\n  id: 'sticky-note-decor',\n  kind: 'sticky',\n  layers: ['rest', 'checked'],\n  pad: 6,\n  draw(ink, { w, h }, _p, ctx) {\n    const s = STICKY_BOX.size\n    const x = w - STICKY_BOX.inset - s\n    const y = STICKY_BOX.top\n    const mirror = ctx.dir === 'rtl'\n    const inMirror = (fn: () => void) => (mirror ? ink.group({ transform: MIRROR(w) }, fn) : fn())\n    ink.layer('rest', () => inMirror(() => box(ink, x, y, s, s, { pen: 'ink.fine', corner: 2.5, opts: { alpha: 0.6 } })))\n    ink.layer('checked', () =>\n      inMirror(() => reveal(ink, { id: revealId(ctx.seed, 't'), lines: checkLines(ink.next('tick'), x + 2, y, s + 1), pen: 'greenfelt', box: { w, h }, revealWidth: 7, width: 1.15 })),\n    )\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/sticky-note-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "paper",
+      "tape",
+      "card",
+      "index-card"
+    ],
+    "a11y": [
+      "A note is a plain `div`. Give it `role=\"note\"` or `as`-like semantics through props when it means more (for instance `role=\"group\"` with an `aria-label` in a board of notes).",
+      "The gum band, curl, pin and tape are aria-hidden decoration. The tick box is drawing only unless you pass `onDoneChange`, and then it is a real checkbox (named by `doneLabel`, Space toggles, `aria-checked` follows `done`). A done note without it says \"Done.\" to screen readers through hidden text; either way it is struck through, so meaning never rests on colour or the drawing alone.",
+      "Ink on every pad is at least 9:1; struck-through text switches to ink-soft (5.8:1 or better). Tilt is zero in calm density.",
+      "Sticky text is real DOM and wraps at any size (`break-words`), so a note resized by its container never clips."
+    ],
+    "usage": "import { StickyNote, StickyNoteContent, StickyNoteFooter, StickyNoteTitle } from \"@/components/ui/sticky-note\"\n\n<StickyNote color=\"pink\" curl fastener=\"pin\" done={done} onDoneChange={setDone}>\n  <StickyNoteTitle>urgent</StickyNoteTitle>\n  <StickyNoteContent>call mum before six</StickyNoteContent>\n  <StickyNoteFooter>from Ada</StickyNoteFooter>\n</StickyNote>",
+    "parts": [
+      "StickyNote",
+      "StickyNoteTitle",
+      "StickyNoteContent",
+      "StickyNoteFooter"
+    ]
+  },
+  "categories": [
+    "Paper"
+  ],
+  "type": "registry:ui"
+}

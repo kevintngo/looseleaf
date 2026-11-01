@@ -1,0 +1,8 @@
+{
+  "$comment": "check-classes: tokens that legitimately generate no Tailwind CSS. Class names defined as plain selectors (or @utility) in the stylesheet are picked up automatically; list only marker/JS-hook classes here.",
+  "exclude": ["**/*.d.ts", "**/*.test.{ts,tsx}", "**/*.generated.{ts,tsx}", "src/docs/meta/**"],
+  "ignoreClasses": ["group", "peer", "dark", "light", "not-prose", "prose", "toaster", "sr-only-focusable"],
+  "ignorePatterns": ["^group/[\\w-]+$", "^peer/[\\w-]+$", "^@container/[\\w-]+$", "^(?:recharts|rdp|embla|cmdk|sonner|vaul|radix)-[\\w-]+$"],
+  "knownGroups": [],
+  "ambient": { "minRatio": 0.6, "minValidTokens": 2 }
+}

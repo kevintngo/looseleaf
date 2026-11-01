@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "highlight",
+  "title": "Highlight",
+  "description": "A highlighter swipe behind real words. The phrase stays text you can select and copy; the swipe follows it line by line when it wraps, in yellow or any stationery colour, and can draw itself on as it scrolls into view.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-mark-ink.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/highlight.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Slot } from \"radix-ui\"\n\nimport { MARK_WIPE, useMarkInk } from \"@/hooks/use-mark-ink\"\nimport { useMergedRef } from \"@/lib/ink/react\"\nimport { highlightRecipe } from \"@/lib/ink/recipes/highlight-ink\"\nimport type { HighlightTone } from \"@/lib/ink/recipes/text-marks-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst FAT = { light: 0.82, regular: 1, heavy: 1.22 } as const\n\nfunction Highlight({\n  tone = \"yellow\",\n  weight = \"regular\",\n  cover = \"full\",\n  animate = false,\n  show = true,\n  delay,\n  seed,\n  asChild = false,\n  className,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<\"mark\"> & {\n  tone?: HighlightTone\n  weight?: keyof typeof FAT\n  cover?: \"full\" | \"under\"\n  animate?: boolean\n  show?: boolean\n  delay?: number\n  seed?: string | number\n  asChild?: boolean\n}) {\n  const { hostRef, hostProps, nodes } = useMarkInk({\n    recipe: highlightRecipe,\n    params: { tone, fat: FAT[weight], cover },\n    kind: \"highlight\",\n    seed,\n    animate,\n    show,\n    delay,\n  })\n  const Comp = asChild ? Slot.Root : \"mark\"\n  return (\n    <Comp\n      data-slot=\"highlight\"\n      data-tone={tone}\n      data-cover={cover}\n      ref={useMergedRef<HTMLElement>(hostRef, ref as React.Ref<HTMLElement> | undefined)}\n      {...hostProps}\n      className={cn(\n        \"relative isolate text-inherit data-[ink-ready]:bg-transparent data-[mark=off]:bg-transparent not-focus-visible:outline-none forced-colors:not-focus-visible:outline-none!\",\n        animate && \"bg-transparent noscript:bg-hi-select\",\n        animate && MARK_WIPE,\n        className,\n      )}\n      {...props}\n    >\n      <Slot.Slottable>{children}</Slot.Slottable>\n      {nodes}\n    </Comp>\n  )\n}\n\nexport { Highlight }\n",
+      "type": "registry:ui",
+      "target": "@ui/highlight.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/highlight-ink.ts",
+      "content": "import { highlight } from '@/lib/ink/fills'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { highlighterPen, overshoot, type HighlightTone, type LineParams } from '@/lib/ink/recipes/text-marks-ink'\n\nexport interface HighlightParams extends LineParams {\n  tone: HighlightTone\n  fat?: number\n  cover?: 'full' | 'under'\n}\n\nexport const highlightRecipe = defineRecipe<HighlightParams>({\n  id: 'highlight',\n  kind: 'highlight',\n  layers: ['rest'],\n  pad: 10,\n  draw(ink, { w, h }, p, ctx) {\n    const { pen, opts } = highlighterPen(p.tone)\n    const o = overshoot(p.fs)\n    const under = p.cover === 'under'\n    const top = under ? p.base - p.xh * 0.42 : p.base - p.cap - p.fs * 0.14\n    const bot = p.base + p.desc * (under ? 0.95 : 0.85) + p.fs * 0.06\n    const band = Math.min(h, (bot - top) * (p.fat ?? 1))\n    const y = Math.max(0, top + ((bot - top) - band) / 2)\n    const x0 = p.first ? -o * 0.6 : -1\n    const x1 = p.last ? w + o * 0.6 : w + 1\n    ink.layer('rest', () => {\n      highlight(ink, x0, y, x1 - x0, band, { pen, opts })\n      if (!ctx.calm && x1 - x0 > 4.5 * p.fs) {\n        const r = ink.next('again')\n        highlight(ink, x0 + r.range(0.1, 0.25) * (x1 - x0), y + r.range(-1.2, 1.2), (x1 - x0) * r.range(0.4, 0.62), band * 0.8, { pen, opts: { ...opts, alpha: (opts.alpha ?? 1) * 0.5 } })\n      }\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/highlight-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "underline",
+      "circled",
+      "annotate",
+      "strike"
+    ],
+    "a11y": [
+      "The words are ordinary text: selectable, copyable, found by search, read in order. The swipe is aria-hidden and pointer-events-none, so it never takes a click or a selection.",
+      "It is a <mark>, so assistive technology that announces highlighted text still does. Text on the swipe stays ink on a translucent tint (about 12:1 on the yellow).",
+      "Before the first measure, without JavaScript and in Windows high contrast you get the browser's own <mark> background (system Mark colours in high contrast). With animate the swipe is only drawn once scripts run.",
+      "Reduced motion (or data-motion=\"reduced\") zeroes the draw-on: the swipe simply appears."
+    ],
+    "usage": "import { Highlight } from \"@/components/ui/highlight\"\n\nexport function Example() {\n  return (\n    <p>\n      The good bits get <Highlight>a swipe of yellow</Highlight> so I can find them again.\n    </p>\n  )\n}",
+    "parts": [
+      "Highlight"
+    ]
+  },
+  "categories": [
+    "Marks"
+  ],
+  "type": "registry:ui"
+}

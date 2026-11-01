@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "faq-01",
+  "title": "FAQ on ruled paper",
+  "description": "An accordion written on ruled notebook paper, every line on the printed rules, with a flagged \"still stuck?\" index card and Stubby beside it. Looks right on paper or on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/accordion.json",
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/index-card.json",
+    "https://kevintngo.github.io/looseleaf/r/lettering.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/mascot.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/faq-01/components/faq-01-help.tsx",
+      "content": "import { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { IndexCard, IndexCardContent, IndexCardFooter, IndexCardHeader, IndexCardTitle } from \"@/components/ui/index-card\"\nimport { Mascot } from \"@/components/ui/mascot\"\n\nfunction Faq01Help() {\n  return (\n    <IndexCard flag=\"tangerine\" seed=\"faq-help\" className=\"min-h-0 max-w-none\">\n      <IndexCardHeader>\n        <IndexCardTitle>\n          <h3 className=\"inline\">Still stuck?</h3>\n        </IndexCardTitle>\n        <Mascot pose=\"think\" size={44} className=\"-mb-0.5 me-7\" />\n      </IndexCardHeader>\n      <IndexCardContent>A real person answers, usually before lunch.</IndexCardContent>\n      <IndexCardFooter>\n        <Button asChild variant=\"link\" size=\"sm\" className=\"-ms-3\">\n          <a href=\"mailto:hello@penmark.example\">\n            <Icon name=\"mail\" />\n            Write to us\n          </a>\n        </Button>\n      </IndexCardFooter>\n    </IndexCard>\n  )\n}\n\nexport { Faq01Help }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/faq-01/components/faq-01-help.tsx"
+    },
+    {
+      "path": "src/blocks/faq-01/components/faq-01-sheet.tsx",
+      "content": "import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from \"@/components/ui/accordion\"\nimport { Paper } from \"@/components/ui/paper\"\n\nconst QUESTIONS = [\n  {\n    id: \"free\",\n    q: \"Is there a free plan?\",\n    a: \"Yes. Teams of up to five can use everything, free, for as long as they like. Past five it is $6 a person a month. No card to start.\",\n  },\n  {\n    id: \"import\",\n    q: \"Can I bring my notes from other apps?\",\n    a: \"Drag in a folder of Markdown, or a Notion or Evernote export, and your pages and links come across, pictures too. A hundred pages takes about a minute.\",\n  },\n  {\n    id: \"offline\",\n    q: \"Does it work offline?\",\n    a: \"It does. Keep writing on the train and everything syncs when you are back. If two people changed the same line, you get both versions side by side.\",\n  },\n  {\n    id: \"privacy\",\n    q: \"Who can see my notebooks?\",\n    a: \"Only the people you invite. A page is private until you share it, and a shared link can be switched off whenever you like.\",\n  },\n  {\n    id: \"backups\",\n    q: \"How are my pages backed up?\",\n    a: \"Every change is saved and every version is kept for a year. We also take nightly backups in two places, and you can download everything as plain files.\",\n  },\n  {\n    id: \"cancel\",\n    q: \"Can I cancel any time?\",\n    a: \"In two clicks. Your notebooks stay readable and downloadable afterwards.\",\n  },\n]\n\nfunction Faq01Sheet() {\n  return (\n    <Paper stock=\"paper\" rules=\"ruled\" tape=\"corner\" tapeKind=\"masking\" seed=\"faq-sheet\" className=\"pt-4 pe-5 pb-7 ps-14 text-[17px] leading-7 rtl:[&>[data-slot=paper-rules]]:-scale-x-100\">\n      <p className=\"font-type text-sm leading-7 tracking-[0.18em] text-pencil-text uppercase\">Frequently asked</p>\n      <Accordion type=\"single\" collapsible defaultValue=\"free\" className=\"w-full\">\n        {QUESTIONS.map((item) => (\n          <AccordionItem key={item.id} value={item.id} className=\"pb-0 [&>[data-slot=accordion-rule]]:hidden\">\n            <AccordionTrigger className=\"min-h-14 items-end pt-7 pb-0 text-[17px] leading-7 [&:not(:focus-visible)]:outline-transparent [&>[data-chevron]]:mt-0 [&>[data-chevron]]:mb-1.5\">{item.q}</AccordionTrigger>\n            <AccordionContent className=\"pb-0 text-[17px] leading-7\">\n              <p>{item.a}</p>\n            </AccordionContent>\n          </AccordionItem>\n        ))}\n      </Accordion>\n    </Paper>\n  )\n}\n\nexport { Faq01Sheet, QUESTIONS }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/faq-01/components/faq-01-sheet.tsx"
+    },
+    {
+      "path": "src/blocks/faq-01/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Lettering } from \"@/components/ui/lettering\"\nimport { Faq01Help } from \"@/components/blocks/faq-01/components/faq-01-help\"\nimport { Faq01Sheet } from \"@/components/blocks/faq-01/components/faq-01-sheet\"\n\nexport default function Faq01() {\n  const titleId = React.useId()\n  return (\n    <section aria-labelledby={titleId} className=\"@container w-full\">\n      <div className=\"px-8 py-14 @xl:py-20\">\n        <div className=\"mx-auto grid max-w-5xl gap-x-12 gap-y-10 @3xl:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] @3xl:items-start\">\n          <header className=\"@3xl:col-start-1 @3xl:row-start-1\">\n            <Lettering as=\"h2\" id={titleId} size=\"lg\" tone=\"grass\" wobble={0.4} seed=\"faq-title\">\n              Questions, answered\n            </Lettering>\n            <p className=\"mt-4 text-xl/8 text-ink-soft\">The ones we get every week, in our own words.</p>\n          </header>\n          <div className=\"@3xl:col-start-2 @3xl:row-span-2 @3xl:row-start-1\">\n            <Faq01Sheet />\n          </div>\n          <div className=\"@3xl:col-start-1 @3xl:row-start-2\">\n            <Faq01Help />\n          </div>\n        </div>\n      </div>\n    </section>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/faq-01/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "marketing",
+      "faq",
+      "accordion"
+    ]
+  },
+  "docs": "Installed the \"FAQ on ruled paper\" block into your components directory under blocks/faq-01/.\nImport it: import Faq01 from \"<your components alias>/blocks/faq-01/page\"",
+  "categories": [
+    "marketing"
+  ],
+  "type": "registry:block"
+}

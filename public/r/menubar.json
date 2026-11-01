@@ -1,0 +1,71 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "menubar",
+  "title": "Menubar",
+  "description": "A desktop-style menu bar: a strip of paper with a pencil ruler along its foot and the menu titles written on it. Hovered, focused or open, a title wears the highlighter; each menu opens the same slip as the dropdown. Roving focus, hover-to-switch and typeahead are Radix's.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/kbd.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/menu-styles.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/separator.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/menubar.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Menubar as MenubarPrimitive } from \"radix-ui\"\n\nimport { Icon } from \"@/components/ui/icon\"\nimport { Kbd } from \"@/components/ui/kbd\"\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { useInk, useInkScope, useMergedRef } from \"@/lib/ink/react\"\nimport { menubarRecipe } from \"@/lib/ink/recipes/menubar-ink\"\nimport {\n  MENU_CHOICE_ITEM,\n  MENU_INDICATOR,\n  MENU_ITEM,\n  MENU_KEYCAP,\n  MENU_LABEL,\n  MENU_MARK,\n  MENU_SEPARATOR,\n  MENU_SHORTCUT,\n  MENU_SUB_TRIGGER,\n  menuContentClass,\n  menuViewportClass,\n  parseShortcut,\n  splitMenuClass,\n} from \"@/lib/menu-styles\"\nimport { cn } from \"@/lib/utils\"\n\ntype PaperLook = Pick<PaperProps, \"stock\" | \"edge\" | \"tilt\" | \"tape\" | \"seed\">\n\nfunction Menubar({\n  className,\n  seed,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<typeof MenubarPrimitive.Root> & {\n  seed?: string | number\n}) {\n  const { hostRef, hostProps, node } = useInk({ recipe: menubarRecipe, params: {}, kind: \"bar\", seed, still: true })\n  return (\n    <MenubarPrimitive.Root\n      data-slot=\"menubar\"\n      ref={useMergedRef<HTMLDivElement>(hostRef, ref)}\n      {...hostProps}\n      className={cn(\"relative isolate flex h-10 items-center gap-1 px-2 compact:h-9 calm:h-8\", className)}\n      {...props}\n    >\n      {node}\n      {children}\n    </MenubarPrimitive.Root>\n  )\n}\n\nfunction MenubarMenu({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Menu>) {\n  return <MenubarPrimitive.Menu data-slot=\"menubar-menu\" {...props} />\n}\n\nfunction MenubarGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Group>) {\n  return <MenubarPrimitive.Group data-slot=\"menubar-group\" {...props} />\n}\n\nfunction MenubarPortal({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Portal>) {\n  return <MenubarPrimitive.Portal data-slot=\"menubar-portal\" {...props} />\n}\n\nfunction MenubarRadioGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.RadioGroup>) {\n  return <MenubarPrimitive.RadioGroup data-slot=\"menubar-radio-group\" {...props} />\n}\n\nfunction MenubarTrigger({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Trigger>) {\n  return (\n    <MenubarPrimitive.Trigger\n      data-slot=\"menubar-trigger\"\n      className={cn(\n        \"flex min-h-7 items-center px-3 py-0.5 font-hand text-base leading-6 font-bold select-none hover:ll-swipe focus:ll-swipe data-[state=open]:ll-swipe\",\n        \"forced-colors:[&:is(:hover,:focus,[data-state=open])]:bg-[color:Highlight]! forced-colors:[&:is(:hover,:focus,[data-state=open])]:text-[color:HighlightText]!\",\n        \"calm:px-2.5 calm:text-[15px]\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarContent({\n  className,\n  align = \"start\",\n  alignOffset = -4,\n  sideOffset = 8,\n  stock = \"slip\",\n  edge,\n  tilt = true,\n  tape,\n  seed,\n  children,\n  ...props\n}: React.ComponentProps<typeof MenubarPrimitive.Content> & PaperLook) {\n  const scope = useInkScope()\n  const split = splitMenuClass(className)\n  return (\n    <MenubarPortal>\n      <MenubarPrimitive.Content asChild align={align} alignOffset={alignOffset} sideOffset={sideOffset} {...props}>\n        <Paper data-slot=\"menubar-content\" stock={stock} edge={edge} tilt={tilt} tape={tape} rules=\"none\" seed={seed} {...scope} className={cn(menuContentClass(\"menubar\"), \"min-w-48\", split.content)}>\n          <div data-slot=\"menubar-viewport\" className={menuViewportClass(\"menubar\", split.viewport)}>\n            {children}\n          </div>\n        </Paper>\n      </MenubarPrimitive.Content>\n    </MenubarPortal>\n  )\n}\n\nfunction MenubarItem({\n  className,\n  inset,\n  variant = \"default\",\n  ...props\n}: React.ComponentProps<typeof MenubarPrimitive.Item> & {\n  inset?: boolean\n  variant?: \"default\" | \"destructive\"\n}) {\n  return <MenubarPrimitive.Item data-slot=\"menubar-item\" data-inset={inset} data-variant={variant} className={cn(MENU_ITEM, className)} {...props} />\n}\n\nfunction MenubarCheckboxItem({ className, children, checked, ...props }: React.ComponentProps<typeof MenubarPrimitive.CheckboxItem>) {\n  return (\n    <MenubarPrimitive.CheckboxItem data-slot=\"menubar-checkbox-item\" className={cn(MENU_CHOICE_ITEM, className)} checked={checked} {...props}>\n      <span data-slot=\"menubar-item-indicator\" className={MENU_INDICATOR}>\n        <Icon name=\"square\" size={16} className=\"absolute text-pencil-mark forced-colors:text-[CanvasText]\" />\n        <MenubarPrimitive.ItemIndicator className={MENU_MARK}>\n          <Icon name=\"check\" size={22} className=\"-translate-y-px\" />\n        </MenubarPrimitive.ItemIndicator>\n      </span>\n      {children}\n    </MenubarPrimitive.CheckboxItem>\n  )\n}\n\nfunction MenubarRadioItem({ className, children, ...props }: React.ComponentProps<typeof MenubarPrimitive.RadioItem>) {\n  return (\n    <MenubarPrimitive.RadioItem data-slot=\"menubar-radio-item\" className={cn(MENU_CHOICE_ITEM, className)} {...props}>\n      <span data-slot=\"menubar-item-indicator\" className={MENU_INDICATOR}>\n        <Icon name=\"circle\" size={16} className=\"absolute text-pencil-mark forced-colors:text-[CanvasText]\" />\n        <MenubarPrimitive.ItemIndicator className={MENU_MARK}>\n          <Icon name=\"dot\" size={26} />\n        </MenubarPrimitive.ItemIndicator>\n      </span>\n      {children}\n    </MenubarPrimitive.RadioItem>\n  )\n}\n\nfunction MenubarLabel({ className, inset, ...props }: React.ComponentProps<typeof MenubarPrimitive.Label> & { inset?: boolean }) {\n  return <MenubarPrimitive.Label data-slot=\"menubar-label\" data-inset={inset} className={cn(MENU_LABEL, className)} {...props} />\n}\n\nfunction MenubarSeparator({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Separator>) {\n  return (\n    <MenubarPrimitive.Separator asChild {...props}>\n      <Separator data-slot=\"menubar-separator\" className={cn(MENU_SEPARATOR, className)} />\n    </MenubarPrimitive.Separator>\n  )\n}\n\nfunction MenubarShortcut({ className, children, ...props }: React.ComponentProps<\"span\">) {\n  const keys = typeof children === \"string\" ? parseShortcut(children) : null\n  return (\n    <span data-slot=\"menubar-shortcut\" className={cn(MENU_SHORTCUT, className)} {...props}>\n      {keys\n        ? keys.map((k, i) => (\n            <Kbd key={i} className={MENU_KEYCAP}>\n              {\"icon\" in k ? <Icon name={k.icon} label={k.label} /> : k.text}\n            </Kbd>\n          ))\n        : children}\n    </span>\n  )\n}\n\nfunction MenubarSub({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Sub>) {\n  return <MenubarPrimitive.Sub data-slot=\"menubar-sub\" {...props} />\n}\n\nfunction MenubarSubTrigger({ className, inset, children, ...props }: React.ComponentProps<typeof MenubarPrimitive.SubTrigger> & { inset?: boolean }) {\n  return (\n    <MenubarPrimitive.SubTrigger data-slot=\"menubar-sub-trigger\" data-inset={inset} className={cn(MENU_SUB_TRIGGER, className)} {...props}>\n      {children}\n      <Icon name=\"chevron-right\" size={16} className=\"ms-auto\" />\n    </MenubarPrimitive.SubTrigger>\n  )\n}\n\nfunction MenubarSubContent({\n  className,\n  alignOffset = -4,\n  stock = \"slip\",\n  edge,\n  tilt = true,\n  tape,\n  seed,\n  children,\n  ...props\n}: React.ComponentProps<typeof MenubarPrimitive.SubContent> & PaperLook) {\n  const scope = useInkScope()\n  const split = splitMenuClass(className)\n  return (\n    <MenubarPrimitive.SubContent asChild alignOffset={alignOffset} {...props}>\n      <Paper data-slot=\"menubar-sub-content\" stock={stock} edge={edge} tilt={tilt} tape={tape} rules=\"none\" seed={seed} {...scope} className={cn(menuContentClass(\"menubar\"), split.content)}>\n        <div data-slot=\"menubar-viewport\" className={menuViewportClass(\"menubar\", split.viewport)}>\n          {children}\n        </div>\n      </Paper>\n    </MenubarPrimitive.SubContent>\n  )\n}\n\nexport {\n  Menubar,\n  MenubarPortal,\n  MenubarMenu,\n  MenubarTrigger,\n  MenubarContent,\n  MenubarGroup,\n  MenubarSeparator,\n  MenubarLabel,\n  MenubarItem,\n  MenubarShortcut,\n  MenubarCheckboxItem,\n  MenubarRadioGroup,\n  MenubarRadioItem,\n  MenubarSub,\n  MenubarSubTrigger,\n  MenubarSubContent,\n}\n",
+      "type": "registry:ui",
+      "target": "@ui/menubar.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/menubar-ink.ts",
+      "content": "import { wash } from '@/lib/ink/fills'\nimport { roundRectPoly } from '@/lib/ink/geom'\nimport { n } from '@/lib/ink/paint'\nimport { clamp } from '@/lib/ink/rng'\nimport { box } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\n\nconst MAX_TICKS = 72\n\nexport const menubarRecipe = defineRecipe<Record<string, never>>({\n  id: 'menubar',\n  kind: 'bar',\n  layers: ['rest'],\n  pad: 12,\n  draw(ink, { w, h }, _p, ctx) {\n    const r = clamp(h * 0.09, 2.5, 4.4)\n    const inset = clamp(h * 0.06, 1.6, 3)\n    ink.layer('rest', () => {\n      wash(ink, roundRectPoly(inset, inset, w - 2 * inset, h - 2 * inset, r), 'paper-shade', { alpha: 0.85, material: 'wash' })\n      if (ctx.calm) {\n        box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false, opts: { simple: w > 360 || undefined } })\n        return\n      }\n      const rng = ink.next('ruler')\n      const from = 12\n      const to = w - 12\n      const step = Math.max(6, (to - from) / MAX_TICKS)\n      let d = ''\n      let i = 0\n      for (let x = from + rng.range(0, 3); x < to; x += step * rng.range(0.94, 1.06), i++) {\n        const tall = i % 5 === 0\n        const hh = (tall ? 5.2 : 3) + rng.gauss(0, 0.35)\n        const y = h - inset - 1.4\n        const wd = tall ? 1 : 0.8\n        const lean = rng.gauss(0, 0.25)\n        d += `M${n(x)} ${n(y)}L${n(x + wd)} ${n(y)}L${n(x + wd + lean)} ${n(y - hh)}L${n(x + lean)} ${n(y - hh)}Z`\n      }\n      ink.flat('pencil', d, 'pencil-mark', 0.7)\n      box(ink, 0, 0, w, h, { pen: 'ink.fine', corner: r, opts: w > 360 ? { simple: true } : undefined })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/menubar-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "menubar",
+    "related": [
+      "dropdown-menu",
+      "navigation-menu",
+      "context-menu",
+      "tabs"
+    ],
+    "a11y": [
+      "Radix Menubar: role=menubar with menuitem titles (aria-haspopup, aria-expanded). Left and Right (mirrored in RTL) move between titles; Enter, Space or ArrowDown opens a menu with its first row highlighted (ArrowUp on a title opens nothing). Once one is open, hovering another title or pressing Left or Right from a plain row switches menus.",
+      "Inside a menu: Up and Down move (disabled rows are skipped), Home and End jump, typing a letter jumps to the next row that starts with it, ArrowRight opens a sub-menu and ArrowLeft closes it, Enter or Space chooses, Escape closes and returns focus to the title. The bar is one tab stop.",
+      "The strip and its ruler are aria-hidden decoration with no pointer events; the titles keep a 28 px hit box. The highlight follows the keyboard as well as the pointer, and keyboard focus on a title also shows the theme's blue focus ring; inside a menu the row with keyboard focus gets a bar of blue felt at its start edge.",
+      "Ticks, dots, chevrons and pencil boxes are aria-hidden drawings; keycaps are real `kbd` elements. Portalled content repeats the InkProvider's data-density, data-motion and data-theme. In forced-colors mode the strip gives way to a real outline and the hovered, focused or open title takes the system highlight colours."
+    ],
+    "usage": "import {\n  Menubar,\n  MenubarContent,\n  MenubarItem,\n  MenubarMenu,\n  MenubarSeparator,\n  MenubarShortcut,\n  MenubarTrigger,\n} from \"@/components/ui/menubar\"\n\nexport function Example() {\n  return (\n    <Menubar>\n      <MenubarMenu>\n        <MenubarTrigger>File</MenubarTrigger>\n        <MenubarContent>\n          <MenubarItem>\n            New tab <MenubarShortcut>⌘T</MenubarShortcut>\n          </MenubarItem>\n          <MenubarItem>New window</MenubarItem>\n          <MenubarSeparator />\n          <MenubarItem>Print…</MenubarItem>\n        </MenubarContent>\n      </MenubarMenu>\n    </Menubar>\n  )\n}",
+    "parts": [
+      "Menubar",
+      "MenubarMenu",
+      "MenubarTrigger",
+      "MenubarPortal",
+      "MenubarContent",
+      "MenubarGroup",
+      "MenubarLabel",
+      "MenubarItem",
+      "MenubarCheckboxItem",
+      "MenubarRadioGroup",
+      "MenubarRadioItem",
+      "MenubarSeparator",
+      "MenubarShortcut",
+      "MenubarSub",
+      "MenubarSubTrigger",
+      "MenubarSubContent"
+    ]
+  },
+  "categories": [
+    "Navigation"
+  ],
+  "type": "registry:ui"
+}

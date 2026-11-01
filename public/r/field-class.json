@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "field-class",
+  "title": "Field Class",
+  "description": "Shared Looseleaf helpers: field-class.",
+  "files": [
+    {
+      "path": "src/lib/field-class.ts",
+      "content": "const CONTROL_VARIANT = /^(?:placeholder|file|selection|autofill|read-only|disabled|enabled|focus|focus-visible|aria-invalid|user-invalid|invalid|required|optional)$/\nconst PADDING = /^-?p[xytblrse]?-/\nconst CONTROL_UTILITY = /^(?:resize|field-sizing)(?:-|$)/\n\nfunction parse(token: string): [string[], string] {\n  const variants: string[] = []\n  let depth = 0\n  let start = 0\n  for (let i = 0; i < token.length; i++) {\n    const c = token[i]\n    if (c === \"[\" || c === \"(\") depth++\n    else if (c === \"]\" || c === \")\") depth--\n    else if (c === \":\" && depth === 0) {\n      variants.push(token.slice(start, i))\n      start = i + 1\n    }\n  }\n  return [variants, token.slice(start).replace(/^!/, \"\").replace(/!$/, \"\")]\n}\n\nexport function splitFieldClass(className?: string): { frame: string; control: string } {\n  const frame: string[] = []\n  const control: string[] = []\n  for (const token of className?.split(/\\s+/) ?? []) {\n    if (!token) continue\n    const [variants, utility] = parse(token)\n    const own = variants.some((v) => CONTROL_VARIANT.test(v.replace(/[-_]?\\[.*$/, \"\").replace(/\\/.*$/, \"\")))\n    ;(own || PADDING.test(utility) || CONTROL_UTILITY.test(utility) ? control : frame).push(token)\n  }\n  return { frame: frame.join(\" \"), control: control.join(\" \") }\n}\n",
+      "type": "registry:lib",
+      "target": "@lib/field-class.ts"
+    }
+  ],
+  "type": "registry:lib"
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alert-dialog",
+  "title": "Alert Dialog",
+  "description": "A dialog that asks one question and will not go away until it is answered: no close button, no dismissing by clicking outside, focus starts on the safe answer. For risky questions it can be taped with hazard strips and given a red patch behind its icon.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/tape.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/alert-dialog.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { AlertDialog as AlertDialogPrimitive } from \"radix-ui\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { Tape } from \"@/components/ui/tape\"\nimport { useInk, useInkScope, useInkSeed, useMergedRef } from \"@/lib/ink/react\"\nimport { alertMediaRecipe, type AlertMediaTone } from \"@/lib/ink/recipes/alert-dialog-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction AlertDialog({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Root>) {\n  return <AlertDialogPrimitive.Root data-slot=\"alert-dialog\" {...props} />\n}\n\nfunction AlertDialogTrigger({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Trigger>) {\n  return <AlertDialogPrimitive.Trigger data-slot=\"alert-dialog-trigger\" {...props} />\n}\n\nfunction AlertDialogPortal({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Portal>) {\n  return <AlertDialogPrimitive.Portal data-slot=\"alert-dialog-portal\" {...props} />\n}\n\nfunction AlertDialogOverlay({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Overlay>) {\n  const scope = useInkScope()\n  return (\n    <AlertDialogPrimitive.Overlay\n      data-slot=\"alert-dialog-overlay\"\n      {...scope}\n      className={cn(\n        \"fixed inset-0 z-(--ll-z-overlay) flex overflow-y-auto overscroll-contain p-4 [background:var(--ll-overlay-dim)] [scrollbar-gutter:stable_both-edges] max-sm:p-0\",\n        \"duration-(--ll-dur-sheet) data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogContent({\n  className,\n  size = \"default\",\n  tone = \"default\",\n  children,\n  stock = \"paper\",\n  edge,\n  tilt,\n  seed: seedProp,\n  ...props\n}: React.ComponentProps<typeof AlertDialogPrimitive.Content> &\n  Pick<PaperProps, \"stock\" | \"edge\" | \"tilt\" | \"seed\"> & {\n    size?: \"default\" | \"sm\"\n    tone?: \"default\" | \"danger\"\n  }) {\n  const scope = useInkScope()\n  const seed = useInkSeed(seedProp)\n  return (\n    <AlertDialogPortal>\n      <AlertDialogOverlay>\n        <AlertDialogPrimitive.Content asChild {...props}>\n          <Paper\n            data-slot=\"alert-dialog-content\"\n            data-size={size}\n            data-tone={tone}\n            stock={stock}\n            edge={edge}\n            tilt={tilt}\n            rules=\"none\"\n            seed={seed}\n            {...scope}\n            className={cn(\n              \"group/alert-dialog-content m-auto grid w-full max-w-lg gap-4 p-6 text-foreground outline-hidden compact:p-5 calm:p-4 data-[size=sm]:max-w-xs\",\n              \"max-sm:mb-0 max-sm:max-w-none max-sm:pb-[max(1.5rem,env(safe-area-inset-bottom))] max-sm:compact:pb-[max(1.25rem,env(safe-area-inset-bottom))] max-sm:calm:pb-[max(1rem,env(safe-area-inset-bottom))] max-sm:[--ll-tilt:0deg]!\",\n              \"data-[state=open]:animate-sheet-drop max-sm:data-[state=open]:animate-in max-sm:data-[state=open]:slide-in-from-bottom-16 max-sm:data-[state=open]:fade-in-0\",\n              \"duration-(--ll-dur-fade) data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 max-sm:data-[state=closed]:slide-out-to-bottom-8\",\n              className\n            )}\n          >\n            {tone === \"danger\" && (\n              <>\n                <Tape kind=\"washi-stripes\" color=\"tomato\" length={68} height={20} angle={-38} seed={`${seed}:hz-a`} className=\"absolute -top-2 -left-7 z-(--ll-z-prop) max-sm:hidden calm:hidden\" />\n                <Tape kind=\"washi-stripes\" color=\"tomato\" length={68} height={20} angle={36} seed={`${seed}:hz-b`} className=\"absolute -top-2 -right-7 z-(--ll-z-prop) max-sm:hidden calm:hidden\" />\n              </>\n            )}\n            {children}\n          </Paper>\n        </AlertDialogPrimitive.Content>\n      </AlertDialogOverlay>\n    </AlertDialogPortal>\n  )\n}\n\nfunction AlertDialogHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"alert-dialog-header\"\n      className={cn(\n        \"grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-6 sm:group-data-[size=default]/alert-dialog-content:place-items-start sm:group-data-[size=default]/alert-dialog-content:text-start sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-rows-[auto_1fr]\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"alert-dialog-footer\"\n      className={cn(\n        \"flex flex-col-reverse gap-2 group-data-[size=sm]/alert-dialog-content:grid group-data-[size=sm]/alert-dialog-content:grid-cols-2 sm:flex-row sm:justify-end\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogTitle({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {\n  return (\n    <AlertDialogPrimitive.Title\n      data-slot=\"alert-dialog-title\"\n      className={cn(\n        \"font-script text-[1.7rem] leading-none font-semibold sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogDescription({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Description>) {\n  return <AlertDialogPrimitive.Description data-slot=\"alert-dialog-description\" className={cn(\"text-sm text-muted-foreground\", className)} {...props} />\n}\n\nfunction AlertDialogMedia({\n  className,\n  tone = \"default\",\n  seed: seedProp,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  tone?: AlertMediaTone\n  seed?: string | number\n}) {\n  const seed = useInkSeed(seedProp)\n  const { hostRef, hostProps, node } = useInk({ recipe: alertMediaRecipe, params: { tone }, kind: \"plate\", size: [64, 64], seed })\n  return (\n    <div\n      data-slot=\"alert-dialog-media\"\n      ref={useMergedRef<HTMLElement>(hostRef, ref as React.Ref<HTMLElement> | undefined)}\n      {...hostProps}\n      className={cn(\n        \"relative isolate mb-2 inline-flex size-16 items-center justify-center sm:group-data-[size=default]/alert-dialog-content:row-span-2 *:[svg:not(.absolute):not([class*='size-'])]:size-8\",\n        className\n      )}\n      {...props}\n    >\n      {node}\n      {children}\n    </div>\n  )\n}\n\nfunction AlertDialogAction({\n  className,\n  variant = \"default\",\n  size = \"default\",\n  ...props\n}: React.ComponentProps<typeof AlertDialogPrimitive.Action> & Pick<React.ComponentProps<typeof Button>, \"variant\" | \"size\">) {\n  return (\n    <Button variant={variant} size={size} asChild>\n      <AlertDialogPrimitive.Action data-slot=\"alert-dialog-action\" className={cn(className)} {...props} />\n    </Button>\n  )\n}\n\nfunction AlertDialogCancel({\n  className,\n  variant = \"outline\",\n  size = \"default\",\n  ...props\n}: React.ComponentProps<typeof AlertDialogPrimitive.Cancel> & Pick<React.ComponentProps<typeof Button>, \"variant\" | \"size\">) {\n  return (\n    <Button variant={variant} size={size} asChild>\n      <AlertDialogPrimitive.Cancel data-slot=\"alert-dialog-cancel\" className={cn(className)} {...props} />\n    </Button>\n  )\n}\n\nexport {\n  AlertDialog,\n  AlertDialogAction,\n  AlertDialogCancel,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogFooter,\n  AlertDialogHeader,\n  AlertDialogMedia,\n  AlertDialogOverlay,\n  AlertDialogPortal,\n  AlertDialogTitle,\n  AlertDialogTrigger,\n}\n",
+      "type": "registry:ui",
+      "target": "@ui/alert-dialog.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/alert-dialog-ink.ts",
+      "content": "import { blobFill } from '@/lib/ink/fills'\nimport { ellipsePoly } from '@/lib/ink/geom'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { loop } from '@/lib/ink/shapes'\nimport type { PaintKey } from '@/lib/ink/paint'\n\nexport type AlertMediaTone = 'default' | 'danger' | 'info'\n\nexport interface AlertMediaParams {\n  tone: AlertMediaTone\n}\n\nconst FILL: Record<AlertMediaTone, PaintKey> = { default: 'hi', danger: 'tomato', info: 'sky' }\n\nexport const alertMediaRecipe = defineRecipe<AlertMediaParams>({\n  id: 'alert-media',\n  kind: 'plate',\n  layers: ['rest'],\n  pad: 8,\n  draw(ink, { w, h }, { tone }, ctx) {\n    const cx = w / 2\n    const cy = h / 2\n    ink.layer('rest', () => {\n      ink.part('fill', () => blobFill(ink, ellipsePoly(cx, cy, w * 0.43, h * 0.42, 30, ink.next('plate').range(-0.3, 0.3)), FILL[tone], { alpha: tone === 'danger' ? 0.34 : 0.62 }))\n      loop(ink, cx, cy, w * 0.45, h * 0.44, { pen: ctx.calm ? 'pencil.fine' : tone === 'danger' ? 'redfelt.fine' : 'ink.fine' })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/alert-dialog-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "alert-dialog",
+    "related": [
+      "dialog",
+      "button",
+      "sheet",
+      "sonner"
+    ],
+    "a11y": [
+      "Radix AlertDialog: role=alertdialog with `aria-labelledby` and `aria-describedby` (always provide a title and description). Focus is trapped, the page behind is inert, and Escape cancels.",
+      "Focus starts on the Cancel button, so an accidental Enter does the safe thing. Clicking outside does not dismiss it.",
+      "The hazard tape and the media patch are decoration; the meaning is in the words and in the destructive button (hatched, not only red).",
+      "With reduced motion the sheet simply appears; in `calm` density it is flat and untaped."
+    ],
+    "usage": "import {\n  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,\n  AlertDialogFooter, AlertDialogHeader, AlertDialogMedia, AlertDialogTitle, AlertDialogTrigger,\n} from \"@/components/ui/alert-dialog\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\n\nexport function Example() {\n  return (\n    <AlertDialog>\n      <AlertDialogTrigger asChild>\n        <Button variant=\"destructive\">Delete notebook</Button>\n      </AlertDialogTrigger>\n      <AlertDialogContent tone=\"danger\">\n        <AlertDialogHeader>\n          <AlertDialogMedia tone=\"danger\"><Icon name=\"trash\" /></AlertDialogMedia>\n          <AlertDialogTitle>Delete this notebook?</AlertDialogTitle>\n          <AlertDialogDescription>All 48 pages will be gone for good.</AlertDialogDescription>\n        </AlertDialogHeader>\n        <AlertDialogFooter>\n          <AlertDialogCancel>Cancel</AlertDialogCancel>\n          <AlertDialogAction variant=\"destructive\">Delete</AlertDialogAction>\n        </AlertDialogFooter>\n      </AlertDialogContent>\n    </AlertDialog>\n  )\n}",
+    "parts": [
+      "AlertDialog",
+      "AlertDialogTrigger",
+      "AlertDialogPortal",
+      "AlertDialogOverlay",
+      "AlertDialogContent",
+      "AlertDialogHeader",
+      "AlertDialogTitle",
+      "AlertDialogDescription",
+      "AlertDialogMedia",
+      "AlertDialogFooter",
+      "AlertDialogAction",
+      "AlertDialogCancel"
+    ]
+  },
+  "categories": [
+    "Overlays"
+  ],
+  "type": "registry:ui"
+}

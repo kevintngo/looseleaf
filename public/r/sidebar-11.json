@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-11",
+  "title": "Sidebar 11",
+  "description": "A sidebar with a collapsible file tree: the changed files with their letters in the margin, then the folders, each folding open to any depth. Pick a file and the trail in the header follows it. Mirrors shadcn's sidebar-11. Looks right on the desk and on plain paper.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/collapsible.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-11/components/sidebar-11-app-sidebar.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { fileChanges, fileTree, type FileNode } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\nimport { Icon } from \"@/components/ui/icon\"\nimport {\n  Sidebar,\n  SidebarContent,\n  SidebarGroup,\n  SidebarGroupContent,\n  SidebarGroupLabel,\n  SidebarMenu,\n  SidebarMenuBadge,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarMenuSub,\n  SidebarRail,\n} from \"@/components/ui/sidebar\"\n\nconst OPEN_BY_DEFAULT = new Set([\"components\", \"components/ui\"])\nconst STATE_NAMES: Record<string, string> = { M: \"modified\", U: \"untracked\" }\n\nfunction fileIcon(name: string) {\n  if (/\\.(tsx?|jsx?|json)$/.test(name) || name.startsWith(\".\")) return \"file-code\"\n  if (/\\.(md|txt)$/.test(name)) return \"file-text\"\n  return \"file\"\n}\n\nfunction Tree({ node, parent, active, onPick }: { node: FileNode; parent: string; active: string; onPick: (path: string) => void }) {\n  const path = parent ? `${parent}/${node.name}` : node.name\n\n  if (!node.children) {\n    return (\n      <SidebarMenuItem>\n        <SidebarMenuButton isActive={active === path} aria-current={active === path ? \"true\" : undefined} onClick={() => onPick(path)}>\n          <Icon name={fileIcon(node.name)} />\n          <span className=\"truncate\">{node.name}</span>\n        </SidebarMenuButton>\n      </SidebarMenuItem>\n    )\n  }\n\n  return (\n    <Collapsible asChild defaultOpen={OPEN_BY_DEFAULT.has(path)}>\n      <SidebarMenuItem>\n        <CollapsibleTrigger asChild>\n          <SidebarMenuButton>\n            <Icon name=\"chevron-right\" className=\"transition-transform group-data-[state=open]/collapsible-trigger:rotate-90 rtl:group-data-[state=open]/collapsible-trigger:-rotate-90\" />\n            <Icon name=\"folder\" className=\"group-data-[state=open]/collapsible-trigger:hidden\" />\n            <Icon name=\"folder-open\" className=\"group-data-[state=closed]/collapsible-trigger:hidden\" />\n            <span className=\"truncate\">{node.name}</span>\n          </SidebarMenuButton>\n        </CollapsibleTrigger>\n        <CollapsibleContent>\n          <SidebarMenuSub>\n            {node.children.map((child) => (\n              <Tree key={child.name} node={child} parent={path} active={active} onPick={onPick} />\n            ))}\n          </SidebarMenuSub>\n        </CollapsibleContent>\n      </SidebarMenuItem>\n    </Collapsible>\n  )\n}\n\nexport function AppSidebar({ active, onPick, ...props }: React.ComponentProps<typeof Sidebar> & { active: string; onPick: (path: string) => void }) {\n  return (\n    <Sidebar role=\"navigation\" aria-label=\"Files\" {...props}>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarGroupLabel>Changes</SidebarGroupLabel>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {fileChanges.map((change) => (\n                <SidebarMenuItem key={change.file}>\n                  <SidebarMenuButton isActive={active === change.file} aria-current={active === change.file ? \"true\" : undefined} className=\"group-has-data-[sidebar=menu-badge]/menu-item:pe-8\" onClick={() => onPick(change.file)}>\n                    <Icon name={fileIcon(change.file)} />\n                    <span className=\"truncate\">{change.file}</span>\n                  </SidebarMenuButton>\n                  <SidebarMenuBadge>\n                    <span aria-hidden=\"true\">{change.state}</span>\n                    <span className=\"sr-only\">{STATE_NAMES[change.state] ?? change.state}</span>\n                  </SidebarMenuBadge>\n                </SidebarMenuItem>\n              ))}\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n        <SidebarGroup>\n          <SidebarGroupLabel>Files</SidebarGroupLabel>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {fileTree.map((node) => (\n                <Tree key={node.name} node={node} parent=\"\" active={active} onPick={onPick} />\n              ))}\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n      </SidebarContent>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-11/components/sidebar-11-app-sidebar.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-11/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { AppSidebar } from \"@/components/blocks/sidebar-11/components/sidebar-11-app-sidebar\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { PageBody, PageHeader, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\nimport { cn } from \"@/lib/utils\"\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  const [active, setActive] = React.useState(\"components/ui/button.tsx\")\n  const parts = active.split(\"/\")\n  const file = parts[parts.length - 1]!\n\n  return (\n    <SidebarProvider className={cn(\"overflow-x-clip\", c.provider)}>\n      <AppSidebar className={c.sidebar} active={active} onPick={setActive} />\n      <PageSheet className={c.inset}>\n        <PageHeader crumbs={parts} bordered />\n        <PageBody title={file} kicker={parts.length > 1 ? parts.slice(0, -1).join(\" / \") : \"project root\"}>\n          <PageNote title=\"No editor here yet\" pose=\"think\">\n            This is where {file} would open. Pick another file on the pad and the trail above follows you.\n          </PageNote>\n        </PageBody>\n      </PageSheet>\n    </SidebarProvider>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-11/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "tree",
+      "files"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 11\" block into your components directory under blocks/sidebar-11/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-11/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

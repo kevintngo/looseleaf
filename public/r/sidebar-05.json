@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-05",
+  "title": "Sidebar 05",
+  "description": "A sidebar with collapsible submenus: each section is a row with a plus that turns into a minus while its pages are showing. Mirrors shadcn's sidebar-05. Looks right on the desk and on plain paper.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/collapsible.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-05/components/sidebar-05-app-sidebar.tsx",
+      "content": "import * as React from \"react\"\n\nimport { SidebarBrand } from \"@/components/blocks/sidebar-shared/sidebar-brand\"\nimport { docsNav } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { SearchForm } from \"@/components/blocks/sidebar-shared/sidebar-search-form\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\nimport { Icon } from \"@/components/ui/icon\"\nimport {\n  Sidebar,\n  SidebarContent,\n  SidebarGroup,\n  SidebarHeader,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarMenuSub,\n  SidebarMenuSubButton,\n  SidebarMenuSubItem,\n  SidebarRail,\n} from \"@/components/ui/sidebar\"\n\nexport function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {\n  return (\n    <Sidebar role=\"navigation\" aria-label=\"Field guide\" {...props}>\n      <SidebarHeader>\n        <SidebarBrand title=\"Field guide\" subtitle=\"v1.0.0\" icon=\"book-open\" />\n        <SearchForm />\n      </SidebarHeader>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarMenu>\n            {docsNav.map((section, index) => (\n              <Collapsible key={section.title} asChild defaultOpen={index === 1}>\n                <SidebarMenuItem>\n                  <CollapsibleTrigger asChild>\n                    <SidebarMenuButton>\n                      {section.title}\n                      <Icon name=\"plus\" className=\"ms-auto group-data-[state=open]/collapsible:hidden\" />\n                      <Icon name=\"minus\" className=\"ms-auto group-data-[state=closed]/collapsible:hidden\" />\n                    </SidebarMenuButton>\n                  </CollapsibleTrigger>\n                  {section.items.length ? (\n                    <CollapsibleContent>\n                      <SidebarMenuSub>\n                        {section.items.map((item) => (\n                          <SidebarMenuSubItem key={item.title}>\n                            <SidebarMenuSubButton asChild isActive={item.isActive}>\n                              <a href={item.url}>{item.title}</a>\n                            </SidebarMenuSubButton>\n                          </SidebarMenuSubItem>\n                        ))}\n                      </SidebarMenuSub>\n                    </CollapsibleContent>\n                  ) : null}\n                </SidebarMenuItem>\n              </Collapsible>\n            ))}\n          </SidebarMenu>\n        </SidebarGroup>\n      </SidebarContent>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-05/components/sidebar-05-app-sidebar.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-05/page.tsx",
+      "content": "import { AppSidebar } from \"@/components/blocks/sidebar-05/components/sidebar-05-app-sidebar\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { docsTrail } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { PageBody, PageHeader, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  return (\n    <SidebarProvider className={c.provider}>\n      <AppSidebar className={c.sidebar} />\n      <PageSheet className={c.inset}>\n        <PageHeader crumbs={docsTrail} bordered className=\"overflow-x-clip\" />\n        <PageBody title=\"Margins\" kicker=\"Writing on paper\">\n          <PageNote title=\"Plus opens, minus closes\" pose=\"wave\">\n            Open a section on the pad to see its pages. Only one is open to begin with, so the list stays short.\n          </PageNote>\n        </PageBody>\n      </PageSheet>\n    </SidebarProvider>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-05/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "navigation",
+      "collapsible"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 05\" block into your components directory under blocks/sidebar-05/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-05/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

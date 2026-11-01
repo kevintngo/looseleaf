@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "footer-01",
+  "title": "Footer, stitched kraft",
+  "description": "A sheet of kraft torn along its top edge and sewn with a running stitch: wordmark and Stubby, three link lists, social buttons, a status badge and a round rubber stamp. Looks right on paper or on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/badge.json",
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/mascot.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/separator.json",
+    "https://kevintngo.github.io/looseleaf/r/stamp.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/footer-01/components/footer-01-brand.tsx",
+      "content": "import { Mascot } from \"@/components/ui/mascot\"\nimport { Stamp } from \"@/components/ui/stamp\"\n\nfunction Footer01Brand() {\n  return (\n    <div className=\"flex flex-wrap items-start gap-x-6 gap-y-4 @3xl:flex-col\">\n      <div className=\"max-w-xs\">\n        <a href=\"#top\" className=\"flex items-center gap-2 font-script text-4xl leading-none font-bold text-ink\">\n          <Mascot pose=\"idle\" size={40} />\n          penmark\n        </a>\n        <p className=\"mt-3 text-base/7 text-ink\">Notes and tasks for small teams, drawn by hand in Lisbon and kept in a drawer in Porto.</p>\n      </div>\n      <Stamp shape=\"round\" text=\"hand made\" ring=\"PENMARK * DRAWN IN LISBON *\" ink=\"ink-you\" size={112} tilt={-9} seed=\"footer-stamp\" label=\"Stamp: hand made, drawn in Lisbon\" />\n    </div>\n  )\n}\n\nexport { Footer01Brand }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/footer-01/components/footer-01-brand.tsx"
+    },
+    {
+      "path": "src/blocks/footer-01/components/footer-01-links.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nconst COLUMNS = [\n  { title: \"Product\", links: [\"Notebooks\", \"Tasks\", \"Templates\", \"Changelog\", \"Pricing\"] },\n  { title: \"Company\", links: [\"About\", \"Careers\", \"Press kit\", \"Contact\"] },\n  { title: \"Resources\", links: [\"Guides\", \"Help centre\", \"API docs\", \"Status\", \"Community\"] },\n]\n\nfunction Footer01Links() {\n  return (\n    <div className=\"grid grid-cols-2 gap-x-6 gap-y-10 @xl:grid-cols-3\">\n      {COLUMNS.map((col) => (\n        <FooterColumn key={col.title} title={col.title} links={col.links} />\n      ))}\n    </div>\n  )\n}\n\nfunction FooterColumn({ title, links }: { title: string; links: string[] }) {\n  const id = React.useId()\n  return (\n    <nav aria-labelledby={id}>\n      <h2 id={id} className=\"font-script text-2xl leading-none font-bold text-ink\">\n        {title}\n      </h2>\n      <ul role=\"list\" className=\"mt-3 grid list-none gap-0.5\">\n        {links.map((l) => (\n          <li key={l}>\n            <a href={`#${l.toLowerCase().replace(/\\s+/g, \"-\")}`} className=\"-mx-2 inline-block px-2 py-1 text-base text-ink hover:ll-swipe\">\n              {l}\n            </a>\n          </li>\n        ))}\n      </ul>\n    </nav>\n  )\n}\n\nexport { Footer01Links, COLUMNS }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/footer-01/components/footer-01-links.tsx"
+    },
+    {
+      "path": "src/blocks/footer-01/page.tsx",
+      "content": "\"use client\"\n\nimport { Badge } from \"@/components/ui/badge\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Paper } from \"@/components/ui/paper\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Footer01Brand } from \"@/components/blocks/footer-01/components/footer-01-brand\"\nimport { Footer01Links } from \"@/components/blocks/footer-01/components/footer-01-links\"\n\nconst social = [\n  { label: \"Email us\", icon: \"mail\", href: \"mailto:hello@penmark.example\" },\n  { label: \"Read the blog\", icon: \"book-open\", href: \"#blog\" },\n  { label: \"Join the chat\", icon: \"message-circle\", href: \"#chat\" },\n  { label: \"See the source\", icon: \"code\", href: \"#source\" },\n]\n\nexport default function Footer01() {\n  return (\n    <div className=\"@container w-full\">\n      <div className=\"px-4 pt-14 pb-6 @xl:px-8\">\n        <Paper as=\"footer\" stock=\"kraft\" edge={{ top: \"torn\" }} tilt={false} seed=\"footer-01\" className=\"mx-auto max-w-6xl px-6 pt-12 pb-7 @xl:px-12\">\n          <div className=\"grid gap-12 @3xl:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]\">\n            <Footer01Brand />\n            <Footer01Links />\n          </div>\n\n          <Separator variant=\"stitched\" className=\"my-8\" />\n\n          <div className=\"flex flex-wrap items-center justify-between gap-x-6 gap-y-4 text-[15px] text-ink\">\n            <p>&copy; 2026 Penmark. Every page checked by hand.</p>\n            <ul role=\"list\" className=\"flex list-none items-center gap-1\" aria-label=\"Elsewhere\">\n              {social.map((s) => (\n                <li key={s.label}>\n                  <Button asChild variant=\"ghost\" size=\"icon\">\n                    <a href={s.href} aria-label={s.label}>\n                      <Icon name={s.icon} size={20} />\n                    </a>\n                  </Button>\n                </li>\n              ))}\n            </ul>\n            <div className=\"flex flex-wrap items-center gap-x-4 gap-y-2\">\n              <a href=\"#privacy\" className=\"inline-block py-1 underline underline-offset-4 hover:ll-swipe\">\n                Privacy\n              </a>\n              <a href=\"#terms\" className=\"inline-block py-1 underline underline-offset-4 hover:ll-swipe\">\n                Terms\n              </a>\n              <Badge tone=\"grass\">All systems normal</Badge>\n            </div>\n          </div>\n        </Paper>\n      </div>\n    </div>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/footer-01/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "marketing",
+      "footer",
+      "kraft",
+      "stamp"
+    ]
+  },
+  "docs": "Installed the \"Footer, stitched kraft\" block into your components directory under blocks/footer-01/.\nImport it: import Footer01 from \"<your components alias>/blocks/footer-01/page\"",
+  "categories": [
+    "marketing"
+  ],
+  "type": "registry:block"
+}

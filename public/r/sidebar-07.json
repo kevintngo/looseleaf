@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-07",
+  "title": "Sidebar 07",
+  "description": "A sidebar that collapses to icons: the header button, Ctrl/Cmd+B or the strip on the pad's edge shrinks it to a 3rem column, the clip comes off and each icon names itself in a tooltip. Team switcher, folding rows, projects and an account menu. Mirrors shadcn's sidebar-07. Looks right on the desk and on plain paper.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/collapsible.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-07/components/sidebar-07-app-sidebar.tsx",
+      "content": "import * as React from \"react\"\n\nimport { NavMain } from \"@/components/blocks/sidebar-07/components/sidebar-07-nav-main\"\nimport { appNav, appProjects, appTeams, appUser } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { NavProjects } from \"@/components/blocks/sidebar-shared/sidebar-nav-app\"\nimport { TeamSwitcher } from \"@/components/blocks/sidebar-shared/sidebar-team-switcher\"\nimport { NavUser } from \"@/components/blocks/sidebar-shared/sidebar-user-menu\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from \"@/components/ui/sidebar\"\n\nconst nav = appNav.map((item) => ({ ...item, items: item.items?.map((sub) => ({ ...sub, isActive: sub.title === \"Recent\" })) }))\n\nexport function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {\n  return (\n    <Sidebar collapsible=\"icon\" role=\"navigation\" aria-label=\"Studio\" {...props}>\n      <SidebarHeader>\n        <TeamSwitcher teams={appTeams} />\n      </SidebarHeader>\n      <SidebarContent>\n        <NavMain items={nav} />\n        <NavProjects projects={appProjects} />\n      </SidebarContent>\n      <SidebarFooter>\n        <NavUser user={appUser} />\n      </SidebarFooter>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-07/components/sidebar-07-app-sidebar.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-07/components/sidebar-07-nav-main.tsx",
+      "content": "\"use client\"\n\nimport type { AppNavItem } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { Collapsible, CollapsibleContent, CollapsibleIndicator, CollapsibleTrigger } from \"@/components/ui/collapsible\"\nimport { Icon } from \"@/components/ui/icon\"\nimport {\n  SidebarGroup,\n  SidebarGroupLabel,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarMenuSub,\n  SidebarMenuSubButton,\n  SidebarMenuSubItem,\n} from \"@/components/ui/sidebar\"\n\nexport function NavMain({ items, label = \"Studio\" }: { items: AppNavItem[]; label?: string }) {\n  return (\n    <SidebarGroup>\n      <SidebarGroupLabel>{label}</SidebarGroupLabel>\n      <SidebarMenu>\n        {items.map((item) => (\n          <Collapsible key={item.title} asChild defaultOpen={item.isActive}>\n            <SidebarMenuItem>\n              <CollapsibleTrigger asChild>\n                <SidebarMenuButton tooltip={item.title}>\n                  <Icon name={item.icon} />\n                  <span className=\"truncate\">{item.title}</span>\n                  <CollapsibleIndicator className=\"ms-auto group-data-[collapsible=icon]:hidden\" />\n                </SidebarMenuButton>\n              </CollapsibleTrigger>\n              <CollapsibleContent>\n                <SidebarMenuSub>\n                  {item.items?.map((sub) => (\n                    <SidebarMenuSubItem key={sub.title}>\n                      <SidebarMenuSubButton asChild isActive={sub.isActive}>\n                        <a href={sub.url}>\n                          <span>{sub.title}</span>\n                        </a>\n                      </SidebarMenuSubButton>\n                    </SidebarMenuSubItem>\n                  ))}\n                </SidebarMenuSub>\n              </CollapsibleContent>\n            </SidebarMenuItem>\n          </Collapsible>\n        ))}\n      </SidebarMenu>\n    </SidebarGroup>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-07/components/sidebar-07-nav-main.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-07/page.tsx",
+      "content": "import { AppSidebar } from \"@/components/blocks/sidebar-07/components/sidebar-07-app-sidebar\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { PageBody, PageHeader, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  return (\n    <SidebarProvider className={c.provider}>\n      <AppSidebar className={c.sidebar} />\n      <PageSheet className={c.inset}>\n        <PageHeader\n          crumbs={[{ label: \"Sketchbook\", href: \"#sketchbook\" }, \"Recent\"]}\n          className=\"transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12\"\n        />\n        <PageBody title=\"Recent sketches\" kicker=\"Sketchbook\">\n          <PageNote title=\"Nothing sketched today\" pose=\"sketch\">\n            The button above squeezes the pad down to icons so the page gets all the room. On a phone it opens the pad instead.\n          </PageNote>\n        </PageBody>\n      </PageSheet>\n    </SidebarProvider>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-07/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "icons",
+      "collapsible",
+      "app"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 07\" block into your components directory under blocks/sidebar-07/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-07/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

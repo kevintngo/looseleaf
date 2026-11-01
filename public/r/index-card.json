@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "index-card",
+  "title": "Index card",
+  "description": "A 3 x 5 card of cream stock with a red header rule and blue lines every 30 px. Header, body and footer parts lay out on the printed rules; the card can have its rod hole punched at the foot, a coloured flag stuck over its edge, and a pile of cards behind it.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-paper.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/use-paper-object.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/index-card.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { usePaperDecor } from \"@/hooks/use-paper-object\"\nimport type { Accent } from \"@/lib/ink/paper/props\"\nimport { indexCardRecipe } from \"@/lib/ink/recipes/index-card-ink\"\nimport { cn } from \"@/lib/utils\"\n\ntype IndexCardProps = Omit<PaperProps, \"stock\" | \"rules\"> & {\n  hole?: boolean\n  flag?: Accent | false\n  stack?: 0 | 1 | 2 | 3\n}\n\nfunction IndexCard({ className, children, ref, hole = false, flag = false, stack = 0, as = \"div\", seed, tilt, size, style, ...props }: IndexCardProps) {\n  const o = usePaperDecor({\n    recipe: indexCardRecipe,\n    params: { hole, flag: flag || \"none\", stack },\n    kind: \"index-card\",\n    ref,\n    seed,\n    tilt,\n    tiltMax: 0.5 * 0.45,\n    size,\n    enabled: hole || !!flag || stack > 0,\n  })\n  return (\n    <Paper\n      data-slot=\"index-card\"\n      as={as}\n      stock=\"index-card\"\n      rules=\"index\"\n      size={size}\n      {...o.paper}\n      {...props}\n      className={cn(o.paper.className, \"flex min-h-56 w-full max-w-md flex-col px-5 pb-[25px] text-[17px] leading-[30px] rtl:[&>[data-slot=paper-rules]]:-scale-x-100\", className)}\n      style={{ ...o.paper.style, ...style }}\n    >\n      {o.decor}\n      {children}\n    </Paper>\n  )\n}\n\nfunction IndexCardHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"index-card-header\" className={cn(\"flex h-[49px] shrink-0 items-end justify-between gap-3 pb-1.5\", className)} {...props} />\n}\n\nfunction IndexCardTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"index-card-title\" className={cn(\"min-w-0 truncate pe-[0.2em] -me-[0.2em] pb-[0.2em] -mb-[0.2em] font-script text-[1.65rem] leading-none font-bold\", className)} {...props} />\n}\n\nfunction IndexCardContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"index-card-content\" className={cn(\"flex-1\", className)} {...props} />\n}\n\nfunction IndexCardFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"index-card-footer\" className={cn(\"mt-auto flex items-center justify-between gap-3 text-sm leading-[30px] text-muted-foreground\", className)} {...props} />\n}\n\nexport { IndexCard, IndexCardHeader, IndexCardTitle, IndexCardContent, IndexCardFooter }\nexport type { IndexCardProps }\n",
+      "type": "registry:ui",
+      "target": "@ui/index-card.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/index-card-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { holePunch, mirrorX, num, pathTag, stackSvg, tok } from '@/lib/ink/recipes/paper-set-ink'\nimport type { Accent } from '@/lib/ink/paper/props'\n\nexport interface IndexCardParams {\n  hole: boolean\n  flag: Accent | 'none'\n  stack: number\n}\n\nexport const INDEX_CARD = { holeFromFoot: 19, holeR: 6.2, flagAt: 58, flagH: 42, flagOut: 15, flagOver: 9 } as const\n\nexport const indexCardRecipe = defineRecipe<IndexCardParams>({\n  id: 'index-card-decor',\n  kind: 'index-card',\n  layers: ['rest'],\n  pad: 26,\n  draw(ink, { w, h }, { hole, flag, stack }, ctx) {\n    const id = `ll-ic${ink.seed.toString(36)}`\n    ink.layer('rest', () => {\n      const r = ink.next('card')\n      let s = stackSvg(w, h, stack, r, id, ['card', 'slip'])\n      let inner = ''\n      if (hole) inner += holePunch(`${id}h`, w / 2 + r.gauss(0, 0.6), h - INDEX_CARD.holeFromFoot + r.gauss(0, 0.5), INDEX_CARD.holeR, r.range(-20, 20))\n      if (flag !== 'none') {\n        const { flagAt: y, flagH: fh, flagOut: out, flagOver: over } = INDEX_CARD\n        const x0 = w - over\n        const x1 = w + out\n        const body = `M${num(x0)} ${num(y)}H${num(x1 - 3)}L${num(x1)} ${num(y + fh / 2)}L${num(x1 - 3)} ${num(y + fh)}H${num(x0)}z`\n        inner += pathTag(body, { fill: tok('ink'), op: 0.18, transform: 'translate(.8 2)' })\n        inner += pathTag(body, { fill: tok(flag), op: 0.92 })\n        inner += pathTag(`M${num(x0)} ${num(y)}H${num(w)}V${num(y + fh)}H${num(x0)}z`, { fill: tok('photo'), op: 0.18 })\n        inner += pathTag(`M${num(w)} ${num(y)}V${num(y + fh)}`, { stroke: tok('ink'), sw: 0.6, op: 0.28 })\n        inner += pathTag(`M${num(x0 + 1)} ${num(y + 1)}H${num(x1 - 3)}`, { stroke: tok('photo'), sw: 0.9, op: 0.75 })\n        inner += pathTag(body, { stroke: tok('ink'), sw: 0.6, op: 0.28 })\n      }\n      s += ctx.dir === 'rtl' ? mirrorX(w, inner) : inner\n      ink.raw(s, 'top')\n      ink.grow([-26, -26, w + 26, h + 26])\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/index-card-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "card",
+      "paper",
+      "sticky-note",
+      "notebook"
+    ],
+    "a11y": [
+      "An index card is a plain `div`; use `as=\"article\"` or `role=\"group\"` with a label when it means more. The hole, flag and pile are aria-hidden decoration; put anything a flag stands for into text.",
+      "Body ink is 14:1 on the card; the muted footer 8:1. The printed rules and the red header line are decoration and mirror for right-to-left text.",
+      "The tilt is zero in calm density; Windows high contrast replaces the drawing with a plain outline."
+    ],
+    "usage": "import { IndexCard, IndexCardContent, IndexCardFooter, IndexCardHeader, IndexCardTitle } from \"@/components/ui/index-card\"\n\n<IndexCard hole flag=\"tomato\" stack={2}>\n  <IndexCardHeader><IndexCardTitle>Sources</IndexCardTitle></IndexCardHeader>\n  <IndexCardContent>sketchbook, dip pen, ink</IndexCardContent>\n  <IndexCardFooter><span>filed under P</span><span>12</span></IndexCardFooter>\n</IndexCard>",
+    "parts": [
+      "IndexCard",
+      "IndexCardHeader",
+      "IndexCardTitle",
+      "IndexCardContent",
+      "IndexCardFooter"
+    ]
+  },
+  "categories": [
+    "Paper"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "annotate",
+  "title": "Annotate",
+  "description": "One component for every mark, in the spirit of RoughNotation: put a highlight, an underline, a circle, a box, brackets, a strike, a cross-out or a scribble on real words, and draw it on when it scrolls into view.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/circled.json",
+    "https://kevintngo.github.io/looseleaf/r/highlight.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/scribble.json",
+    "https://kevintngo.github.io/looseleaf/r/strike.json",
+    "https://kevintngo.github.io/looseleaf/r/underline.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/annotate.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Circled } from \"@/components/ui/circled\"\nimport { Highlight } from \"@/components/ui/highlight\"\nimport { Scribble } from \"@/components/ui/scribble\"\nimport { Strike } from \"@/components/ui/strike\"\nimport { Underline } from \"@/components/ui/underline\"\nimport type { HighlightTone, MarkPen, MarkWeight } from \"@/lib/ink/recipes/text-marks-ink\"\nimport type { UnderlineKind } from \"@/lib/ink/recipes/underline-ink\"\n\nexport type AnnotateType = \"underline\" | \"box\" | \"circle\" | \"highlight\" | \"strike-through\" | \"crossed-off\" | \"brackets\" | \"scribble\"\n\ntype Common = {\n  type: AnnotateType\n  color?: HighlightTone | MarkPen\n  weight?: MarkWeight\n  kind?: UnderlineKind\n  show?: boolean\n  animate?: boolean\n  delay?: number\n  seed?: string | number\n  className?: string\n  children?: React.ReactNode\n}\n\nconst HIGHLIGHTS: readonly string[] = [\"yellow\", \"pink\", \"green\", \"blue\", \"orange\", \"lilac\", \"teal\"]\nconst PENS: readonly string[] = [\"ink\", \"blue\", \"red\", \"green\", \"pencil\", \"marker\", \"orange\"]\n\nfunction Annotate({ type, color, weight, kind, ...props }: Common & Omit<React.ComponentProps<\"span\">, keyof Common | \"color\">) {\n  const pen: MarkPen | undefined = color && PENS.includes(color) ? (color as MarkPen) : undefined\n  const tone: HighlightTone | undefined = color && HIGHLIGHTS.includes(color) ? (color as HighlightTone) : undefined\n  switch (type) {\n    case \"highlight\":\n      return <Highlight data-annotate={type} tone={tone} weight={weight === \"fine\" ? \"light\" : weight === \"brush\" ? \"heavy\" : undefined} {...(props as React.ComponentProps<\"mark\">)} />\n    case \"underline\":\n      return <Underline data-annotate={type} kind={kind} tone={pen} weight={weight} {...props} />\n    case \"circle\":\n      return <Circled data-annotate={type} shape=\"circle\" tone={pen} weight={weight} {...props} />\n    case \"box\":\n      return <Circled data-annotate={type} shape=\"box\" tone={pen} weight={weight} {...props} />\n    case \"brackets\":\n      return <Circled data-annotate={type} shape=\"brackets\" tone={pen} weight={weight} {...props} />\n    case \"strike-through\":\n      return <Strike data-annotate={type} kind=\"single\" tone={pen} weight={weight} {...(props as React.ComponentProps<\"s\">)} />\n    case \"crossed-off\":\n      return <Strike data-annotate={type} kind=\"cross\" tone={pen} weight={weight} {...(props as React.ComponentProps<\"s\">)} />\n    case \"scribble\":\n      return <Scribble data-annotate={type} tone={pen} weight={weight} {...props} />\n    default:\n      return <span {...props} />\n  }\n}\n\nexport { Annotate }\n",
+      "type": "registry:ui",
+      "target": "@ui/annotate.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "highlight",
+      "underline",
+      "circled",
+      "strike",
+      "scribble",
+      "callout",
+      "arrow"
+    ],
+    "a11y": [
+      "The words are ordinary text: selectable, copyable, found by search and read in order. Every drawing is aria-hidden and pointer-events-none.",
+      "A mark that carries meaning (the right answer, a price that changed) needs the meaning in words as well; a drawing alone is not announced.",
+      "Highlight is a <mark>, strike-through is an <s>. Before the drawing exists, without JavaScript, and in Windows high contrast, the browser's own decoration shows instead.",
+      "Reduced motion (or data-motion=\"reduced\") zeroes the draw-on: marks simply appear."
+    ],
+    "usage": "import { Annotate } from \"@/components/ui/annotate\"\n\nexport function Example() {\n  return (\n    <p>\n      Read <Annotate type=\"circle\" color=\"red\" animate>this</Annotate> twice, and{\" \"}\n      <Annotate type=\"highlight\" animate>underline nothing</Annotate>.\n    </p>\n  )\n}",
+    "parts": [
+      "Annotate"
+    ]
+  },
+  "categories": [
+    "Marks"
+  ],
+  "type": "registry:ui"
+}

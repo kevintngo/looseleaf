@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "newsletter-01",
+  "title": "Newsletter sign-up",
+  "description": "A taped card with a labelled email field and a button, beside a kraft envelope that holds a sample letter. A bad address is flagged under the field; a good one opens the envelope and stamps it SUBSCRIBED. Looks right on paper or on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/envelope.json",
+    "https://kevintngo.github.io/looseleaf/r/field.json",
+    "https://kevintngo.github.io/looseleaf/r/input.json",
+    "https://kevintngo.github.io/looseleaf/r/lettering.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/stamp.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/newsletter-01/components/newsletter-01-envelope.tsx",
+      "content": "\"use client\"\n\nimport { Envelope, EnvelopeAddress, EnvelopeFront, EnvelopeLetter, EnvelopeSender, EnvelopeTrigger } from \"@/components/ui/envelope\"\nimport { Stamp } from \"@/components/ui/stamp\"\n\ntype Newsletter01EnvelopeProps = {\n  open: boolean\n  onOpenChange: (open: boolean) => void\n  stamped: boolean\n}\n\nfunction Newsletter01Envelope({ open, onOpenChange, stamped }: Newsletter01EnvelopeProps) {\n  return (\n    <div className=\"relative mx-auto flex aspect-[40/39] w-full max-w-sm flex-col justify-end\">\n      <Envelope stock=\"kraft\" stamp=\"tomato\" postmark open={open} onOpenChange={onOpenChange} seed=\"newsletter-envelope\" tilt={1}>\n        <EnvelopeFront>\n          <EnvelopeSender>\n            Penmark\n            <br />\n            Lisbon\n          </EnvelopeSender>\n          <EnvelopeAddress className=\"text-[1.15rem]\">\n            <p>You</p>\n            <p>Your inbox</p>\n            <p>Sunday morning</p>\n          </EnvelopeAddress>\n          <EnvelopeTrigger>Peek inside the Sunday letter</EnvelopeTrigger>\n        </EnvelopeFront>\n        <EnvelopeLetter>\n          <p className=\"font-script text-2xl leading-none font-bold\">Sunday letter, no. 41</p>\n          <p className=\"mt-1 text-sm\">On buying too many pens, and one very good link.</p>\n        </EnvelopeLetter>\n      </Envelope>\n      {stamped ? (\n        <Stamp\n          text=\"Subscribed\"\n          ink=\"green\"\n          w={150}\n          h={50}\n          tilt={-8}\n          ghost\n          seed=\"newsletter-stamp\"\n          className=\"pointer-events-none absolute end-3 bottom-5 z-30 animate-in zoom-in-[1.7] fade-in-0 duration-(--ll-dur-pop)\"\n        />\n      ) : null}\n    </div>\n  )\n}\n\nexport { Newsletter01Envelope }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/newsletter-01/components/newsletter-01-envelope.tsx"
+    },
+    {
+      "path": "src/blocks/newsletter-01/components/newsletter-01-form.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Field, FieldDescription, FieldError, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\ntype Newsletter01Status = \"idle\" | \"invalid\" | \"sending\" | \"failed\" | \"done\"\n\ntype Newsletter01FormProps = {\n  status: Newsletter01Status\n  email: string\n  onEmailChange: (email: string) => void\n  onSubmit: () => void\n  onReset: () => void\n}\n\nfunction Newsletter01Form({ status, email, onEmailChange, onSubmit, onReset }: Newsletter01FormProps) {\n  const id = React.useId()\n  const inputRef = React.useRef<HTMLInputElement>(null)\n  const doneRef = React.useRef<HTMLDivElement>(null)\n  const bad = status === \"invalid\" || status === \"failed\"\n\n  React.useEffect(() => {\n    if (status === \"done\") doneRef.current?.focus()\n    if (status === \"invalid\" || status === \"failed\") inputRef.current?.focus()\n  }, [status])\n\n  if (status === \"done\") {\n    return (\n      <div ref={doneRef} tabIndex={-1} role=\"status\" className=\"rounded-none outline-none\">\n        <p className=\"font-script text-3xl leading-none font-bold text-ink\">You&rsquo;re on the list.</p>\n        <p className=\"mt-2 text-lg/7 text-ink-soft\">\n          We sent a note to <strong className=\"font-bold text-ink\">{email}</strong>. Click the link inside to confirm, and the first letter lands on Sunday.\n        </p>\n        <Button type=\"button\" variant=\"link\" size=\"sm\" onClick={onReset} className=\"-ms-3 mt-1\">\n          Use a different address\n        </Button>\n      </div>\n    )\n  }\n\n  return (\n    <form\n      noValidate\n      onSubmit={(e) => {\n        e.preventDefault()\n        onSubmit()\n      }}\n    >\n      <Field data-invalid={bad || undefined}>\n        <FieldLabel htmlFor={`${id}-email`}>Your email address</FieldLabel>\n        <div className=\"flex flex-col gap-3 @lg:flex-row @lg:gap-4\">\n          <Input\n            ref={inputRef}\n            id={`${id}-email`}\n            type=\"email\"\n            name=\"email\"\n            autoComplete=\"email\"\n            required\n            placeholder=\"you@example.com\"\n            value={email}\n            onChange={(e) => onEmailChange(e.target.value)}\n            aria-invalid={bad || undefined}\n            aria-describedby={`${id}-help${bad ? ` ${id}-error` : \"\"}`}\n            className=\"min-w-0 @lg:flex-1\"\n          />\n          <Button type=\"submit\" disabled={status === \"sending\"}>\n            {status === \"sending\" ? \"Subscribing…\" : \"Subscribe\"}\n          </Button>\n        </div>\n        <FieldDescription id={`${id}-help`}>No spam. Leave with one click. 12,400 people read it.</FieldDescription>\n        {status === \"invalid\" ? <FieldError id={`${id}-error`}>That does not look like an email address. Check it for typos?</FieldError> : null}\n        {status === \"failed\" ? <FieldError id={`${id}-error`}>Something went wrong on our side. Please try again in a moment.</FieldError> : null}\n      </Field>\n    </form>\n  )\n}\n\nexport { Newsletter01Form }\nexport type { Newsletter01Status }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/newsletter-01/components/newsletter-01-form.tsx"
+    },
+    {
+      "path": "src/blocks/newsletter-01/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Lettering } from \"@/components/ui/lettering\"\nimport { Paper } from \"@/components/ui/paper\"\nimport { Newsletter01Envelope } from \"@/components/blocks/newsletter-01/components/newsletter-01-envelope\"\nimport { Newsletter01Form, type Newsletter01Status } from \"@/components/blocks/newsletter-01/components/newsletter-01-form\"\n\ntype Newsletter01Props = {\n  onSubscribe?: (email: string) => void | Promise<void>\n}\n\nconst EMAIL = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/\n\nexport default function Newsletter01({ onSubscribe }: Newsletter01Props) {\n  const titleId = React.useId()\n  const [status, setStatus] = React.useState<Newsletter01Status>(\"idle\")\n  const [email, setEmail] = React.useState(\"\")\n  const [open, setOpen] = React.useState(false)\n\n  const submit = async () => {\n    if (!EMAIL.test(email.trim())) {\n      setStatus(\"invalid\")\n      return\n    }\n    setStatus(\"sending\")\n    try {\n      await onSubscribe?.(email.trim())\n      setStatus(\"done\")\n      setOpen(true)\n    } catch {\n      setStatus(\"failed\")\n    }\n  }\n\n  return (\n    <section aria-labelledby={titleId} className=\"@container relative w-full overflow-x-clip\">\n      <div className=\"px-8 py-14 @xl:py-20\">\n        <div className=\"mx-auto grid max-w-5xl items-center gap-x-14 gap-y-6 @3xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]\">\n          <Paper stock=\"paper\" tilt={false} tape=\"corner\" tapeKind=\"washi-dots\" seed=\"newsletter-card\" className=\"px-6 py-8 @xl:px-9 @xl:py-10\">\n            <p className=\"font-type text-sm tracking-[0.18em] text-pencil-text uppercase\">The Sunday letter</p>\n            <Lettering as=\"h2\" id={titleId} size=\"md\" tone=\"marker\" wobble={0.4} seed=\"newsletter-title\" className=\"mt-3\">\n              One short letter, every Sunday\n            </Lettering>\n            <p className=\"mt-4 mb-6 text-lg/7 text-ink-soft\">What we shipped, what we drew, and one good link. Three minutes, best with tea.</p>\n            <Newsletter01Form\n              status={status}\n              email={email}\n              onEmailChange={(v) => {\n                setEmail(v)\n                if (status === \"invalid\" || status === \"failed\") setStatus(\"idle\")\n              }}\n              onSubmit={submit}\n              onReset={() => {\n                setStatus(\"idle\")\n                setEmail(\"\")\n                setOpen(false)\n              }}\n            />\n          </Paper>\n\n          <Newsletter01Envelope open={open} onOpenChange={setOpen} stamped={status === \"done\"} />\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport type { Newsletter01Props }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/newsletter-01/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "marketing",
+      "newsletter",
+      "form",
+      "envelope"
+    ]
+  },
+  "docs": "Installed the \"Newsletter sign-up\" block into your components directory under blocks/newsletter-01/.\nImport it: import Newsletter01 from \"<your components alias>/blocks/newsletter-01/page\"",
+  "categories": [
+    "marketing"
+  ],
+  "type": "registry:block"
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sticker",
+  "title": "Sticker",
+  "description": "Die-cut vinyl stickers: the art with a white border, a cut line, a soft shadow and, if you like, a peeled corner. Status badges (done, sale) are generated; the rest are drawn by hand.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-art.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-stickers.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/sticker.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { useEnsureInkDefs } from \"@/lib/ink/react\"\nimport { stickers, type StickerName } from \"@/lib/ink/art/stickers\"\nimport { memo, renderSticker } from \"@/lib/ink/art-draw\"\nimport { hashSeed } from \"@/lib/ink/rng\"\nimport type { StickerDef } from \"@/lib/ink/art/types\"\n\nconst autoTilt = (seed: string): number => ((hashSeed(seed) % 640) - 320) / 100\n\nfunction Sticker({\n  name,\n  size = 96,\n  peel = false,\n  rotate = \"auto\",\n  border,\n  shadow = true,\n  seed,\n  label,\n  className,\n  style,\n  ...props\n}: Omit<React.ComponentProps<\"svg\">, \"name\" | \"children\" | \"viewBox\"> & {\n  name: StickerName | (string & {})\n  size?: number\n  peel?: boolean | number\n  rotate?: number | \"auto\"\n  border?: number\n  shadow?: boolean\n  seed?: string | number\n  label?: string\n}) {\n  useEnsureInkDefs()\n  const def = (stickers as Record<string, StickerDef>)[name]\n  const uid = React.useId().replace(/[^a-zA-Z0-9]/g, \"\")\n  if (!def) return null\n  const px = Math.max(32, Math.round(size))\n  const s = `${seed ?? name}`\n  const res = memo(`sticker|${name}|${px}|${peel}|${border ?? \"\"}|${s}|${uid}`, () => renderSticker(def, px, s, { peel: peel === false ? undefined : peel, border, idPrefix: `ll-${uid}` }), 120)\n  const tilt = rotate === \"auto\" ? autoTilt(s) : rotate\n  return (\n    <svg\n      data-slot=\"sticker\"\n      data-ink=\"sticker\"\n      data-sticker={name}\n      aria-hidden={label ? undefined : true}\n      role={label ? \"img\" : undefined}\n      aria-label={label}\n      focusable=\"false\"\n      viewBox={`0 0 ${res.w} ${res.h}`}\n      width={res.w}\n      height={res.h}\n      style={rotate === \"auto\" ? ({ \"--ll-tilt\": `${tilt}deg`, ...style } as React.CSSProperties) : tilt ? { rotate: `${tilt}deg`, ...style } : style}\n      className={cn(\"pointer-events-none shrink-0 overflow-visible\", shadow && \"ll-drop-sticker\", rotate === \"auto\" && \"ll-tilt-layer\", className)}\n      dangerouslySetInnerHTML={{ __html: res.svg }}\n      {...props}\n    />\n  )\n}\n\nexport { Sticker }\nexport type { StickerName }\n",
+      "type": "registry:ui",
+      "target": "@ui/sticker.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/sticker-ink.ts",
+      "content": "import { memo, renderSticker, type Silhouette } from '@/lib/ink/art-draw'\nimport { n } from '@/lib/ink/paint'\nimport { stickerBatches, stickers } from '@/lib/ink/art/stickers'\nimport type { StickerDef } from '@/lib/ink/art/types'\n\nexport function stickerLabel(name: string): string {\n  const words = name.replace(/[-_]+/g, ' ').trim()\n  return words.charAt(0).toUpperCase() + words.slice(1)\n}\n\nconst CATEGORY_LABEL: Record<string, string> = {\n  statusPointers: 'Status & pointers',\n  spaceWeather: 'Space & weather',\n  foodDrink: 'Food & drink',\n  officeDesk: 'Office & desk',\n  natureAnimals: 'Nature & animals',\n  facesCelebrate: 'Faces & celebrate',\n  badgesStamps: 'Badges & stamps',\n}\n\nexport function categoryLabel(key: string): string {\n  return CATEGORY_LABEL[key] ?? stickerLabel(key.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase())\n}\n\nexport interface StickerCatalogEntry {\n  name: string\n  label: string\n  category: string\n  categoryLabel: string\n  tags: readonly string[]\n}\n\nexport function stickerCatalog(): StickerCatalogEntry[] {\n  return catalog()\n}\n\nconst catalog = (): StickerCatalogEntry[] =>\n  memo('sticker-catalog', () =>\n    Object.entries(stickerBatches as Record<string, Record<string, StickerDef>>).flatMap(([category, defs]) =>\n      Object.entries(defs).map(([name, def]) => ({\n        name,\n        label: stickerLabel(name),\n        category,\n        categoryLabel: categoryLabel(category),\n        tags: (def as { tags?: readonly string[] }).tags ?? [],\n      }))\n    ), 4)\n\nexport function hasSticker(name: string): boolean {\n  return Object.prototype.hasOwnProperty.call(stickers, name)\n}\n\nexport type CutShape =\n  | { kind: 'path'; fills: readonly string[]; lines: readonly string[]; W: number; border: number }\n  | { kind: 'rect' }\n\nexport interface StickerFace {\n  name: string\n  w: number\n  h: number\n  box: { x: number; y: number; w: number; h: number }\n  svg: string\n  cut: CutShape\n}\n\nexport interface FaceOpts {\n  peel?: boolean | number\n  idPrefix?: string\n  border?: number\n}\n\nexport function stickerFace(name: string, px: number, seed: string, o: FaceOpts = {}): StickerFace | null {\n  const def = (stickers as Record<string, StickerDef>)[name]\n  if (!def) return null\n  const size = Math.max(32, Math.round(px))\n  const key = `face|${name}|${size}|${seed}|${o.peel ? o.peel : ''}|${o.border ?? ''}|${o.idPrefix ?? ''}`\n  return memo(\n    key,\n    () => {\n      const res = renderSticker(def, size, seed, { peel: o.peel ? o.peel : undefined, border: o.border, idPrefix: o.idPrefix })\n      const sil = (res as { silhouette?: Silhouette }).silhouette\n      const border = (res as { border?: number }).border\n      const cut: CutShape = sil && border !== undefined ? { kind: 'path', fills: sil.fills, lines: sil.lines, W: sil.W, border } : { kind: 'rect' }\n      return { name, w: res.w, h: res.h, box: tightBox(res.w, res.h, sil, border), svg: res.svg, cut }\n    },\n    400\n  )\n}\n\nfunction tightBox(w: number, h: number, sil: Silhouette | undefined, border: number | undefined): StickerFace['box'] {\n  if (!sil || border === undefined || sil.pts.length === 0) return { x: 0, y: 0, w, h }\n  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity\n  for (const [x, y] of sil.pts) {\n    if (x < x0) x0 = x\n    if (x > x1) x1 = x\n    if (y < y0) y0 = y\n    if (y > y1) y1 = y\n  }\n  const m = border + 1.5\n  x0 = Math.max(0, Math.floor(x0 - m))\n  y0 = Math.max(0, Math.floor(y0 - m))\n  x1 = Math.min(w, Math.ceil(x1 + m))\n  y1 = Math.min(h, Math.ceil(y1 + m))\n  return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }\n}\n\nexport function kissCut(face: StickerFace, id: string): string {\n  const { w, h, cut } = face\n  const ring = 1.4\n  const shapeOf = (paint: string, extra: number, more = ''): string => {\n    if (cut.kind === 'rect') {\n      const r = Math.min(w, h) * 0.08\n      const inset = 3.5 - extra / 2\n      return `<rect x=\"${n(inset)}\" y=\"${n(inset)}\" width=\"${n(w - 2 * inset)}\" height=\"${n(h - 2 * inset)}\" rx=\"${n(r)}\" fill=\"${paint}\" ${more}/>`\n    }\n    const sw = 2 * cut.border + extra\n    const g = `fill=\"${paint}\" stroke=\"${paint}\" stroke-width=\"${n(sw)}\" stroke-linejoin=\"round\" stroke-linecap=\"round\"`\n    const lines = `fill=\"none\" stroke=\"${paint}\" stroke-width=\"${n(sw + cut.W)}\" stroke-linejoin=\"round\" stroke-linecap=\"round\"`\n    return `<g ${g} ${more}>${cut.fills.map((d) => `<path d=\"${d}\"/>`).join('')}</g><g ${lines} ${more}>${cut.lines.map((d) => `<path d=\"${d}\"/>`).join('')}</g>`\n  }\n  const mask = `<mask id=\"${id}m\" maskUnits=\"userSpaceOnUse\" x=\"-12\" y=\"-12\" width=\"${n(w + 24)}\" height=\"${n(h + 24)}\">${shapeOf('white', ring)}${shapeOf('black', 0)}</mask>`\n  const catchLine = `<g transform=\"translate(.9 1)\" opacity=\".8\"><rect x=\"-12\" y=\"-12\" width=\"${n(w + 24)}\" height=\"${n(h + 24)}\" fill=\"var(--ll-photo)\" mask=\"url(#${id}m)\"/></g>`\n  const cutLine = `<rect x=\"-12\" y=\"-12\" width=\"${n(w + 24)}\" height=\"${n(h + 24)}\" fill=\"var(--ll-pencil)\" opacity=\".62\" mask=\"url(#${id}m)\"/>`\n  return `<defs>${mask}</defs><g opacity=\".07\">${shapeOf('var(--ll-ink)', 0)}</g>${catchLine}${cutLine}`\n}\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/sticker-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "doodle",
+      "stamp",
+      "icon"
+    ],
+    "a11y": [
+      "Decorative by default. A badge that carries meaning (Done, Sale) should sit next to real text or be given a `label`."
+    ],
+    "usage": "import { Sticker } from \"@/components/ui/sticker\"\n\nexport function Example() {\n  return <Sticker name=\"done\" size={96} peel />\n}",
+    "parts": [
+      "Sticker"
+    ]
+  },
+  "categories": [
+    "Stickers & doodles"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,29 @@
+{
+  "$comment": "The generic contrast table that shipped before the Looseleaf theme landed (foreground/background 7, muted 4.5, ring 3, …), kept for the QA self-test: tools/qa-selftest.mjs runs check-tokens against tools/fixtures/{good,bad}, whose invented palettes cannot satisfy the real Looseleaf table in tools/contrast-pairs.json. Use it with: node tools/check-tokens.mjs --root tools/fixtures/good --pairs tools/fixtures/contrast-pairs.default.json",
+  "pageBackground": "background",
+  "scopes": [],
+  "pairs": [
+    { "fg": "foreground", "bg": "background", "min": 7, "purpose": "body text on paper", "required": true },
+    { "fg": "card-foreground", "bg": "card", "min": 7, "purpose": "text on cards", "required": true },
+    { "fg": "popover-foreground", "bg": "popover", "min": 7, "purpose": "text in popovers and menus" },
+    { "fg": "primary-foreground", "bg": "primary", "min": 4.5, "purpose": "primary button label", "required": true },
+    { "fg": "secondary-foreground", "bg": "secondary", "min": 4.5, "purpose": "secondary button label" },
+    { "fg": "accent-foreground", "bg": "accent", "min": 4.5, "purpose": "hover/selected row text" },
+    { "fg": "muted-foreground", "bg": "background", "min": 4.5, "purpose": "secondary text on paper" },
+    { "fg": "muted-foreground", "bg": "card", "min": 4.5, "purpose": "secondary text on cards" },
+    { "fg": "muted-foreground", "bg": "muted", "min": 4.5, "purpose": "secondary text on muted fills" },
+    { "fg": "destructive-foreground", "bg": "destructive", "min": 4.5, "purpose": "destructive button label" },
+    { "fg": "destructive", "bg": "background", "min": 4.5, "purpose": "error text and icons on paper" },
+    { "fg": "ring", "bg": "background", "min": 3, "purpose": "focus mark (WCAG 1.4.11)" },
+    { "fg": "border", "bg": "background", "min": 1.5, "purpose": "drawn line marks (hairlines)" },
+    { "fg": "input", "bg": "background", "min": 1.5, "purpose": "field outline marks", "level": "warn" },
+    { "fg": "chart-1", "bg": "card", "min": 3, "purpose": "chart series 1 vs card" },
+    { "fg": "chart-2", "bg": "card", "min": 3, "purpose": "chart series 2 vs card" },
+    { "fg": "chart-3", "bg": "card", "min": 3, "purpose": "chart series 3 vs card" },
+    { "fg": "chart-4", "bg": "card", "min": 3, "purpose": "chart series 4 vs card" },
+    { "fg": "chart-5", "bg": "card", "min": 3, "purpose": "chart series 5 vs card" },
+    { "fg": "sidebar-foreground", "bg": "sidebar", "min": 7, "purpose": "sidebar text" },
+    { "fg": "sidebar-primary-foreground", "bg": "sidebar-primary", "min": 4.5, "purpose": "sidebar primary label" },
+    { "fg": "sidebar-accent-foreground", "bg": "sidebar-accent", "min": 4.5, "purpose": "sidebar hover/selected text" }
+  ]
+}

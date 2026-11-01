@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "flip-card",
+  "title": "Flip card",
+  "description": "An index card with two sides. It turns over in 3D when you click it or press Space, lifting off the desk on the way; the side you cannot see is inert and hidden from assistive technology. For flashcards, reveals, and anything with a back.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/flip-card.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Slot } from \"radix-ui\"\n\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { flipTriggerRecipe } from \"@/lib/ink/recipes/flip-card-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst CSS = `@keyframes ll-flip-lift-a{0%,100%{translate:0 0;scale:1}42%{translate:0 -10px;scale:1.045}}\n@keyframes ll-flip-lift-b{0%,100%{translate:0 0;scale:1}42%{translate:0 -10px;scale:1.045}}\n[data-slot=flip-card][data-touched][data-state=back]>[data-slot=flip-card-inner]{animation:ll-flip-lift-a calc(var(--ll-dur-sheet)*2) var(--ll-ease-out)}\n[data-slot=flip-card][data-touched][data-state=front]>[data-slot=flip-card-inner]{animation:ll-flip-lift-b calc(var(--ll-dur-sheet)*2) var(--ll-ease-out)}`\n\ntype Side = \"front\" | \"back\"\n\ninterface FlipCardContextValue {\n  flipped: boolean\n  toggle(): void\n  axis: \"x\" | \"y\"\n  label: string\n}\n\nconst FlipCardContext = React.createContext<FlipCardContextValue | null>(null)\n\nfunction useFlipCard(): FlipCardContextValue {\n  const ctx = React.useContext(FlipCardContext)\n  if (!ctx) throw new Error(\"FlipCard parts must be used inside <FlipCard>\")\n  return ctx\n}\n\ntype FlipCardProps = Omit<React.ComponentProps<\"div\">, \"onChange\"> & {\n  flipped?: boolean\n  defaultFlipped?: boolean\n  onFlippedChange?: (flipped: boolean) => void\n  axis?: \"x\" | \"y\"\n  trigger?: boolean\n  label?: string\n}\n\nfunction FlipCard({ className, children, ref, flipped: flippedProp, defaultFlipped = false, onFlippedChange, axis = \"y\", trigger = true, label = \"Flip card\", ...props }: FlipCardProps) {\n  const [inner, setInner] = React.useState(defaultFlipped)\n  const [touched, setTouched] = React.useState(false)\n  const flipped = flippedProp ?? inner\n  const toggle = () => {\n    setTouched(true)\n    if (flippedProp === undefined) setInner(!flipped)\n    onFlippedChange?.(!flipped)\n  }\n  const state: Side = flipped ? \"back\" : \"front\"\n  const ctx: FlipCardContextValue = { flipped, toggle, axis, label }\n  return (\n    <FlipCardContext.Provider value={ctx}>\n      <style href=\"ll-flip-card\" precedence=\"low\">\n        {CSS}\n      </style>\n      <div\n        data-slot=\"flip-card\"\n        data-state={state}\n        data-touched={touched ? \"\" : undefined}\n        ref={ref}\n        className={cn(\"relative isolate block h-48 w-72 [perspective:1200px]\", className)}\n        {...props}\n      >\n        <div\n          data-slot=\"flip-card-inner\"\n          className={cn(\n            \"grid size-full [transform-style:preserve-3d] transition-transform duration-[calc(var(--ll-dur-sheet)*2)] ease-(--ll-ease-settle)\",\n            flipped && (axis === \"x\" ? \"[transform:rotateX(180deg)]\" : \"[transform:rotateY(180deg)]\"),\n          )}\n        >\n          {children}\n        </div>\n        {trigger ? <FlipCardTrigger /> : null}\n      </div>\n    </FlipCardContext.Provider>\n  )\n}\n\ntype FaceProps = Omit<PaperProps, \"ref\" | \"stock\"> & { ref?: React.Ref<HTMLElement>; stock?: PaperProps[\"stock\"] }\n\nfunction Face({ side, stock, className, children, ref, ...props }: FaceProps & { side: Side }) {\n  const { flipped, axis } = useFlipCard()\n  const hidden = side === \"front\" ? flipped : !flipped\n  return (\n    <Paper\n      data-slot={`flip-card-${side}`}\n      data-side={side}\n      stock={stock ?? (side === \"front\" ? \"index-card\" : \"slip\")}\n      edge=\"cut\"\n      tilt={false}\n      inert={hidden}\n      aria-hidden={hidden || undefined}\n      ref={ref}\n      className={cn(\n        \"col-start-1 row-start-1 size-full [backface-visibility:hidden] flex flex-col items-center justify-center gap-1 px-6 py-5 text-center font-script text-2xl leading-tight\",\n        \"[transition:visibility_0s_linear_calc(var(--ll-dur-sheet)*.24)]\",\n        hidden ? \"invisible\" : \"visible\",\n        side === \"back\" && (axis === \"x\" ? \"[transform:rotateX(180deg)]\" : \"[transform:rotateY(180deg)]\"),\n        className,\n      )}\n      {...props}\n    >\n      {children}\n    </Paper>\n  )\n}\n\nfunction FlipCardFront(props: FaceProps) {\n  return <Face side=\"front\" {...props} />\n}\n\nfunction FlipCardBack(props: FaceProps) {\n  return <Face side=\"back\" {...props} />\n}\n\ntype FlipCardTriggerProps = React.ComponentProps<\"button\"> & {\n  asChild?: boolean\n  overlay?: boolean\n  hint?: boolean\n  seed?: string | number\n}\n\nfunction FlipCardTrigger({ className, children, asChild = false, overlay = true, hint, seed, ref, onClick, ...props }: FlipCardTriggerProps) {\n  const ctx = useFlipCard()\n  const drawn = overlay && (hint ?? true)\n  const { hostRef, hostProps, node } = useInk({ recipe: flipTriggerRecipe, params: { hint: drawn }, kind: \"flip-card-trigger\", seed })\n  const Comp = asChild ? Slot.Root : \"button\"\n  return (\n    <Comp\n      data-slot=\"flip-card-trigger\"\n      type={asChild ? undefined : \"button\"}\n      aria-pressed={ctx.flipped}\n      ref={useMergedRef<HTMLButtonElement>(overlay ? hostRef : undefined, ref)}\n      {...(overlay ? hostProps : {})}\n      onClick={(e: React.MouseEvent<HTMLButtonElement>) => {\n        onClick?.(e)\n        if (!e.defaultPrevented) ctx.toggle()\n      }}\n      className={cn(overlay && \"absolute inset-0 z-(--ll-z-raised) block size-full cursor-pointer\", className)}\n      {...props}\n    >\n      <Slot.Slottable>{children ?? <span className=\"sr-only\">{ctx.label}</span>}</Slot.Slottable>\n      {overlay ? node : null}\n    </Comp>\n  )\n}\n\nexport { FlipCard, FlipCardFront, FlipCardBack, FlipCardTrigger, useFlipCard }\nexport type { FlipCardProps, FlipCardTriggerProps }\n",
+      "type": "registry:ui",
+      "target": "@ui/flip-card.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/flip-card-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { arrow, focusRing } from '@/lib/ink/shapes'\n\nexport interface FlipTriggerParams {\n  hint?: boolean\n}\n\nexport const flipTriggerRecipe = defineRecipe<FlipTriggerParams>({\n  id: 'flip-card-trigger',\n  kind: 'flip-card-trigger',\n  layers: ['rest', 'hover', 'focus'],\n  lazy: ['focus'],\n  pad: 12,\n  draw(ink, { w, h }, { hint = true }, ctx) {\n    ctx.lazy('focus', (f) => focusRing(f, -1, -1, w + 2, h + 2, { r: 4 }))\n    if (ctx.lazyOnly || !hint) return\n    const x = w - 20, y = h - 20\n    ink.layer('rest', () => {\n      arrow(ink, x - 16, y + 10, x + 4, y - 12, { pen: 'pencil', head: 'v', curve: 0.35, headLen: 8, opts: { alpha: 0.9, width: 1.2 } })\n    })\n    ink.layer('hover', () => {\n      arrow(ink, x - 16, y + 10, x + 4, y - 12, { pen: 'ink', head: 'v', curve: 0.35, headLen: 8 })\n      arrow(ink, x - 30, y + 14, x - 15, y + 2, { pen: 'ink.fine', head: 'none', curve: 0.3, opts: { alpha: 0.7 } })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/flip-card-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "paper",
+      "card",
+      "corkboard",
+      "reveal"
+    ],
+    "a11y": [
+      "The trigger is a real <button> with aria-pressed (true while the back shows); Space and Enter turn the card. Give it a name that says what happens (\"Show the answer\").",
+      "The hidden face is inert and aria-hidden, so Tab and screen readers only see the side that is showing.",
+      "The default overlay covers the card, so faces should be static text. Faces with links or buttons: trigger={false} and a FlipCardTrigger placed beside them.",
+      "The card has a fixed size (h-48 w-72 unless you pass another) and its faces do not scroll: size it (`className=\"h-64 w-96\"`) for the longer face, and keep answers short.",
+      "Reduced motion: the card swaps sides without turning or lifting (durations collapse to zero).",
+      "The corner arrow and the focus ring are drawn and aria-hidden; the focus ring is the same blue felt as every other control."
+    ],
+    "usage": "import { FlipCard, FlipCardBack, FlipCardFront } from \"@/components/ui/flip-card\"\n\nexport function Example() {\n  return (\n    <FlipCard label=\"Show the answer\">\n      <FlipCardFront>le chat</FlipCardFront>\n      <FlipCardBack>the cat</FlipCardBack>\n    </FlipCard>\n  )\n}",
+    "parts": [
+      "FlipCard",
+      "FlipCardFront",
+      "FlipCardBack",
+      "FlipCardTrigger"
+    ]
+  },
+  "categories": [
+    "Interactive"
+  ],
+  "type": "registry:ui"
+}

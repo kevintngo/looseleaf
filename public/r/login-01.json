@@ -1,0 +1,62 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "login-01",
+  "title": "Login 01",
+  "description": "A taped sheet on the desk with a hand-written welcome back and Stubby looking over its top edge. Email, password with a show toggle, remember me and a Google button, checked with react-hook-form and zod. Sits on the desk (it brings its own) and reads the same on paper.",
+  "dependencies": [
+    "@hookform/resolvers@^5",
+    "react-hook-form@^7",
+    "zod@^4"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/alert.json",
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/card.json",
+    "https://kevintngo.github.io/looseleaf/r/checkbox.json",
+    "https://kevintngo.github.io/looseleaf/r/desk.json",
+    "https://kevintngo.github.io/looseleaf/r/field.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-art.json",
+    "https://kevintngo.github.io/looseleaf/r/input.json",
+    "https://kevintngo.github.io/looseleaf/r/input-group.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/mascot.json",
+    "https://kevintngo.github.io/looseleaf/r/spinner.json",
+    "https://kevintngo.github.io/looseleaf/r/underline.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/login-01/components/login-01-brand-marks.tsx",
+      "content": "\"use client\"\n\nimport type { ArtDef } from \"@/lib/ink/art/types\"\nimport { drawSkeleton, memo } from \"@/lib/ink/art-draw\"\nimport { useEnsureInkDefs } from \"@/lib/ink/react\"\nimport { cn } from \"@/lib/utils\"\n\nconst MARKS = {\n  google: {\n    grid: 24,\n    parts: [\n      [\"s\", \"M20.3 8.6 C18.8 5.2 15.4 3.5 12 3.9 C7.6 4.4 4.2 8.2 4.3 12.6 C4.4 17.2 7.9 20.6 12 20.5 C16.3 20.4 19.8 17.4 20 12.4\", 1.15],\n      [\"s\", \"M12.2 12.5 L20.1 12.4\", 1.1],\n    ],\n  },\n} satisfies Record<string, ArtDef>\n\ntype BrandMarkName = keyof typeof MARKS\n\nfunction BrandMark({ name, size = 16, className }: { name: BrandMarkName; size?: number; className?: string }) {\n  useEnsureInkDefs()\n  const res = memo(`auth-brand|${name}|${size}`, () => drawSkeleton(MARKS[name], size, name, { tone: \"ui\", kind: \"icon\", nib: 1.6 }))\n  return (\n    <svg\n      data-ink=\"icon\"\n      aria-hidden=\"true\"\n      focusable=\"false\"\n      viewBox={`0 0 ${res.w} ${res.h}`}\n      width={size}\n      height={size}\n      className={cn(\"pointer-events-none shrink-0 overflow-visible\", className)}\n      dangerouslySetInnerHTML={{ __html: res.svg }}\n    />\n  )\n}\n\nexport { BrandMark }\nexport type { BrandMarkName }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/login-01/components/login-01-brand-marks.tsx"
+    },
+    {
+      "path": "src/blocks/login-01/components/login-01-form.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { zodResolver } from \"@hookform/resolvers/zod\"\nimport { Controller, useForm } from \"react-hook-form\"\nimport { z } from \"zod\"\n\nimport { BrandMark } from \"@/components/blocks/login-01/components/login-01-brand-marks\"\nimport { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from \"@/components/ui/field\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Input } from \"@/components/ui/input\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Mascot } from \"@/components/ui/mascot\"\nimport { Spinner } from \"@/components/ui/spinner\"\nimport { Underline } from \"@/components/ui/underline\"\nimport { cn } from \"@/lib/utils\"\n\nconst schema = z.object({\n  email: z.email(\"Enter a full address, like ada@notes.dev.\"),\n  password: z.string().min(1, \"Enter your password.\"),\n  remember: z.boolean(),\n})\n\ntype LoginValues = z.infer<typeof schema>\n\ntype LoginFormProps = Omit<React.ComponentProps<\"div\">, \"onSubmit\"> & {\n  onSubmit?: (values: LoginValues) => void | Promise<void>\n}\n\nconst pretend = () => new Promise<void>((resolve) => setTimeout(resolve, 700))\n\nfunction PasswordInput({ ...props }: Omit<React.ComponentProps<typeof InputGroupInput>, \"type\">) {\n  const [shown, setShown] = React.useState(false)\n  return (\n    <InputGroup>\n      <InputGroupInput type={shown ? \"text\" : \"password\"} {...props} />\n      <InputGroupAddon align=\"inline-end\" className=\"has-[>button]:-me-1\">\n        <InputGroupButton size=\"icon-sm\" className=\"size-7 compact:size-6 calm:size-6\" aria-label=\"Show password\" aria-pressed={shown} onClick={() => setShown((v) => !v)}>\n          <Icon name={shown ? \"eye-off\" : \"eye\"} size={16} />\n        </InputGroupButton>\n      </InputGroupAddon>\n    </InputGroup>\n  )\n}\n\nfunction LoginForm({ className, onSubmit, ...props }: LoginFormProps) {\n  const uid = React.useId()\n  const id = (name: string) => `${uid}-${name}`\n  const [formError, setFormError] = React.useState<string | null>(null)\n  const [signedIn, setSignedIn] = React.useState(false)\n  const {\n    register,\n    control,\n    handleSubmit,\n    formState: { errors, isSubmitting },\n  } = useForm<LoginValues>({ resolver: zodResolver(schema), mode: \"onTouched\", defaultValues: { email: \"\", password: \"\", remember: true } })\n\n  const submit = handleSubmit(async (values) => {\n    setFormError(null)\n    try {\n      await (onSubmit ?? pretend)(values)\n      if (!onSubmit) setSignedIn(true)\n    } catch (error) {\n      setFormError(error instanceof Error && error.message ? error.message : \"Something went wrong on our side. Try again in a moment.\")\n    }\n  })\n\n  return (\n    <div className={cn(\"relative flex flex-col gap-6\", className)} {...props}>\n      <Mascot pose=\"peek\" size={88} className=\"pointer-events-none absolute end-9 bottom-[calc(100%-1rem)] [--ll-blend:normal]\" />\n      <Card tilt={false} tape=\"corner\" tapeKind=\"washi-dots\" seed=\"login-01\">\n        <CardHeader>\n          <CardTitle role=\"heading\" aria-level={1} className=\"text-[2rem]\">\n            Welcome <Underline kind=\"wavy\" tone=\"marker\">back</Underline>\n          </CardTitle>\n          <CardDescription>Sign in to pick up where you left off.</CardDescription>\n        </CardHeader>\n        <CardContent>\n          <form onSubmit={submit} noValidate>\n            <FieldGroup>\n              {formError ? (\n                <Alert variant=\"destructive\">\n                  <Icon name=\"circle-alert\" />\n                  <AlertTitle>We could not sign you in</AlertTitle>\n                  <AlertDescription>{formError}</AlertDescription>\n                </Alert>\n              ) : null}\n              {signedIn ? (\n                <Alert variant=\"success\" role=\"status\">\n                  <Icon name=\"circle-check\" />\n                  <AlertTitle>You are in (this is a demo)</AlertTitle>\n                  <AlertDescription>Nothing was sent anywhere. Pass an onSubmit to LoginForm to sign in for real.</AlertDescription>\n                </Alert>\n              ) : null}\n              <Field data-invalid={!!errors.email}>\n                <FieldLabel htmlFor={id(\"email\")}>Email</FieldLabel>\n                <Input\n                  id={id(\"email\")}\n                  type=\"email\"\n                  autoComplete=\"email\"\n                  placeholder=\"ada@notes.dev\"\n                  required\n                  aria-invalid={!!errors.email}\n                  aria-describedby={errors.email ? id(\"email-error\") : undefined}\n                  {...register(\"email\")}\n                />\n                <FieldError id={id(\"email-error\")} errors={[errors.email]} />\n              </Field>\n              <Field data-invalid={!!errors.password}>\n                <div className=\"flex items-center gap-3\">\n                  <FieldLabel htmlFor={id(\"password\")}>Password</FieldLabel>\n                  <a href=\"#forgot-password\" className=\"-my-1 ms-auto py-1 text-sm text-link underline underline-offset-4 hover:text-link-hover\">\n                    Forgot your password?\n                  </a>\n                </div>\n                <PasswordInput\n                  id={id(\"password\")}\n                  autoComplete=\"current-password\"\n                  required\n                  aria-invalid={!!errors.password}\n                  aria-describedby={errors.password ? id(\"password-error\") : undefined}\n                  {...register(\"password\")}\n                />\n                <FieldError id={id(\"password-error\")} errors={[errors.password]} />\n              </Field>\n              <Field orientation=\"horizontal\">\n                <Controller\n                  control={control}\n                  name=\"remember\"\n                  render={({ field }) => (\n                    <Checkbox id={id(\"remember\")} name={field.name} ref={field.ref} checked={field.value} onCheckedChange={(v) => field.onChange(v === true)} onBlur={field.onBlur} />\n                  )}\n                />\n                <FieldLabel htmlFor={id(\"remember\")} className=\"font-normal\">\n                  Remember me on this desk\n                </FieldLabel>\n              </Field>\n              <Field>\n                <Button type=\"submit\" aria-busy={isSubmitting} disabled={isSubmitting}>\n                  {isSubmitting ? (\n                    <>\n                      <Spinner aria-hidden=\"true\" /> Signing in\n                    </>\n                  ) : (\n                    \"Sign in\"\n                  )}\n                </Button>\n                <Button variant=\"outline\" type=\"button\">\n                  <BrandMark name=\"google\" />\n                  Sign in with Google\n                </Button>\n                <FieldDescription className=\"text-center\">\n                  New here? <a href=\"#signup\">Make an account</a>\n                </FieldDescription>\n              </Field>\n            </FieldGroup>\n          </form>\n        </CardContent>\n      </Card>\n    </div>\n  )\n}\n\nexport { LoginForm }\nexport type { LoginFormProps, LoginValues }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/login-01/components/login-01-form.tsx"
+    },
+    {
+      "path": "src/blocks/login-01/page.tsx",
+      "content": "import { LoginForm } from \"@/components/blocks/login-01/components/login-01-form\"\nimport { Desk } from \"@/components/ui/desk\"\nimport { cn } from \"@/lib/utils\"\n\nexport default function Login01Page({ className, as = \"main\", ...props }: Omit<React.ComponentProps<typeof Desk>, \"as\"> & { as?: \"main\" | \"div\" }) {\n  return (\n    <Desk as={as} seed=\"login-01\" className={cn(\"@container/page min-h-svh w-full overflow-x-clip\", className)} {...props}>\n      <div className=\"flex min-h-[inherit] items-center justify-center p-6 pt-24 @xl/page:p-10 @xl/page:pt-24\">\n        <div className=\"w-full max-w-sm\">\n          <LoginForm />\n        </div>\n      </div>\n    </Desk>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/login-01/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "login",
+      "auth",
+      "card",
+      "desk",
+      "mascot"
+    ]
+  },
+  "docs": "Installed the \"Login 01\" block into your components directory under blocks/login-01/.\nImport it: import Login01Page from \"<your components alias>/blocks/login-01/page\"\nNeeds @hookform/resolvers@^5, react-hook-form@^7, zod@^4: the CLI installs them (a project on an older major is upgraded).",
+  "categories": [
+    "authentication"
+  ],
+  "type": "registry:block"
+}

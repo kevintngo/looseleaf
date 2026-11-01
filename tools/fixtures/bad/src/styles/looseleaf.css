@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-ink: var(--ll-ink);
+  --font-script: "Kalam", cursive;
+}
+
+:root {
+  --background: #f8f5ee;
+  --foreground: #8e887f;
+  --ll-ink: #2a2420;
+  --primary: oklch(0.85 0.1 90);
+  --primary-foreground: #ffffff;
+  --muted-foreground: var(--ll-missing-pencil);
+  --card: oklch(from var(--background) l c h);
+  --card-foreground: #2a2420;
+  --border: color-mix(in srgb, #f8f5ee 92%, #000);
+}
+
+[data-theme="forest"] {
+  --background: #1f3a2a;
+  --foreground: #e8f0e0;
+  --border: color-mix(in srgb, #e8f0e0 40%, #1f3a2a);
+}
+
+.dark {
+  --background: #222222;
+  --foreground: #444444;
+}
+
+.ll-note {
+  color: var(--ll-nope);
+  outline-color: var(--ll-maybe, red);
+  background: var(--ll-ink);
+}
+
+.ll-paper-grain {
+  background-image: none;
+}
+
+@utility ll-tilt {
+  rotate: 1deg;
+}

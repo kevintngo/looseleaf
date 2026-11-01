@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-10",
+  "title": "Sidebar 10",
+  "description": "A sidebar with a popover: a notes app with favorites and workspaces on the pad and, in the page header, a star and a \"...\" that opens a slip of actions built from the same menu parts as the pad. Mirrors shadcn's sidebar-10. Looks right on the desk and on plain paper.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/popover.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-10/components/sidebar-10-app-sidebar.tsx",
+      "content": "import * as React from \"react\"\n\nimport { notesFavorites, notesNav, notesSecondary, notesWorkspaces, appTeams } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { NavSecondary } from \"@/components/blocks/sidebar-shared/sidebar-nav-app\"\nimport { NavFavorites, NavLinks, NavWorkspaces } from \"@/components/blocks/sidebar-shared/sidebar-nav-notes\"\nimport { TeamSwitcher } from \"@/components/blocks/sidebar-shared/sidebar-team-switcher\"\nimport { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from \"@/components/ui/sidebar\"\n\nexport function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {\n  return (\n    <Sidebar role=\"navigation\" aria-label=\"Notes\" {...props}>\n      <SidebarHeader>\n        <TeamSwitcher teams={appTeams} compact />\n        <NavLinks items={notesNav} />\n      </SidebarHeader>\n      <SidebarContent>\n        <NavFavorites favorites={notesFavorites} />\n        <NavWorkspaces workspaces={notesWorkspaces} />\n        <NavSecondary items={notesSecondary} className=\"mt-auto\" />\n      </SidebarContent>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-10/components/sidebar-10-app-sidebar.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-10/components/sidebar-10-nav-actions.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { pageActions } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Popover, PopoverContent, PopoverTrigger } from \"@/components/ui/popover\"\nimport { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from \"@/components/ui/sidebar\"\n\nexport function NavActions({ defaultOpen = false }: { defaultOpen?: boolean }) {\n  const [starred, setStarred] = React.useState(false)\n  const [open, setOpen] = React.useState(defaultOpen)\n\n  return (\n    <div className=\"flex items-center gap-2 text-sm\">\n      <div className=\"hidden font-hand text-muted-foreground md:inline-block\">Edited just now</div>\n      <Button\n        variant=\"ghost\"\n        size=\"icon-sm\"\n        aria-pressed={starred}\n        aria-label={starred ? \"Remove from favorites\" : \"Add to favorites\"}\n        onClick={() => setStarred((value) => !value)}\n      >\n        <Icon name=\"star\" tone={starred ? \"doodle\" : \"ui\"} />\n      </Button>\n      <Popover open={open} onOpenChange={setOpen}>\n        <PopoverTrigger asChild>\n          <Button variant=\"ghost\" size=\"icon-sm\" aria-label=\"More actions\" className=\"data-[state=open]:ll-swipe\">\n            <Icon name=\"ellipsis\" />\n          </Button>\n        </PopoverTrigger>\n        <PopoverContent className=\"w-56 p-0\" align=\"end\" tilt={false} aria-label=\"Page actions\">\n          {pageActions.map((group, index) => (\n            <SidebarGroup key={index} className=\"border-b border-sidebar-border last:border-none\">\n              <SidebarGroupContent>\n                <SidebarMenu>\n                  {group.map((item) => (\n                    <SidebarMenuItem key={item.label}>\n                      <SidebarMenuButton onClick={() => setOpen(false)}>\n                        <Icon name={item.icon} />\n                        <span>{item.label}</span>\n                      </SidebarMenuButton>\n                    </SidebarMenuItem>\n                  ))}\n                </SidebarMenu>\n              </SidebarGroupContent>\n            </SidebarGroup>\n          ))}\n        </PopoverContent>\n      </Popover>\n    </div>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-10/components/sidebar-10-nav-actions.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-10/page.tsx",
+      "content": "import { AppSidebar } from \"@/components/blocks/sidebar-10/components/sidebar-10-app-sidebar\"\nimport { NavActions } from \"@/components/blocks/sidebar-10/components/sidebar-10-nav-actions\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { PageBody, PageHeader, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  return (\n    <SidebarProvider className={c.provider}>\n      <AppSidebar className={c.sidebar} />\n      <PageSheet className={c.inset}>\n        <PageHeader crumbs={[\"Project plan & to-dos\"]}>\n          <NavActions />\n        </PageHeader>\n        <PageBody title=\"Project plan & to-dos\" kicker=\"Favorites\">\n          <PageNote title=\"A blank page, for now\" pose=\"write\">\n            Nothing on this page yet. Open the three dots up in the corner to see what you can do with it.\n          </PageNote>\n        </PageBody>\n      </PageSheet>\n    </SidebarProvider>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-10/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "popover",
+      "notes",
+      "app"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 10\" block into your components directory under blocks/sidebar-10/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-10/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "login-02",
+  "title": "Login 02",
+  "description": "Two columns: the form on a sheet of paper, and where the photograph would be a hand-made cover on the desk (graph paper, a greeting, Stubby waving, a pinned note, stickers). The cover shows from 48rem of width. Paper on one side, desk on the other, so it works on either.",
+  "dependencies": [
+    "@hookform/resolvers@^5",
+    "react-hook-form@^7",
+    "zod@^4"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/alert.json",
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/circled.json",
+    "https://kevintngo.github.io/looseleaf/r/desk.json",
+    "https://kevintngo.github.io/looseleaf/r/field.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-art.json",
+    "https://kevintngo.github.io/looseleaf/r/input.json",
+    "https://kevintngo.github.io/looseleaf/r/input-group.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/mascot.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/spinner.json",
+    "https://kevintngo.github.io/looseleaf/r/sticker.json",
+    "https://kevintngo.github.io/looseleaf/r/sticky-note.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/login-02/components/login-02-brand-marks.tsx",
+      "content": "\"use client\"\n\nimport type { ArtDef } from \"@/lib/ink/art/types\"\nimport { drawSkeleton, memo } from \"@/lib/ink/art-draw\"\nimport { useEnsureInkDefs } from \"@/lib/ink/react\"\nimport { cn } from \"@/lib/utils\"\n\nconst MARKS = {\n  github: {\n    grid: 24,\n    parts: [\n      [\"s\", \"M6.3 3.9 C8 4 9.3 5 10.1 5.8 C11.4 5.5 12.7 5.5 14 5.8 C14.8 5 16.1 4 17.8 3.9 C18.4 5.2 18.4 6.6 18 7.8 C19.3 9 19.8 10.8 19.6 12.6 C19.2 16.6 15.9 19.1 12 19 C8.1 18.9 4.8 16.6 4.5 12.6 C4.3 10.8 4.8 9 6.1 7.8 C5.7 6.6 5.7 5.2 6.3 3.9\", 1.1],\n      [\"s\", \"M9.9 19 C9.3 20.3 8 20.9 6.7 20.5\", 0.95],\n      [\"s\", \"M14.3 19 C15 20.4 16.4 20.9 17.9 20.3\", 0.95],\n    ],\n  },\n} satisfies Record<string, ArtDef>\n\ntype BrandMarkName = keyof typeof MARKS\n\nfunction BrandMark({ name, size = 16, className }: { name: BrandMarkName; size?: number; className?: string }) {\n  useEnsureInkDefs()\n  const res = memo(`auth-brand|${name}|${size}`, () => drawSkeleton(MARKS[name], size, name, { tone: \"ui\", kind: \"icon\", nib: 1.6 }))\n  return (\n    <svg\n      data-ink=\"icon\"\n      aria-hidden=\"true\"\n      focusable=\"false\"\n      viewBox={`0 0 ${res.w} ${res.h}`}\n      width={size}\n      height={size}\n      className={cn(\"pointer-events-none shrink-0 overflow-visible\", className)}\n      dangerouslySetInnerHTML={{ __html: res.svg }}\n    />\n  )\n}\n\nexport { BrandMark }\nexport type { BrandMarkName }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/login-02/components/login-02-brand-marks.tsx"
+    },
+    {
+      "path": "src/blocks/login-02/components/login-02-cover.tsx",
+      "content": "import { Mascot } from \"@/components/ui/mascot\"\nimport { Paper } from \"@/components/ui/paper\"\nimport { Sticker } from \"@/components/ui/sticker\"\nimport { StickyNote } from \"@/components/ui/sticky-note\"\n\nfunction LoginCover() {\n  return (\n    <div data-slot=\"login-cover\" aria-hidden=\"true\" className=\"relative h-[30rem] w-[23rem] shrink-0\">\n      <Paper stock=\"graph\" tilt={-1.5} tape=\"both\" tapeKind=\"washi-stripes\" seed=\"login-02-sheet\" className=\"absolute start-6 top-10 h-[22rem] w-[18rem] px-6 pt-8\">\n        <p className=\"font-script text-[2.75rem] leading-[0.95] font-bold text-ink\">hi again!</p>\n        <p className=\"mt-2 max-w-[11rem] font-hand text-base leading-snug text-ink-soft\">we kept your page open and the kettle on.</p>\n      </Paper>\n      <Mascot pose=\"wave\" size={216} seed=\"login-02-stubby\" className=\"absolute start-[7.5rem] top-[11.5rem] [--ll-blend:normal]\" />\n      <StickyNote color=\"yellow\" fastener=\"pin\" tilt={-3} seed=\"login-02-note\" className=\"absolute start-0 top-[13rem] min-h-0 w-28 px-3 pt-6 pb-3 text-lg\">\n        psst: tab works too\n      </StickyNote>\n      <Sticker name=\"rocket\" size={84} rotate={12} className=\"absolute end-0 top-0\" />\n      <Sticker name=\"coffee-to-go\" size={78} rotate={-9} className=\"absolute start-1 top-[22.5rem]\" />\n      <Sticker name=\"sun-shades\" size={72} rotate={8} className=\"absolute end-1 top-[24.5rem]\" />\n    </div>\n  )\n}\n\nexport { LoginCover }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/login-02/components/login-02-cover.tsx"
+    },
+    {
+      "path": "src/blocks/login-02/components/login-02-form.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { zodResolver } from \"@hookform/resolvers/zod\"\nimport { useForm } from \"react-hook-form\"\nimport { z } from \"zod\"\n\nimport { BrandMark } from \"@/components/blocks/login-02/components/login-02-brand-marks\"\nimport { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"\nimport { Button } from \"@/components/ui/button\"\nimport { Circled } from \"@/components/ui/circled\"\nimport { Field, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldSeparator } from \"@/components/ui/field\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Input } from \"@/components/ui/input\"\nimport { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Spinner } from \"@/components/ui/spinner\"\nimport { cn } from \"@/lib/utils\"\n\nconst schema = z.object({\n  email: z.email(\"Enter a full address, like ada@notes.dev.\"),\n  password: z.string().min(1, \"Enter your password.\"),\n})\n\ntype LoginValues = z.infer<typeof schema>\n\ntype LoginFormProps = Omit<React.ComponentProps<\"form\">, \"onSubmit\"> & {\n  onSubmit?: (values: LoginValues) => void | Promise<void>\n}\n\nconst pretend = () => new Promise<void>((resolve) => setTimeout(resolve, 700))\n\nfunction PasswordInput({ ...props }: Omit<React.ComponentProps<typeof InputGroupInput>, \"type\">) {\n  const [shown, setShown] = React.useState(false)\n  return (\n    <InputGroup>\n      <InputGroupInput type={shown ? \"text\" : \"password\"} {...props} />\n      <InputGroupAddon align=\"inline-end\" className=\"has-[>button]:-me-1\">\n        <InputGroupButton size=\"icon-sm\" className=\"size-7 compact:size-6 calm:size-6\" aria-label=\"Show password\" aria-pressed={shown} onClick={() => setShown((v) => !v)}>\n          <Icon name={shown ? \"eye-off\" : \"eye\"} size={16} />\n        </InputGroupButton>\n      </InputGroupAddon>\n    </InputGroup>\n  )\n}\n\nfunction LoginForm({ className, onSubmit, ...props }: LoginFormProps) {\n  const uid = React.useId()\n  const id = (name: string) => `${uid}-${name}`\n  const [formError, setFormError] = React.useState<string | null>(null)\n  const [signedIn, setSignedIn] = React.useState(false)\n  const {\n    register,\n    handleSubmit,\n    formState: { errors, isSubmitting },\n  } = useForm<LoginValues>({ resolver: zodResolver(schema), mode: \"onTouched\", defaultValues: { email: \"\", password: \"\" } })\n\n  const submit = handleSubmit(async (values) => {\n    setFormError(null)\n    try {\n      await (onSubmit ?? pretend)(values)\n      if (!onSubmit) setSignedIn(true)\n    } catch (error) {\n      setFormError(error instanceof Error && error.message ? error.message : \"Something went wrong on our side. Try again in a moment.\")\n    }\n  })\n\n  return (\n    <form onSubmit={submit} noValidate className={cn(\"flex flex-col gap-6\", className)} {...props}>\n      <FieldGroup>\n        <div className=\"flex flex-col items-center gap-1 text-center\">\n          <h1 className=\"mb-3 font-script text-[2rem] leading-none font-bold\">\n            Good to see <Circled tone=\"blue\" className=\"mx-2\">you</Circled> again\n          </h1>\n          <p className=\"text-sm text-balance text-muted-foreground\">Sign in with your email and the password you keep in your head.</p>\n        </div>\n        {formError ? (\n          <Alert variant=\"destructive\">\n            <Icon name=\"circle-alert\" />\n            <AlertTitle>We could not sign you in</AlertTitle>\n            <AlertDescription>{formError}</AlertDescription>\n          </Alert>\n        ) : null}\n        {signedIn ? (\n          <Alert variant=\"success\" role=\"status\">\n            <Icon name=\"circle-check\" />\n            <AlertTitle>You are in (this is a demo)</AlertTitle>\n            <AlertDescription>Nothing was sent anywhere. Pass an onSubmit to LoginForm to sign in for real.</AlertDescription>\n          </Alert>\n        ) : null}\n        <Field data-invalid={!!errors.email}>\n          <FieldLabel htmlFor={id(\"email\")}>Email</FieldLabel>\n          <Input\n            id={id(\"email\")}\n            type=\"email\"\n            autoComplete=\"email\"\n            placeholder=\"ada@notes.dev\"\n            required\n            aria-invalid={!!errors.email}\n            aria-describedby={errors.email ? id(\"email-error\") : undefined}\n            {...register(\"email\")}\n          />\n          <FieldError id={id(\"email-error\")} errors={[errors.email]} />\n        </Field>\n        <Field data-invalid={!!errors.password}>\n          <div className=\"flex items-center gap-3\">\n            <FieldLabel htmlFor={id(\"password\")}>Password</FieldLabel>\n            <a href=\"#forgot-password\" className=\"-my-1 ms-auto py-1 text-sm text-link underline underline-offset-4 hover:text-link-hover\">\n              Forgot your password?\n            </a>\n          </div>\n          <PasswordInput\n            id={id(\"password\")}\n            autoComplete=\"current-password\"\n            required\n            aria-invalid={!!errors.password}\n            aria-describedby={errors.password ? id(\"password-error\") : undefined}\n            {...register(\"password\")}\n          />\n          <FieldError id={id(\"password-error\")} errors={[errors.password]} />\n        </Field>\n        <Field>\n          <Button type=\"submit\" aria-busy={isSubmitting} disabled={isSubmitting}>\n            {isSubmitting ? (\n              <>\n                <Spinner aria-hidden=\"true\" /> Signing in\n              </>\n            ) : (\n              \"Sign in\"\n            )}\n          </Button>\n        </Field>\n        <FieldSeparator>Or continue with</FieldSeparator>\n        <Field>\n          <Button variant=\"outline\" type=\"button\">\n            <BrandMark name=\"github\" />\n            Sign in with GitHub\n          </Button>\n          <FieldDescription className=\"text-center\">\n            New here? <a href=\"#signup\">Make an account</a>\n          </FieldDescription>\n        </Field>\n      </FieldGroup>\n    </form>\n  )\n}\n\nexport { LoginForm }\nexport type { LoginFormProps, LoginValues }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/login-02/components/login-02-form.tsx"
+    },
+    {
+      "path": "src/blocks/login-02/page.tsx",
+      "content": "import { LoginCover } from \"@/components/blocks/login-02/components/login-02-cover\"\nimport { LoginForm } from \"@/components/blocks/login-02/components/login-02-form\"\nimport { Desk } from \"@/components/ui/desk\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Paper } from \"@/components/ui/paper\"\nimport { cn } from \"@/lib/utils\"\n\nexport default function Login02Page({ className, as: Root = \"main\", ...props }: React.ComponentProps<\"div\"> & { as?: \"main\" | \"div\" }) {\n  return (\n    <Root className={cn(\"@container/page min-h-svh w-full\", className)} {...props}>\n      <div className=\"grid min-h-[inherit] @3xl/page:grid-cols-2\">\n        <Paper stock=\"paper\" tilt={false} shadow=\"none\" seed=\"login-02\" className=\"flex flex-col gap-4 p-6 @xl/page:p-10\">\n          <div className=\"flex justify-center gap-2 @3xl/page:justify-start\">\n            <a href=\"#home\" className=\"flex items-center gap-2 font-script text-2xl leading-none font-bold\">\n              <Icon name=\"book-open\" tone=\"doodle\" size={24} />\n              Looseleaf\n            </a>\n          </div>\n          <div className=\"flex flex-1 items-center justify-center\">\n            <div className=\"w-full max-w-xs\">\n              <LoginForm />\n            </div>\n          </div>\n        </Paper>\n        <Desk aria-hidden=\"true\" seed=\"login-02-desk\" className=\"hidden items-center justify-center overflow-hidden @3xl/page:flex\">\n          <LoginCover />\n        </Desk>\n      </div>\n    </Root>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/login-02/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "login",
+      "auth",
+      "split",
+      "collage"
+    ]
+  },
+  "docs": "Installed the \"Login 02\" block into your components directory under blocks/login-02/.\nImport it: import Login02Page from \"<your components alias>/blocks/login-02/page\"\nNeeds @hookform/resolvers@^5, react-hook-form@^7, zod@^4: the CLI installs them (a project on an older major is upgraded).",
+  "categories": [
+    "authentication"
+  ],
+  "type": "registry:block"
+}

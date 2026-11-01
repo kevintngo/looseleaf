@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "boil",
+  "title": "Boil",
+  "description": "Makes drawn things shiver the way hand-animated line drawings do. About six times a second it moves to the next of a few frames: doodles are redrawn by a new hand, and buttons, cards and fields inside wobble a little differently. It stands still when motion is reduced, off screen and in a hidden tab.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-live-motion.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/boil.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { motionIsOff } from \"@/hooks/use-live-motion\"\nimport { InkContext, useInkContext, useMergedRef } from \"@/lib/ink/react\"\nimport { BOIL_MAX_FRAMES, boilKnobs, boilSeed } from \"@/lib/ink/recipes/boil-ink\"\nimport { cn } from \"@/lib/utils\"\n\ninterface BoilContextValue {\n  frame: number\n  frames: number\n}\n\nconst BoilContext = React.createContext<BoilContextValue | null>(null)\n\nfunction useBoilFrame(): number {\n  return React.useContext(BoilContext)?.frame ?? 0\n}\n\nfunction useBoilSeed(seed: string | number): string {\n  return boilSeed(seed, useBoilFrame())\n}\n\ntype BoilProps = Omit<React.ComponentProps<\"span\">, \"children\"> & {\n  fps?: number\n  frames?: number\n  strength?: number\n  active?: boolean\n  reseed?: boolean\n  children?: React.ReactNode | ((frame: { frame: number; seed: (base: string | number) => string }) => React.ReactNode)\n}\n\nfunction Boil({ className, children, ref, fps = 6, frames = 3, strength = 1, active = true, reseed = true, ...props }: BoilProps) {\n  const outer = useInkContext()\n  const providerReduced = outer.motion === \"reduced\" || outer.density === \"calm\"\n  const n = Math.min(BOIL_MAX_FRAMES, Math.max(2, Math.round(frames)))\n  const [frame, setFrame] = React.useState(0)\n  const [onScreen, setOnScreen] = React.useState(true)\n  const root = React.useRef<HTMLSpanElement | null>(null)\n  const [hidden, setHidden] = React.useState(false)\n  const [still, setStill] = React.useState(false)\n\n  React.useEffect(() => {\n    const el = root.current\n    if (!el || typeof IntersectionObserver === \"undefined\") return\n    const io = new IntersectionObserver((entries) => setOnScreen(entries.some((e) => e.isIntersecting)))\n    io.observe(el)\n    return () => io.disconnect()\n  }, [])\n  React.useEffect(() => {\n    const on = () => setHidden(document.hidden)\n    on()\n    document.addEventListener(\"visibilitychange\", on)\n    return () => document.removeEventListener(\"visibilitychange\", on)\n  }, [])\n  React.useEffect(() => {\n    const check = () => setStill(motionIsOff(root.current, providerReduced))\n    check()\n    const mq = window.matchMedia?.(\"(prefers-reduced-motion: reduce)\")\n    mq?.addEventListener?.(\"change\", check)\n    return () => mq?.removeEventListener?.(\"change\", check)\n  }, [providerReduced])\n\n  const boiling = active && onScreen && !hidden && !still\n  React.useEffect(() => {\n    if (!boiling) {\n      setFrame(0)\n      return\n    }\n    const id = setInterval(() => setFrame((f) => (f + 1) % n), 1000 / Math.min(12, Math.max(1, fps)))\n    return () => clearInterval(id)\n  }, [boiling, fps, n])\n\n  const f = boiling ? frame % n : 0\n  const value = React.useMemo(\n    () => (f === 0 ? outer : { ...outer, knobs: mulKnobs(outer.knobs, boilKnobs(f, strength)) }),\n    [outer, f, strength],\n  )\n  const seedOf = (base: string | number) => boilSeed(base, f)\n  const body =\n    typeof children === \"function\"\n      ? children({ frame: f, seed: seedOf })\n      : reseed\n        ? React.Children.map(children, (child, i) => {\n            if (f === 0 || !React.isValidElement<{ seed?: string | number; name?: string; id?: string }>(child) || typeof child.type === \"string\") return child\n            const base = child.props.seed ?? child.props.name ?? child.props.id ?? i\n            return React.cloneElement(child, { seed: seedOf(base) })\n          })\n        : children\n\n  return (\n    <BoilContext.Provider value={{ frame: f, frames: n }}>\n      <InkContext.Provider value={value}>\n        <span data-slot=\"boil\" data-state={boiling ? \"boiling\" : \"still\"} data-frame={f} ref={useMergedRef<HTMLSpanElement>(root, ref)} className={cn(\"inline-block\", className)} {...props}>\n          {body}\n        </span>\n      </InkContext.Provider>\n    </BoilContext.Provider>\n  )\n}\n\nconst mulKnobs = (a: { wobble: number; misreg: number; bleed: number; width: number }, b: { wobble: number; misreg: number; bleed: number; width: number }) => ({\n  wobble: a.wobble * b.wobble,\n  misreg: a.misreg * b.misreg,\n  bleed: a.bleed * b.bleed,\n  width: a.width * b.width,\n})\n\nexport { Boil, useBoilFrame, useBoilSeed }\nexport type { BoilProps }\n",
+      "type": "registry:ui",
+      "target": "@ui/boil.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/boil-ink.ts",
+      "content": "import type { Knobs } from '@/lib/ink/builder'\n\nconst TABLE: readonly Knobs[] = [\n  { wobble: 1, misreg: 1, bleed: 1, width: 1 },\n  { wobble: 1.3, misreg: 1.7, bleed: 1.18, width: 0.96 },\n  { wobble: 0.78, misreg: 0.5, bleed: 0.86, width: 1.05 },\n  { wobble: 1.12, misreg: 1.3, bleed: 1.06, width: 0.98 },\n]\n\nexport const BOIL_MAX_FRAMES = TABLE.length\n\nexport function boilKnobs(frame: number, strength = 1): Knobs {\n  const k = TABLE[((frame % TABLE.length) + TABLE.length) % TABLE.length]\n  const s = Math.max(0, strength)\n  const at = (v: number) => Math.max(0.05, 1 + (v - 1) * s)\n  return { wobble: at(k.wobble), misreg: at(k.misreg), bleed: at(k.bleed), width: at(k.width) }\n}\n\nexport function boilSeed(seed: string | number, frame: number): string {\n  return frame === 0 ? String(seed) : `${seed}~${frame}`\n}\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/boil-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "reveal",
+      "doodle",
+      "sticker",
+      "mascot",
+      "confetti"
+    ],
+    "a11y": [
+      "Boil changes drawings, never content or layout: the shapes do not move, the lines shiver by a fraction of a pixel to a couple of pixels. Nothing is announced and nothing takes focus.",
+      "Reduced motion (the OS setting, data-motion=\"reduced\", or an InkProvider with motion=\"reduced\") shows the resting drawing and runs no timer. The same happens while the tab is hidden and while the wrapper is scrolled out of view.",
+      "WCAG 2.2.2: a boil that runs for more than five seconds is moving content. It stops for people who ask for reduced motion, but give everyone else a way out where it matters: bind `active` to a pause control or to a preference. Children keep their state, focus and drawn ink across frames (they are re-seeded, never remounted).",
+      "Use it for a few live things (a mascot, a logo doodle, a call to action), not lists: every frame re-renders the children. The timer stops when the component unmounts.",
+      "Hooks for your own drawings: useBoilFrame() and useBoilSeed(seed) return the frame and a frame-suffixed seed inside a Boil, and the plain seed outside one."
+    ],
+    "usage": "import { Boil } from \"@/components/ui/boil\"\nimport { Doodle } from \"@/components/ui/doodle\"\n\nexport function Example() {\n  return (\n    <Boil>\n      <Doodle name=\"sun\" size={96} />\n    </Boil>\n  )\n}",
+    "parts": [
+      "Boil"
+    ]
+  },
+  "categories": [
+    "Interactive"
+  ],
+  "type": "registry:ui"
+}

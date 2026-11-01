@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-live-motion",
+  "title": "use-live-motion",
+  "description": "The use-live-motion React hook from Looseleaf.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json"
+  ],
+  "files": [
+    {
+      "path": "src/hooks/use-live-motion.ts",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { useInkContext } from \"@/lib/ink/react\"\n\nexport function motionIsOff(el?: Element | null, providerReduced = false): boolean {\n  if (providerReduced) return true\n  if (typeof window === \"undefined\") return false\n  const node = el ?? document.documentElement\n  if (node.closest?.('[data-motion=\"reduced\"]')) return true\n  if (window.getComputedStyle(node).getPropertyValue(\"--ll-motion\").trim() === \"0\") return true\n  return window.matchMedia?.(\"(prefers-reduced-motion: reduce)\").matches ?? false\n}\n\nexport function useReducedMotion(ref?: React.RefObject<Element | null>): boolean {\n  const provider = useInkContext().motion === \"reduced\"\n  const [off, setOff] = React.useState(false)\n  React.useLayoutEffect(() => {\n    const check = () => setOff(motionIsOff(ref?.current, provider))\n    check()\n    const mq = window.matchMedia?.(\"(prefers-reduced-motion: reduce)\")\n    mq?.addEventListener?.(\"change\", check)\n    const mo = new MutationObserver(check)\n    mo.observe(document.documentElement, { attributes: true, attributeFilter: [\"data-motion\"] })\n    return () => {\n      mq?.removeEventListener?.(\"change\", check)\n      mo.disconnect()\n    }\n  }, [ref, provider])\n  return off\n}\n",
+      "type": "registry:hook",
+      "target": "@hooks/use-live-motion.ts"
+    }
+  ],
+  "type": "registry:hook"
+}

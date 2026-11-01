@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ticket",
+  "title": "Ticket",
+  "description": "A ticket with concave corners, a bite out of both edges where the stub tears off, and a row of holes along the tear. The holes are cut out of the paper, so the desk (and the shadow) show through. A body, a stub, spaced capitals in the typewriter font and a serial number in red.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-paper.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-paper-object.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/ticket.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { useShapedSheet } from \"@/hooks/use-paper-object\"\nimport type { StockName } from \"@/lib/ink/paper/stocks\"\nimport { ticketRecipe, type TicketStub } from \"@/lib/ink/recipes/ticket-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst TicketContext = React.createContext<{ stubWidth: number }>({ stubWidth: 88 })\n\ntype TicketProps = React.ComponentProps<\"div\"> & {\n  stock?: StockName\n  stub?: TicketStub\n  stubWidth?: number\n  punched?: boolean\n  tilt?: boolean | number\n  seed?: string | number\n  size?: readonly [number, number]\n}\n\nfunction Ticket({ className, style, children, ref, stock = \"kraft\", stub = \"end\", stubWidth = 88, punched = false, tilt, seed, size, ...props }: TicketProps) {\n  const o = useShapedSheet({ recipe: ticketRecipe, params: { stock, stub, stubWidth, punched }, ref, seed, tilt, tiltMax: 1.2, size })\n  const ctx = React.useMemo(() => ({ stubWidth }), [stubWidth])\n  return (\n    <TicketContext.Provider value={ctx}>\n      <div\n        data-slot=\"ticket\"\n        data-stub={stub}\n        data-punched={punched ? \"\" : undefined}\n        {...o.root}\n        {...props}\n        className={cn(\"relative isolate flex min-h-28 w-full max-w-lg items-stretch text-ink\", stub === \"start\" && \"flex-row-reverse\", !o.ready && \"bg-index-card shadow-card\", className)}\n        style={{ ...o.root.style, ...style }}\n      >\n        {o.node}\n        {children}\n      </div>\n    </TicketContext.Provider>\n  )\n}\n\nfunction TicketBody({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"ticket-body\" className={cn(\"flex min-w-0 flex-1 flex-col justify-center gap-1 px-6 py-4 font-type break-words\", className)} {...props} />\n}\n\nfunction TicketStub({ className, style, ...props }: React.ComponentProps<\"aside\">) {\n  const { stubWidth } = React.useContext(TicketContext)\n  return <aside data-slot=\"ticket-stub\" role=\"note\" className={cn(\"flex shrink-0 flex-col items-center justify-center gap-1 px-2 py-3 text-center font-type break-words\", className)} style={{ width: stubWidth, ...style }} {...props} />\n}\n\nfunction TicketTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"ticket-title\" className={cn(\"text-2xl leading-none tracking-[0.14em] uppercase\", className)} {...props} />\n}\n\nfunction TicketDescription({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"ticket-description\" className={cn(\"text-sm tracking-wider uppercase\", className)} {...props} />\n}\n\nfunction TicketNumber({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"ticket-number\" className={cn(\"ll-num text-sm tracking-widest text-[color-mix(in_srgb,var(--ll-red)_60%,var(--ll-ink))]\", className)} {...props} />\n}\n\nexport { Ticket, TicketBody, TicketStub, TicketTitle, TicketDescription, TicketNumber }\nexport type { TicketProps }\n",
+      "type": "registry:ui",
+      "target": "@ui/ticket.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/ticket-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { circleD, litEdge, num, paperFill, pathTag, tok } from '@/lib/ink/recipes/paper-set-ink'\nimport type { StockName } from '@/lib/ink/paper/stocks'\n\nexport type TicketStub = 'end' | 'start' | 'none'\n\nexport interface TicketParams {\n  stock: StockName\n  stub: TicketStub\n  stubWidth: number\n  punched: boolean\n}\n\nexport const TICKET = { corner: 6, notch: 8, hole: 1.2, holeGap: 6.6, frameInset: 7 } as const\n\nexport function ticketPath(w: number, h: number, sx: number, holes: readonly [number, number][] = []): { d: string; holesD: string } {\n  const c = TICKET.corner\n  const nr = TICKET.notch\n  let d = `M${num(c)} 0`\n  const notch = sx > 0 && sx < w\n  if (notch) d += `H${num(sx - nr)}A${nr} ${nr} 0 0 0 ${num(sx + nr)} 0`\n  d += `H${num(w - c)}A${c} ${c} 0 0 0 ${num(w)} ${c}V${num(h - c)}A${c} ${c} 0 0 0 ${num(w - c)} ${num(h)}`\n  if (notch) d += `H${num(sx + nr)}A${nr} ${nr} 0 0 0 ${num(sx - nr)} ${num(h)}`\n  d += `H${num(c)}A${c} ${c} 0 0 0 0 ${num(h - c)}V${num(c)}A${c} ${c} 0 0 0 ${num(c)} 0z`\n  let holesD = ''\n  if (notch) for (let y = nr + 7; y < h - nr - 6; y += TICKET.holeGap) holesD += circleD(sx, y, TICKET.hole)\n  for (const [x, y] of holes) holesD += circleD(x, y, 5.6)\n  return { d, holesD }\n}\n\nexport const ticketRecipe = defineRecipe<TicketParams>({\n  id: 'ticket-sheet',\n  kind: 'sheet',\n  layers: ['rest'],\n  pad: 4,\n  draw(ink, { w, h }, { stock, stub, stubWidth, punched }, ctx) {\n    const r = ink.next('ticket')\n    const left = (stub === 'start') !== (ctx.dir === 'rtl')\n    const sx = stub === 'none' ? -1 : left ? stubWidth : w - stubWidth\n    const bodyStart = stub === 'none' ? 0 : left ? sx : 0\n    const bodyEnd = stub === 'none' ? w : left ? w : sx\n    const px = ctx.dir === 'rtl' ? bodyStart + 32 : bodyEnd - 32\n    const punch: [number, number][] = punched ? [[px + r.gauss(0, 2), h - 30 + r.gauss(0, 2.5)]] : []\n    const { d, holesD } = ticketPath(w, h, sx, punch)\n    ink.layer('rest', () => {\n      let s = paperFill(ink.seed, d + holesD, { stock, evenodd: true, shadow: true, inset: [0.5, 0.5, 0.5, 0.5] })\n      const fi = TICKET.frameInset\n      const frame = (x0: number, x1: number) => `M${num(x0)} ${num(fi)}H${num(x1)}V${num(h - fi)}H${num(x0)}z`\n      const [b0, b1] = stub === 'none' ? [fi, w - fi] : left ? [sx + fi + 2, w - fi] : [fi, sx - fi - 2]\n      s += pathTag(frame(b0, b1), { stroke: tok('ink'), sw: 0.8, op: 0.34 })\n      s += pathTag(frame(b0 + 2, b1 - 2), { stroke: tok('ink'), sw: 0.5, op: 0.2 })\n      if (stub !== 'none') {\n        const [s0, s1] = left ? [fi, sx - fi - 2] : [sx + fi + 2, w - fi]\n        s += pathTag(frame(s0, s1), { stroke: tok('ink'), sw: 0.8, op: 0.34 })\n        s += pathTag(`M${num(sx)} ${num(TICKET.notch)}V${num(h - TICKET.notch)}`, { stroke: tok('ink'), sw: 0.6, op: 0.1 })\n      }\n      s += litEdge(`M${num(TICKET.corner)} 0.6H${num(w - TICKET.corner)}`, 0.7)\n      ink.raw(s, 'under')\n      ink.grow([-2, -2, w + 2, h + 2])\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/ticket-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "receipt",
+      "label-tag",
+      "paper",
+      "stamp"
+    ],
+    "a11y": [
+      "A ticket is a `div`. Give it `role=\"group\"` and a label when several sit on a page. The stub is an `aside` with `role=\"note\"`, so a page of tickets does not fill up with unnamed complementary landmarks.",
+      "The drawn paper, notches, holes and frames are aria-hidden decoration; the ticket's information is text in the body and stub. Punched is shown by a hole and a data attribute: also say it in text (\"Used\") if it matters.",
+      "Ink on every ticket stock is at least 9:1; the serial number is a red darkened with ink and reads at least 4.9:1 on kraft, yellow and pink. The tilt is zero in calm density; Windows high contrast replaces the drawing with an outline."
+    ],
+    "usage": "import { Ticket, TicketBody, TicketDescription, TicketNumber, TicketStub, TicketTitle } from \"@/components/ui/ticket\"\n\n<Ticket role=\"group\" aria-label=\"Ticket 0042\">\n  <TicketBody>\n    <TicketTitle>Admit one</TicketTitle>\n    <TicketDescription>Le Grand Jardin</TicketDescription>\n  </TicketBody>\n  <TicketStub><TicketNumber>No. 0042</TicketNumber></TicketStub>\n</Ticket>",
+    "parts": [
+      "Ticket",
+      "TicketBody",
+      "TicketStub",
+      "TicketTitle",
+      "TicketDescription",
+      "TicketNumber"
+    ]
+  },
+  "categories": [
+    "Paper"
+  ],
+  "type": "registry:ui"
+}

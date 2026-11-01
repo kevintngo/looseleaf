@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "switch",
+  "title": "Switch",
+  "description": "An on/off switch that is a marker pen being uncapped, not a glossy pill: a felt-outlined track the terracotta marker fills when it is on (with a darker rim where the ink pooled), and a paper coin for a thumb that slides across. Radix Switch underneath.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/switch.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Switch as SwitchPrimitive } from \"radix-ui\"\n\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { switchRecipe, switchThumbRecipe } from \"@/lib/ink/recipes/switch-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction SwitchThumb({ className, seed, disabled, ref, ...props }: React.ComponentProps<typeof SwitchPrimitive.Thumb> & { seed: string; disabled: boolean }) {\n  const { hostRef, hostProps, node } = useInk({ recipe: switchThumbRecipe, params: { disabled }, kind: \"thumb\", seed, still: true })\n  return (\n    <SwitchPrimitive.Thumb\n      data-slot=\"switch-thumb\"\n      ref={useMergedRef<HTMLSpanElement>(hostRef, ref)}\n      {...hostProps}\n      className={cn(\n        \"pointer-events-none relative isolate block shrink-0 transition-transform duration-(--ll-dur-pop) ease-pop forced-colors:rounded-full forced-colors:bg-[ButtonText]\",\n        \"size-(--sw-t) data-[state=unchecked]:translate-x-1 rtl:data-[state=unchecked]:-translate-x-1 data-[state=checked]:translate-x-(--sw-on) rtl:data-[state=checked]:-translate-x-(--sw-on)\",\n        className\n      )}\n      {...props}\n    >\n      {node}\n    </SwitchPrimitive.Thumb>\n  )\n}\n\nfunction Switch({\n  className,\n  size = \"default\",\n  seed,\n  disabled,\n  ref,\n  ...props\n}: React.ComponentProps<typeof SwitchPrimitive.Root> & {\n  size?: \"sm\" | \"default\"\n  seed?: string | number\n}) {\n  const invalid = props[\"aria-invalid\"] === true || props[\"aria-invalid\"] === \"true\"\n  const { hostRef, hostProps, node, seed: hostSeed } = useInk({ recipe: switchRecipe, params: { disabled: !!disabled, invalid }, kind: \"switch\", seed })\n  return (\n    <SwitchPrimitive.Root\n      data-slot=\"switch\"\n      data-size={size}\n      ref={useMergedRef<HTMLButtonElement>(hostRef, ref)}\n      {...hostProps}\n      disabled={disabled}\n      className={cn(\n        \"peer group/switch relative isolate inline-flex shrink-0 items-center after:absolute after:-inset-1 disabled:cursor-not-allowed\",\n        \"h-6 w-11 [--sw-on:1.5rem] [--sw-t:1rem] data-[size=sm]:h-5 data-[size=sm]:w-9 data-[size=sm]:[--sw-on:1.25rem] data-[size=sm]:[--sw-t:0.75rem] calm:h-5 calm:w-9 calm:[--sw-on:1.25rem] calm:[--sw-t:0.75rem]\",\n        \"forced-colors:border forced-colors:border-[ButtonText] forced-colors:data-[state=checked]:bg-[Highlight]\",\n        \"group-hover/field:[&>svg_[data-layer=hover]]:visible group-hover/field:[&>svg_[data-layer=hover]]:opacity-100\",\n        \"has-[+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:visible has-[+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:opacity-100\",\n        \"has-[+input+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:visible has-[+input+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:opacity-100\",\n        className\n      )}\n      {...props}\n    >\n      {node}\n      <SwitchThumb seed={`${hostSeed}|thumb`} disabled={!!disabled} />\n    </SwitchPrimitive.Root>\n  )\n}\n\nexport { Switch }\n",
+      "type": "registry:ui",
+      "target": "@ui/switch.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/switch-ink.ts",
+      "content": "import { bandFill, wash } from '@/lib/ink/fills'\nimport { pillPoly, seg } from '@/lib/ink/geom'\nimport { clamp } from '@/lib/ink/rng'\nimport { box, chain, dashedBox, focusRing, loop } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport type { Ink } from '@/lib/ink/builder'\nimport type { Pt } from '@/lib/ink/types'\n\nexport interface SwitchParams {\n  disabled?: boolean\n  invalid?: boolean\n}\n\nexport const switchRecipe = defineRecipe<SwitchParams>({\n  id: 'switch',\n  kind: 'switch',\n  layers: ['rest', 'hover', 'checked', 'focus'],\n  lazy: ['focus'],\n  pad: 12,\n  draw(ink, { w, h }, { disabled, invalid }, ctx) {\n    const r = h / 2\n    const rtl = ctx.dir === 'rtl'\n    const calm = ctx.calm\n    const X = (x: number): number => (rtl ? w - x : x)\n    const body = pillPoly(0.5, 0.5, w - 1, h - 1)\n    const oX = X(w - h * 0.46)\n    const barX = X(h * 0.48)\n\n    if (!disabled) ctx.lazy('focus', (f) => focusRing(f, 0, 0, w, h, { r }))\n    if (ctx.lazyOnly) return\n\n    const outline = (pen: 'ink' | 'red', width?: number): void =>\n      box(ink, 0, 0, w, h, {\n        pen: calm ? (pen === 'red' ? 'red.fine' : 'pencil.fine') : pen,\n        corner: r,\n        ghost: false,\n        ...(calm ? { style: 'loop' as const, stubs: false } : {}),\n        opts: width ? { width } : undefined,\n      })\n\n    ink.layer('rest', () => {\n      if (disabled) {\n        wash(ink, body, 'pencil-mark', { alpha: 0.35, material: 'wash' })\n        dashedBox(ink, 0, 0, w, h, { r, pen: 'pencil', opts: { color: 'pencil', width: 1.2 } })\n        loop(ink, oX, h / 2, 2.4, 2.4, { pen: 'pencil.fine', turns: 1.1, opts: { simple: true } })\n        return\n      }\n      ink.poly('under', body, 'slip', 0.85)\n      outline(invalid ? 'red' : 'ink', invalid ? 1.2 : undefined)\n      loop(ink, oX, h / 2, 2.6, 2.6, { pen: invalid ? 'red.fine' : 'pencil.fine', turns: 1.1, opts: { simple: true } })\n    })\n\n    if (!disabled) {\n      ink.layer('hover', () => {\n        if (calm) {\n          box(ink, 1, 1, w - 2, h - 2, { pen: invalid ? 'red.fine' : 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false, loose: 0.5, opts: { alpha: 0.75, simple: true } })\n          return\n        }\n        const d = 2 + h / 24\n        ink.lines(\n          [\n            { pts: chain([[r + 1, h + d], [w + d, h + d], [w + d, r + 1]], [0.2, -0.15], Math.max(2.5, r), ink.next('drop')), o: { start: 'soft', end: 'soft', wobble: 0.25, dry: 0 } },\n          ],\n          'ink.fine',\n          { width: 1.1 }\n        )\n      })\n    }\n\n    ink.layer('checked', () => {\n      if (disabled) {\n        wash(ink, body, 'pencil-mark', { alpha: 0.4, material: 'wash' })\n        ink.stroke(seg(barX, h / 2 - 3.4, barX + 0.4, h / 2 + 3.4, 0.3, 3), 'pencil', { width: 1, start: 'soft', end: 'flick', wobble: 0.3, simple: true })\n        return\n      }\n      ink.part('fill', () =>\n        bandFill(ink, body, 'marker', { alpha: 0.86, passes: calm ? 1 : 2, ends: 'square', W: clamp(h * 0.34, 5, 9), angle: -0.02 })\n      )\n      if (false as boolean) {\n        const rim: Pt[] = [...pillPoly(3, 3, w - 6, h - 6, 5)]\n        rim.push(rim[0], rim[1])\n        ink.stroke(rim, 'terracotta', { width: 0.26, alpha: 0.5, start: 'soft', end: 'soft', wobble: 0.5, simple: true })\n      }\n      if (invalid) outline('red', 1.3)\n      ink.stroke(seg(barX, h / 2 - 3.6, barX + 0.5, h / 2 + 3.6, 0.3, 3), 'ink', { width: 1.05, start: 'pool', end: 'flick', wobble: 0.3, simple: true })\n    })\n  },\n})\n\nexport interface SwitchThumbParams {\n  disabled?: boolean\n}\n\nexport const switchThumbRecipe = defineRecipe<SwitchThumbParams>({\n  id: 'switch-thumb',\n  kind: 'thumb',\n  layers: ['rest'],\n  pad: 6,\n  draw(ink: Ink, { w, h }, { disabled }, ctx) {\n    const d = Math.min(w, h)\n    const cx = w / 2\n    const cy = h / 2\n    const rad = d / 2 - 0.8\n    const rtl = ctx.dir === 'rtl'\n    ink.layer('rest', () => {\n      if (disabled) {\n        dashedBox(ink, 0, 0, w, h, { r: d / 2, pen: 'pencil', opts: { color: 'pencil', width: 1.1 } })\n        return\n      }\n      const disc: Pt[] = []\n      for (let i = 0; i < 24; i++) disc.push([cx + Math.cos((i / 24) * Math.PI * 2) * (rad + 0.4), cy + Math.sin((i / 24) * Math.PI * 2) * (rad + 0.4)])\n      ink.poly('under', disc, 'slip', 1)\n      loop(ink, cx, cy, rad, rad, { pen: ctx.calm ? 'pencil.fine' : d < 14 ? 'ink.fine' : 'ink', clean: true, opts: { simple: d < 14 } })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/switch-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "switch",
+    "related": [
+      "checkbox",
+      "toggle",
+      "radio-group",
+      "field",
+      "label"
+    ],
+    "a11y": [
+      "role=\"switch\" with aria-checked true or false. Space and Enter toggle it, Tab focuses it (Radix). Label it with <Label htmlFor>, wrap it, or use aria-label.",
+      "State is not carried by colour alone: off shows a pencil o at the end and the thumb at the start, on shows a felt bar and the thumb at the end.",
+      "The hit area is 8 px larger than the track on every side (an ::after, so layout never moves). The track is 24 px tall at the default size, 20 px small with the enlarged hit area.",
+      "A Label beside it is a peer: peer-disabled dims it, and hovering the row (a `group/field`) or the label right after it lights the switch's hover overlay.",
+      "Keyboard focus draws a blue felt ring; the drawing is aria-hidden, pointer-events: none and never focusable. Windows high contrast replaces the ink by a real border, a Highlight fill when on and a solid thumb.",
+      "Reduced motion (the OS setting or data-motion=\"reduced\") makes the thumb jump and the marker appear at once.",
+      "Right-to-left: the thumb starts at the right and travels left (rtl: twins), and the o and bar marks swap ends."
+    ],
+    "usage": "import { Label } from \"@/components/ui/label\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function Example() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Switch id=\"airplane\" />\n      <Label htmlFor=\"airplane\">Airplane mode</Label>\n    </div>\n  )\n}",
+    "parts": [
+      "Switch"
+    ]
+  },
+  "categories": [
+    "Forms"
+  ],
+  "type": "registry:ui"
+}

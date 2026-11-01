@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "message",
+  "title": "Message",
+  "description": "The row of a chat message: an avatar, a column with a header, the bubbles and a footer, aligned to the start or the end. Also MessageText, which sets a reply word by word so streaming text soaks in like wet ink.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/chat-align.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/message.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { ChatAlignContext } from \"@/lib/chat-align\"\nimport { makeRng } from \"@/lib/ink/rng\"\nimport { cn } from \"@/lib/utils\"\n\nfunction MessageGroup({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"message-group\" className={cn(\"flex min-w-0 flex-col gap-2\", className)} {...props} />\n}\n\nfunction Message({\n  className,\n  align = \"start\",\n  ...props\n}: React.ComponentProps<\"div\"> & { align?: \"start\" | \"end\" }) {\n  return (\n    <ChatAlignContext.Provider value={align}>\n      <div\n        data-slot=\"message\"\n        data-align={align}\n        className={cn(\"group/message relative flex w-full min-w-0 gap-2 text-[15px] data-[align=end]:flex-row-reverse\", className)}\n        {...props}\n      />\n    </ChatAlignContext.Provider>\n  )\n}\n\nfunction MessageAvatar({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"message-avatar\"\n      className={cn(\n        \"flex w-fit min-w-8 shrink-0 items-center justify-center self-end group-has-data-[slot=message-footer]/message:-translate-y-8\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MessageContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"message-content\"\n      className={cn(\"flex w-full min-w-0 flex-col gap-2.5 wrap-break-word group-data-[align=end]/message:*:data-slot:self-end\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MessageHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"message-header\"\n      className={cn(\n        \"flex max-w-full min-w-0 items-center gap-2 px-3 font-hand text-sm font-bold text-muted-foreground group-has-data-[variant=ghost]/message:px-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MessageFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"message-footer\"\n      className={cn(\n        \"flex max-w-full min-w-0 items-center gap-2 px-3 font-hand text-sm text-muted-foreground group-has-data-[variant=ghost]/message:px-0 group-data-[align=end]/message:justify-end\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction jitterOf(seed: string, index: number): React.CSSProperties {\n  const r = makeRng(`${seed}:${index}`)\n  return {\n    \"--jy\": `${((r() * 2 - 1) * 0.6).toFixed(2)}px`,\n    \"--jo\": (0.88 + r() * 0.12).toFixed(2),\n  } as React.CSSProperties\n}\n\nconst CSS = `[data-slot=message-text] [style*=\"--jy\"]{position:relative;top:calc(var(--jy,0px)*var(--ll-jitter-k,1));color:color-mix(in srgb,currentColor calc((1 - (1 - var(--jo,1))*var(--ll-jitter-k,1))*100%),transparent)}`\n\nconst WORDS = /(\\s+)/\nconst RTL_SCRIPT = /[\\u0590-\\u08FF\\uFB1D-\\uFDFF\\uFE70-\\uFEFF]/\nconst CARET = \"after:ms-0.5 after:inline-block after:h-[1.05em] after:w-0.5 after:animate-pulse after:rounded-full after:bg-ink-you after:align-[-0.18em] after:content-['']\"\n\nfunction MessageText({\n  children,\n  streaming = false,\n  jitter = true,\n  seed,\n  className,\n  ...props\n}: Omit<React.ComponentProps<\"span\">, \"children\"> & {\n  children?: string\n  streaming?: boolean\n  jitter?: boolean\n  seed?: string | number\n}) {\n  const id = React.useId()\n  const text = children ?? \"\"\n  const s = seed === undefined ? id : String(seed)\n  const bidi = RTL_SCRIPT.test(text)\n  const parts = React.useMemo(() => (bidi ? [] : text.split(WORDS)), [text, bidi])\n  let last = parts.length - 1\n  while (last > 0 && (parts[last] === \"\" || last % 2 === 1)) last--\n  const settled = React.useRef<number | null>(null)\n  if (settled.current === null) {\n    let end = parts.length\n    while (end > 0 && parts[end - 1] === \"\") end--\n    settled.current = end\n  }\n  let word = 0\n  const out = parts.map((p, i) => {\n    if (p === \"\") return null\n    if (i % 2 === 1) return p\n    const n = word++\n    const fresh = streaming && i >= (settled.current ?? 0)\n    return (\n      <span\n        key={i}\n        data-word={fresh ? \"fresh\" : undefined}\n        className={cn(fresh && \"animate-soak\", streaming && i === last && CARET) || undefined}\n        style={jitter ? jitterOf(s, n) : undefined}\n      >\n        {p}\n      </span>\n    )\n  })\n  return (\n    <span\n      data-slot=\"message-text\"\n      data-streaming={streaming ? \"\" : undefined}\n      dir={bidi ? \"auto\" : undefined}\n      className={cn(\"whitespace-pre-wrap\", bidi && streaming && CARET, className)}\n      {...props}\n    >\n      {jitter && !bidi ? (\n        <style href=\"ll-message-text\" precedence=\"low\">\n          {CSS}\n        </style>\n      ) : null}\n      {bidi ? text : out}\n    </span>\n  )\n}\n\nexport { MessageGroup, Message, MessageAvatar, MessageContent, MessageFooter, MessageHeader, MessageText }\n",
+      "type": "registry:ui",
+      "target": "@ui/message.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "upstream": "message",
+    "related": [
+      "bubble",
+      "message-scroller",
+      "marker",
+      "typing-indicator",
+      "prompt-input"
+    ],
+    "a11y": [
+      "All parts are plain divs (as upstream). Put the transcript in a `role=\"log\"` region, which MessageScrollerContent does for you.",
+      "MessageText renders one span per word with normal spaces between them, so copy, paste, find-in-page and screen readers read it as ordinary text. The animation is a CSS one that reduced motion turns off; the words and the caret stay.",
+      "Text in a right-to-left script (Hebrew, Arabic...) is not split into words. Such text is one plain span with `dir=\"auto\"`, so the browser orders, joins and shapes it itself (no per-word wobble or soak; the caret stays).",
+      "Header and footer are 14 px muted text (8.9:1 on paper)."
+    ],
+    "usage": "import { Bubble, BubbleContent } from \"@/components/ui/bubble\"\nimport { Message, MessageContent, MessageFooter, MessageHeader, MessageText } from \"@/components/ui/message\"\n\nexport function Example({ reply, streaming }: { reply: string; streaming: boolean }) {\n  return (\n    <Message>\n      <MessageContent>\n        <MessageHeader>Stubby</MessageHeader>\n        <Bubble variant=\"muted\">\n          <BubbleContent>\n            <MessageText streaming={streaming}>{reply}</MessageText>\n          </BubbleContent>\n        </Bubble>\n        <MessageFooter>9:41</MessageFooter>\n      </MessageContent>\n    </Message>\n  )\n}",
+    "parts": [
+      "MessageGroup",
+      "Message",
+      "MessageAvatar",
+      "MessageContent",
+      "MessageHeader",
+      "MessageFooter",
+      "MessageText"
+    ]
+  },
+  "categories": [
+    "Chat"
+  ],
+  "type": "registry:ui"
+}

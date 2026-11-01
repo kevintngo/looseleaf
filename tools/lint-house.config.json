@@ -1,0 +1,87 @@
+{
+  "$comment": "Looseleaf house-rules linter config. Every key is optional; missing keys fall back to the built-in defaults in tools/lint-house.mjs. Rule value = \"error\" | \"warn\" | \"off\" or { severity, zones, exceptZones }. Zones: all, registry (= registryZones), or any key of `zones`. Inline escapes: `// lint-house-disable-next-line <rule[,rule]> -- reason`, `// lint-house-disable-line <rule>`, `/* lint-house-disable-file <rule> */`.",
+  "scan": {
+    "include": ["src/**/*.{ts,tsx}"],
+    "exclude": ["**/*.d.ts", "**/*.test.{ts,tsx}", "**/*.generated.{ts,tsx}"]
+  },
+  "zones": {
+    "ui": ["src/components/ui/**"],
+    "blocks": ["src/blocks/**"],
+    "hooks": ["src/hooks/**"],
+    "lib": ["src/lib/**"],
+    "ink": ["src/lib/ink/**"],
+    "recipes": ["src/lib/ink/recipes/**"],
+    "art": ["src/lib/ink/art/*/**"],
+    "examples": ["src/docs/examples/**"],
+    "meta": ["src/docs/meta/**"],
+    "docs": ["src/docs/**"]
+  },
+  "registryZones": ["ui", "blocks", "hooks", "lib"],
+  "rules": {
+    "parse-error": "warn",
+    "import-allowed": {"severity": "error", "zones": ["registry"]},
+    "relative-import": {"severity": "error", "zones": ["registry"]},
+    "example-import": {"severity": "warn", "zones": ["examples"]},
+    "no-lucide": {"severity": "error", "zones": ["all"]},
+    "hard-coded-color": {"severity": "error", "zones": ["ui", "blocks", "recipes", "art"]},
+    "palette-color": {"severity": "warn", "zones": ["ui", "blocks"]},
+    "use-client": {"severity": "error", "zones": ["ui", "blocks"]},
+    "data-slot": {"severity": "error", "zones": ["ui"]},
+    "data-slot-format": {"severity": "warn", "zones": ["ui"]},
+    "rounded-class": {"severity": "error", "zones": ["ui", "blocks"]},
+    "aspect-auto-height": {"severity": "warn", "zones": ["examples", "blocks"]},
+    "font-literal": {"severity": "warn", "zones": ["ui", "blocks"]},
+    "fe-turbulence": {"severity": "error", "zones": ["all"]},
+    "forward-ref": {"severity": "error", "zones": ["all"]},
+    "default-export": {"severity": "error", "zones": ["ui", "hooks", "lib"]},
+    "module-scope-dom": {"severity": "error", "zones": ["registry", "examples"]},
+    "unseeded-random": {"severity": "error", "zones": ["registry", "examples"]},
+    "render-time": {"severity": "error", "zones": ["registry", "examples"]},
+    "console-log": {"severity": "error", "zones": ["registry", "examples"]},
+    "debugger": {"severity": "error", "zones": ["all"]},
+    "ink-layer": {"severity": "error", "zones": ["all"]},
+    "ink-svg-root": {"severity": "error", "zones": ["all"]},
+    "ink-layer-name": {"severity": "error", "zones": ["all"]},
+    "ink-void-host": {"severity": "error", "zones": ["ui", "blocks", "examples"]},
+    "ink-host-svg": {"severity": "error", "zones": ["ui", "blocks"]},
+    "ink-kind": {"severity": "warn", "zones": ["all"]},
+    "recipe-pure": {"severity": "error", "zones": ["recipes", "art"]},
+    "ink-direct-import": {"severity": "error", "zones": ["ui", "blocks", "hooks", "examples"]},
+    "no-clock-random": {"severity": "error", "zones": ["ink", "ui", "blocks"]},
+    "todo-litter": {"severity": "warn", "zones": ["registry", "examples"]},
+    "file-name": {"severity": "error", "zones": ["ui", "hooks", "examples", "meta", "recipes", "art"]},
+    "example-shape": {"severity": "error", "zones": ["examples"]},
+    "meta-shape": {"severity": "error", "zones": ["meta"]}
+  },
+  "overrides": [
+    {
+      "files": ["src/lib/ink/**"],
+      "rules": {"relative-import": "warn", "fe-turbulence": "off"}
+    },
+    {
+      "files": ["src/lib/ink/recipes/**", "src/lib/ink/art/*/**"],
+      "rules": {"fe-turbulence": "error"}
+    },
+    {
+      "files": ["src/docs/examples/**"],
+      "rules": {"console-log": "warn"}
+    }
+  ],
+  "allow": {
+    "importPackages": [],
+    "exampleImports": ["react", "react-dom", "react-hook-form", "@hookform/resolvers", "zod", "date-fns", "sonner", "react-day-picker"],
+    "rounded": ["rounded-none", "rounded-full", "rounded-inherit", "rounded-[inherit]"],
+    "colorLiterals": [],
+    "clientPackages": ["radix-ui", "@radix-ui/*", "cmdk", "vaul", "sonner", "embla-carousel-react", "input-otp", "react-day-picker", "react-hook-form", "react-resizable-panels", "next-themes", "recharts"],
+    "radixServerSafe": ["Slot", "Slottable"],
+    "moduleGlobals": ["window", "document", "navigator", "localStorage", "sessionStorage", "matchMedia", "getComputedStyle", "requestAnimationFrame", "HTMLElement", "customElements"],
+    "consoleMethods": ["log", "debug", "info", "trace", "dir", "table"],
+    "safeCallees": ["useEffect", "useLayoutEffect", "useInsertionEffect", "useImperativeHandle", "useCallback", "useEffectEvent", "useEvent", "setTimeout", "setInterval", "requestAnimationFrame", "requestIdleCallback", "queueMicrotask", "addEventListener", "startTransition"],
+    "classFunctions": ["cn", "clsx", "cx", "twMerge", "twJoin", "classNames", "classnames", "cva", "tv"],
+    "inkLayers": ["rest", "hover", "pressed", "focus", "disabled", "invalid", "checked", "indeterminate", "open", "busy"],
+    "inkIntrinsicKinds": ["icon", "doodle", "sticker", "stamp", "tape", "prop", "mascot", "illustration", "badge"],
+    "inkInternals": ["pen", "pens", "shapes", "fills", "builder", "geom", "noise"],
+    "artImports": ["@/lib/ink/art/**"],
+    "pureGlobals": ["window", "document", "navigator", "localStorage", "sessionStorage", "matchMedia", "getComputedStyle", "requestAnimationFrame", "cancelAnimationFrame", "requestIdleCallback", "setTimeout", "setInterval", "queueMicrotask", "fetch", "performance", "crypto", "ResizeObserver", "MutationObserver", "IntersectionObserver", "HTMLElement", "SVGElement", "Element", "Node", "Image", "DOMParser", "XMLSerializer", "customElements"]
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "context-menu",
+  "title": "Context Menu",
+  "description": "The right-click menu, written on the same slip of paper as the dropdown and set down where the pointer was. Highlighter rows, drawn keycaps, pencil boxes and felt ticks, a red pencil hatch for what deletes. It opens on a right click, a long press on touch, or the menu key, and pops in where the pointer was.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/kbd.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/menu-styles.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/separator.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/context-menu.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { ContextMenu as ContextMenuPrimitive } from \"radix-ui\"\n\nimport { Icon } from \"@/components/ui/icon\"\nimport { Kbd } from \"@/components/ui/kbd\"\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { useInkScope } from \"@/lib/ink/react\"\nimport {\n  MENU_CHOICE_ITEM,\n  MENU_INDICATOR,\n  MENU_ITEM,\n  MENU_KEYCAP,\n  MENU_LABEL,\n  MENU_MARK,\n  MENU_SEPARATOR,\n  MENU_SHORTCUT,\n  MENU_SUB_TRIGGER,\n  menuContentClass,\n  menuViewportClass,\n  parseShortcut,\n  splitMenuClass,\n} from \"@/lib/menu-styles\"\nimport { cn } from \"@/lib/utils\"\n\ntype PaperLook = Pick<PaperProps, \"stock\" | \"edge\" | \"tilt\" | \"tape\" | \"seed\">\n\nfunction ContextMenu({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Root>) {\n  return <ContextMenuPrimitive.Root data-slot=\"context-menu\" {...props} />\n}\n\nfunction ContextMenuTrigger({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Trigger>) {\n  return <ContextMenuPrimitive.Trigger data-slot=\"context-menu-trigger\" {...props} />\n}\n\nfunction ContextMenuGroup({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Group>) {\n  return <ContextMenuPrimitive.Group data-slot=\"context-menu-group\" {...props} />\n}\n\nfunction ContextMenuPortal({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Portal>) {\n  return <ContextMenuPrimitive.Portal data-slot=\"context-menu-portal\" {...props} />\n}\n\nfunction ContextMenuSub({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Sub>) {\n  return <ContextMenuPrimitive.Sub data-slot=\"context-menu-sub\" {...props} />\n}\n\nfunction ContextMenuRadioGroup({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.RadioGroup>) {\n  return <ContextMenuPrimitive.RadioGroup data-slot=\"context-menu-radio-group\" {...props} />\n}\n\nfunction ContextMenuSubTrigger({ className, inset, children, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.SubTrigger> & { inset?: boolean }) {\n  return (\n    <ContextMenuPrimitive.SubTrigger data-slot=\"context-menu-sub-trigger\" data-inset={inset} className={cn(MENU_SUB_TRIGGER, className)} {...props}>\n      {children}\n      <Icon name=\"chevron-right\" size={16} className=\"ms-auto\" />\n    </ContextMenuPrimitive.SubTrigger>\n  )\n}\n\nfunction ContextMenuSubContent({\n  className,\n  alignOffset = -4,\n  stock = \"slip\",\n  edge,\n  tilt = true,\n  tape,\n  seed,\n  children,\n  ...props\n}: React.ComponentProps<typeof ContextMenuPrimitive.SubContent> & PaperLook) {\n  const scope = useInkScope()\n  const split = splitMenuClass(className)\n  return (\n    <ContextMenuPrimitive.SubContent asChild alignOffset={alignOffset} {...props}>\n      <Paper data-slot=\"context-menu-sub-content\" stock={stock} edge={edge} tilt={tilt} tape={tape} rules=\"none\" seed={seed} {...scope} className={cn(menuContentClass(\"context-menu\"), split.content)}>\n        <div data-slot=\"context-menu-viewport\" className={menuViewportClass(\"context-menu\", split.viewport)}>\n          {children}\n        </div>\n      </Paper>\n    </ContextMenuPrimitive.SubContent>\n  )\n}\n\nfunction ContextMenuContent({\n  className,\n  stock = \"slip\",\n  edge,\n  tilt = true,\n  tape,\n  seed,\n  children,\n  ...props\n}: React.ComponentProps<typeof ContextMenuPrimitive.Content> & PaperLook) {\n  const scope = useInkScope()\n  const split = splitMenuClass(className)\n  return (\n    <ContextMenuPrimitive.Portal>\n      <ContextMenuPrimitive.Content asChild {...props}>\n        <Paper data-slot=\"context-menu-content\" stock={stock} edge={edge} tilt={tilt} tape={tape} rules=\"none\" seed={seed} {...scope} className={cn(menuContentClass(\"context-menu\"), \"data-[state=open]:animate-pop\", split.content)}>\n          <div data-slot=\"context-menu-viewport\" className={menuViewportClass(\"context-menu\", split.viewport)}>\n            {children}\n          </div>\n        </Paper>\n      </ContextMenuPrimitive.Content>\n    </ContextMenuPrimitive.Portal>\n  )\n}\n\nfunction ContextMenuItem({\n  className,\n  inset,\n  variant = \"default\",\n  ...props\n}: React.ComponentProps<typeof ContextMenuPrimitive.Item> & {\n  inset?: boolean\n  variant?: \"default\" | \"destructive\"\n}) {\n  return <ContextMenuPrimitive.Item data-slot=\"context-menu-item\" data-inset={inset} data-variant={variant} className={cn(MENU_ITEM, className)} {...props} />\n}\n\nfunction ContextMenuCheckboxItem({ className, children, checked, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>) {\n  return (\n    <ContextMenuPrimitive.CheckboxItem data-slot=\"context-menu-checkbox-item\" className={cn(MENU_CHOICE_ITEM, className)} checked={checked} {...props}>\n      <span data-slot=\"context-menu-item-indicator\" className={MENU_INDICATOR}>\n        <Icon name=\"square\" size={16} className=\"absolute text-pencil-mark forced-colors:text-[CanvasText]\" />\n        <ContextMenuPrimitive.ItemIndicator className={MENU_MARK}>\n          <Icon name=\"check\" size={22} className=\"-translate-y-px\" />\n        </ContextMenuPrimitive.ItemIndicator>\n      </span>\n      {children}\n    </ContextMenuPrimitive.CheckboxItem>\n  )\n}\n\nfunction ContextMenuRadioItem({ className, children, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.RadioItem>) {\n  return (\n    <ContextMenuPrimitive.RadioItem data-slot=\"context-menu-radio-item\" className={cn(MENU_CHOICE_ITEM, className)} {...props}>\n      <span data-slot=\"context-menu-item-indicator\" className={MENU_INDICATOR}>\n        <Icon name=\"circle\" size={16} className=\"absolute text-pencil-mark forced-colors:text-[CanvasText]\" />\n        <ContextMenuPrimitive.ItemIndicator className={MENU_MARK}>\n          <Icon name=\"dot\" size={26} />\n        </ContextMenuPrimitive.ItemIndicator>\n      </span>\n      {children}\n    </ContextMenuPrimitive.RadioItem>\n  )\n}\n\nfunction ContextMenuLabel({ className, inset, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Label> & { inset?: boolean }) {\n  return <ContextMenuPrimitive.Label data-slot=\"context-menu-label\" data-inset={inset} className={cn(MENU_LABEL, className)} {...props} />\n}\n\nfunction ContextMenuSeparator({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Separator>) {\n  return (\n    <ContextMenuPrimitive.Separator asChild {...props}>\n      <Separator data-slot=\"context-menu-separator\" className={cn(MENU_SEPARATOR, className)} />\n    </ContextMenuPrimitive.Separator>\n  )\n}\n\nfunction ContextMenuShortcut({ className, children, ...props }: React.ComponentProps<\"span\">) {\n  const keys = typeof children === \"string\" ? parseShortcut(children) : null\n  return (\n    <span data-slot=\"context-menu-shortcut\" className={cn(MENU_SHORTCUT, className)} {...props}>\n      {keys\n        ? keys.map((k, i) => (\n            <Kbd key={i} className={MENU_KEYCAP}>\n              {\"icon\" in k ? <Icon name={k.icon} label={k.label} /> : k.text}\n            </Kbd>\n          ))\n        : children}\n    </span>\n  )\n}\n\nexport {\n  ContextMenu,\n  ContextMenuTrigger,\n  ContextMenuContent,\n  ContextMenuItem,\n  ContextMenuCheckboxItem,\n  ContextMenuRadioItem,\n  ContextMenuLabel,\n  ContextMenuSeparator,\n  ContextMenuShortcut,\n  ContextMenuGroup,\n  ContextMenuPortal,\n  ContextMenuSub,\n  ContextMenuSubContent,\n  ContextMenuSubTrigger,\n  ContextMenuRadioGroup,\n}\n",
+      "type": "registry:ui",
+      "target": "@ui/context-menu.tsx"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "context-menu",
+    "related": [
+      "dropdown-menu",
+      "menubar",
+      "popover"
+    ],
+    "a11y": [
+      "Radix ContextMenu: opens on a right click, a long press on touch and the ContextMenu key or Shift+F10 on the focused region; the content is role=menu with menuitem, menuitemcheckbox and menuitemradio rows.",
+      "Up and Down move (disabled rows are skipped), Home and End jump, typing a letter jumps to the next row that starts with it, ArrowRight opens a sub-menu and ArrowLeft closes it, Enter or Space chooses, Escape closes.",
+      "A context menu must never be the only way to reach an action: put the same actions on a visible control (a DropdownMenu on a button) as well.",
+      "The highlight follows the keyboard as well as the pointer (`data-highlighted`); a row with keyboard focus also gets a bar of blue felt at its start edge. Ticks, dots, chevrons and the pencil boxes are aria-hidden drawings; keycaps are real `kbd` elements.",
+      "Rows are 32 px high (28 compact and calm). Portalled content repeats the InkProvider's data-density, data-motion and data-theme; with reduced motion it appears without the slide and zoom. In forced-colors mode the highlighted row takes the system highlight colours."
+    ],
+    "usage": "import {\n  ContextMenu,\n  ContextMenuContent,\n  ContextMenuItem,\n  ContextMenuSeparator,\n  ContextMenuShortcut,\n  ContextMenuTrigger,\n} from \"@/components/ui/context-menu\"\n\nexport function Example() {\n  return (\n    <ContextMenu>\n      <ContextMenuTrigger className=\"grid h-40 w-72 place-items-center\">Right click here</ContextMenuTrigger>\n      <ContextMenuContent className=\"w-56\">\n        <ContextMenuItem>\n          Back <ContextMenuShortcut>⌘[</ContextMenuShortcut>\n        </ContextMenuItem>\n        <ContextMenuItem>Reload</ContextMenuItem>\n        <ContextMenuSeparator />\n        <ContextMenuItem variant=\"destructive\">Delete</ContextMenuItem>\n      </ContextMenuContent>\n    </ContextMenu>\n  )\n}",
+    "parts": [
+      "ContextMenu",
+      "ContextMenuTrigger",
+      "ContextMenuPortal",
+      "ContextMenuContent",
+      "ContextMenuGroup",
+      "ContextMenuLabel",
+      "ContextMenuItem",
+      "ContextMenuCheckboxItem",
+      "ContextMenuRadioGroup",
+      "ContextMenuRadioItem",
+      "ContextMenuSeparator",
+      "ContextMenuShortcut",
+      "ContextMenuSub",
+      "ContextMenuSubTrigger",
+      "ContextMenuSubContent"
+    ]
+  },
+  "categories": [
+    "Overlays"
+  ],
+  "type": "registry:ui"
+}

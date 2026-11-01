@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sonner",
+  "title": "Sonner",
+  "description": "Toasts as slips of paper tossed onto the desk. A guest check for success, a pink sticky for errors, yellow for warnings, blue for news; stacked, swipeable, with drawn icons, action buttons, promise toasts and tape or a pin to hold them down. Built on the sonner package: you keep its `toast()` API.",
+  "dependencies": [
+    "sonner"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/sonner.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { createPortal } from \"react-dom\"\nimport { Toaster as Sonner, toast, useSonner, type ToasterProps } from \"sonner\"\n\nimport { Icon } from \"@/components/ui/icon\"\nimport { useInkScope } from \"@/lib/ink/react\"\nimport { cn } from \"@/lib/utils\"\n\ntype ToastClassNames = NonNullable<NonNullable<ToasterProps[\"toastOptions\"]>[\"classNames\"]>\n\ntype LooseleafToasterProps = ToasterProps & {\n  decoration?: \"none\" | \"tape\" | \"pin\"\n  portal?: boolean\n}\n\nconst SLIP = cn(\n  \"ll-paper ll-tooth-fine ll-stock-slip ll-sheet-slip pointer-events-auto flex w-(--width) items-center gap-3 p-4 font-hand text-[15px] text-foreground compact:p-3.5 calm:p-3\",\n  \"data-[type=success]:ll-stock-check data-[type=success]:ll-sheet-check data-[type=success]:[--ll-tilt:-0.5deg]\",\n  \"data-[type=error]:ll-stock-sticky-pink data-[type=error]:ll-sheet-sticky data-[type=error]:[--ll-tilt:0.9deg]\",\n  \"data-[type=warning]:ll-stock-sticky-yellow data-[type=warning]:ll-sheet-sticky data-[type=warning]:[--ll-tilt:-0.8deg]\",\n  \"data-[type=info]:ll-stock-sticky-blue data-[type=info]:ll-sheet-sticky data-[type=info]:[--ll-tilt:0.6deg]\",\n  \"data-[type=loading]:[--ll-tilt:0.35deg] data-[type=default]:[--ll-tilt:-0.3deg]\",\n  \"[&[data-expanded=false][data-front=false]>*]:opacity-0\",\n  \"data-[x-position=right]:animate-[ll-toss_var(--ll-dur-toss)_var(--ll-ease-settle)_backwards] data-[x-position=left]:animate-[ll-drop_var(--ll-dur-drop)_var(--ll-ease-settle)_backwards] data-[x-position=center]:animate-[ll-drop_var(--ll-dur-drop)_var(--ll-ease-settle)_backwards]\"\n)\n\nconst TAPE =\n  \"after:pointer-events-none after:absolute after:-top-3 after:left-1/2 after:h-4.5 after:w-14 after:-translate-x-1/2 after:-rotate-3 after:border-y after:border-tape-edge after:bg-[color-mix(in_srgb,var(--ll-kraft)_70%,transparent)] after:[background-image:linear-gradient(90deg,transparent_29%,var(--ll-tape-edge)_29%_30%,transparent_30%_69%,var(--ll-tape-edge)_69%_70%,transparent_70%)] after:content-[''] after:[clip-path:polygon(0_0,100%_0,96%_20%,100%_40%,96%_60%,100%_80%,96%_100%,0_100%,4%_80%,0_60%,4%_40%,0_20%)] calm:after:hidden\"\nconst PIN =\n  \"after:pointer-events-none after:absolute after:-top-2 after:left-1/2 after:size-3.5 after:-translate-x-1/2 after:rounded-full after:bg-tomato after:content-[''] after:[background-image:radial-gradient(circle_at_34%_30%,var(--ll-photo)_0_13%,transparent_15%),radial-gradient(circle_at_66%_70%,rgb(var(--ll-shade)/0.32),transparent_60%)] after:shadow-[0_2px_2px_rgb(var(--ll-shade)/0.35)] calm:after:hidden\"\n\nconst BASE: ToastClassNames = {\n  toast: SLIP,\n  content: \"flex min-w-0 flex-1 flex-col gap-0.5\",\n  title: \"text-[15px] leading-snug font-bold\",\n  description: \"text-sm leading-snug text-muted-foreground\",\n  icon: \"relative flex size-5 shrink-0 items-center justify-center text-ink\",\n  loader: \"text-ink\",\n  actionButton:\n    \"ll-swipe ms-auto min-h-6 shrink-0 cursor-pointer px-2.5 py-0.5 text-sm font-bold whitespace-nowrap transition-[translate] duration-(--ll-dur-press) active:translate-y-(--ll-press-sink)\",\n  cancelButton: \"ms-auto min-h-6 shrink-0 cursor-pointer px-2 py-0.5 text-sm whitespace-nowrap text-ink-muted underline decoration-wavy underline-offset-4 hover:text-foreground\",\n  closeButton:\n    \"absolute end-1.5 top-1.5 z-(--ll-z-raised) grid size-6 cursor-pointer place-items-center text-ink hover:ll-swipe\",\n}\n\nfunction Toaster({ className, toastOptions, decoration = \"none\", theme = \"light\", icons, style, portal = false, ...props }: LooseleafToasterProps) {\n  const scope = useInkScope()\n  const [mounted, setMounted] = React.useState(false)\n  React.useEffect(() => {\n    if (portal) setMounted(true)\n  }, [portal])\n  const user = toastOptions?.classNames ?? {}\n  const merged = Object.fromEntries(\n    (Object.keys({ ...BASE, ...user }) as Array<keyof ToastClassNames>).map((k) => [k, cn(BASE[k], k === \"content\" && decoration !== \"none\" && (decoration === \"tape\" ? TAPE : PIN), user[k])])\n  ) as ToastClassNames\n  const stack = (\n    // lint-house-disable-next-line data-slot\n    <Sonner\n      theme={theme}\n      className={cn(\"toaster group pointer-events-auto\", className)}\n      icons={{\n        success: <Icon name=\"circle-check\" size={20} />,\n        info: <Icon name=\"info\" size={20} />,\n        warning: <Icon name=\"triangle-alert\" size={20} />,\n        error: <Icon name=\"octagon-x\" size={20} />,\n        loading: <Icon name=\"loader-circle\" size={20} className=\"animate-spin\" />,\n        close: <Icon name=\"x\" size={14} />,\n        ...icons,\n      }}\n      style={{ zIndex: \"var(--ll-z-toast)\", \"--width\": \"min(360px, calc(100vw - 32px))\", ...style } as React.CSSProperties}\n      toastOptions={{ unstyled: true, ...toastOptions, classNames: merged }}\n      {...props}\n    />\n  )\n  if (!portal) return stack\n  return mounted ? createPortal(<div data-slot=\"toaster-portal\" {...scope} className=\"contents\">{stack}</div>, document.body) : null\n}\n\nexport { Toaster, toast, useSonner }\nexport type { LooseleafToasterProps as ToasterProps }\n",
+      "type": "registry:ui",
+      "target": "@ui/sonner.tsx"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "sonner",
+    "related": [
+      "alert",
+      "dialog",
+      "button",
+      "popover"
+    ],
+    "a11y": [
+      "Sonner renders a polite aria-live region (`aria-label=\"Notifications alt+T\"`); Alt+T focuses it so a keyboard user can reach the toasts, and hovering or focusing pauses the timers. Each type is its own icon shape and paper (guest check, pink, yellow, blue sticky), so colour is never the only signal.",
+      "Action and cancel are real buttons at least 24 px tall; the close button is named \"Close toast\". Keep toast text short and never put the only copy of an error in a toast that disappears: pair it with an inline message.",
+      "Swipe to dismiss is a pointer shortcut only (sonner); every toast also closes with its close button, its action, its timer or `toast.dismiss()`.",
+      "The toss-in uses the theme's `ll-toss` (`ll-drop` when the stack is not on the right) and collapses to nothing with reduced motion. In `calm` density the slips lose their tilt, tape and pin.",
+      "Toasts are above dialogs and popovers on the z-scale and stay clickable while a modal is open."
+    ],
+    "usage": "// app/layout.tsx  (once)\nimport { Toaster } from \"@/components/ui/sonner\"\n\nexport default function Layout({ children }) {\n  return (\n    <>\n      {children}\n      <Toaster />\n    </>\n  )\n}\n\nimport { toast } from \"sonner\"\n\ntoast.success(\"Notebook saved\", { description: \"All 48 pages are safe.\" })\n\ntoast.promise(saveNotebook(), {\n  loading: \"Saving notebook…\",\n  success: \"Saved\",\n  error: \"Could not save\",\n})",
+    "parts": [
+      "Toaster",
+      "toast",
+      "useSonner"
+    ]
+  },
+  "categories": [
+    "Feedback"
+  ],
+  "type": "registry:ui"
+}

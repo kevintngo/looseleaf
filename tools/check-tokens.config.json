@@ -1,0 +1,7 @@
+{
+  "$comment": "check-tokens: custom properties provided by libraries at runtime (never defined in our CSS), and files to skip.",
+  "ignorePrefixes": ["--tw-", "--radix-", "--cmdk-", "--vaul-", "--sonner-", "--rdp-", "--embla-", "--toast-", "--input-otp-", "--recharts-", "--default-", "--container-", "--breakpoint-"],
+  "ignoreNames": [],
+  "exclude": ["**/*.d.ts", "**/*.test.{ts,tsx}", "**/*.generated.{ts,tsx}", "src/docs/meta/**"],
+  "checkedPrefixes": ["--ll-", "--color-"]
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pagination",
+  "title": "Pagination",
+  "description": "Page links as drawn buttons: each number is a Button around your own link, the page you are on is a block of highlighter, the arrows and the ellipsis are hand-drawn. It is just links, so it works with any router, or with plain hrefs and no JavaScript at all.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/pagination.tsx",
+      "content": "import * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Pagination({ className, ...props }: React.ComponentProps<\"nav\">) {\n  return <nav role=\"navigation\" aria-label=\"pagination\" data-slot=\"pagination\" className={cn(\"mx-auto flex w-full justify-center\", className)} {...props} />\n}\n\nfunction PaginationContent({ className, ...props }: React.ComponentProps<\"ul\">) {\n  return <ul data-slot=\"pagination-content\" className={cn(\"flex flex-row items-center gap-1.5\", className)} {...props} />\n}\n\nfunction PaginationItem({ ...props }: React.ComponentProps<\"li\">) {\n  return <li data-slot=\"pagination-item\" {...props} />\n}\n\ntype PaginationLinkProps = {\n  isActive?: boolean\n  disabled?: boolean\n} & Pick<React.ComponentProps<typeof Button>, \"size\"> &\n  React.ComponentProps<\"a\">\n\nfunction PaginationLink({ className, isActive, disabled, size = \"icon\", onClick, children, ...props }: PaginationLinkProps) {\n  return (\n    <Button asChild variant={isActive ? \"secondary\" : \"ghost\"} size={size} className={className} disabled={disabled}>\n      <a aria-current={isActive ? \"page\" : undefined} data-slot=\"pagination-link\" data-active={isActive} onClick={disabled ? undefined : onClick} {...props}>\n        {children}\n      </a>\n    </Button>\n  )\n}\n\nfunction PaginationPrevious({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {\n  return (\n    <PaginationLink aria-label=\"Go to previous page\" size=\"default\" className={cn(\"gap-1 px-2.5 sm:ps-2.5\", className)} {...props}>\n      <Icon name=\"chevron-left\" />\n      <span className=\"hidden sm:block\">Previous</span>\n    </PaginationLink>\n  )\n}\n\nfunction PaginationNext({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {\n  return (\n    <PaginationLink aria-label=\"Go to next page\" size=\"default\" className={cn(\"gap-1 px-2.5 sm:pe-2.5\", className)} {...props}>\n      <span className=\"hidden sm:block\">Next</span>\n      <Icon name=\"chevron-right\" />\n    </PaginationLink>\n  )\n}\n\nfunction PaginationEllipsis({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span aria-hidden data-slot=\"pagination-ellipsis\" className={cn(\"flex size-9 items-center justify-center text-ink-soft\", className)} {...props}>\n      <Icon name=\"ellipsis\" />\n      <span className=\"sr-only\">More pages</span>\n    </span>\n  )\n}\n\nexport { Pagination, PaginationContent, PaginationLink, PaginationItem, PaginationPrevious, PaginationNext, PaginationEllipsis }\n",
+      "type": "registry:ui",
+      "target": "@ui/pagination.tsx"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "pagination",
+    "related": [
+      "button",
+      "breadcrumb",
+      "tabs",
+      "table"
+    ],
+    "a11y": [
+      "A `nav` landmark labelled \"pagination\" holding a list of links. The current page has `aria-current=\"page\"`; it is also bold-on-highlighter, so it does not rely on colour.",
+      "Previous and Next carry `aria-label`s that name their destination, so they read the same when the word is hidden on a phone. Give number links an accessible name of their own when the bare number is ambiguous (`aria-label=\"Page 3\"`).",
+      "A disabled link is `aria-disabled`, removed from the tab order and drawn as the dashed alternative; its click is prevented and your `onClick` is not called.",
+      "Each link is at least 36 px square (32 compact, 28 calm), a tab stop with the theme's drawn blue focus ring. Being plain anchors, they work without JavaScript and with any router."
+    ],
+    "usage": "import {\n  Pagination,\n  PaginationContent,\n  PaginationEllipsis,\n  PaginationItem,\n  PaginationLink,\n  PaginationNext,\n  PaginationPrevious,\n} from \"@/components/ui/pagination\"\n\nexport function Example() {\n  return (\n    <Pagination>\n      <PaginationContent>\n        <PaginationItem>\n          <PaginationPrevious href=\"?page=1\" />\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationLink href=\"?page=1\">1</PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationLink href=\"?page=2\" isActive>\n            2\n          </PaginationLink>\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationEllipsis />\n        </PaginationItem>\n        <PaginationItem>\n          <PaginationNext href=\"?page=3\" />\n        </PaginationItem>\n      </PaginationContent>\n    </Pagination>\n  )\n}",
+    "parts": [
+      "Pagination",
+      "PaginationContent",
+      "PaginationItem",
+      "PaginationLink",
+      "PaginationPrevious",
+      "PaginationNext",
+      "PaginationEllipsis"
+    ]
+  },
+  "categories": [
+    "Navigation"
+  ],
+  "type": "registry:ui"
+}

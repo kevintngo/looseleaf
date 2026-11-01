@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "marker",
+  "title": "Marker",
+  "description": "The pencil line between two days of a conversation, the red one where you stopped reading, and the quiet note that someone joined. A separator, a border or a plain line of small print.",
+  "dependencies": [
+    "class-variance-authority",
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/marker.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { Slot } from \"radix-ui\"\n\nimport { useInk } from \"@/lib/ink/react\"\nimport { markerRuleRecipe, type MarkerSide, type MarkerTone } from \"@/lib/ink/recipes/marker-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst markerVariants = cva(\n  \"group/marker relative flex min-h-4 w-full items-center gap-2 text-start font-hand text-sm text-muted-foreground [&_svg:not([class*='size-']):not(.absolute)]:size-4 [a]:underline [a]:underline-offset-3 [a]:hover:text-foreground\",\n  {\n    variants: {\n      variant: {\n        default: \"\",\n        separator: \"\",\n        border: \"pb-3\",\n      },\n    },\n  }\n)\n\nfunction MarkerRule({ side, tone, seed, wavy }: { side: MarkerSide; tone: MarkerTone; seed?: string | number; wavy?: boolean }) {\n  const { hostRef, hostProps, node } = useInk({\n    recipe: markerRuleRecipe,\n    params: { side, tone, style: wavy ? \"wavy\" : \"line\" },\n    kind: \"rule\",\n    seed: seed === undefined ? undefined : `${seed}|${side}`,\n    still: true,\n  })\n  return (\n    <span\n      data-slot=\"marker-rule\"\n      data-side={side}\n      ref={hostRef}\n      {...hostProps}\n      className={cn(\n        \"relative isolate block h-4 min-w-0 forced-colors:h-2 forced-colors:border-b-2 forced-colors:border-[CanvasText] forced-colors:outline-none!\",\n        side === \"full\" ? \"absolute inset-x-0 bottom-0\" : \"flex-1\"\n      )}\n    >\n      {node}\n    </span>\n  )\n}\n\nfunction Marker({\n  className,\n  variant = \"default\",\n  tone = \"default\",\n  rule = \"line\",\n  seed,\n  asChild = false,\n  children,\n  ...props\n}: React.ComponentProps<\"div\"> &\n  VariantProps<typeof markerVariants> & {\n    asChild?: boolean\n    tone?: \"default\" | \"new\"\n    rule?: \"line\" | \"wavy\"\n    seed?: string | number\n  }) {\n  const Comp = asChild ? Slot.Root : \"div\"\n  const t: MarkerTone = tone ?? \"default\"\n  const v = variant ?? \"default\"\n  const inner = asChild ? <Slot.Slottable>{children}</Slot.Slottable> : children\n  return (\n    <Comp\n      data-slot=\"marker\"\n      data-variant={v}\n      data-tone={t === \"new\" ? \"new\" : undefined}\n      className={cn(markerVariants({ variant: v }), className)}\n      {...props}\n    >\n      {v === \"separator\" ? <MarkerRule side=\"start\" tone={t} seed={seed} /> : null}\n      {inner}\n      {v === \"separator\" ? <MarkerRule side=\"end\" tone={t} seed={seed} /> : null}\n      {v === \"border\" ? <MarkerRule side=\"full\" tone={t} seed={seed} wavy={rule === \"wavy\"} /> : null}\n    </Comp>\n  )\n}\n\nfunction MarkerIcon({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"marker-icon\"\n      aria-hidden=\"true\"\n      className={cn(\"size-4 shrink-0 group-data-[tone=new]/marker:text-red [&_svg:not([class*='size-']):not(.absolute)]:size-4\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MarkerContent({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"marker-content\"\n      className={cn(\n        \"min-w-0 wrap-break-word group-data-[variant=separator]/marker:flex-none group-data-[variant=separator]/marker:text-center group-data-[variant=separator]/marker:font-script group-data-[variant=separator]/marker:text-xl group-data-[variant=separator]/marker:leading-none group-data-[tone=new]/marker:ll-swipe group-data-[tone=new]/marker:px-2 group-data-[tone=new]/marker:font-bold *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { Marker, MarkerIcon, MarkerContent, markerVariants }\n",
+      "type": "registry:ui",
+      "target": "@ui/marker.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/marker-ink.ts",
+      "content": "import { line, underline } from '@/lib/ink/shapes'\nimport { clamp } from '@/lib/ink/rng'\nimport { defineRecipe } from '@/lib/ink/recipes'\n\nexport type MarkerSide = 'start' | 'end' | 'full'\nexport type MarkerTone = 'default' | 'new'\n\nexport interface MarkerRuleParams {\n  side: MarkerSide\n  tone: MarkerTone\n  style?: 'line' | 'wavy'\n}\n\nexport const markerRuleRecipe = defineRecipe<MarkerRuleParams>({\n  id: 'marker-rule',\n  kind: 'rule',\n  layers: ['rest'],\n  pad: 8,\n  draw(ink, { w, h }, { side, tone, style = 'line' }, ctx) {\n    const y = h / 2\n    const pen = tone === 'new' ? 'red' : 'pencil'\n    const rtl = ctx.dir === 'rtl'\n    const towardsWords: 'left' | 'right' | 'none' = side === 'full' ? 'none' : (side === 'start') === !rtl ? 'right' : 'left'\n    const rng = ink.next('rule')\n    const gapEnd = clamp(w * 0.02, 1, 4) + rng.range(0, 2)\n    const over = rng.range(0, 3.5)\n    const x1 = towardsWords === 'left' ? gapEnd : towardsWords === 'none' ? 1 + over * 0.5 : -over\n    const x2 = towardsWords === 'right' ? w - gapEnd : towardsWords === 'none' ? w - 1 + over * 0.5 : w + over\n    ink.layer('rest', () => {\n      if (ctx.calm) {\n        line(ink, x1, y, x2, y, { pen: 'pencil.fine', single: true, bow: 0, opts: { alpha: tone === 'new' ? 0.9 : 0.7, wobble: 0.2, color: tone === 'new' ? 'red' : undefined } })\n        return\n      }\n      if (style === 'wavy' && side === 'full') {\n        underline(ink, x1, y, x2 - x1, { kind: 'wavy', pen: tone === 'new' ? 'red' : 'pencil' })\n        return\n      }\n      line(ink, x1, y, x2, y, { pen, bow: rng.range(0.4, 1.2) })\n      if (tone === 'new' || w > 140) {\n        const a = x1 + (x2 - x1) * rng.range(0.05, 0.3)\n        const b = x2 - (x2 - x1) * rng.range(0.05, 0.3)\n        line(ink, a, y + 1.4, b, y + 1.9, { pen, single: true, bow: 0.5, opts: { alpha: 0.5, width: 0.8 } })\n      }\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/marker-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "upstream": "marker",
+    "related": [
+      "message",
+      "bubble",
+      "message-scroller",
+      "separator"
+    ],
+    "a11y": [
+      "Markers are plain divs (as upstream). Inside a `role=\"log\"` transcript a separator is announced as its words: 'Today', 'New messages'.",
+      "Nothing is conveyed by the drawing alone: the unread state is the words, and colour is backed by the asterisk and the highlighter swipe.",
+      "Use `asChild` with a `button` to make 'New messages' a control; the drawn focus ring is the button's own.",
+      "Difference from upstream: `markerVariants` gives the layout only. The lines of `separator` and `border` are drawn parts of `Marker` (a pseudo-element cannot hold a drawing), so applying the variants to your own element draws no line.",
+      "Ink lines are 3:1 or more against paper; the words are muted text at 8.9:1 (ink on the highlighter swipe 12:1)."
+    ],
+    "usage": "import { Icon } from \"@/components/ui/icon\"\nimport { Marker, MarkerContent, MarkerIcon } from \"@/components/ui/marker\"\n\nexport function Example() {\n  return (\n    <>\n      <Marker variant=\"separator\">\n        <MarkerContent>Today</MarkerContent>\n      </Marker>\n      <Marker variant=\"separator\" tone=\"new\">\n        <MarkerIcon><Icon name=\"asterisk\" /></MarkerIcon>\n        <MarkerContent>New messages</MarkerContent>\n      </Marker>\n    </>\n  )\n}",
+    "parts": [
+      "Marker",
+      "MarkerIcon",
+      "MarkerContent"
+    ]
+  },
+  "categories": [
+    "Chat"
+  ],
+  "type": "registry:ui"
+}

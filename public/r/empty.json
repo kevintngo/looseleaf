@@ -1,0 +1,59 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty",
+  "title": "Empty",
+  "description": "What a page says when there is nothing on it yet: media, a title in the script font, a line of explanation and an action. The media can be an icon on a slip of paper, Stubby the pencil stub in one of his poses, or a doodle; a `border` draws the sketched, dashed placeholder frame.",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/doodle.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/mascot.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/empty.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { Doodle } from \"@/components/ui/doodle\"\nimport { Mascot, type MascotPose } from \"@/components/ui/mascot\"\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { emptyFrameRecipe, emptyMediaRecipe } from \"@/lib/ink/recipes/empty-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst hasClass = (className: string | undefined, name: string) => !!className && className.split(/\\s+/).includes(name)\n\nfunction Empty({ className, seed, ref, children, ...props }: React.ComponentProps<\"div\"> & { seed?: string | number }) {\n  const framed = hasClass(className, \"border\")\n  const { hostRef, hostProps, node } = useInk({ recipe: emptyFrameRecipe, params: {}, kind: \"frame\", seed, still: true })\n  return (\n    <div\n      data-slot=\"empty\"\n      ref={useMergedRef<HTMLDivElement>(framed ? hostRef : undefined, ref)}\n      {...(framed && node ? hostProps : {})}\n      className={cn(\n        \"relative isolate flex min-w-0 flex-1 flex-col items-center justify-center gap-6 p-6 text-center text-balance md:p-12 [.border]:border-transparent\",\n        className\n      )}\n      {...props}\n    >\n      {framed ? node : null}\n      {children}\n    </div>\n  )\n}\n\nfunction EmptyHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"empty-header\" className={cn(\"flex max-w-sm flex-col items-center gap-2 text-center\", className)} {...props} />\n}\n\nconst emptyMediaVariants = cva(\"mb-2 flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0\", {\n  variants: {\n    variant: {\n      default: \"bg-transparent\",\n      icon: \"relative isolate flex size-11 shrink-0 items-center justify-center text-foreground [&_svg:not(.absolute):not([class*='size-'])]:size-6\",\n    },\n  },\n  defaultVariants: {\n    variant: \"default\",\n  },\n})\n\nfunction EmptyMedia({\n  className,\n  variant = \"default\",\n  pose,\n  doodle,\n  size,\n  seed,\n  ref,\n  children,\n  ...props\n}: React.ComponentProps<\"div\"> &\n  VariantProps<typeof emptyMediaVariants> & {\n    pose?: MascotPose\n    doodle?: string\n    size?: number\n    seed?: string | number\n  }) {\n  const tile = variant === \"icon\"\n  const { hostRef, hostProps, node } = useInk({ recipe: emptyMediaRecipe, params: {}, kind: \"tile\", seed, still: true })\n  return (\n    <div\n      data-slot=\"empty-icon\"\n      data-variant={variant}\n      ref={useMergedRef<HTMLDivElement>(tile ? hostRef : undefined, ref)}\n      {...(tile && node ? hostProps : {})}\n      className={cn(emptyMediaVariants({ variant }), className)}\n      {...props}\n    >\n      {tile ? node : null}\n      {pose ? <Mascot pose={pose} size={size ?? 96} seed={seed} /> : null}\n      {doodle ? <Doodle name={doodle} size={size ?? 80} seed={seed} /> : null}\n      {children}\n    </div>\n  )\n}\n\nfunction EmptyTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"empty-title\" className={cn(\"font-script text-[1.65rem] leading-none font-semibold\", className)} {...props} />\n}\n\nfunction EmptyDescription({ className, ...props }: React.ComponentProps<\"p\">) {\n  return (\n    <div\n      data-slot=\"empty-description\"\n      className={cn(\"text-sm/relaxed text-muted-foreground [&>a]:text-link [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-link-hover\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction EmptyContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"empty-content\" className={cn(\"flex w-full max-w-sm min-w-0 flex-col items-center gap-4 text-sm text-balance\", className)} {...props} />\n}\n\nexport { Empty, EmptyHeader, EmptyTitle, EmptyDescription, EmptyContent, EmptyMedia }\n",
+      "type": "registry:ui",
+      "target": "@ui/empty.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/empty-ink.ts",
+      "content": "import { edgeBand, wash } from '@/lib/ink/fills'\nimport { roundRectPoly, seg } from '@/lib/ink/geom'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { box, dashedBox } from '@/lib/ink/shapes'\nimport type { Line } from '@/lib/ink/types'\n\nexport const emptyFrameRecipe = defineRecipe<Record<string, never>>({\n  id: 'empty-frame',\n  kind: 'frame',\n  layers: ['rest'],\n  pad: 8,\n  draw(ink, { w, h }, _p, ctx) {\n    ink.layer('rest', () => {\n      const r = Math.min(12, Math.min(w, h) / 4)\n      dashedBox(ink, 1, 1, w - 2, h - 2, { r, pen: ctx.calm ? 'pencil.fine' : 'pencil', dash: 9, gap: 6.5 })\n      if (ctx.calm) return\n      const t = 7\n      const ticks: Line[] = [\n        { pts: seg(-2, r + 2, -2, r + 2 - t, 0, 2), o: { start: 'soft', end: 'flick', simple: true } },\n        { pts: seg(r + 2, -2, r + 2 - t, -2, 0, 2), o: { start: 'soft', end: 'flick', simple: true } },\n        { pts: seg(w + 2, h - r - 2, w + 2, h - r - 2 + t, 0, 2), o: { start: 'soft', end: 'flick', simple: true } },\n        { pts: seg(w - r - 2, h + 2, w - r - 2 + t, h + 2, 0, 2), o: { start: 'soft', end: 'flick', simple: true } },\n      ]\n      ink.lines(ticks, 'pencil.fine', { alpha: 0.7 })\n    })\n  },\n})\n\nexport const emptyMediaRecipe = defineRecipe<Record<string, never>>({\n  id: 'empty-media',\n  kind: 'tile',\n  layers: ['rest'],\n  pad: 8,\n  draw(ink, { w, h }, _p, ctx) {\n    const body = roundRectPoly(1.5, 1.5, w - 3, h - 3, 6)\n    ink.layer('rest', () => {\n      ink.poly('under', body, 'slip', 0.98)\n      wash(ink, body, 'hi', { alpha: ctx.calm ? 0.25 : 0.35 })\n      box(ink, 0, 0, w, h, { pen: ctx.calm ? 'pencil.fine' : 'ink.fine', corner: 6, style: 'loop', stubs: false, ghost: false })\n      if (!ctx.calm) {\n        edgeBand(ink, 0, 0, w, h, 'b', { thick: 4 })\n        edgeBand(ink, 0, 0, w, h, 'r', { thick: 4 })\n      }\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/empty-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "empty",
+    "related": [
+      "mascot",
+      "doodle",
+      "card",
+      "button"
+    ],
+    "a11y": [
+      "Empty is a plain group of divs, as upstream; the title is not a heading unless you make it one (put an `<h2>` inside `EmptyTitle`, or give the Empty a role and a name).",
+      "Stubby, doodles and the icon tile are decoration (aria-hidden): the title and description carry the meaning. If the state is announced dynamically (search results going to none), put `role=\"status\"` on the Empty.",
+      "Ink on paper is 14:1, the muted description 8.9:1. The dashed frame is decoration and carries no information.",
+      "Buttons and links in EmptyContent are ordinary controls with their own focus rings.",
+      "The frame and the tile are hairline in calm density, and hidden in Windows high contrast in favour of a plain outline."
+    ],
+    "usage": "import { Button } from \"@/components/ui/button\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\n\nexport function Example() {\n  return (\n    <Empty className=\"border\">\n      <EmptyHeader>\n        <EmptyMedia pose=\"search\" />\n        <EmptyTitle>No results</EmptyTitle>\n        <EmptyDescription>Nothing matches your search. Try a shorter word.</EmptyDescription>\n      </EmptyHeader>\n      <EmptyContent>\n        <Button>Clear search</Button>\n      </EmptyContent>\n    </Empty>\n  )\n}",
+    "parts": [
+      "Empty",
+      "EmptyHeader",
+      "EmptyMedia",
+      "EmptyTitle",
+      "EmptyDescription",
+      "EmptyContent"
+    ]
+  },
+  "categories": [
+    "Feedback"
+  ],
+  "type": "registry:ui"
+}

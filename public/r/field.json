@@ -1,0 +1,68 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "field",
+  "title": "Field",
+  "description": "The words around a control: a label, help text and an error, stacked or in a row, grouped in sets with a legend. It is layout, so the only drawings are the wavy red pencil underline of an error and the hand-drawn card around a choice (a label that wraps a radio or checkbox with its own title and help).",
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/label.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/separator.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/field.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\n\nimport { Label } from \"@/components/ui/label\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { fieldErrorRecipe } from \"@/lib/ink/recipes/field-error-ink\"\nimport { fieldChoiceRecipe } from \"@/lib/ink/recipes/field-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction FieldSet({ className, ...props }: React.ComponentProps<\"fieldset\">) {\n  return (\n    <fieldset\n      data-slot=\"field-set\"\n      className={cn(\n        \"flex flex-col gap-6 calm:gap-4\",\n        \"has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction FieldLegend({ className, variant = \"legend\", ...props }: React.ComponentProps<\"legend\"> & { variant?: \"legend\" | \"label\" }) {\n  return (\n    <legend\n      data-slot=\"field-legend\"\n      data-variant={variant}\n      className={cn(\n        \"mb-3 font-bold\",\n        \"data-[variant=legend]:font-script data-[variant=legend]:text-[1.6rem] data-[variant=legend]:leading-none\",\n        \"data-[variant=label]:font-hand data-[variant=label]:text-[15px]\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction FieldGroup({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"field-group\"\n      className={cn(\n        \"group/field-group @container/field-group flex w-full flex-col gap-7 calm:gap-5 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nconst fieldVariants = cva(\"group/field flex w-full gap-3 data-[invalid=true]:text-destructive\", {\n  variants: {\n    orientation: {\n      vertical: [\"flex-col [&>*:not([data-slot=toggle-group])]:w-full [&>.sr-only]:w-auto\"],\n      horizontal: [\n        \"flex-row items-center\",\n        \"[&>[data-slot=field-label]]:flex-auto\",\n        \"has-[>[data-slot=field-content]]:items-start has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px\",\n      ],\n      responsive: [\n        \"flex-col @md/field-group:flex-row @md/field-group:items-center [&>*:not([data-slot=toggle-group])]:w-full @md/field-group:[&>*:not([data-slot=toggle-group])]:w-auto [&>.sr-only]:w-auto\",\n        \"@md/field-group:[&>[data-slot=field-label]]:flex-auto\",\n        \"@md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px\",\n      ],\n    },\n  },\n  defaultVariants: {\n    orientation: \"vertical\",\n  },\n})\n\nfunction Field({ className, orientation = \"vertical\", ...props }: React.ComponentProps<\"div\"> & VariantProps<typeof fieldVariants>) {\n  return <div role=\"group\" data-slot=\"field\" data-orientation={orientation} className={cn(fieldVariants({ orientation }), className)} {...props} />\n}\n\nfunction FieldContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"field-content\" className={cn(\"group/field-content flex flex-1 flex-col gap-1.5 leading-snug\", className)} {...props} />\n}\n\nfunction FieldLabel({\n  className,\n  children,\n  card,\n  seed,\n  ref,\n  ...props\n}: React.ComponentProps<typeof Label> & {\n  card?: boolean\n}) {\n  const isCard = card ?? React.Children.toArray(children).some((c) => React.isValidElement(c) && c.type === Field)\n  const content = React.Children.map(children, (c) => (React.isValidElement<{ role?: string }>(c) && c.type === Field ? React.cloneElement(c, { role: c.props.role ?? \"none\" }) : c))\n  const { hostRef, hostProps, node } = useInk({ recipe: fieldChoiceRecipe, params: {}, kind: \"card\", seed, still: true })\n  return (\n    <Label\n      data-slot=\"field-label\"\n      ref={useMergedRef<HTMLLabelElement>(isCard ? hostRef : undefined, ref as React.Ref<HTMLLabelElement> | undefined)}\n      {...(isCard ? hostProps : {})}\n      className={cn(\n        \"group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:text-pencil-text\",\n        \"has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:outline-hidden [&>*]:data-[slot=field]:p-4\",\n        \"has-data-[state=checked]:[&>svg>[data-layer=checked]]:visible has-data-[state=checked]:[&>svg>[data-layer=checked]]:scale-100 has-data-[state=checked]:[&>svg>[data-layer=checked]]:rotate-0 has-data-[state=checked]:[&>svg>[data-layer=checked]]:opacity-100\",\n        isCard && \"cursor-pointer forced-colors:has-data-[state=checked]:bg-[Highlight] forced-colors:has-data-[state=checked]:text-[HighlightText]\",\n        className\n      )}\n      {...props}\n    >\n      {isCard ? node : null}\n      {content}\n    </Label>\n  )\n}\n\nfunction FieldTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"field-label\"\n      className={cn(\"flex w-fit items-center gap-2 font-hand text-[15px] leading-snug font-bold group-data-[disabled=true]/field:text-pencil-text\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FieldDescription({ className, ...props }: React.ComponentProps<\"p\">) {\n  return (\n    <p\n      data-slot=\"field-description\"\n      className={cn(\n        \"text-sm leading-normal font-normal text-muted-foreground group-has-[[data-orientation=horizontal]]/field:text-balance\",\n        \"last:mt-0 nth-last-2:-mt-1 [[data-variant=legend]+&]:-mt-1.5\",\n        \"[&>a]:text-link [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-link-hover\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction FieldSeparator({ children, className, ...props }: React.ComponentProps<\"div\"> & { children?: React.ReactNode }) {\n  return (\n    <div data-slot=\"field-separator\" data-content={!!children} className={cn(\"relative -my-2 flex h-5 items-center text-sm group-data-[variant=outline]/field-group:-mb-2\", className)} {...props}>\n      {children ? <Separator data-slot=\"field-separator-content\">{children}</Separator> : <Separator />}\n    </div>\n  )\n}\n\nfunction FieldError({\n  className,\n  children,\n  errors,\n  seed,\n  ref,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  errors?: Array<{ message?: string } | undefined>\n  seed?: string | number\n}) {\n  const content = React.useMemo(() => {\n    if (children) {\n      return children\n    }\n\n    if (!errors?.length) {\n      return null\n    }\n\n    const uniqueErrors = [...new Map(errors.map((error) => [error?.message, error])).values()]\n\n    if (uniqueErrors?.length == 1) {\n      return uniqueErrors[0]?.message\n    }\n\n    return (\n      <ul className=\"ms-4 flex list-disc flex-col gap-1\">\n        {uniqueErrors.map((error, index) => error?.message && <li key={index}>{error.message}</li>)}\n      </ul>\n    )\n  }, [children, errors])\n  const { hostRef, hostProps, node } = useInk({ recipe: fieldErrorRecipe, params: {}, kind: \"underline\", seed, still: true })\n  const mergedRef = useMergedRef<HTMLDivElement>(hostRef, ref)\n\n  if (!content) {\n    return null\n  }\n\n  return (\n    <div\n      role=\"alert\"\n      data-slot=\"field-error\"\n      ref={mergedRef}\n      {...hostProps}\n      className={cn(\"relative isolate w-fit max-w-full pb-1 text-sm font-normal text-destructive outline-hidden forced-colors:underline forced-colors:decoration-wavy\", className)}\n      {...props}\n    >\n      {node}\n      {content}\n    </div>\n  )\n}\n\nexport { Field, FieldLabel, FieldDescription, FieldError, FieldGroup, FieldLegend, FieldSeparator, FieldSet, FieldContent, FieldTitle }\n",
+      "type": "registry:ui",
+      "target": "@ui/field.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/field-ink.ts",
+      "content": "import { wash } from '@/lib/ink/fills'\nimport { roundRectPoly } from '@/lib/ink/geom'\nimport { clamp } from '@/lib/ink/rng'\nimport { box } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\n\nexport const fieldChoiceRecipe = defineRecipe<Record<string, never>>({\n  id: 'field-choice',\n  kind: 'card',\n  layers: ['rest', 'hover', 'checked'],\n  pad: 12,\n  draw(ink, { w, h }, _p, ctx) {\n    const r = clamp(Math.min(w, h) * 0.06, 2, 4)\n    const body = roundRectPoly(1.5, 1.5, w - 3, h - 3, r)\n    const wide = w > 360\n    ink.layer('rest', () => {\n      ink.poly('under', body, 'slip', 0.7)\n      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false })\n      else box(ink, 0, 0, w, h, { pen: 'pencil', corner: r, style: 'two', ghost: false, opts: { width: 1.1, simple: wide } })\n    })\n    ink.layer('hover', () => {\n      box(ink, 0.8, 0.8, w - 1.6, h - 1.6, { pen: ctx.calm ? 'pencil.fine' : 'ink.fine', corner: r, style: 'loop', stubs: false, ghost: false, loose: 0.7, opts: { alpha: 0.75, simple: wide } })\n    })\n    ink.layer('checked', () => {\n      ink.part('fill', () => wash(ink, body, 'hi', { alpha: 0.5 }))\n      box(ink, 0, 0, w, h, { pen: ctx.calm ? 'pencil.fine' : 'ink', corner: r, style: ctx.calm ? 'loop' : 'two', ...(ctx.calm ? { stubs: false } : {}), ghost: false, opts: { width: 1.05, simple: wide } })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/field-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "field",
+    "related": [
+      "form",
+      "label",
+      "input",
+      "select",
+      "radio-group",
+      "checkbox",
+      "switch"
+    ],
+    "a11y": [
+      "Field is a role=group; a FieldLabel is a real <label> (use htmlFor + id), so a click on it focuses or toggles the control. Wrap radios and checkboxes in a FieldSet with a FieldLegend so the group has a name.",
+      "FieldError is role=\"alert\": it is announced when it appears. Point the control at it with aria-describedby and set aria-invalid, so the control's own box turns red as well (hue is never the only cue: the message, the wavy underline and the bang of the field say it too).",
+      "A choice card is one big label: clicking anywhere on it toggles its control, and the checked state is shown by the wash and the felt box, not by colour alone (the radio or checkbox inside shows it too). In Windows high contrast the checked card becomes a Highlight block.",
+      "Disabling: set `data-disabled=\"true\"` on the Field (the label goes graphite) AND `disabled` on the control. A `disabled` FieldSet disables the controls natively, but the drawn controls choose their dashed disabled drawing from their own props (or their root's), not from an ancestor fieldset: pass `disabled` to each.",
+      "`responsive` uses a container query on the FieldGroup, so it reacts to the width of the form, not of the screen.",
+      "Right-to-left: everything uses logical properties; the error underline is symmetric."
+    ],
+    "usage": "import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from \"@/components/ui/field\"\nimport { Input } from \"@/components/ui/input\"\n\nexport function Example() {\n  return (\n    <FieldGroup className=\"max-w-sm\">\n      <Field data-invalid=\"true\">\n        <FieldLabel htmlFor=\"email\">Email</FieldLabel>\n        <Input id=\"email\" aria-invalid aria-describedby=\"email-error\" />\n        <FieldDescription>We send one page a week.</FieldDescription>\n        <FieldError id=\"email-error\">Enter an address like ada@notes.dev.</FieldError>\n      </Field>\n    </FieldGroup>\n  )\n}",
+    "parts": [
+      "FieldSet",
+      "FieldLegend",
+      "FieldGroup",
+      "Field",
+      "FieldContent",
+      "FieldLabel",
+      "FieldTitle",
+      "FieldDescription",
+      "FieldSeparator",
+      "FieldError"
+    ]
+  },
+  "categories": [
+    "Forms"
+  ],
+  "type": "registry:ui"
+}

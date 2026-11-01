@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "onboarding-01",
+  "title": "Onboarding checklist",
+  "description": "A taped card with a progress bar and a pencil tally that follow five ticks, a button per step, a stamp and confetti when the last one is done, and a skip link. Looks right on paper or on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/card.json",
+    "https://kevintngo.github.io/looseleaf/r/checkbox.json",
+    "https://kevintngo.github.io/looseleaf/r/confetti.json",
+    "https://kevintngo.github.io/looseleaf/r/kbd.json",
+    "https://kevintngo.github.io/looseleaf/r/label.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/mascot.json",
+    "https://kevintngo.github.io/looseleaf/r/progress.json",
+    "https://kevintngo.github.io/looseleaf/r/stamp.json",
+    "https://kevintngo.github.io/looseleaf/r/tally.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/onboarding-01/components/onboarding-01-steps.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Kbd } from \"@/components/ui/kbd\"\nimport { Label } from \"@/components/ui/label\"\nimport { cn } from \"@/lib/utils\"\n\ntype Onboarding01Step = {\n  id: string\n  title: string\n  hint: React.ReactNode\n  action: string\n}\n\nconst STEPS: Onboarding01Step[] = [\n  { id: \"name\", title: \"Name your first notebook\", hint: \"Give it a cover and a name people will remember.\", action: \"Name it\" },\n  { id: \"invite\", title: \"Invite a teammate\", hint: \"Notes are better with company.\", action: \"Invite\" },\n  { id: \"pin\", title: \"Pin a page you love\", hint: \"Pinned pages sit at the top of every notebook.\", action: \"Show me\" },\n  { id: \"draw\", title: \"Draw something, anything\", hint: \"Every page has a sketch pad. Stubby will not judge.\", action: \"Open sketch pad\" },\n  {\n    id: \"jump\",\n    title: \"Try the shortcut\",\n    hint: (\n      <>\n        Press <Kbd>&#8984;</Kbd> <Kbd>K</Kbd> to jump to any page.\n      </>\n    ),\n    action: \"Try it\",\n  },\n]\n\ntype Onboarding01StepsProps = {\n  done: Record<string, boolean>\n  onDoneChange: (id: string, done: boolean) => void\n  onAction?: (id: string) => void\n}\n\nfunction Onboarding01Steps({ done, onDoneChange, onAction }: Onboarding01StepsProps) {\n  const uid = React.useId()\n  return (\n    <ul className=\"grid list-none gap-5 @md:gap-4\">\n      {STEPS.map((step) => {\n        const id = `${uid}-${step.id}`\n        return (\n          <li key={step.id} className=\"grid grid-cols-[1.25rem_minmax(0,1fr)] items-start gap-x-3 gap-y-1 @md:grid-cols-[1.25rem_minmax(0,1fr)_auto]\">\n            <Checkbox id={id} aria-describedby={`${id}-hint`} className=\"mt-0.5 size-5\" checked={!!done[step.id]} onCheckedChange={(v) => onDoneChange(step.id, v === true)} />\n            <div className=\"min-w-0\">\n              <Label htmlFor={id} className={cn(\"text-[17px] leading-6 font-bold\", done[step.id] && \"text-ink-muted line-through\")}>\n                {step.title}\n              </Label>\n              <p id={`${id}-hint`} className=\"text-[15px] leading-6 text-ink-soft\">\n                {step.hint}\n              </p>\n            </div>\n            <Button type=\"button\" variant=\"outline\" size=\"sm\" onClick={() => onAction?.(step.id)} className=\"col-start-2 mt-1 justify-self-start @md:col-start-3 @md:row-start-1 @md:mt-0 @md:self-center\">\n              {step.action}\n              <span className=\"sr-only\">, {step.title.toLowerCase()}</span>\n            </Button>\n          </li>\n        )\n      })}\n    </ul>\n  )\n}\n\nexport { Onboarding01Steps, STEPS }\nexport type { Onboarding01Step }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/onboarding-01/components/onboarding-01-steps.tsx"
+    },
+    {
+      "path": "src/blocks/onboarding-01/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Confetti } from \"@/components/ui/confetti\"\nimport { Mascot } from \"@/components/ui/mascot\"\nimport { Progress } from \"@/components/ui/progress\"\nimport { Stamp } from \"@/components/ui/stamp\"\nimport { Tally } from \"@/components/ui/tally\"\nimport { Onboarding01Steps, STEPS } from \"@/components/blocks/onboarding-01/components/onboarding-01-steps\"\n\ntype Onboarding01Props = {\n  defaultDone?: string[]\n  onDoneChange?: (done: string[]) => void\n  onAction?: (id: string) => void\n}\n\nexport default function Onboarding01({ defaultDone = [\"name\", \"invite\"], onDoneChange, onAction }: Onboarding01Props) {\n  const titleId = React.useId()\n  const [done, setDone] = React.useState<Record<string, boolean>>(() => Object.fromEntries(STEPS.map((s) => [s.id, defaultDone.includes(s.id)])))\n  const [hidden, setHidden] = React.useState(false)\n  const heading = React.useRef<HTMLHeadingElement>(null)\n  const showAgain = React.useRef<HTMLButtonElement>(null)\n  const folded = React.useRef(false)\n  React.useEffect(() => {\n    if (!folded.current) return\n    folded.current = false\n    if (hidden) showAgain.current?.focus()\n    else heading.current?.focus()\n  }, [hidden])\n  const fold = (next: boolean) => {\n    folded.current = true\n    setHidden(next)\n  }\n  const count = STEPS.filter((s) => done[s.id]).length\n  const all = count === STEPS.length\n\n  const change = (id: string, value: boolean) => {\n    const next = { ...done, [id]: value }\n    setDone(next)\n    onDoneChange?.(STEPS.filter((s) => next[s.id]).map((s) => s.id))\n  }\n\n  if (hidden) {\n    return (\n      <div className=\"@container flex w-full justify-center px-4 py-10\">\n        <Button ref={showAgain} type=\"button\" variant=\"link\" onClick={() => fold(false)}>\n          Show the setup checklist ({count} of {STEPS.length} done)\n        </Button>\n      </div>\n    )\n  }\n\n  return (\n    <section aria-labelledby={titleId} className=\"@container w-full\">\n      <div className=\"px-7 py-10 @xl:px-8 @xl:py-14\">\n        <div className=\"relative mx-auto max-w-xl\">\n          <Card tape=\"top\" tapeKind=\"washi-dots\" seed=\"onboarding-card\">\n            <CardHeader>\n              <CardTitle>\n                <h2 id={titleId} ref={heading} tabIndex={-1} className=\"outline-none\">\n                  Let&rsquo;s get you set up\n                </h2>\n              </CardTitle>\n              <CardDescription>Five small things. Tick them off as you go.</CardDescription>\n              <CardAction>\n                <Mascot pose={all ? \"celebrate\" : \"write\"} size={80} />\n              </CardAction>\n            </CardHeader>\n\n            <CardContent className=\"grid gap-6\">\n              <div>\n                <div className=\"mb-2 flex items-center gap-4\">\n                  <p role=\"status\" className=\"text-[15px] text-ink-soft\">\n                    <span className=\"ll-num font-bold text-ink\">{count}</span> of {STEPS.length} done\n                  </p>\n                  <Tally count={count} size=\"md\" tone=\"blue\" label={`${count} steps done`} />\n                </div>\n                <Progress value={count} max={STEPS.length} tone={all ? \"green\" : \"marker\"} aria-label=\"Setup progress\" aria-valuetext={`${count} of ${STEPS.length} steps done`} />\n              </div>\n              <Onboarding01Steps done={done} onDoneChange={change} onAction={onAction} />\n            </CardContent>\n\n            <CardFooter className=\"justify-between gap-3\">\n              {all ? (\n                <>\n                  <Stamp text=\"All set\" ink=\"green\" w={124} h={46} tilt={-6} seed=\"onboarding-stamp\" className=\"animate-in zoom-in-[1.6] fade-in-0 duration-(--ll-dur-pop)\" />\n                  <Button asChild>\n                    <a href=\"#write\">Start writing</a>\n                  </Button>\n                </>\n              ) : (\n                <Button type=\"button\" variant=\"ghost\" onClick={() => fold(true)}>\n                  Skip for now\n                </Button>\n              )}\n            </CardFooter>\n          </Card>\n          <Confetti active={all} count={80} />\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport type { Onboarding01Props }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/onboarding-01/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "marketing",
+      "onboarding",
+      "checklist",
+      "progress"
+    ]
+  },
+  "docs": "Installed the \"Onboarding checklist\" block into your components directory under blocks/onboarding-01/.\nImport it: import Onboarding01 from \"<your components alias>/blocks/onboarding-01/page\"",
+  "categories": [
+    "marketing"
+  ],
+  "type": "registry:block"
+}

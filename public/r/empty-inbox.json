@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-inbox",
+  "title": "Empty inbox",
+  "description": "A taped inbox card with three filters and an empty state under each: inbox zero with Stubby celebrating beside a hand-circled 0, all quiet, and nothing starred. Looks right on paper or on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/card.json",
+    "https://kevintngo.github.io/looseleaf/r/circled.json",
+    "https://kevintngo.github.io/looseleaf/r/empty.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/mascot.json",
+    "https://kevintngo.github.io/looseleaf/r/sticker.json",
+    "https://kevintngo.github.io/looseleaf/r/tabs.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/empty-inbox/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Circled } from \"@/components/ui/circled\"\nimport { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from \"@/components/ui/empty\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Mascot } from \"@/components/ui/mascot\"\nimport { Sticker } from \"@/components/ui/sticker\"\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\"\n\ntype EmptyInboxProps = {\n  onCompose?: () => void\n  onRefresh?: () => void\n}\n\nexport default function EmptyInbox({ onCompose, onRefresh }: EmptyInboxProps) {\n  const titleId = React.useId()\n  const [checks, setChecks] = React.useState(0)\n  return (\n    <section aria-labelledby={titleId} className=\"@container w-full\">\n      <div className=\"px-7 py-10 @xl:px-8 @xl:py-14\">\n        <Card tape=\"top\" tapeKind=\"washi-dots\" seed=\"empty-inbox\" className=\"mx-auto max-w-2xl\">\n          <CardHeader>\n            <CardTitle>\n              <h2 id={titleId}>Inbox</h2>\n            </CardTitle>\n            <CardDescription role=\"status\">{checks === 0 ? \"Checked just now\" : \"Checked again. Still nothing new.\"}</CardDescription>\n            <CardAction>\n              <Button\n                type=\"button\"\n                variant=\"ghost\"\n                size=\"icon-sm\"\n                aria-label=\"Check for new mail\"\n                onClick={() => {\n                  setChecks((n) => n + 1)\n                  onRefresh?.()\n                }}\n              >\n                <Icon name=\"rotate-cw\" />\n              </Button>\n            </CardAction>\n          </CardHeader>\n\n          <CardContent>\n            <Tabs defaultValue=\"all\" className=\"gap-2\">\n              <TabsList variant=\"line\" aria-label=\"Filter mail\">\n                <TabsTrigger value=\"all\">All mail</TabsTrigger>\n                <TabsTrigger value=\"unread\">Unread</TabsTrigger>\n                <TabsTrigger value=\"starred\">Starred</TabsTrigger>\n              </TabsList>\n\n              <TabsContent value=\"all\">\n                <Empty>\n                  <EmptyHeader>\n                    <EmptyMedia className=\"mb-1 gap-1\">\n                      <Circled tone=\"red\" weight=\"brush\" seed=\"inbox-zero\" className=\"mx-2 px-1 font-script text-5xl leading-none font-bold\" aria-hidden=\"true\">\n                        0\n                      </Circled>\n                      <Mascot pose=\"celebrate\" size={112} />\n                      <Sticker name=\"done\" size={50} rotate={9} className=\"-ms-3 mt-8\" />\n                    </EmptyMedia>\n                    <EmptyTitle>Inbox zero</EmptyTitle>\n                    <EmptyDescription>You have read everything. Go stretch, or put the kettle on.</EmptyDescription>\n                  </EmptyHeader>\n                  <EmptyContent>\n                    <div className=\"flex flex-wrap items-center justify-center gap-x-3 gap-y-3\">\n                      <Button type=\"button\" onClick={onCompose}>\n                        <Icon name=\"pencil\" />\n                        Write a message\n                      </Button>\n                      <Button asChild variant=\"ghost\">\n                        <a href=\"#archive\">Visit the archive</a>\n                      </Button>\n                    </div>\n                  </EmptyContent>\n                </Empty>\n              </TabsContent>\n\n              <TabsContent value=\"unread\">\n                <Empty>\n                  <EmptyHeader>\n                    <EmptyMedia pose=\"sleep\" size={124} />\n                    <EmptyTitle>All quiet</EmptyTitle>\n                    <EmptyDescription>Nothing unread. Enjoy it while it lasts.</EmptyDescription>\n                  </EmptyHeader>\n                </Empty>\n              </TabsContent>\n\n              <TabsContent value=\"starred\">\n                <Empty>\n                  <EmptyHeader>\n                    <EmptyMedia pose=\"peek\" size={124} />\n                    <EmptyTitle>Nothing starred yet</EmptyTitle>\n                    <EmptyDescription>Star a message to keep it close. It will wait for you here.</EmptyDescription>\n                  </EmptyHeader>\n                </Empty>\n              </TabsContent>\n            </Tabs>\n          </CardContent>\n        </Card>\n      </div>\n    </section>\n  )\n}\n\nexport type { EmptyInboxProps }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/empty-inbox/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "empty state",
+      "inbox",
+      "stubby",
+      "tabs"
+    ]
+  },
+  "docs": "Installed the \"Empty inbox\" block into your components directory under blocks/empty-inbox/.\nImport it: import EmptyInbox from \"<your components alias>/blocks/empty-inbox/page\"",
+  "categories": [
+    "feedback"
+  ],
+  "type": "registry:block"
+}

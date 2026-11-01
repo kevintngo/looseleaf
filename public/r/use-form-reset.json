@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-form-reset",
+  "title": "use-form-reset",
+  "description": "The use-form-reset React hook from Looseleaf.",
+  "files": [
+    {
+      "path": "src/hooks/use-form-reset.ts",
+      "content": "import * as React from \"react\"\n\nexport function useFormReset(getElement: () => Element | null | undefined, onReset: () => void): void {\n  const latest = React.useRef({ getElement, onReset })\n  latest.current = { getElement, onReset }\n  React.useEffect(() => {\n    const onEvent = (event: Event) => {\n      const el = latest.current.getElement()\n      const form = event.target\n      if (!el || !(form instanceof HTMLFormElement)) return\n      if (form === (el as Element & { form?: HTMLFormElement | null }).form || form.contains(el)) latest.current.onReset()\n    }\n    document.addEventListener(\"reset\", onEvent)\n    return () => document.removeEventListener(\"reset\", onEvent)\n  }, [])\n}\n",
+      "type": "registry:hook",
+      "target": "@hooks/use-form-reset.ts"
+    }
+  ],
+  "type": "registry:hook"
+}

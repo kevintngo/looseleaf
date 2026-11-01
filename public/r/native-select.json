@@ -1,0 +1,54 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "native-select",
+  "title": "Native Select",
+  "description": "The browser's own <select> in a hand-drawn frame with a pencil chevron. You keep the platform's popup, mobile picker, typeahead and autofill, and a list of hundreds of options costs nothing. Reach for Select when you want the paper slip.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/field-class.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/native-select.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Icon } from \"@/components/ui/icon\"\nimport { splitFieldClass } from \"@/lib/field-class\"\nimport { useInk } from \"@/lib/ink/react\"\nimport { nativeSelectRecipe } from \"@/lib/ink/recipes/native-select-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst isTrue = (v: unknown) => v === true || v === \"true\"\n\nfunction NativeSelect({\n  className,\n  size = \"default\",\n  seed,\n  style,\n  children,\n  ref,\n  ...props\n}: Omit<React.ComponentProps<\"select\">, \"size\"> & {\n  size?: \"sm\" | \"default\"\n  seed?: string | number\n}) {\n  const { hostRef, hostProps, node } = useInk({\n    recipe: nativeSelectRecipe,\n    params: { disabled: !!props.disabled, invalid: isTrue(props[\"aria-invalid\"]) },\n    kind: \"field\",\n    seed,\n    still: true,\n  })\n  const split = splitFieldClass(className)\n  return (\n    <span\n      data-slot=\"native-select-wrapper\"\n      data-size={size}\n      data-ink-focus=\"within\"\n      ref={hostRef}\n      {...hostProps}\n      style={style}\n      className={cn(\n        \"group/native-select relative isolate flex h-9 w-fit items-center font-hand text-base text-(--ll-input-ink) caret-(--ll-caret) has-[select[multiple]]:h-auto data-[size=sm]:h-8 data-[size=sm]:text-[15px] compact:h-8 calm:h-7 calm:text-[15px] compact:data-[size=sm]:h-7\",\n        split.frame\n      )}\n    >\n      {node}\n      <select\n        data-slot=\"native-select\"\n        data-size={size}\n        ref={ref}\n        className={cn(\n          \"h-full w-full min-w-0 appearance-none bg-transparent ps-3 pe-10 aria-invalid:pe-14 outline-none text-[length:inherit] disabled:cursor-not-allowed disabled:text-pencil-text has-[option[value='']:checked]:text-(--ll-placeholder) forced-colors:aria-invalid:underline forced-colors:aria-invalid:decoration-wavy\",\n          split.control\n        )}\n        {...props}\n      >\n        {children}\n      </select>\n      <Icon\n        name=\"chevron-down\"\n        size={16}\n        data-slot=\"native-select-icon\"\n        className=\"pointer-events-none absolute end-2 top-1/2 -translate-y-1/2 text-ink-soft select-none group-has-[select:disabled]/native-select:text-pencil-text\"\n      />\n    </span>\n  )\n}\n\nfunction NativeSelectOption({ className, ...props }: React.ComponentProps<\"option\">) {\n  return <option data-slot=\"native-select-option\" className={cn(\"bg-popover text-popover-foreground\", className)} {...props} />\n}\n\nfunction NativeSelectOptGroup({ className, ...props }: React.ComponentProps<\"optgroup\">) {\n  return <optgroup data-slot=\"native-select-optgroup\" className={cn(\"bg-popover text-popover-foreground\", className)} {...props} />\n}\n\nexport { NativeSelect, NativeSelectOptGroup, NativeSelectOption }\n",
+      "type": "registry:ui",
+      "target": "@ui/native-select.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/native-select-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { drawSelectFrame } from '@/lib/ink/recipes/select-frame-ink'\n\nexport interface NativeSelectParams {\n  disabled?: boolean\n  invalid?: boolean\n}\n\nexport const nativeSelectRecipe = defineRecipe<NativeSelectParams>({\n  id: 'native-select',\n  kind: 'field',\n  layers: ['rest', 'hover', 'focus', 'invalid', 'disabled'],\n  lazy: ['focus', 'hover'],\n  pad: 12,\n  draw(ink, box, params, ctx) {\n    drawSelectFrame(ink, box, { ...params, openable: false }, ctx)\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/native-select-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "native-select",
+    "related": [
+      "select",
+      "input",
+      "field",
+      "input-group"
+    ],
+    "a11y": [
+      "It is a native select: role=combobox / listbox, the platform's keyboard (arrows, typeahead, Enter, Escape), its own mobile picker, autofill and form value. Nothing is re-implemented.",
+      "Label it with a Label (`htmlFor` + `id`) or `aria-label`. A first option with an empty value reads as a placeholder (graphite text) when it is selected.",
+      "The frame follows the select's own state: keyboard focus draws the blue ring, `aria-invalid` the red box, `disabled` the dashed one. The popup itself cannot be styled by any library; only its colours and font are asked for.",
+      "The chevron is decorative (aria-hidden) and does not take the pointer, so the whole box opens the list. Windows high contrast replaces the ink by a real border.",
+      "Right-to-left: the chevron cell, the divider tick and the bang are on the start side."
+    ],
+    "usage": "import { Label } from \"@/components/ui/label\"\nimport { NativeSelect, NativeSelectOption } from \"@/components/ui/native-select\"\n\nexport function Example() {\n  return (\n    <div className=\"grid gap-2\">\n      <Label htmlFor=\"country\">Country</Label>\n      <NativeSelect id=\"country\" defaultValue=\"is\" className=\"w-[220px]\">\n        <NativeSelectOption value=\"is\">Iceland</NativeSelectOption>\n        <NativeSelectOption value=\"pt\">Portugal</NativeSelectOption>\n      </NativeSelect>\n    </div>\n  )\n}",
+    "parts": [
+      "NativeSelect",
+      "NativeSelectOption",
+      "NativeSelectOptGroup"
+    ]
+  },
+  "categories": [
+    "Forms"
+  ],
+  "type": "registry:ui"
+}

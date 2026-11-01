@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "title": "Tooltip",
+  "description": "A sticky note stuck next to a control, with a felt-tip arrow pointing at it. It names an icon button or adds a hint, opens on hover and keyboard focus with a shared delay, and never hides anything a person needs to be able to read.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-paper.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/tooltip.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Tooltip as TooltipPrimitive } from \"radix-ui\"\n\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { PropSvg } from \"@/lib/ink/paper/prop-svg\"\nimport { useDensity, useInkScope, useInkSeed, useInkTier } from \"@/lib/ink/react\"\nimport { pointerMark } from \"@/lib/ink/recipes/overlay-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction TooltipProvider({ delayDuration = 0, ...props }: React.ComponentProps<typeof TooltipPrimitive.Provider>) {\n  return <TooltipPrimitive.Provider data-slot=\"tooltip-provider\" delayDuration={delayDuration} {...props} />\n}\n\nfunction Tooltip({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Root>) {\n  return <TooltipPrimitive.Root data-slot=\"tooltip\" {...props} />\n}\n\nfunction TooltipTrigger({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {\n  return <TooltipPrimitive.Trigger data-slot=\"tooltip-trigger\" {...props} />\n}\n\nfunction TooltipPointer({ seed }: { seed: string }) {\n  const tier = useInkTier()\n  const calm = useDensity() === \"calm\"\n  const res = React.useMemo(() => pointerMark(`${seed}|pointer`, { tier, calm, w: 18, h: 16 }), [seed, tier, calm])\n  return (\n    <TooltipPrimitive.Arrow asChild>\n      <PropSvg\n        res={res}\n        kind=\"prop\"\n        data-slot=\"tooltip-arrow\"\n        width={res.w}\n        height={res.h}\n        viewBox={`0 0 ${res.w} ${res.h}`}\n        preserveAspectRatio=\"xMidYMid meet\"\n        className=\"pointer-events-none\"\n      />\n    </TooltipPrimitive.Arrow>\n  )\n}\n\nfunction TooltipContent({\n  className,\n  sideOffset = 1,\n  collisionPadding = 8,\n  stock = \"sticky-yellow\",\n  tilt = true,\n  arrow = true,\n  seed: seedProp,\n  children,\n  ...props\n}: React.ComponentProps<typeof TooltipPrimitive.Content> &\n  Pick<PaperProps, \"stock\" | \"tilt\" | \"seed\"> & {\n    arrow?: boolean\n  }) {\n  const scope = useInkScope()\n  const seed = useInkSeed(seedProp)\n  return (\n    <TooltipPrimitive.Portal>\n      <TooltipPrimitive.Content asChild sideOffset={sideOffset} collisionPadding={collisionPadding} {...props}>\n        <Paper\n          data-slot=\"tooltip-content\"\n          stock={stock}\n          tilt={tilt}\n          rules=\"none\"\n          seed={seed}\n          {...scope}\n          className={cn(\n            \"z-(--ll-z-popover) w-fit max-w-[min(22rem,calc(100vw-1rem))] origin-(--radix-tooltip-content-transform-origin) px-2.5 py-1.5 text-sm/snug break-words text-balance text-foreground\",\n            \"duration-(--ll-dur-pop) animate-in fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2\",\n            \"data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95\",\n            className\n          )}\n        >\n          {children}\n          {arrow && <TooltipPointer seed={seed} />}\n        </Paper>\n      </TooltipPrimitive.Content>\n    </TooltipPrimitive.Portal>\n  )\n}\n\nexport { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }\n",
+      "type": "registry:ui",
+      "target": "@ui/tooltip.tsx"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "tooltip",
+    "related": [
+      "popover",
+      "hover-card",
+      "button"
+    ],
+    "a11y": [
+      "Radix Tooltip: the note has role=tooltip and the trigger gets `aria-describedby` while it is open; the text is announced as the trigger's description. It opens on hover and on keyboard focus, and Escape closes it.",
+      "Tooltips never open on a touch tap (Radix ignores touch pointers) and are not focusable themselves: never put the only copy of a label, an instruction or an error in one. An icon button still needs an `aria-label`.",
+      "A disabled button does not receive pointer or focus events, so it cannot show a tooltip: wrap it in a focusable element (see the example) if the reason it is disabled matters.",
+      "The arrow is aria-hidden decoration. Note text is ink on sticky yellow (about 12:1). With reduced motion the note appears without the zoom; in `calm` density it is a flat, untilted note.",
+      "Portalled content repeats the InkProvider's `data-density`, `data-motion` and `data-theme`."
+    ],
+    "usage": "import { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from \"@/components/ui/tooltip\"\n\nexport function Example() {\n  return (\n    <TooltipProvider delayDuration={300}>\n      <Tooltip>\n        <TooltipTrigger asChild>\n          <Button variant=\"outline\" size=\"icon\" aria-label=\"Add to library\">\n            <Icon name=\"plus\" />\n          </Button>\n        </TooltipTrigger>\n        <TooltipContent>Add to library</TooltipContent>\n      </Tooltip>\n    </TooltipProvider>\n  )\n}",
+    "parts": [
+      "TooltipProvider",
+      "Tooltip",
+      "TooltipTrigger",
+      "TooltipContent"
+    ]
+  },
+  "categories": [
+    "Overlays"
+  ],
+  "type": "registry:ui"
+}

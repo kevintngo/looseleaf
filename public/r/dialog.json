@@ -1,0 +1,62 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "dialog",
+  "title": "Dialog",
+  "description": "A modal window that is a sheet of paper dropped on the desk: it lands with a small tilt that settles, the page behind goes dim under a lamp, and the close button is a doodled x. Tape it, pin it, tear its edge; on a phone it becomes a sheet at the bottom of the screen.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/dialog.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Dialog as DialogPrimitive } from \"radix-ui\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { useInk, useInkScope } from \"@/lib/ink/react\"\nimport { closeMarkRecipe } from \"@/lib/ink/recipes/overlay-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst ModalContext = React.createContext(true)\n\nfunction Dialog({ modal = true, ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) {\n  return (\n    <ModalContext.Provider value={modal}>\n      <DialogPrimitive.Root data-slot=\"dialog\" modal={modal} {...props} />\n    </ModalContext.Provider>\n  )\n}\n\nfunction DialogTrigger({ ...props }: React.ComponentProps<typeof DialogPrimitive.Trigger>) {\n  return <DialogPrimitive.Trigger data-slot=\"dialog-trigger\" {...props} />\n}\n\nfunction DialogPortal({ ...props }: React.ComponentProps<typeof DialogPrimitive.Portal>) {\n  return <DialogPrimitive.Portal data-slot=\"dialog-portal\" {...props} />\n}\n\nfunction DialogClose({ ...props }: React.ComponentProps<typeof DialogPrimitive.Close>) {\n  return <DialogPrimitive.Close data-slot=\"dialog-close\" {...props} />\n}\n\nfunction DialogOverlay({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Overlay>) {\n  const scope = useInkScope()\n  return (\n    <DialogPrimitive.Overlay\n      data-slot=\"dialog-overlay\"\n      {...scope}\n      className={cn(\n        \"fixed inset-0 z-(--ll-z-overlay) flex overflow-y-auto overscroll-contain p-4 [background:var(--ll-overlay-dim)] [scrollbar-gutter:stable_both-edges] max-sm:p-0\",\n        \"duration-(--ll-dur-sheet) data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DialogFrame({ children }: { children: React.ReactNode }) {\n  const scope = useInkScope()\n  return (\n    <div\n      data-slot=\"dialog-frame\"\n      {...scope}\n      className=\"pointer-events-none fixed inset-0 z-(--ll-z-overlay) flex overflow-y-auto overscroll-contain p-4 [scrollbar-gutter:stable_both-edges] *:pointer-events-auto max-sm:p-0\"\n    >\n      {children}\n    </div>\n  )\n}\n\nfunction DialogCloseMark({ className, seed }: { className?: string; seed?: string | number }) {\n  const { hostRef, hostProps, node } = useInk({ recipe: closeMarkRecipe, params: {}, kind: \"close\", size: [32, 32], seed })\n  return (\n    <DialogPrimitive.Close\n      data-slot=\"dialog-close\"\n      data-part=\"x\"\n      ref={hostRef}\n      {...hostProps}\n      className={cn(\"absolute end-3 top-3 z-(--ll-z-raised) grid size-8 place-items-center text-ink\", className)}\n    >\n      {node}\n      <span aria-hidden=\"true\" className=\"hidden font-hand text-xl leading-none forced-colors:block\">\n        ×\n      </span>\n      <span className=\"sr-only\">Close</span>\n    </DialogPrimitive.Close>\n  )\n}\n\ntype DialogPaperProps = Pick<PaperProps, \"stock\" | \"edge\" | \"tilt\" | \"tape\" | \"tapeKind\" | \"fastener\" | \"fastenerTone\" | \"rules\" | \"shadow\" | \"seed\">\n\nfunction DialogContent({\n  className,\n  children,\n  showCloseButton = true,\n  stock = \"paper\",\n  edge,\n  tilt,\n  tape = false,\n  tapeKind,\n  fastener = false,\n  fastenerTone,\n  rules,\n  shadow,\n  seed,\n  onInteractOutside,\n  ...props\n}: React.ComponentProps<typeof DialogPrimitive.Content> &\n  DialogPaperProps & {\n    showCloseButton?: boolean\n  }) {\n  const scope = useInkScope()\n  const Frame = React.useContext(ModalContext) ? DialogOverlay : DialogFrame\n  return (\n    <DialogPortal data-slot=\"dialog-portal\">\n      <Frame>\n        <DialogPrimitive.Content\n          asChild\n          {...props}\n          onInteractOutside={(e) => {\n            onInteractOutside?.(e)\n            if ((e.target as Element | null)?.closest?.(\"[data-sonner-toaster]\")) e.preventDefault()\n          }}\n        >\n          <Paper\n            data-slot=\"dialog-content\"\n            stock={stock}\n            edge={edge}\n            tilt={tilt}\n            tape={tape}\n            tapeKind={tapeKind}\n            fastener={fastener}\n            fastenerTone={fastenerTone}\n            rules={rules ?? \"none\"}\n            shadow={shadow}\n            seed={seed}\n            {...scope}\n            className={cn(\n              \"group/dialog m-auto grid w-full max-w-lg gap-4 p-6 text-foreground outline-hidden compact:p-5 calm:p-4\",\n              \"max-sm:[&>svg[data-slot=tape]]:hidden\",\n              \"max-sm:mb-0 max-sm:max-w-none max-sm:pb-[max(1.5rem,env(safe-area-inset-bottom))] max-sm:compact:pb-[max(1.25rem,env(safe-area-inset-bottom))] max-sm:calm:pb-[max(1rem,env(safe-area-inset-bottom))] max-sm:[--ll-tilt:0deg]!\",\n              \"data-[state=open]:animate-sheet-drop max-sm:data-[state=open]:animate-in max-sm:data-[state=open]:slide-in-from-bottom-16 max-sm:data-[state=open]:fade-in-0\",\n              \"duration-(--ll-dur-fade) data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 max-sm:data-[state=closed]:slide-out-to-bottom-8\",\n              className\n            )}\n          >\n            {children}\n            {showCloseButton && <DialogCloseMark seed={seed === undefined ? undefined : `${seed}|x`} />}\n          </Paper>\n        </DialogPrimitive.Content>\n      </Frame>\n    </DialogPortal>\n  )\n}\n\nfunction DialogHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"dialog-header\"\n      className={cn(\"flex flex-col gap-2 text-center group-has-[[data-part=x]]/dialog:sm:pe-8 sm:text-start\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DialogBody({ className, tabIndex = 0, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"dialog-body\"\n      tabIndex={tabIndex}\n      className={cn(\"-mx-2 max-h-[min(60dvh,32rem)] min-h-0 overflow-y-auto px-2 py-1 text-[15px] outline-hidden focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DialogFooter({\n  className,\n  showCloseButton = false,\n  children,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  showCloseButton?: boolean\n}) {\n  return (\n    <div data-slot=\"dialog-footer\" className={cn(\"flex flex-col-reverse gap-2 sm:flex-row sm:justify-end\", className)} {...props}>\n      {children}\n      {showCloseButton && (\n        <DialogPrimitive.Close asChild>\n          <Button variant=\"outline\">Close</Button>\n        </DialogPrimitive.Close>\n      )}\n    </div>\n  )\n}\n\nfunction DialogTitle({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Title>) {\n  return <DialogPrimitive.Title data-slot=\"dialog-title\" className={cn(\"font-script text-[1.7rem] leading-none font-semibold\", className)} {...props} />\n}\n\nfunction DialogDescription({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Description>) {\n  return <DialogPrimitive.Description data-slot=\"dialog-description\" className={cn(\"text-sm text-muted-foreground\", className)} {...props} />\n}\n\nexport {\n  Dialog,\n  DialogBody,\n  DialogClose,\n  DialogContent,\n  DialogDescription,\n  DialogFooter,\n  DialogHeader,\n  DialogOverlay,\n  DialogPortal,\n  DialogTitle,\n  DialogTrigger,\n}\n",
+      "type": "registry:ui",
+      "target": "@ui/dialog.tsx"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "dialog",
+    "related": [
+      "alert-dialog",
+      "sheet",
+      "drawer",
+      "popover",
+      "paper",
+      "tape"
+    ],
+    "a11y": [
+      "Radix Dialog: role=dialog with `aria-labelledby` (the title) and `aria-describedby` (the description); give every dialog both. Focus moves into the sheet, Tab and Shift+Tab cycle inside it, Escape closes it, and focus returns to the trigger.",
+      "The page behind is inert while the dialog is open (pointer events off, aria-hidden on siblings) and scroll is locked.",
+      "The close button is a real button named \"Close\"; the x is decorative ink. In Windows high contrast the ink hides and a plain × takes its place.",
+      "The drop-in, the fade and the hover blot follow `--ll-motion`: with reduced motion the dialog simply appears. In `calm` density the sheet is flat, untilted and untaped.",
+      "Portalled content repeats the InkProvider's `data-density`, `data-motion` and `data-theme`, so density and reduced motion work inside the dialog too.",
+      "`modal={false}` works as in Radix: no dim (the sheet sits in a frame that lets clicks through), the page stays interactive and scroll is not locked. Clicking a Sonner toast never counts as \"outside\", so a toast action pressed over a dialog does not dismiss it. On a phone the bottom sheet pads its foot by `env(safe-area-inset-bottom)`, and the dim reserves its scrollbar gutter so the drop-in cannot make a classic scrollbar shove the sheet sideways."
+    ],
+    "usage": "import { Button } from \"@/components/ui/button\"\nimport {\n  Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,\n} from \"@/components/ui/dialog\"\n\nexport function Example() {\n  return (\n    <Dialog>\n      <DialogTrigger asChild>\n        <Button variant=\"outline\">Edit profile</Button>\n      </DialogTrigger>\n      <DialogContent tape=\"both\" className=\"sm:max-w-[425px]\">\n        <DialogHeader>\n          <DialogTitle>Edit profile</DialogTitle>\n          <DialogDescription>Make changes to your profile here. Click save when you&apos;re done.</DialogDescription>\n        </DialogHeader>\n        {/* form fields */}\n        <DialogFooter>\n          <DialogClose asChild>\n            <Button variant=\"outline\">Cancel</Button>\n          </DialogClose>\n          <Button type=\"submit\">Save changes</Button>\n        </DialogFooter>\n      </DialogContent>\n    </Dialog>\n  )\n}",
+    "parts": [
+      "Dialog",
+      "DialogTrigger",
+      "DialogPortal",
+      "DialogOverlay",
+      "DialogContent",
+      "DialogHeader",
+      "DialogTitle",
+      "DialogDescription",
+      "DialogBody",
+      "DialogFooter",
+      "DialogClose"
+    ]
+  },
+  "categories": [
+    "Overlays"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,1087 @@
+[
+  {
+    "batch": "icons-arrows",
+    "file": "src/lib/ink/art/icons/arrows.ts",
+    "kind": "icon",
+    "ids": [
+      "chevron-down",
+      "chevron-right",
+      "chevron-left",
+      "chevron-up",
+      "arrow-left",
+      "arrow-right",
+      "arrow-down",
+      "arrow-up",
+      "arrow-up-right",
+      "chevrons-up-down",
+      "chevrons-left",
+      "chevrons-right",
+      "arrow-up-down",
+      "undo-2",
+      "redo-2",
+      "rotate-cw"
+    ],
+    "priority": "P0",
+    "gate": [
+      "chevron-down",
+      "arrow-right",
+      "chevrons-up-down",
+      "rotate-cw"
+    ],
+    "p0Ids": [
+      "chevron-down",
+      "chevron-right",
+      "chevron-left",
+      "chevron-up",
+      "arrow-left",
+      "arrow-right",
+      "arrow-down"
+    ],
+    "tiers": {
+      "default": "16 (small redraw) + 24 (master)",
+      "micro": [
+        "chevron-down",
+        "chevron-right"
+      ]
+    },
+    "count": 16,
+    "wave": 1,
+    "section": "notes/art-inventory.md section A",
+    "dependsOn": [],
+    "notes": "One flowing hand for every direction glyph. Chevron = ONE stroke, apex softened by the pen slowing, arms unequal by ~0.8 unit. Arrow = a shaft that bows <= 0.4 unit plus a head that is ONE two-legged stroke laid over the tip (legs 7 : 5.5 units, tip is where the pen turns, never a closed triangle). Ends flick out. Per-id concept lines: notes/art-inventory.md section A; shared rules: section G."
+  },
+  {
+    "batch": "icons-marks",
+    "file": "src/lib/ink/art/icons/marks.ts",
+    "kind": "icon",
+    "ids": [
+      "check",
+      "x",
+      "minus",
+      "circle",
+      "circle-check",
+      "plus",
+      "dot",
+      "circle-x",
+      "circle-plus",
+      "circle-minus",
+      "circle-dot",
+      "square-check",
+      "badge-check",
+      "asterisk",
+      "square",
+      "slash"
+    ],
+    "priority": "P0",
+    "gate": [
+      "check",
+      "circle",
+      "circle-check",
+      "badge-check"
+    ],
+    "p0Ids": [
+      "check",
+      "x",
+      "minus",
+      "circle",
+      "circle-check"
+    ],
+    "tiers": {
+      "default": "16 (small redraw) + 24 (master)",
+      "micro": [
+        "check",
+        "x",
+        "circle",
+        "plus",
+        "dot"
+      ],
+      "hi48": [
+        "circle-check",
+        "circle-x"
+      ]
+    },
+    "count": 16,
+    "wave": 1,
+    "section": "notes/art-inventory.md section A",
+    "dependsOn": [],
+    "notes": "The most-seen glyphs in the whole library (checkbox, menu ticks, dialog close, input-otp dash), so the hand must be heavier here (nib x1.2 to x1.3) and the 12 px redraws must be a single confident stroke. Crossing strokes cross off-centre and overshoot 1 to 1.5 units. Per-id concept lines: notes/art-inventory.md section A; shared rules: section G."
+  },
+  {
+    "batch": "icons-status",
+    "file": "src/lib/ink/art/icons/status.ts",
+    "kind": "icon",
+    "ids": [
+      "triangle-alert",
+      "octagon-x",
+      "info",
+      "loader-circle",
+      "loader",
+      "circle-alert",
+      "circle-question-mark",
+      "bell",
+      "ban",
+      "shield-check",
+      "flag",
+      "bug",
+      "lightbulb",
+      "life-buoy",
+      "octagon-alert",
+      "shield-alert"
+    ],
+    "priority": "P0",
+    "gate": [
+      "triangle-alert",
+      "loader-circle",
+      "octagon-x",
+      "bell"
+    ],
+    "p0Ids": [
+      "triangle-alert",
+      "octagon-x",
+      "info",
+      "loader-circle"
+    ],
+    "tiers": {
+      "default": "16 (small redraw) + 24 (master)",
+      "hi48": [
+        "triangle-alert",
+        "octagon-x",
+        "info",
+        "loader-circle",
+        "circle-alert",
+        "circle-question-mark",
+        "bell",
+        "shield-check",
+        "lightbulb"
+      ]
+    },
+    "count": 16,
+    "wave": 1,
+    "section": "notes/art-inventory.md section A",
+    "dependsOn": [],
+    "notes": "Meaning must survive without colour: each status has its OWN silhouette (triangle = warning, octagon = error/stop, ring = info/help, arc = busy) AND its own inner glyph. Per-id concept lines: notes/art-inventory.md section A; shared rules: section G."
+  },
+  {
+    "batch": "icons-layout",
+    "file": "src/lib/ink/art/icons/layout.ts",
+    "kind": "icon",
+    "ids": [
+      "panel-left",
+      "grip-vertical",
+      "ellipsis",
+      "search",
+      "ellipsis-vertical",
+      "menu",
+      "panel-left-close",
+      "panel-left-open",
+      "layout-dashboard",
+      "layout-grid",
+      "list",
+      "list-filter",
+      "eye",
+      "eye-off",
+      "sliders-horizontal",
+      "frame"
+    ],
+    "priority": "P0",
+    "gate": [
+      "search",
+      "grip-vertical",
+      "panel-left",
+      "eye"
+    ],
+    "p0Ids": [
+      "panel-left",
+      "grip-vertical",
+      "ellipsis",
+      "search"
+    ],
+    "tiers": {
+      "default": "16 (small redraw) + 24 (master)",
+      "micro": [
+        "grip-vertical"
+      ],
+      "hi48": [
+        "search",
+        "eye"
+      ]
+    },
+    "count": 16,
+    "wave": 1,
+    "section": "notes/art-inventory.md section A",
+    "dependsOn": [],
+    "notes": "Boxes are hand boxes: an L and a Gamma, one corner overshoots, one falls short, interior dividers poke through the frame by 1 unit. Dots (ellipsis, grip) are blots of slightly different size, never a perfect row. Search is the most-used glyph in the set: lens 60 percent of the frame, handle heavier than the lens. Per-id concept lines: notes/art-inventory.md section A; shared rules: section G."
+  },
+  {
+    "batch": "mascot-stubby",
+    "file": "src/lib/ink/art/mascot/poses.ts",
+    "extraFiles": [
+      "src/lib/ink/art/mascot/body.ts",
+      "src/lib/ink/art/mascot/props.ts"
+    ],
+    "kind": "mascot",
+    "ids": [
+      "idle",
+      "wave",
+      "think",
+      "write",
+      "sketch",
+      "celebrate",
+      "oops",
+      "shrug",
+      "sleep",
+      "peek",
+      "point",
+      "carry",
+      "halt",
+      "search",
+      "unplug"
+    ],
+    "priority": "P0",
+    "gate": [
+      "idle",
+      "write",
+      "oops",
+      "shrug"
+    ],
+    "p0Ids": [
+      "idle",
+      "wave",
+      "think",
+      "write",
+      "sketch",
+      "celebrate",
+      "oops",
+      "shrug"
+    ],
+    "alsoDeliver": [
+      "mascot-prop:thought-cloud",
+      "mascot-prop:question-mark",
+      "mascot-prop:zzz",
+      "mascot-prop:sweat-drop",
+      "mascot-prop:ink-blot",
+      "mascot-prop:lead-shards",
+      "mascot-prop:confetti-burst",
+      "mascot-prop:magnifier",
+      "mascot-prop:dashed-frame",
+      "mascot-prop:cable-cut",
+      "mascot-prop:sheet-box",
+      "mascot-prop:stop-tick",
+      "mascot-prop:shavings",
+      "mascot-prop:scribble"
+    ],
+    "tiers": {
+      "default": "48 + 96",
+      "head32": [
+        "idle",
+        "think",
+        "write",
+        "celebrate",
+        "oops",
+        "peek"
+      ],
+      "hero160": [
+        "idle",
+        "wave",
+        "sketch",
+        "celebrate",
+        "oops",
+        "shrug"
+      ]
+    },
+    "count": 15,
+    "wave": 1,
+    "section": "notes/art-inventory.md section D",
+    "dependsOn": [],
+    "notes": "One body, fifteen poses as data deltas (arms, legs, eyes, mouth, props). See D. Per-id concept lines: notes/art-inventory.md section D; shared rules: section G."
+  },
+  {
+    "batch": "icons-files",
+    "file": "src/lib/ink/art/icons/files.ts",
+    "kind": "icon",
+    "ids": [
+      "file",
+      "file-text",
+      "file-code",
+      "folder",
+      "folder-open",
+      "upload",
+      "download",
+      "save",
+      "paperclip",
+      "copy",
+      "clipboard",
+      "image",
+      "trash",
+      "file-plus",
+      "folder-plus",
+      "archive"
+    ],
+    "priority": "P1",
+    "gate": [
+      "file-text",
+      "folder",
+      "trash",
+      "copy"
+    ],
+    "tiers": {
+      "default": "16 (small redraw) + 24 (master)",
+      "hi48": [
+        "file",
+        "file-text",
+        "folder",
+        "folder-open",
+        "upload",
+        "download",
+        "image"
+      ]
+    },
+    "count": 16,
+    "wave": 2,
+    "section": "notes/art-inventory.md section A",
+    "dependsOn": [],
+    "notes": "Paper things: a sheet is a rectangle whose fold corner is a separate small triangle stroke that overshoots. Folders have a tab bump on the top-left, a body drawn as an open U and a lid line that does not meet it. Feature tier (48) is used by Empty, Attachment and Item media, so those get more detail (text lines, a tab label). Per-id concept lines: notes/art-inventory.md section A; shared rules: section G."
+  },
+  {
+    "batch": "icons-comms",
+    "file": "src/lib/ink/art/icons/comms.ts",
+    "kind": "icon",
+    "ids": [
+      "mail",
+      "mail-check",
+      "send",
+      "message-square",
+      "message-circle",
+      "inbox",
+      "share",
+      "link",
+      "external-link",
+      "user",
+      "users",
+      "user-plus",
+      "circle-user",
+      "log-in",
+      "log-out",
+      "video"
+    ],
+    "priority": "P1",
+    "gate": [
+      "mail",
+      "user",
+      "message-square",
+      "share"
+    ],
+    "tiers": {
+      "default": "16 (small redraw) + 24 (master)",
+      "hi48": [
+        "mail",
+        "inbox",
+        "user"
+      ]
+    },
+    "count": 16,
+    "wave": 2,
+    "section": "notes/art-inventory.md section A",
+    "dependsOn": [],
+    "notes": "Speech and post: bubbles are one closed loop with the tail as a hook at the end of the same stroke. People are heads (loop) over shoulders (one open arc), head offset from the shoulder centre by 0.6 unit. Envelope flaps are a V that stops short of the corners. acc = bubblegum wash on heads only. Per-id concept lines: notes/art-inventory.md section A; shared rules: section G."
+  },
+  {
+    "batch": "icons-dev-data",
+    "file": "src/lib/ink/art/icons/dev-data.ts",
+    "kind": "icon",
+    "ids": [
+      "settings",
+      "settings-2",
+      "terminal",
+      "square-terminal",
+      "code",
+      "command",
+      "lock",
+      "key-round",
+      "bot",
+      "chart-column",
+      "chart-line",
+      "chart-pie",
+      "trending-up",
+      "trending-down",
+      "table",
+      "git-branch"
+    ],
+    "priority": "P1",
+    "gate": [
+      "settings",
+      "lock",
+      "chart-pie",
+      "trending-up"
+    ],
+    "tiers": {
+      "default": "16 (small redraw) + 24 (master)",
+      "hi48": [
+        "settings",
+        "lock"
+      ]
+    },
+    "count": 16,
+    "wave": 2,
+    "section": "notes/art-inventory.md section A",
+    "dependsOn": [],
+    "notes": "Tools and charts: keep these calm because they sit in dense UI. Bars in charts are separate strokes of different height with a base line that overshoots; lines/pies are single strokes; nothing decorative. Gear teeth are ticks around a loop, never a perfect cog outline. acc = none by default; chart-pie may carry a marker wedge. Per-id concept lines: notes/art-inventory.md section A; shared rules: section G."
+  },
+  {
+    "batch": "icons-text-nature-misc",
+    "file": "src/lib/ink/art/icons/text-nature-misc.ts",
+    "kind": "icon",
+    "ids": [
+      "bold",
+      "italic",
+      "underline",
+      "pencil",
+      "book-open",
+      "sun",
+      "moon",
+      "house",
+      "star",
+      "heart",
+      "bookmark",
+      "globe",
+      "sparkles",
+      "map",
+      "face-slightly-smiling",
+      "cloud"
+    ],
+    "priority": "P1",
+    "gate": [
+      "bold",
+      "sun",
+      "house",
+      "heart"
+    ],
+    "tiers": {
+      "default": "16 (small redraw) + 24 (master)",
+      "hi48": [
+        "house"
+      ]
+    },
+    "count": 16,
+    "wave": 2,
+    "section": "notes/art-inventory.md section A",
+    "dependsOn": [],
+    "notes": "Three small families in one hand. Letters (bold, italic, underline) are drawn as printed capitals with the same pen, bold at nib x1.35. Nature glyphs are single outlines with one identifying detail. Misc are the universal \"favourite\" shapes. acc allowed on sun, heart, star, leaf in doodle tone only. Per-id concept lines: notes/art-inventory.md section A; shared rules: section G."
+  },
+  {
+    "batch": "props-tape-fasteners",
+    "file": "src/lib/ink/art/props/tape-fasteners.ts",
+    "kind": "prop",
+    "ids": [
+      "tape-masking",
+      "tape-washi-dots",
+      "tape-washi-stripes",
+      "tape-washi-zigzag",
+      "clip-wire",
+      "pin-push",
+      "tape-kraft",
+      "tape-clear",
+      "tape-washi-gingham",
+      "clip-binder",
+      "staple",
+      "tape-washi-hearts",
+      "tape-washi-stars",
+      "tape-washi-graph",
+      "tape-washi-checker",
+      "tape-washi-leaves"
+    ],
+    "priority": "P0",
+    "gate": [
+      "tape-masking",
+      "tape-washi-dots",
+      "clip-wire",
+      "pin-push"
+    ],
+    "p0Ids": [
+      "tape-masking",
+      "tape-washi-dots",
+      "tape-washi-stripes",
+      "tape-washi-zigzag",
+      "clip-wire",
+      "pin-push"
+    ],
+    "count": 16,
+    "wave": 2,
+    "section": "notes/art-inventory.md section F",
+    "dependsOn": [],
+    "notes": "Things that hold paper down. Tape = a seamless PATTERN TILE plus an END PROFILE (sawtooth, torn, straight, zig) so any length works; the generator stretches the middle. Translucent (55 to 85 percent) with slit lines and a whisper shadow; never opaque, never over text. Per-id concept lines: notes/art-inventory.md section F; shared rules: section G."
+  },
+  {
+    "batch": "props-stocks-extras",
+    "file": "src/lib/ink/art/props/stocks-extras.ts",
+    "kind": "prop",
+    "ids": [
+      "paper-plain",
+      "paper-ruled",
+      "paper-index-card",
+      "sticky-note",
+      "paper-graph",
+      "paper-dot-grid",
+      "paper-kraft",
+      "paper-napkin",
+      "paper-ledger",
+      "paper-photo",
+      "running-stitch",
+      "paper-parchment",
+      "paper-receipt",
+      "paper-order-pad",
+      "coffee-ring",
+      "rubber-band"
+    ],
+    "priority": "P0",
+    "gate": [
+      "paper-plain",
+      "paper-ruled",
+      "sticky-note",
+      "coffee-ring"
+    ],
+    "p0Ids": [
+      "paper-plain",
+      "paper-ruled",
+      "paper-index-card",
+      "sticky-note"
+    ],
+    "count": 16,
+    "wave": 2,
+    "section": "notes/art-inventory.md section F",
+    "dependsOn": [],
+    "notes": "Stocks are RECIPES not drawings: a token colour, a rule/print pattern, a tile choice from the baked overlays and a default edge profile. The author writes the rule/print generator (printed-line jitter: alpha .84 to 1 with starved flecks) and the config object; textures themselves come from tools/bake-textures.mjs. Per-id concept lines: notes/art-inventory.md section F; shared rules: section G."
+  },
+  {
+    "batch": "icons-media",
+    "file": "src/lib/ink/art/icons/media.ts",
+    "kind": "icon",
+    "ids": [
+      "play",
+      "pause",
+      "circle-play",
+      "skip-back",
+      "skip-forward",
+      "repeat",
+      "volume-2",
+      "volume-off",
+      "mic",
+      "music",
+      "camera",
+      "audio-lines",
+      "shuffle",
+      "headphones",
+      "film",
+      "audio-waveform"
+    ],
+    "priority": "P1",
+    "gate": [
+      "play",
+      "volume-2",
+      "camera",
+      "music"
+    ],
+    "tiers": {
+      "default": "16 (small redraw) + 24 (master)",
+      "hi48": [
+        "camera"
+      ]
+    },
+    "count": 16,
+    "wave": 3,
+    "section": "notes/art-inventory.md section A",
+    "dependsOn": [],
+    "notes": "Transport glyphs are solid-ish: triangles are drawn in three pulls with a rounded leading corner and one overshoot; bars are two strokes leaning 1 degree apart. Loops (repeat, shuffle) are rounded rectangles of arrows that never close cleanly. Sound waves are open arcs of increasing size. acc = grape on music note heads only. Per-id concept lines: notes/art-inventory.md section A; shared rules: section G."
+  },
+  {
+    "batch": "icons-commerce-time",
+    "file": "src/lib/ink/art/icons/commerce-time.ts",
+    "kind": "icon",
+    "ids": [
+      "shopping-cart",
+      "credit-card",
+      "tag",
+      "calculator",
+      "dollar-sign",
+      "calendar",
+      "calendar-plus",
+      "calendar-days",
+      "calendar-check",
+      "clock",
+      "wallet",
+      "receipt",
+      "gift",
+      "timer",
+      "rotate-ccw-clock",
+      "hourglass"
+    ],
+    "priority": "P1",
+    "gate": [
+      "shopping-cart",
+      "credit-card",
+      "calendar",
+      "clock"
+    ],
+    "tiers": {
+      "default": "16 (small redraw) + 24 (master)",
+      "hi48": [
+        "shopping-cart",
+        "calendar"
+      ]
+    },
+    "count": 16,
+    "wave": 3,
+    "section": "notes/art-inventory.md section A",
+    "dependsOn": [],
+    "notes": "Two families, one hand: things you buy (bags, carts, cards, tags) and things that measure time (calendars, clocks, hourglass). Calendars are a hand box with two binder ring ticks that break the top edge and a few date blots; clocks are a loop plus two hands of unequal length meeting off-centre. Per-id concept lines: notes/art-inventory.md section A; shared rules: section G."
+  },
+  {
+    "batch": "doodles-nature",
+    "file": "src/lib/ink/art/doodles/nature.ts",
+    "kind": "doodle",
+    "ids": [
+      "star",
+      "sparkle",
+      "sun",
+      "moon",
+      "cloud",
+      "lightning",
+      "flower",
+      "leaf",
+      "sparkle-trio",
+      "rain-cloud",
+      "tulip",
+      "tree",
+      "mushroom",
+      "sprout",
+      "feather",
+      "wave"
+    ],
+    "priority": "P1",
+    "gate": [
+      "star",
+      "sun",
+      "flower",
+      "mushroom"
+    ],
+    "tiers": {
+      "default": "48 (small redraw) + 96 (master)"
+    },
+    "count": 16,
+    "wave": 3,
+    "section": "notes/art-inventory.md section B",
+    "dependsOn": [],
+    "notes": "Line-led marks with ONE flat marker fill that misses the outline (offset 2 to 4 px at 96) and at most one accent stroke. Ink outline is the fine-liner; a brush-weight (x1.5) stroke is allowed for one feature per doodle (a stem, a cloud underside). Per-id concept lines: notes/art-inventory.md section B; shared rules: section G."
+  },
+  {
+    "batch": "doodles-things",
+    "file": "src/lib/ink/art/doodles/things.ts",
+    "kind": "doodle",
+    "ids": [
+      "heart",
+      "crown",
+      "smiley",
+      "cat-face",
+      "house",
+      "cup",
+      "balloon",
+      "paper-plane",
+      "light-bulb",
+      "pencil",
+      "eye",
+      "umbrella",
+      "music-note",
+      "key",
+      "fish",
+      "book"
+    ],
+    "priority": "P1",
+    "gate": [
+      "heart",
+      "cup",
+      "cat-face",
+      "key"
+    ],
+    "tiers": {
+      "default": "48 (small redraw) + 96 (master)"
+    },
+    "count": 16,
+    "wave": 3,
+    "section": "notes/art-inventory.md section B",
+    "dependsOn": [],
+    "notes": "Objects a person doodles in the margin of a meeting. Each has ONE identifying detail drawn larger than life (steam curl on the cup, teeth on the key, wing fold on the plane). Fills are single flat marker colours; shading hatch appears only at 96 and only on the lower-right inside edge. Faces only on the smiley and the cat. Per-id concept lines: notes/art-inventory.md section B; shared rules: section G."
+  },
+  {
+    "batch": "doodles-marks",
+    "file": "src/lib/ink/art/doodles/marks.ts",
+    "kind": "doodle",
+    "ids": [
+      "arrow-swoop",
+      "arrow-loop",
+      "spiral",
+      "asterisk-burst",
+      "radial-burst",
+      "underline-flourish",
+      "corner-flourish",
+      "confetti",
+      "squiggle-border",
+      "arrow-bounce",
+      "arrow-block",
+      "swirl",
+      "underline-scribble",
+      "corner-vine",
+      "dotted-trail",
+      "exclaim-burst"
+    ],
+    "priority": "P1",
+    "gate": [
+      "arrow-swoop",
+      "spiral",
+      "confetti",
+      "squiggle-border"
+    ],
+    "tiers": {
+      "default": "48 (small redraw) + 96 (master)"
+    },
+    "count": 16,
+    "wave": 3,
+    "section": "notes/art-inventory.md section B",
+    "dependsOn": [],
+    "notes": "The connective tissue of a page: things that point, frame, emphasise. Mostly single-pen line work with at most one accent stroke; these must tile or attach cleanly (borders repeat every 96 units, corner flourishes are drawn for the top-left and rotated by the consumer). Per-id concept lines: notes/art-inventory.md section B; shared rules: section G."
+  },
+  {
+    "batch": "stickers-status-pointers",
+    "file": "src/lib/ink/art/stickers/status-pointers.ts",
+    "kind": "sticker",
+    "ids": [
+      "done",
+      "wip",
+      "new",
+      "sale",
+      "beta",
+      "pro",
+      "ok",
+      "wow",
+      "cursor-click",
+      "hand-point-right",
+      "hand-point-up",
+      "arrow-curved",
+      "arrow-striped",
+      "arrow-down-bounce",
+      "eyes-look",
+      "scribble-circle"
+    ],
+    "priority": "P1",
+    "gate": [
+      "done",
+      "sale",
+      "cursor-click",
+      "hand-point-right"
+    ],
+    "tiers": {
+      "default": "64 (small redraw) + 96 (master); stamps are flat, sized in their rows",
+      "hi128": [
+        "done",
+        "new"
+      ]
+    },
+    "count": 16,
+    "wave": 3,
+    "section": "notes/art-inventory.md section C",
+    "dependsOn": [],
+    "notes": "The functional half of the sticker sheet. Status stickers are TEXT BADGES produced by the badge generator (spec in C.2): the author picks shape, colour, text and sub-line, and hand-tunes lettering; each of the eight has a different shape AND colour so they are distinguishable without reading. Per-id concept lines: notes/art-inventory.md section C; shared rules: section G."
+  },
+  {
+    "batch": "stickers-space-weather",
+    "file": "src/lib/ink/art/stickers/space-weather.ts",
+    "kind": "sticker",
+    "ids": [
+      "rocket",
+      "sun-shades",
+      "cloud-smile",
+      "rainbow",
+      "ringed-planet",
+      "astronaut-helmet",
+      "ufo",
+      "comet",
+      "moon-sleepy",
+      "raindrop-pal",
+      "snowflake",
+      "storm-cloud"
+    ],
+    "priority": "P1",
+    "gate": [
+      "rocket",
+      "sun-shades",
+      "cloud-smile",
+      "ringed-planet"
+    ],
+    "tiers": {
+      "default": "64 (small redraw) + 96 (master); stamps are flat, sized in their rows",
+      "hi128": [
+        "rocket",
+        "sun-shades",
+        "rainbow"
+      ]
+    },
+    "count": 12,
+    "wave": 4,
+    "section": "notes/art-inventory.md section C",
+    "dependsOn": [],
+    "notes": "Bold, few-part stickers with a face or one big gesture. Two accents plus ink. Outline is a single heavy pull (nib x1.1) with marker fill offset 3 to 4 px at 96; interior detail lines are x0.7. Per-id concept lines: notes/art-inventory.md section C; shared rules: section G."
+  },
+  {
+    "batch": "stickers-food-drink",
+    "file": "src/lib/ink/art/stickers/food-drink.ts",
+    "kind": "sticker",
+    "ids": [
+      "coffee-to-go",
+      "boba-tea",
+      "pizza-slice",
+      "donut",
+      "cupcake",
+      "teacup",
+      "ice-cream-cone",
+      "avocado-half",
+      "cookie-bitten",
+      "cherries",
+      "lemon-slice",
+      "popcorn-tub"
+    ],
+    "priority": "P1",
+    "gate": [
+      "coffee-to-go",
+      "boba-tea",
+      "donut",
+      "cookie-bitten"
+    ],
+    "tiers": {
+      "default": "64 (small redraw) + 96 (master); stamps are flat, sized in their rows",
+      "hi128": [
+        "coffee-to-go",
+        "donut",
+        "cupcake"
+      ]
+    },
+    "count": 12,
+    "wave": 4,
+    "section": "notes/art-inventory.md section C",
+    "dependsOn": [],
+    "notes": "Food sticker rule: one big shape, one bite of detail. Colour is saturated and slightly wrong (fills miss outlines, which is where they look edible). Drinks always have a steam curl or a straw to break the silhouette. Faces only on 3 of the 12 (donut, avocado, cupcake) so the set has rhythm. Worked example: cupcake in G. Per-id concept lines: notes/art-inventory.md section C; shared rules: section G."
+  },
+  {
+    "batch": "stickers-office-desk",
+    "file": "src/lib/ink/art/stickers/office-desk.ts",
+    "kind": "sticker",
+    "ids": [
+      "notebook",
+      "laptop-open",
+      "highlighter",
+      "magnifier",
+      "pencil-cup",
+      "stapler",
+      "scissors",
+      "tape-roll",
+      "ruler",
+      "calculator",
+      "desk-lamp",
+      "envelope-heart"
+    ],
+    "priority": "P1",
+    "gate": [
+      "notebook",
+      "highlighter",
+      "laptop-open",
+      "scissors"
+    ],
+    "tiers": {
+      "default": "64 (small redraw) + 96 (master); stamps are flat, sized in their rows",
+      "hi128": [
+        "notebook"
+      ]
+    },
+    "count": 12,
+    "wave": 4,
+    "section": "notes/art-inventory.md section C",
+    "dependsOn": [],
+    "notes": "The desk the notebook lives on, drawn as things you would sticker onto a laptop lid. Objects, no faces except the desk lamp. Long objects (ruler, scissors, highlighter) are drawn at 30 degrees so they fit the square grid and still read. Every object has one printed detail (ruler ticks, calculator digits, notebook rings). Per-id concept lines: notes/art-inventory.md section C; shared rules: section G."
+  },
+  {
+    "batch": "stickers-nature-animals",
+    "file": "src/lib/ink/art/stickers/nature-animals.ts",
+    "kind": "sticker",
+    "ids": [
+      "cactus",
+      "potted-plant",
+      "cat-loaf",
+      "sunflower",
+      "watering-can",
+      "monstera-leaf",
+      "acorn-pair",
+      "puppy",
+      "fox",
+      "owl",
+      "bunny",
+      "frog",
+      "turtle",
+      "bee"
+    ],
+    "priority": "P1",
+    "gate": [
+      "cactus",
+      "cat-loaf",
+      "owl",
+      "sunflower"
+    ],
+    "tiers": {
+      "default": "64 (small redraw) + 96 (master); stamps are flat, sized in their rows",
+      "hi128": [
+        "cactus",
+        "cat-loaf"
+      ]
+    },
+    "count": 14,
+    "wave": 4,
+    "section": "notes/art-inventory.md section C",
+    "dependsOn": [],
+    "notes": "Characters: animals are seen front-on, head-and-shoulders, with two dot eyes and a tiny mouth; the identifying silhouette feature is exaggerated (ears, beak, ears again). Plants are potted or single specimens. Animals are the sticker set most likely to be reused as avatars, so each has a distinct head shape at 64 px. Per-id concept lines: notes/art-inventory.md section C; shared rules: section G."
+  },
+  {
+    "batch": "stickers-faces-celebrate",
+    "file": "src/lib/ink/art/stickers/faces-celebrate.ts",
+    "kind": "sticker",
+    "ids": [
+      "smiley",
+      "shocked",
+      "ghost-boo",
+      "thumbs-up",
+      "party-popper",
+      "wink-tongue",
+      "heart-eyes",
+      "cool-shades",
+      "sleepy",
+      "thinking-face",
+      "balloon-bunch",
+      "cake-slice",
+      "gift-wrapped",
+      "fireworks"
+    ],
+    "priority": "P1",
+    "gate": [
+      "smiley",
+      "ghost-boo",
+      "shocked",
+      "party-popper"
+    ],
+    "tiers": {
+      "default": "64 (small redraw) + 96 (master); stamps are flat, sized in their rows",
+      "hi128": [
+        "smiley",
+        "ghost-boo",
+        "party-popper"
+      ]
+    },
+    "count": 14,
+    "wave": 4,
+    "section": "notes/art-inventory.md section C",
+    "dependsOn": [],
+    "notes": "Faces are the emotional vocabulary of the library (feedback, toasts, reactions). Round base loop for every face so they sit together in a row, but each has its OWN eye/mouth language (not a font of emoji): asymmetric eyes, mouths that run off the face. Per-id concept lines: notes/art-inventory.md section C; shared rules: section G."
+  },
+  {
+    "batch": "stickers-badges-stamps",
+    "file": "src/lib/ink/art/stickers/badges-stamps.ts",
+    "kind": "sticker",
+    "ids": [
+      "rating-five",
+      "stamp-approved",
+      "stamp-draft",
+      "stamp-paid",
+      "stamp-urgent",
+      "stamp-received",
+      "stamp-void",
+      "stamp-new",
+      "stamp-member",
+      "a-plus",
+      "number-one",
+      "hundred",
+      "first-place",
+      "twenty-four-seven",
+      "question-badge",
+      "exclamation-badge"
+    ],
+    "priority": "P1",
+    "gate": [
+      "stamp-approved",
+      "stamp-paid",
+      "first-place",
+      "rating-five"
+    ],
+    "tiers": {
+      "default": "64 (small redraw) + 96 (master); stamps are flat, sized in their rows",
+      "hi128": []
+    },
+    "count": 16,
+    "wave": 4,
+    "section": "notes/art-inventory.md section C",
+    "dependsOn": [],
+    "notes": "Two generator-driven sets. Letters/numbers badges are round or rosette seals with one big glyph (grade marks, ranks, counts). Per-id concept lines: notes/art-inventory.md section C; shared rules: section G."
+  },
+  {
+    "batch": "scenes-empty",
+    "file": "src/lib/ink/art/scenes/empty-scenes.ts",
+    "kind": "scene",
+    "ids": [
+      "empty-no-results",
+      "empty-no-data",
+      "empty-inbox-zero",
+      "error-404",
+      "error-500",
+      "offline",
+      "success",
+      "permission",
+      "first-run",
+      "loading",
+      "search-start",
+      "upload",
+      "no-notifications",
+      "coming-soon"
+    ],
+    "priority": "P0",
+    "gate": [
+      "error-404",
+      "empty-no-results",
+      "loading",
+      "empty-inbox-zero"
+    ],
+    "p0Ids": [
+      "empty-no-results",
+      "empty-no-data",
+      "empty-inbox-zero",
+      "error-404",
+      "error-500",
+      "first-run",
+      "loading"
+    ],
+    "count": 14,
+    "wave": 5,
+    "section": "notes/art-inventory.md section E",
+    "dependsOn": [
+      "icons-layout",
+      "icons-status",
+      "mascot-stubby",
+      "icons-comms",
+      "icons-dev-data",
+      "icons-text-nature-misc",
+      "props-stocks-extras",
+      "props-tape-fasteners",
+      "doodles-marks",
+      "doodles-nature",
+      "doodles-things",
+      "icons-commerce-time",
+      "stickers-status-pointers",
+      "stickers-badges-stamps",
+      "stickers-office-desk"
+    ],
+    "notes": "Compositions only: every layer is a reference to another batch (mascot pose or prop, doodle, sticker, icon, paper prop) or to an engine mark. Start after mascot, doodles, stickers and props exist. Per-id concept lines: notes/art-inventory.md section E; shared rules: section G."
+  }
+]

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "underline",
+  "title": "Underline",
+  "description": "A pen line under real words: single, double, wavy or scribbled, in felt, pencil or marker. It follows the phrase line by line when it wraps, and can draw itself on as it scrolls into view.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-mark-ink.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/underline.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Slot } from \"radix-ui\"\n\nimport { MARK_WIPE, useMarkInk } from \"@/hooks/use-mark-ink\"\nimport { useMergedRef } from \"@/lib/ink/react\"\nimport type { MarkPen, MarkWeight } from \"@/lib/ink/recipes/text-marks-ink\"\nimport { underlineRecipe, type UnderlineKind } from \"@/lib/ink/recipes/underline-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst FALLBACK: Record<MarkPen, string> = {\n  ink: \"decoration-ink\",\n  blue: \"decoration-ink-you\",\n  red: \"decoration-red\",\n  green: \"decoration-green\",\n  pencil: \"decoration-pencil-mark\",\n  marker: \"decoration-marker\",\n  orange: \"decoration-tangerine\",\n}\n\nfunction Underline({\n  kind = \"single\",\n  tone = \"ink\",\n  weight = \"regular\",\n  animate = false,\n  show = true,\n  delay,\n  seed,\n  asChild = false,\n  className,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<\"span\"> & {\n  kind?: UnderlineKind\n  tone?: MarkPen\n  weight?: MarkWeight\n  animate?: boolean\n  show?: boolean\n  delay?: number\n  seed?: string | number\n  asChild?: boolean\n}) {\n  const { hostRef, hostProps, nodes } = useMarkInk({\n    recipe: underlineRecipe,\n    params: { kind, tone, weight },\n    kind: \"underline\",\n    seed,\n    animate,\n    show,\n    delay,\n  })\n  const Comp = asChild ? Slot.Root : \"span\"\n  return (\n    <Comp\n      data-slot=\"underline\"\n      data-kind={kind}\n      ref={useMergedRef<HTMLElement>(hostRef, ref as React.Ref<HTMLElement> | undefined)}\n      {...hostProps}\n      className={cn(\n        \"relative isolate underline decoration-1 underline-offset-[0.2em] data-[ink-ready]:no-underline data-[mark=off]:no-underline forced-colors:not-data-[mark=off]:underline! not-focus-visible:outline-none forced-colors:not-focus-visible:outline-none!\",\n        FALLBACK[tone],\n        animate && \"no-underline noscript:underline\",\n        animate && MARK_WIPE,\n        className,\n      )}\n      {...props}\n    >\n      <Slot.Slottable>{children}</Slot.Slottable>\n      {nodes}\n    </Comp>\n  )\n}\n\nexport { Underline }\n",
+      "type": "registry:ui",
+      "target": "@ui/underline.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/underline-ink.ts",
+      "content": "import { underline } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { markPen, overshoot, type LineParams, type MarkPen, type MarkWeight } from '@/lib/ink/recipes/text-marks-ink'\nimport type { Pt } from '@/lib/ink/types'\n\nexport type UnderlineKind = 'single' | 'double' | 'wavy' | 'scribble'\n\nexport interface UnderlineParams extends LineParams {\n  kind: UnderlineKind\n  tone: MarkPen\n  weight: MarkWeight\n}\n\nexport const underlineRecipe = defineRecipe<UnderlineParams>({\n  id: 'underline',\n  kind: 'underline',\n  layers: ['rest'],\n  pad: 10,\n  draw(ink, { w }, p) {\n    const o = overshoot(p.fs)\n    const x0 = p.first ? -o * 0.5 : 0\n    const x1 = p.last ? w + o : w\n    const y = p.base + p.desc * 0.55 + p.fs * 0.1\n    const { pen, width } = markPen(p.tone, p.weight, p.fs)\n    ink.layer('rest', () => {\n      if (p.kind === 'scribble') {\n        const rng = ink.next('ul-scrib')\n        const pts: Pt[] = []\n        const swing = Math.max(2.2, p.fs * 0.16)\n        let x = x0\n        let up = rng.chance(0.5)\n        while (x < x1) {\n          pts.push([x, y + (up ? -1 : 1) * swing * rng.range(0.6, 1.1) - swing * 0.2 - ((x - x0) / (x1 - x0)) * 1.2])\n          x += Math.max(3.4, p.fs * 0.27) * rng.range(0.75, 1.3)\n          up = !up\n        }\n        ink.lines([{ pts, o: { poly: true, round: 1.6, end: 'flick', speed: 1.3, wobble: 0.6 } }], pen, { width: 0.85 * width })\n        return\n      }\n      underline(ink, x0, y, x1 - x0, { kind: p.kind, pen, opts: { width } })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/underline-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "highlight",
+      "circled",
+      "strike",
+      "annotate"
+    ],
+    "a11y": [
+      "The words are ordinary text: selectable, copyable, found by search. The line is aria-hidden and pointer-events-none.",
+      "Until the drawing exists (no JavaScript, first paint) and in Windows high contrast, the browser's own text-decoration underline is shown in the pen's colour.",
+      "Do not use it as the only sign of a link: put it on a real <a> with asChild (links keep their native focus ring) or keep the link's own underline.",
+      "Reduced motion (or data-motion=\"reduced\") zeroes the draw-on."
+    ],
+    "usage": "import { Underline } from \"@/components/ui/underline\"\n\nexport function Example() {\n  return (\n    <p>\n      Read <Underline tone=\"blue\" kind=\"wavy\">the small print</Underline> first.\n    </p>\n  )\n}",
+    "parts": [
+      "Underline"
+    ]
+  },
+  "categories": [
+    "Marks"
+  ],
+  "type": "registry:ui"
+}

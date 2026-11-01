@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "signature",
+  "title": "Signature",
+  "description": "A name signed in the script font with the pen's flourish under it: a swoosh with a loop that flicks up past the last letter. The name is ordinary text; the flourish is a drawing that can write itself on.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-mark-ink.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/signature.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { MARK_REVEAL, useMarkPhase } from \"@/hooks/use-mark-ink\"\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport type { MarkPen, MarkWeight } from \"@/lib/ink/recipes/text-marks-ink\"\nimport { signatureRecipe, type SignatureFlourish } from \"@/lib/ink/recipes/signature-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst NAME_WIPE =\n  \"data-animate:data-[mark=idle]:[&>[data-slot=signature-name]]:[clip-path:inset(-10%_var(--ll-wipe-r,100%)_-10%_var(--ll-wipe-l,-4%))] data-animate:data-[mark=in]:[&>[data-slot=signature-name]]:animate-[ll-wipe_calc(var(--ll-dur-draw)*1.6)_var(--ll-ease-out)_var(--ll-name-delay,0s)_both]\"\n\nconst SIZE: Record<\"sm\" | \"md\" | \"lg\", number> = { sm: 28, md: 44, lg: 64 }\nconst SIZE_CLASS: Record<\"sm\" | \"md\" | \"lg\", string> = { sm: \"text-[28px]\", md: \"text-[44px]\", lg: \"text-[64px]\" }\n\nfunction Signature({\n  flourish = \"swoosh\",\n  size = \"md\",\n  tone = \"blue\",\n  weight = \"regular\",\n  animate = false,\n  show = true,\n  delay,\n  seed,\n  className,\n  style,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<\"span\"> & {\n  flourish?: SignatureFlourish\n  size?: keyof typeof SIZE\n  tone?: MarkPen\n  weight?: MarkWeight\n  animate?: boolean\n  show?: boolean\n  delay?: number\n  seed?: string | number\n}) {\n  const fs = SIZE[size]\n  const { hostRef, hostProps, node } = useInk({ recipe: signatureRecipe, params: { flourish, tone, weight, fs, animate }, kind: \"signature\", seed })\n  const { phaseRef, phaseProps } = useMarkPhase({ animate, show })\n  const ready = !!node && show\n  const t = delay ?? 0\n  return (\n    <span\n      data-slot=\"signature\"\n      ref={useMergedRef<HTMLElement>(hostRef, phaseRef, ref as React.Ref<HTMLElement> | undefined)}\n      {...(ready ? hostProps : {})}\n      {...phaseProps}\n      style={{ ...(animate ? ({ \"--ll-name-delay\": `${t}ms`, \"--ll-draw-delay\": `${t + 700}ms` } as React.CSSProperties) : undefined), ...style }}\n      className={cn(\n        \"relative isolate inline-block self-start justify-self-start outline-none pb-3 font-script leading-none whitespace-nowrap text-ink-you\",\n        tone === \"ink\" && \"text-ink\",\n        SIZE_CLASS[size],\n        animate && NAME_WIPE,\n        animate && MARK_REVEAL,\n        className,\n      )}\n      {...props}\n    >\n      <span data-slot=\"signature-name\">{children}</span>\n      {ready ? node : null}\n    </span>\n  )\n}\n\nexport { Signature }\n",
+      "type": "registry:ui",
+      "target": "@ui/signature.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/signature-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { markRevealId, revealMark } from '@/lib/ink/recipes/mark-reveal-ink'\nimport { markPen, type MarkPen, type MarkWeight } from '@/lib/ink/recipes/text-marks-ink'\nimport type { Line, Pt } from '@/lib/ink/types'\n\nexport type SignatureFlourish = 'swoosh' | 'underline' | 'none'\n\nexport interface SignatureParams {\n  flourish: SignatureFlourish\n  tone: MarkPen\n  weight: MarkWeight\n  fs: number\n  animate?: boolean\n}\n\nexport const signatureRecipe = defineRecipe<SignatureParams>({\n  id: 'signature',\n  kind: 'signature',\n  layers: ['rest'],\n  pad: 20,\n  draw(ink, { w, h }, p, ctx) {\n    if (p.flourish === 'none') return\n    const { pen, width } = markPen(p.tone, p.weight, p.fs * 0.5)\n    const rng = ink.next('sig')\n    const base = Math.max(p.fs * 0.5, h - 12) * 0.88\n    const r = Math.max(4, p.fs * 0.16)\n    const lines: Line[] = []\n    if (p.flourish === 'underline') {\n      const y = base + r * 0.6\n      const pts: Pt[] = []\n      for (let i = 0; i <= 12; i++) {\n        const t = i / 12\n        pts.push([-w * 0.02 + t * w * 1.08, y + Math.sin(t * Math.PI * 1.1) * -r * 0.5 - t * r * 0.7 + rng.gauss(0, 0.2)])\n      }\n      lines.push({ pts, o: { start: 'pool', end: 'flick', wobble: 0.6 } })\n    } else {\n      const x0 = w * 0.03, y0 = base\n      const pts: Pt[] = []\n      const loop = 14\n      for (let i = 0; i <= loop; i++) {\n        const a = (i / loop) * Math.PI * 2 + Math.PI * 0.5\n        pts.push([x0 + Math.cos(a) * r * 1.25 - r * 0.2, y0 - r * 0.5 - Math.sin(a) * r * 0.85 + (i / loop) * r * 0.9])\n      }\n      const n = 22\n      const sx = pts[pts.length - 1][0], sy = pts[pts.length - 1][1]\n      for (let i = 1; i <= n; i++) {\n        const t = i / n\n        const x = sx + t * (w * 1.1 - sx)\n        const sag = Math.sin(t * Math.PI * 0.95) * r * 0.9\n        const rise = t * t * t * r * 3.2\n        pts.push([x, sy + sag - rise + rng.gauss(0, 0.15)])\n      }\n      lines.push({ pts, o: { start: 'pool', end: 'flick', wobble: 0.55, speed: 1.05 } })\n      const cx0 = w * rng.range(0.42, 0.55), cx1 = w * rng.range(0.9, 1.0), cy = base + r * 1.35\n      const under: Pt[] = []\n      for (let i = 0; i <= 8; i++) {\n        const t = i / 8\n        under.push([cx0 + t * (cx1 - cx0), cy - t * r * 0.9 + Math.sin(t * Math.PI) * r * 0.25])\n      }\n      lines.push({ pts: under, o: { start: 'soft', end: 'flick', wobble: 0.5, speed: 1.25 } })\n    }\n    ink.layer('rest', () => {\n      if (p.animate) revealMark(ink, { id: markRevealId(ctx.seed, 'g'), lines, pen, box: { w, h }, pad: 28, width, revealWidth: 5 + p.fs * 0.06 })\n      else ink.lines(lines, pen, { width })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/signature-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "lettering",
+      "handwritten",
+      "quote",
+      "underline"
+    ],
+    "a11y": [
+      "The name is real text in the page, read by a screen reader; the flourish is aria-hidden. A signature is not proof of anything: say who signed in text if it matters.",
+      "The name text is not clipped by the flourish; the drawing spills 20 px beyond its box and never takes a click.",
+      "Reduced motion zeroes the signing animation."
+    ],
+    "usage": "import { Signature } from \"@/components/ui/signature\"\n\nexport function Example() {\n  return <Signature>Ada Lovelace</Signature>\n}",
+    "parts": [
+      "Signature"
+    ]
+  },
+  "categories": [
+    "Marks"
+  ],
+  "type": "registry:ui"
+}

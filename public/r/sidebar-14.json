@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-14",
+  "title": "Sidebar 14",
+  "description": "A sidebar on the right: the page comes first and the pad hangs from the other edge as a table of contents, folding away with a button at the far end of the header. Mirrors shadcn's sidebar-14. Looks right on the desk and on plain paper.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-14/components/sidebar-14-app-sidebar.tsx",
+      "content": "import * as React from \"react\"\n\nimport { pageOutline } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport {\n  Sidebar,\n  SidebarContent,\n  SidebarGroup,\n  SidebarGroupContent,\n  SidebarGroupLabel,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarMenuSub,\n  SidebarMenuSubButton,\n  SidebarMenuSubItem,\n  SidebarRail,\n} from \"@/components/ui/sidebar\"\n\nexport function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {\n  return (\n    <Sidebar role=\"navigation\" aria-label=\"On this page\" {...props}>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarGroupLabel>Table of contents</SidebarGroupLabel>\n          <SidebarGroupContent>\n            <SidebarMenu>\n              {pageOutline.map((heading) => (\n                <SidebarMenuItem key={heading.title}>\n                  <SidebarMenuButton asChild>\n                    <a href={heading.url} className=\"font-bold\">\n                      {heading.title}\n                    </a>\n                  </SidebarMenuButton>\n                  {heading.items.length ? (\n                    <SidebarMenuSub>\n                      {heading.items.map((item) => (\n                        <SidebarMenuSubItem key={item.title}>\n                          <SidebarMenuSubButton asChild isActive={item.isActive} className=\"h-auto min-h-7 py-0.5 leading-snug\">\n                            <a href={item.url}>{item.title}</a>\n                          </SidebarMenuSubButton>\n                        </SidebarMenuSubItem>\n                      ))}\n                    </SidebarMenuSub>\n                  ) : null}\n                </SidebarMenuItem>\n              ))}\n            </SidebarMenu>\n          </SidebarGroupContent>\n        </SidebarGroup>\n      </SidebarContent>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-14/components/sidebar-14-app-sidebar.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-14/page.tsx",
+      "content": "import { AppSidebar } from \"@/components/blocks/sidebar-14/components/sidebar-14-app-sidebar\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { docsTrail } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { PageBody, PageHeader, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\nimport { cn } from \"@/lib/utils\"\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  return (\n    <SidebarProvider className={cn(\"overflow-x-clip\", c.provider)}>\n      <PageSheet className={c.inset}>\n        <PageHeader crumbs={docsTrail} trigger=\"end\" bordered />\n        <PageBody title=\"Margins\" kicker=\"Writing on paper\">\n          <PageNote title=\"Read it from the right\" pose=\"peek\">\n            The pad on this side lists what is on the page. Fold it away with the button in the corner when you would rather just read.\n          </PageNote>\n        </PageBody>\n      </PageSheet>\n      <AppSidebar side=\"right\" className={c.sidebar} />\n    </SidebarProvider>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-14/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "right",
+      "docs"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 14\" block into your components directory under blocks/sidebar-14/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-14/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

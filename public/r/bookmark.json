@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bookmark",
+  "title": "Bookmark",
+  "description": "A ribbon bookmark you can press. Unpressed, a dashed pencil ghost of a ribbon marks the place; pressed, the woven, edge-stitched cloth ribbon hangs there in its colour and casts a short shadow. It is a Toggle underneath, so `aria-pressed`, Space and Enter come for free. `BookmarkRibbon` is the same ribbon as a page marker with no behaviour.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-paper.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-paper-object.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/bookmark.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Toggle as TogglePrimitive } from \"radix-ui\"\n\nimport { useShapedSheet } from \"@/hooks/use-paper-object\"\nimport type { Accent } from \"@/lib/ink/paper/props\"\nimport { bookmarkRecipe } from \"@/lib/ink/recipes/bookmark-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst RIBBON_TILT = \"[&>svg]:[rotate:clamp(calc(var(--ll-tilt-max)*-1),var(--ll-tilt,0deg),var(--ll-tilt-max))]\"\nconst RIBBON_SHADOW = \"data-[state=on]:[&>svg]:[filter:var(--ll-drop-sticker)]\"\n\nconst FORCED_ON = \"forced-colors:data-[state=on]:bg-[Highlight]\"\n\ntype BookmarkProps = React.ComponentProps<typeof TogglePrimitive.Root> & {\n  tone?: Accent\n  tilt?: boolean | number\n  seed?: string | number\n  size?: readonly [number, number]\n}\n\nfunction Bookmark({ className, style, children, ref, tone = \"tomato\", tilt, seed, size, disabled, ...props }: BookmarkProps) {\n  const o = useShapedSheet({ recipe: bookmarkRecipe, params: { tone, mode: \"toggle\", disabled: !!disabled }, ref: ref as React.Ref<HTMLElement>, seed, tilt, tiltMax: 1.4, size, kind: \"bookmark\" })\n  return (\n    <TogglePrimitive.Root\n      data-slot=\"bookmark\"\n      disabled={disabled}\n      {...o.root}\n      {...props}\n      className={cn(\"relative isolate inline-block h-12 w-8 shrink-0 cursor-pointer align-top after:absolute after:-inset-1.5 disabled:cursor-not-allowed\", RIBBON_TILT, RIBBON_SHADOW, FORCED_ON, className)}\n      style={{ ...o.root.style, ...style }}\n    >\n      {o.node}\n      <span className=\"sr-only\">{children ?? \"Bookmark\"}</span>\n    </TogglePrimitive.Root>\n  )\n}\n\ntype BookmarkRibbonProps = React.ComponentProps<\"div\"> & {\n  tone?: Accent\n  tilt?: boolean | number\n  seed?: string | number\n  size?: readonly [number, number]\n}\n\nfunction BookmarkRibbon({ className, style, ref, tone = \"tomato\", tilt, seed, size, ...props }: BookmarkRibbonProps) {\n  const o = useShapedSheet({ recipe: bookmarkRecipe, params: { tone, mode: \"static\", disabled: false }, ref: ref as React.Ref<HTMLElement>, seed, tilt, tiltMax: 1.4, size, kind: \"bookmark\" })\n  return (\n    <div\n      data-slot=\"bookmark-ribbon\"\n      aria-hidden=\"true\"\n      {...o.root}\n      {...props}\n      className={cn(\"pointer-events-none relative isolate inline-block h-14 w-8 shrink-0 [&>svg]:[filter:var(--ll-drop-sticker)]\", RIBBON_TILT, className)}\n      style={{ ...o.root.style, ...style }}\n    >\n      {o.node}\n    </div>\n  )\n}\n\nexport { Bookmark, BookmarkRibbon }\nexport type { BookmarkProps, BookmarkRibbonProps }\n",
+      "type": "registry:ui",
+      "target": "@ui/bookmark.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/bookmark-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { num, pathTag, tok } from '@/lib/ink/recipes/paper-set-ink'\nimport type { Accent } from '@/lib/ink/paper/props'\nimport { wash } from '@/lib/ink/fills'\nimport { densify } from '@/lib/ink/geom'\nimport type { Rng } from '@/lib/ink/rng'\nimport type { Pt } from '@/lib/ink/types'\n\nexport interface BookmarkParams {\n  tone: Accent\n  mode: 'toggle' | 'static'\n  disabled: boolean\n}\n\nexport const NOTCH = 0.55\n\nexport function ribbonPoly(w: number, h: number): Pt[] {\n  const n = Math.min(h * 0.4, w * NOTCH)\n  return [[0, 0], [w, 0], [w, h], [w / 2, h - n], [0, h]]\n}\n\nconst ribbonD = (w: number, h: number, r: Rng) => {\n  const p = densify([...ribbonPoly(w, h), ribbonPoly(w, h)[0]], 6).slice(0, -1)\n  return `M${num(p[0][0])} ${num(p[0][1])}` + p.slice(1).map((q) => `L${num(q[0] + r.gauss(0, 0.22))} ${num(q[1] + r.gauss(0, 0.22))}`).join('') + 'z'\n}\n\nexport const bookmarkRecipe = defineRecipe<BookmarkParams>({\n  id: 'bookmark-ribbon',\n  kind: 'bookmark',\n  layers: ['rest', 'checked', 'disabled', 'hover'],\n  pad: 6,\n  draw(ink, { w, h }, { tone, mode, disabled }, ctx) {\n    const d = ribbonD(w, h, ink.next('edge'))\n    const ribbon = () => {\n      const r = ink.next('cloth')\n      const id = `ll-bm${ink.seed.toString(36)}`\n      let s = `<clipPath id=\"${id}c\"><path d=\"${d}\"/></clipPath>`\n      s += pathTag(d, { fill: tok(tone) })\n      let g = ''\n      for (let x = 2.2; x < w - 1; x += 2.3) g += `M${num(x + r.gauss(0, 0.08))} 0V${num(h)}`\n      s += `<g clip-path=\"url(#${id}c)\">`\n      s += pathTag(g, { stroke: tok('ink'), sw: 0.7, op: 0.1 })\n      s += pathTag(`M0 0H${num(w * 0.34)}V${num(h)}H0z`, { fill: tok('photo'), op: 0.22 })\n      s += pathTag(`M${num(w * 0.7)} 0H${num(w)}V${num(h)}H${num(w * 0.7)}z`, { fill: tok('ink'), op: 0.13 })\n      s += pathTag(`M0 ${num(h)}L${num(w / 2)} ${num(h - Math.min(h * 0.4, w * NOTCH))}L${num(w)} ${num(h)}V${num(h + 4)}H0z`, { fill: tok('ink'), op: 0.16 })\n      s += `</g>`\n      s += pathTag(`M2.6 1.5V${num(h - 3)}M${num(w - 2.6)} 1.5V${num(h - 3)}`, { stroke: tok('photo'), sw: 0.8, op: 0.6, extra: `stroke-dasharray=\"${num(r.range(2, 2.6))} ${num(r.range(1.5, 2.1))}\"` })\n      s += pathTag(d, { stroke: tok('ink'), sw: 0.7, op: 0.36 })\n      return s\n    }\n    const ghost = (alpha: number) => {\n      ink.raw(pathTag(d, { fill: tok('paper-shade'), op: alpha }) + pathTag(d, { stroke: tok('pencil'), sw: 1.1, op: 0.85, extra: 'stroke-dasharray=\"3.6 3.2\"' }), 'under')\n    }\n    if (disabled) {\n      ink.layer('disabled', () => ghost(0.3))\n      return\n    }\n    if (mode === 'static') {\n      ink.layer('rest', () => ink.raw(ribbon(), 'under'))\n      return\n    }\n    ink.layer('rest', () => ghost(0.45))\n    ink.layer('checked', () => ink.raw(ribbon(), 'under'))\n    if (!ctx.calm) ink.layer('hover', () => wash(ink, ribbonPoly(w, h), tone, { alpha: 0.52, inset: 1.2 }))\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/bookmark-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "toggle",
+      "notebook",
+      "label-tag",
+      "card"
+    ],
+    "a11y": [
+      "Bookmark is a real toggle button: it announces \"pressed\" or \"not pressed\", it is reached by Tab and pressed with Space or Enter. Give it a name that says what it saves (\"Save this article\"); the name does not change with the state, `aria-pressed` does.",
+      "The ribbon, its stitching and its ghost are aria-hidden decoration, so the state is never carried by colour alone: `aria-pressed` and the ghost-versus-ribbon shape (dashed outline versus a filled tail) both tell it. Focus shows the standard focus ring around the box.",
+      "The hit area is 44 x 60 px with its extension (24 px minimum). Windows high contrast replaces the drawing with a button outline, and a pressed bookmark fills with the system highlight colour so the state is still visible; `aria-pressed` follows either way."
+    ],
+    "usage": "import { Bookmark, BookmarkRibbon } from \"@/components/ui/bookmark\"\n\n<Card className=\"relative\">\n  <Bookmark className=\"absolute -top-1 end-6\" defaultPressed onPressedChange={save}>\n    Save this article\n  </Bookmark>\n  …\n</Card>\n\n<Paper className=\"relative\"><BookmarkRibbon tone=\"grape\" className=\"absolute -top-1 end-8\" /></Paper>",
+    "parts": [
+      "Bookmark",
+      "BookmarkRibbon"
+    ]
+  },
+  "categories": [
+    "Paper"
+  ],
+  "type": "registry:ui"
+}

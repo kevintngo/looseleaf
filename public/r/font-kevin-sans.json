@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-kevin-sans",
+  "title": "Kevin Sans",
+  "description": "Kevin Sans, the hand of every Looseleaf label, title and stamp: one family tuned for three roles (font-hand, font-script, font-type), loaded from the Looseleaf site.",
+  "cssVars": {
+    "theme": {
+      "font-hand": "\"Kevin Sans Hand\", \"Kevin Sans\", \"Bradley Hand\", cursive",
+      "font-script": "\"Kevin Sans Script\", \"Kevin Sans\", \"Bradley Hand\", cursive",
+      "font-type": "\"Kevin Sans Type\", \"Kevin Sans\", \"Bradley Hand\", cursive"
+    }
+  },
+  "css": {
+    "@import url(\"https://kevintngo.github.io/looseleaf/fonts/kevin-sans.css\")": {}
+  },
+  "categories": [
+    "fonts"
+  ],
+  "type": "registry:theme"
+}

@@ -1,0 +1,27 @@
+{
+  "$comment": "Everything the registry ships (ui, hooks, lib, blocks), typechecked the way a new project made with `npm create vite -- --template react-ts` + `shadcn init` would check it: the flags of that template's tsconfig.app.json, and only Vite's own types (no @types/node, no vitest globals). `node tools/qa.mjs` runs it as the `shipped` step; tools/registry-consumer-test.mjs scenario I does the same on a real install.",
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["vite/client"],
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "resolveJsonModule": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "paths": { "@/*": ["../../src/*"] }
+  },
+  "include": ["../../src/components/ui", "../../src/hooks", "../../src/lib", "../../src/blocks"],
+  "exclude": ["../../src/**/*.test.ts", "../../src/**/*.test.tsx", "../../src/**/*.d.ts"]
+}

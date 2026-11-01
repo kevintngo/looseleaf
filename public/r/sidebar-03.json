@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-03",
+  "title": "Sidebar 03",
+  "description": "A sidebar with submenus: every section is a bold row with its pages listed underneath, hung on a pencil line down the margin. Mirrors shadcn's sidebar-03. Looks right on the desk and on plain paper.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-03/components/sidebar-03-app-sidebar.tsx",
+      "content": "import * as React from \"react\"\n\nimport { SidebarBrand } from \"@/components/blocks/sidebar-shared/sidebar-brand\"\nimport { docsNav } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport {\n  Sidebar,\n  SidebarContent,\n  SidebarGroup,\n  SidebarHeader,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarMenuSub,\n  SidebarMenuSubButton,\n  SidebarMenuSubItem,\n  SidebarRail,\n} from \"@/components/ui/sidebar\"\n\nexport function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {\n  return (\n    <Sidebar role=\"navigation\" aria-label=\"Field guide\" {...props}>\n      <SidebarHeader>\n        <SidebarBrand title=\"Field guide\" subtitle=\"v1.0.0\" icon=\"book-open\" />\n      </SidebarHeader>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarMenu>\n            {docsNav.map((section) => (\n              <SidebarMenuItem key={section.title}>\n                <SidebarMenuButton asChild>\n                  <a href={section.url} className=\"font-bold\">\n                    {section.title}\n                  </a>\n                </SidebarMenuButton>\n                {section.items.length ? (\n                  <SidebarMenuSub>\n                    {section.items.map((item) => (\n                      <SidebarMenuSubItem key={item.title}>\n                        <SidebarMenuSubButton asChild isActive={item.isActive}>\n                          <a href={item.url}>{item.title}</a>\n                        </SidebarMenuSubButton>\n                      </SidebarMenuSubItem>\n                    ))}\n                  </SidebarMenuSub>\n                ) : null}\n              </SidebarMenuItem>\n            ))}\n          </SidebarMenu>\n        </SidebarGroup>\n      </SidebarContent>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-03/components/sidebar-03-app-sidebar.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-03/page.tsx",
+      "content": "import { AppSidebar } from \"@/components/blocks/sidebar-03/components/sidebar-03-app-sidebar\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { docsTrail } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { PageBody, PageHeader, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  return (\n    <SidebarProvider className={c.provider}>\n      <AppSidebar className={c.sidebar} />\n      <PageSheet className={c.inset}>\n        <PageHeader crumbs={docsTrail} bordered className=\"overflow-x-clip\" />\n        <PageBody title=\"Margins\" kicker=\"Writing on paper\">\n          <PageNote title=\"Nothing here yet\" pose=\"peek\">\n            This page is still blank. The pad has every page, indented the way an outline is.\n          </PageNote>\n        </PageBody>\n      </PageSheet>\n    </SidebarProvider>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-03/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "navigation",
+      "submenu"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 03\" block into your components directory under blocks/sidebar-03/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-03/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

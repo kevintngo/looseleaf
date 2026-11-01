@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-16",
+  "title": "Sidebar 16",
+  "description": "A sidebar under a sticky site header: a strip of paper runs across the whole window with the toggle button, the trail and a search box, and the pad and the page live below it. Mirrors shadcn's sidebar-16. Looks right on the desk and on plain paper.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/breadcrumb.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/separator.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-16/components/sidebar-16-app-sidebar.tsx",
+      "content": "import * as React from \"react\"\n\nimport { BrandTile, BrandText } from \"@/components/blocks/sidebar-shared/sidebar-brand\"\nimport { appNav, appProjects, appSecondary, appUser } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { NavMainFolds, NavProjects, NavSecondary } from \"@/components/blocks/sidebar-shared/sidebar-nav-app\"\nimport { NavUser } from \"@/components/blocks/sidebar-shared/sidebar-user-menu\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from \"@/components/ui/sidebar\"\nimport { cn } from \"@/lib/utils\"\n\nexport function AppSidebar({ contained = false, className, ...props }: React.ComponentProps<typeof Sidebar> & { contained?: boolean }) {\n  return (\n    <Sidebar\n      role=\"navigation\"\n      aria-label=\"Studio\"\n      className={cn(\"top-(--header-height)\", contained ? \"h-[calc(100%-var(--header-height))]!\" : \"h-[calc(100svh-var(--header-height))]!\", className)}\n      {...props}\n    >\n      <SidebarHeader>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton size=\"lg\" asChild>\n              <a href=\"#studio\">\n                <BrandTile icon=\"book-open\" />\n                <BrandText title=\"Looseleaf Studio\" subtitle=\"Notebook\" />\n              </a>\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarHeader>\n      <SidebarContent>\n        <NavMainFolds items={appNav} />\n        <NavProjects projects={appProjects} />\n        <NavSecondary items={appSecondary} small className=\"mt-auto\" />\n      </SidebarContent>\n      <SidebarFooter>\n        <NavUser user={appUser} />\n      </SidebarFooter>\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-16/components/sidebar-16-app-sidebar.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-16/components/sidebar-16-site-header.tsx",
+      "content": "import { docsTrail } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { SearchForm } from \"@/components/blocks/sidebar-shared/sidebar-search-form\"\nimport { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from \"@/components/ui/breadcrumb\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { SidebarTrigger } from \"@/components/ui/sidebar\"\n\nconst STRIP = \"ll-paper ll-stock-paper ll-tooth-cold [--ll-sheet-shadow:var(--ll-shadow-hair)]\"\n\nexport function SiteHeader() {\n  return (\n    <header data-slot=\"site-header\" className={`sticky top-0 z-50 flex w-full items-center ${STRIP}`}>\n      <div className=\"relative flex h-(--header-height) w-full items-center gap-2 px-4\">\n        <SidebarTrigger className=\"size-8\" />\n        <Separator orientation=\"vertical\" className=\"me-2 data-[orientation=vertical]:h-4\" />\n        <Breadcrumb className=\"hidden sm:block\">\n          <BreadcrumbList>\n            <BreadcrumbItem>\n              <BreadcrumbLink href=\"#writing-on-paper\">{docsTrail[0]}</BreadcrumbLink>\n            </BreadcrumbItem>\n            <BreadcrumbSeparator />\n            <BreadcrumbItem>\n              <BreadcrumbPage>{docsTrail[1]}</BreadcrumbPage>\n            </BreadcrumbItem>\n          </BreadcrumbList>\n        </Breadcrumb>\n        <SearchForm variant=\"bar\" placeholder=\"Type to search...\" className=\"w-full sm:ms-auto sm:w-auto\" />\n        <Separator className=\"absolute inset-x-0 bottom-0 w-auto\" />\n      </div>\n    </header>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-16/components/sidebar-16-site-header.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-16/page.tsx",
+      "content": "import { AppSidebar } from \"@/components/blocks/sidebar-16/components/sidebar-16-app-sidebar\"\nimport { SiteHeader } from \"@/components/blocks/sidebar-16/components/sidebar-16-site-header\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { PageBody, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\nimport { cn } from \"@/lib/utils\"\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  return (\n    <div className={cn(\"[--header-height:calc(--spacing(14))]\", contained && \"h-full\")}>\n      <SidebarProvider className={cn(\"flex-col overflow-x-clip\", c.provider)}>\n        <SiteHeader />\n        <div className=\"flex min-h-0 flex-1\">\n          <AppSidebar contained={contained} />\n          <PageSheet className={c.inset}>\n            <PageBody title=\"Margins\" kicker=\"Writing on paper\">\n              <PageNote title=\"Header on top, pad below\" pose=\"wave\">\n                The strip across the top belongs to the whole window, so the search box is always in reach, wherever you have scrolled to.\n              </PageNote>\n            </PageBody>\n          </PageSheet>\n        </div>\n      </SidebarProvider>\n    </div>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-16/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "header",
+      "app"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 16\" block into your components directory under blocks/sidebar-16/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-16/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

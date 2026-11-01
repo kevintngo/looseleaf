@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-align",
+  "title": "Chat Align",
+  "description": "Shared Looseleaf helpers: chat-align.",
+  "files": [
+    {
+      "path": "src/lib/chat-align.ts",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ntype ChatAlign = \"start\" | \"end\"\n\nconst ChatAlignContext = React.createContext<ChatAlign | undefined>(undefined)\n\nfunction useChatAlign(): ChatAlign | undefined {\n  return React.useContext(ChatAlignContext)\n}\n\nexport { ChatAlignContext, useChatAlign }\nexport type { ChatAlign }\n",
+      "type": "registry:lib",
+      "target": "@lib/chat-align.ts"
+    }
+  ],
+  "type": "registry:lib"
+}

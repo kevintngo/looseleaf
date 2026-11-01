@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tally",
+  "title": "Tally",
+  "description": "A count as tally marks, 1 to 99: bundles of four struck through by a fifth. The number is the accessible name, the box is exactly as big as the marks, and it is drawn on the server.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-mark-ink.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/tally.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { BlockSvg, MARK_WIPE, useMarkPhase } from \"@/hooks/use-mark-ink\"\nimport { useInkContext, useInkCore, useMergedRef } from \"@/lib/ink/react\"\nimport type { MarkPen, MarkWeight } from \"@/lib/ink/recipes/text-marks-ink\"\nimport { tallyBox, tallyRecipe } from \"@/lib/ink/recipes/tally-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst SIZES = { sm: 14, md: 22, lg: 34 } as const\n\nfunction Tally({\n  count,\n  size = \"md\",\n  tone = \"ink\",\n  weight = \"regular\",\n  label,\n  animate = false,\n  show = true,\n  delay,\n  seed,\n  className,\n  style,\n  ref,\n  ...props\n}: Omit<React.ComponentProps<\"span\">, \"children\"> & {\n  count: number\n  size?: keyof typeof SIZES | number\n  tone?: MarkPen\n  weight?: MarkWeight\n  label?: string\n  animate?: boolean\n  show?: boolean\n  delay?: number\n  seed?: string | number\n}) {\n  const n = Math.max(0, Math.min(99, Math.floor(Number.isFinite(count) ? count : 0)))\n  const gh = typeof size === \"number\" ? size : SIZES[size]\n  const box = tallyBox(n, gh)\n  const { dir } = useInkContext()\n  const { hostRef, hostProps, frame } = useInkCore({\n    recipe: tallyRecipe,\n    params: { count: n, gh, tone, weight, rtl: dir === \"rtl\" },\n    size: [Math.max(4, box.w), box.h],\n    seed,\n  })\n  const { phaseRef, phaseProps } = useMarkPhase({ animate, show })\n  return (\n    <span\n      data-slot=\"tally\"\n      data-count={n}\n      role=\"img\"\n      aria-label={label ?? String(n)}\n      ref={useMergedRef<HTMLElement>(hostRef, phaseRef, ref as React.Ref<HTMLElement> | undefined)}\n      {...(show ? hostProps : {})}\n      {...phaseProps}\n      style={{ width: box.w, height: box.h, ...(animate ? ({ \"--ll-draw-delay\": `${delay ?? 0}ms` } as React.CSSProperties) : undefined), ...style }}\n      className={cn(\"relative isolate inline-block shrink-0 align-middle outline-none\", animate && MARK_WIPE, className)}\n      {...props}\n    >\n      {show && frame ? <BlockSvg kind=\"tally\" frame={frame} keep /> : null}\n    </span>\n  )\n}\n\nexport { Tally }\n",
+      "type": "registry:ui",
+      "target": "@ui/tally.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/tally-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { markPen, type MarkPen, type MarkWeight } from '@/lib/ink/recipes/text-marks-ink'\nimport { tallyLines } from '@/lib/ink/shapes'\n\nexport interface TallyParams {\n  count: number\n  gh: number\n  tone: MarkPen\n  weight: MarkWeight\n  rtl?: boolean\n}\n\nexport function tallyBox(count: number, gh: number): { w: number; h: number } {\n  const n = Math.max(0, Math.min(99, Math.floor(count)))\n  const step = 0.26 * gh\n  const gw = 1.05 * gh + 6\n  const full = Math.floor(n / 5)\n  const rem = n % 5\n  const x0 = Math.ceil(0.6 * step) + 1\n  let w: number\n  if (n === 0) w = 0\n  else if (rem === 0) w = x0 + (full - 1) * gw + 3.6 * step + 2\n  else w = x0 + full * gw + (rem - 1) * step + 3\n  return { w: Math.ceil(w), h: Math.ceil(gh + 4) }\n}\n\nexport const tallyRecipe = defineRecipe<TallyParams>({\n  id: 'tally',\n  kind: 'tally',\n  layers: ['rest'],\n  pad: 8,\n  draw(ink, { w }, p, ctx) {\n    const n = Math.max(0, Math.min(99, Math.floor(p.count)))\n    if (n === 0) return\n    const { pen, width } = markPen(p.tone, p.weight, Math.max(14, p.gh * 0.9))\n    const x0 = Math.ceil(0.6 * 0.26 * p.gh) + 1\n    const { lines } = tallyLines(ink.next('tally'), x0, 2, n, p.gh)\n    const mirror = p.rtl ?? ctx.dir === 'rtl'\n    ink.layer('rest', () => {\n      if (mirror) ink.group({ transform: `translate(${w} 0) scale(-1 1)` }, () => ink.lines(lines, pen, { width }))\n      else ink.lines(lines, pen, { width })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/tally-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "badge",
+      "annotate",
+      "asterisk"
+    ],
+    "a11y": [
+      "role=\"img\" with aria-label set to the number (or your label): a screen reader hears \"7\", not seven strokes. Add the counted thing in visible text nearby.",
+      "The marks are the only place the number is shown as a drawing, so the svg is kept in Windows high contrast (as system colours).",
+      "Right-to-left pages start the first bundle on the right.",
+      "Reduced motion zeroes the wipe."
+    ],
+    "usage": "import { Tally } from \"@/components/ui/tally\"\n\nexport function Example() {\n  return (\n    <p>\n      Votes for tea: <Tally count={12} label=\"12 votes for tea\" />\n    </p>\n  )\n}",
+    "parts": [
+      "Tally"
+    ]
+  },
+  "categories": [
+    "Marks"
+  ],
+  "type": "registry:ui"
+}

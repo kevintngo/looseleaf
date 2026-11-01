@@ -1,0 +1,57 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "drawer",
+  "title": "Drawer",
+  "description": "A slip of paper you pull up from the bottom of the screen (or in from any edge), built on vaul. From the bottom it is torn off a pad along its top edge with a strip of tape as the grab tab; drag it, flick it away, or give it snap points.",
+  "dependencies": [
+    "vaul"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/tape.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/drawer.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Drawer as DrawerPrimitive } from \"vaul\"\n\nimport { Paper, type PaperProps } from \"@/components/ui/paper\"\nimport { Tape, type TapeProps } from \"@/components/ui/tape\"\nimport { useInkScope, useInkSeed } from \"@/lib/ink/react\"\nimport { cn } from \"@/lib/utils\"\n\ntype Direction = \"top\" | \"bottom\" | \"left\" | \"right\"\n\nconst DrawerContext = React.createContext<{ direction: Direction; modal: boolean }>({ direction: \"bottom\", modal: true })\n\nfunction Drawer({ direction = \"bottom\", modal = true, ...props }: React.ComponentProps<typeof DrawerPrimitive.Root>) {\n  const value = React.useMemo(() => ({ direction: direction as Direction, modal }), [direction, modal])\n  return (\n    <DrawerContext.Provider value={value}>\n      <DrawerPrimitive.Root data-slot=\"drawer\" direction={direction} modal={modal} {...props} />\n    </DrawerContext.Provider>\n  )\n}\n\nfunction DrawerTrigger({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Trigger>) {\n  return <DrawerPrimitive.Trigger data-slot=\"drawer-trigger\" {...props} />\n}\n\nfunction DrawerPortal({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Portal>) {\n  return <DrawerPrimitive.Portal data-slot=\"drawer-portal\" {...props} />\n}\n\nfunction DrawerClose({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Close>) {\n  return <DrawerPrimitive.Close data-slot=\"drawer-close\" {...props} />\n}\n\nfunction DrawerOverlay({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Overlay>) {\n  const scope = useInkScope()\n  return (\n    <DrawerPrimitive.Overlay\n      data-slot=\"drawer-overlay\"\n      {...scope}\n      className={cn(\n        \"fixed inset-0 z-(--ll-z-overlay) [background:var(--ll-overlay-dim)] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerContent({\n  className,\n  children,\n  stock = \"slip\",\n  edge,\n  tapeKind = \"kraft\",\n  tapeColor,\n  seed: seedProp,\n  onOpenAutoFocus,\n  onPointerDownOutside,\n  ...props\n}: React.ComponentProps<typeof DrawerPrimitive.Content> &\n  Pick<PaperProps, \"stock\" | \"edge\" | \"seed\"> & {\n    tapeKind?: TapeProps[\"kind\"]\n    tapeColor?: TapeProps[\"color\"]\n  }) {\n  const scope = useInkScope()\n  const { direction, modal } = React.useContext(DrawerContext)\n  const seed = useInkSeed(seedProp)\n  return (\n    <DrawerPortal data-slot=\"drawer-portal\">\n      <DrawerOverlay />\n      <DrawerPrimitive.Content\n        asChild\n        {...props}\n        onOpenAutoFocus={(e) => {\n          onOpenAutoFocus?.(e)\n          if (modal && !e.defaultPrevented) (e.target as HTMLElement | null)?.focus?.({ preventScroll: true })\n        }}\n        onPointerDownOutside={(e) => {\n          onPointerDownOutside?.(e)\n          if ((e.target as Element | null)?.closest?.(\"[data-sonner-toaster]\")) e.preventDefault()\n        }}\n      >\n        <Paper\n          data-slot=\"drawer-content\"\n          stock={stock}\n          edge={edge ?? (direction === \"bottom\" ? { top: \"torn\" } : \"cut\")}\n          tilt={false}\n          rules=\"none\"\n          seed={seed}\n          {...scope}\n          className={cn(\n            \"group/drawer-content fixed z-(--ll-z-overlay) flex h-auto flex-col text-foreground outline-hidden\",\n            \"data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:mb-24 data-[vaul-drawer-direction=top]:max-h-[80vh]\",\n            \"data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:mt-24 data-[vaul-drawer-direction=bottom]:max-h-[80vh] data-[vaul-drawer-direction=bottom]:pb-[env(safe-area-inset-bottom)]\",\n            \"data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-3/4 data-[vaul-drawer-direction=right]:sm:max-w-sm\",\n            \"data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-3/4 data-[vaul-drawer-direction=left]:sm:max-w-sm\",\n            className\n          )}\n        >\n          <Tape\n            kind={tapeKind}\n            color={tapeColor}\n            length={92}\n            height={22}\n            angle={-1.5}\n            seed={`${seed}:grab`}\n            className=\"absolute -top-3 left-1/2 hidden -translate-x-1/2 group-data-[vaul-drawer-direction=bottom]/drawer-content:block\"\n          />\n          {children}\n        </Paper>\n      </DrawerPrimitive.Content>\n    </DrawerPortal>\n  )\n}\n\nfunction DrawerHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"drawer-header\"\n      className={cn(\n        \"flex flex-col gap-0.5 p-4 group-data-[vaul-drawer-direction=bottom]/drawer-content:pt-6 group-data-[vaul-drawer-direction=bottom]/drawer-content:text-center group-data-[vaul-drawer-direction=top]/drawer-content:text-center md:gap-1.5 md:text-start\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"drawer-footer\" className={cn(\"mt-auto flex flex-col gap-2 p-4\", className)} {...props} />\n}\n\nfunction DrawerTitle({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Title>) {\n  return <DrawerPrimitive.Title data-slot=\"drawer-title\" className={cn(\"font-script text-[1.7rem] leading-none font-semibold text-foreground\", className)} {...props} />\n}\n\nfunction DrawerDescription({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Description>) {\n  return <DrawerPrimitive.Description data-slot=\"drawer-description\" className={cn(\"text-sm text-muted-foreground\", className)} {...props} />\n}\n\nexport { Drawer, DrawerPortal, DrawerOverlay, DrawerTrigger, DrawerClose, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription }\n",
+      "type": "registry:ui",
+      "target": "@ui/drawer.tsx"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "drawer",
+    "related": [
+      "sheet",
+      "dialog",
+      "popover",
+      "tape"
+    ],
+    "a11y": [
+      "vaul builds on Radix Dialog: role=dialog named by DrawerTitle and described by DrawerDescription, Escape closes, the page behind is inert, and focus returns to the trigger.",
+      "Focus moves onto the sheet itself when it opens, not onto the first control (vaul's own default leaves it on the trigger behind the dim, and a field would pop a phone keyboard up over the drawer): a screen reader announces the dialog and Tab starts inside it. Pass `autoFocus` on `Drawer` to jump to the first control instead.",
+      "The drawer sits on the same level of the z-scale as dialogs and sheets (`--ll-z-overlay`), so one opened from a dialog stacks above it by open order. A click on a Sonner toast does not count as \"outside\" and does not dismiss it. On a phone with a home indicator the sheet pads its bottom by `env(safe-area-inset-bottom)`.",
+      "Dragging is a pointer shortcut only: every drawer also closes with Escape, the Cancel/Close buttons you provide, or a tap on the dim.",
+      "The tape is a decorative aria-hidden strip, not a control. With reduced motion the slip simply appears; in `calm` density it is a plain cut slip."
+    ],
+    "usage": "import { Button } from \"@/components/ui/button\"\nimport { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from \"@/components/ui/drawer\"\n\nexport function Example() {\n  return (\n    <Drawer>\n      <DrawerTrigger asChild>\n        <Button variant=\"outline\">Open drawer</Button>\n      </DrawerTrigger>\n      <DrawerContent>\n        <div className=\"mx-auto w-full max-w-sm\">\n          <DrawerHeader>\n            <DrawerTitle>Move goal</DrawerTitle>\n            <DrawerDescription>Set your daily activity goal.</DrawerDescription>\n          </DrawerHeader>\n          {/* content */}\n          <DrawerFooter>\n            <Button>Submit</Button>\n            <DrawerClose asChild>\n              <Button variant=\"outline\">Cancel</Button>\n            </DrawerClose>\n          </DrawerFooter>\n        </div>\n      </DrawerContent>\n    </Drawer>\n  )\n}",
+    "parts": [
+      "Drawer",
+      "DrawerTrigger",
+      "DrawerPortal",
+      "DrawerOverlay",
+      "DrawerContent",
+      "DrawerHeader",
+      "DrawerFooter",
+      "DrawerTitle",
+      "DrawerDescription",
+      "DrawerClose"
+    ]
+  },
+  "categories": [
+    "Overlays"
+  ],
+  "type": "registry:ui"
+}

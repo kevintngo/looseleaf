@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "radio-group",
+  "title": "Radio Group",
+  "description": "Pick exactly one. Each choice is a hand-circled ring; picking it colours the dot in with a terracotta blot and writes a felt spiral into it. Radix Radio Group underneath: roving focus, arrow keys, form value, orientation and direction.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/radio-group.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { RadioGroup as RadioGroupPrimitive } from \"radix-ui\"\n\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { REVEAL_DASH, REVEAL_WHEN_CHECKED, markTouched } from \"@/lib/ink/recipes/draw-on-ink\"\nimport { radioRecipe } from \"@/lib/ink/recipes/radio-group-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst RadioGroupContext = React.createContext({ invalid: false, disabled: false })\n\nfunction RadioGroup({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {\n  const invalid = props[\"aria-invalid\"] === true || props[\"aria-invalid\"] === \"true\"\n  const group = React.useMemo(() => ({ invalid, disabled: !!props.disabled }), [invalid, props.disabled])\n  return (\n    <RadioGroupContext.Provider value={group}>\n      <RadioGroupPrimitive.Root\n        data-slot=\"radio-group\"\n        className={cn(\"grid gap-3 data-[orientation=horizontal]:flex data-[orientation=horizontal]:flex-wrap data-[orientation=horizontal]:gap-x-6\", className)}\n        {...props}\n      />\n    </RadioGroupContext.Provider>\n  )\n}\n\nfunction RadioGroupItem({\n  className,\n  seed,\n  disabled,\n  ref,\n  onClickCapture,\n  ...props\n}: React.ComponentProps<typeof RadioGroupPrimitive.Item> & {\n  seed?: string | number\n}) {\n  const group = React.useContext(RadioGroupContext)\n  const invalid = props[\"aria-invalid\"] === true || props[\"aria-invalid\"] === \"true\" || (group.invalid && props[\"aria-invalid\"] === undefined)\n  const off = !!disabled || group.disabled\n  const { hostRef, hostProps, node } = useInk({ recipe: radioRecipe, params: { disabled: off, invalid }, kind: \"radio\", seed })\n  return (\n    <RadioGroupPrimitive.Item\n      data-slot=\"radio-group-item\"\n      ref={useMergedRef<HTMLButtonElement>(hostRef, ref)}\n      {...hostProps}\n      disabled={disabled}\n      onClickCapture={(e) => {\n        markTouched(e)\n        onClickCapture?.(e)\n      }}\n      className={cn(\n        \"peer relative isolate aspect-square size-4 shrink-0 after:absolute after:-inset-2 disabled:cursor-not-allowed\",\n        REVEAL_DASH,\n        REVEAL_WHEN_CHECKED,\n        \"group-hover/field:[&>svg_[data-layer=hover]]:visible group-hover/field:[&>svg_[data-layer=hover]]:opacity-100\",\n        \"has-[+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:visible has-[+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:opacity-100\",\n        \"has-[+input+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:visible has-[+input+[data-slot=label]:hover]:[&>svg_[data-layer=hover]]:opacity-100\",\n        className\n      )}\n      {...props}\n    >\n      {node}\n      <RadioGroupPrimitive.Indicator\n        data-slot=\"radio-group-indicator\"\n        className=\"pointer-events-none absolute inset-0 hidden place-content-center leading-none font-bold forced-colors:grid forced-colors:before:content-['●']\"\n      />\n    </RadioGroupPrimitive.Item>\n  )\n}\n\nexport { RadioGroup, RadioGroupItem }\n",
+      "type": "registry:ui",
+      "target": "@ui/radio-group.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/radio-group-ink.ts",
+      "content": "import { blobFill, wash } from '@/lib/ink/fills'\nimport { ellipsePoly } from '@/lib/ink/geom'\nimport { clamp } from '@/lib/ink/rng'\nimport { dashedBox, focusRing, loop, spiralLines } from '@/lib/ink/shapes'\nimport { defineRecipe } from '@/lib/ink/recipes'\nimport { reveal, revealId } from '@/lib/ink/recipes/draw-on-ink'\nimport type { PenName, Pt } from '@/lib/ink/types'\n\nexport interface RadioParams {\n  disabled?: boolean\n  invalid?: boolean\n}\n\nexport const radioRecipe = defineRecipe<RadioParams>({\n  id: 'radio-group',\n  kind: 'radio',\n  layers: ['rest', 'hover', 'checked', 'focus'],\n  lazy: ['focus'],\n  pad: 12,\n  draw(ink, { w, h }, { disabled, invalid }, ctx) {\n    const s = Math.min(w, h)\n    const cx = w / 2\n    const cy = h / 2\n    const R = s / 2 - 1\n    const fine = s < 18\n    const calm = ctx.calm\n    const disc = ellipsePoly(cx, cy, R, R, 28)\n\n    if (!disabled) ctx.lazy('focus', (fink) => focusRing(fink, 0, 0, w, h, { shape: 'ellipse' }))\n    if (ctx.lazyOnly) return\n\n    const ring = (pen: PenName, opts?: { width?: number }): void => loop(ink, cx, cy, R, R, { pen, clean: true, opts })\n    const inkPen: PenName = invalid ? (calm || fine ? 'red.fine' : 'red') : calm ? 'pencil.fine' : fine ? 'ink.fine' : 'ink'\n\n    ink.layer('rest', () => {\n      if (disabled) {\n        wash(ink, disc, 'pencil-mark', { alpha: 0.35, material: 'wash' })\n        dashedBox(ink, 0, 0, w, h, { r: s / 2, pen: 'pencil', opts: { color: 'pencil', width: 1.2 } })\n        return\n      }\n      ink.poly('under', disc, 'slip', 0.85)\n      ring(inkPen, invalid ? { width: 1.15 } : s >= 26 ? { width: 1.2 } : undefined)\n    })\n\n    if (!disabled) {\n      ink.layer('hover', () => {\n        if (calm) {\n          loop(ink, cx, cy, R - 1.6, R - 1.6, { pen: invalid ? 'red.fine' : 'pencil.fine', turns: 1.05, opts: { alpha: 0.75, simple: true } })\n          return\n        }\n        const d = 1.8 + s / 24\n        const arc = (a0: number, a1: number): Pt[] => {\n          const pts: Pt[] = []\n          for (let i = 0; i <= 5; i++) {\n            const a = a0 + ((a1 - a0) * i) / 5\n            pts.push([cx + Math.cos(a) * (R + d), cy + Math.sin(a) * (R + d)])\n          }\n          return pts\n        }\n        ink.lines(\n          [\n            { pts: arc(0.25, 1.05), o: { start: 'soft', end: 'flick' } },\n            { pts: arc(1.25, 1.85), o: { start: 'soft', end: 'flick', width: 0.8 } },\n          ],\n          'ink.fine',\n          { width: 1.1 }\n        )\n      })\n    }\n\n    ink.layer('checked', () => {\n      if (disabled) {\n        wash(ink, ellipsePoly(cx, cy, R * 0.6, R * 0.6, 20), 'pencil-mark', { alpha: 0.55, material: 'wash' })\n        return\n      }\n      const dotR = clamp(R * 0.68, 2.6, 14)\n      ink.part('fill', () => blobFill(ink, ellipsePoly(cx, cy, dotR, dotR, 20), 'marker', { alpha: 0.88, mis: clamp(s * 0.07, 0.8, 2) }))\n      if (invalid) ring('red', { width: 1.25 })\n      const spiral = spiralLines(ink.next('spiral'), cx, cy, dotR * 0.85, { turns: fine ? 1.8 : 2.2, steps: fine ? 18 : 24, shrink: 0.82 })\n      reveal(ink, { id: revealId(ctx.seed, 'd'), lines: spiral, pen: fine ? 'ink.fine' : 'ink', box: { w, h }, width: fine ? 0.9 : 1, revealWidth: Math.max(3, dotR * 0.9) })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/radio-group-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "radio-group",
+    "related": [
+      "checkbox",
+      "switch",
+      "toggle-group",
+      "field",
+      "label"
+    ],
+    "a11y": [
+      "role=\"radiogroup\" with role=\"radio\" items and aria-checked. Tab enters the group at the chosen radio (or the first), arrow keys move AND choose, Space chooses the focused radio (Radix roving focus). Give the group a name with aria-label or aria-labelledby (a fieldset legend works too).",
+      "Label each radio with <Label htmlFor>, wrap it, or use aria-label. A Label beside it is a peer: peer-disabled dims it, and hovering the row (a `group/field`) or the label right after the radio lights the ring's hover overlay.",
+      "The hit area reaches 8 px past the ring on every side (an ::after, so layout never moves): 32 px for the 16 px ring.",
+      "Keyboard focus draws a blue felt ring; the drawing is aria-hidden, pointer-events: none and never focusable. Windows high contrast replaces it by a real border and the Indicator shows a real dot.",
+      "The chosen state is a filled dot, not only a colour: a bold blot with a dark spiral. Reduced motion shows the finished dot at once.",
+      "Right-to-left needs nothing: the ring is symmetric and every offset is logical. Pass `dir=\"rtl\"` to mirror the arrow keys."
+    ],
+    "usage": "import { Label } from \"@/components/ui/label\"\nimport { RadioGroup, RadioGroupItem } from \"@/components/ui/radio-group\"\n\nexport function Example() {\n  return (\n    <RadioGroup defaultValue=\"comfortable\" aria-label=\"Density\">\n      <div className=\"flex items-center gap-3\">\n        <RadioGroupItem value=\"default\" id=\"r1\" />\n        <Label htmlFor=\"r1\">Default</Label>\n      </div>\n      <div className=\"flex items-center gap-3\">\n        <RadioGroupItem value=\"comfortable\" id=\"r2\" />\n        <Label htmlFor=\"r2\">Comfortable</Label>\n      </div>\n    </RadioGroup>\n  )\n}",
+    "parts": [
+      "RadioGroup",
+      "RadioGroupItem"
+    ]
+  },
+  "categories": [
+    "Forms"
+  ],
+  "type": "registry:ui"
+}

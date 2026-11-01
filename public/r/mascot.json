@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mascot",
+  "title": "Mascot",
+  "description": "Stubby, the pencil stub who does the drawing. He waves in welcomes, thinks in empty search results, sleeps when nothing is happening. An original character drawn as a die-cut sticker: a chubby pencil stub with a face and nothing else (no arms, no legs, no clothes). His mood is his face, a small lean of the body and one doodle floating beside him.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-art.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-mascots.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/mascot.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\nimport { useEnsureInkDefs } from \"@/lib/ink/react\"\nimport { mascot, mascotProps, type MascotPose } from \"@/lib/ink/art/mascots\"\nimport { drawMascot } from \"@/lib/ink/art/mascot-draw\"\nimport { memo } from \"@/lib/ink/art-draw\"\nimport type { ArtDef } from \"@/lib/ink/art/types\"\n\nconst frames = mascotProps.frames as Record<string, ArtDef>\n\nfunction Mascot({\n  pose = \"idle\",\n  size = 96,\n  seed,\n  label,\n  frame,\n  tier = \"lo\",\n  shadow = true,\n  className,\n  style,\n  ...props\n}: Omit<React.ComponentProps<\"svg\">, \"children\" | \"viewBox\"> & {\n  pose?: MascotPose | (string & {})\n  size?: number\n  seed?: string | number\n  label?: string\n  frame?: number\n  tier?: \"lo\" | \"hi\"\n  shadow?: boolean\n}) {\n  useEnsureInkDefs()\n  const uid = React.useId().replace(/[^a-zA-Z0-9]/g, \"\")\n  const flip = frame === undefined ? undefined : frames[`${pose}-${frame}`]\n  const def = flip ?? (mascot as Record<string, ArtDef>)[pose]\n  if (!def) return null\n  const px = Math.max(16, Math.round(size))\n  const res = memo(`mascot|${pose}|${flip ? frame : \"\"}|${px}|${tier}|${seed ?? \"\"}|${uid}`, () => drawMascot(def, px, seed ?? pose, { tier, idPrefix: `ll-${uid}` }), 240)\n  return (\n    <svg\n      data-slot=\"mascot\"\n      data-ink=\"mascot\"\n      data-pose={pose}\n      data-frame={flip ? frame : undefined}\n      aria-hidden={label ? undefined : true}\n      role={label ? \"img\" : undefined}\n      aria-label={label}\n      focusable=\"false\"\n      viewBox={`0 0 ${res.w} ${res.h}`}\n      width={res.w}\n      height={res.h}\n      style={style}\n      className={cn(\"pointer-events-none shrink-0 overflow-visible\", shadow && \"ll-drop-sticker\", className)}\n      dangerouslySetInnerHTML={{ __html: res.svg }}\n      {...props}\n    />\n  )\n}\n\nexport { Mascot }\nexport type { MascotPose }\n",
+      "type": "registry:ui",
+      "target": "@ui/mascot.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "doodle",
+      "sticker"
+    ],
+    "a11y": [
+      "Decorative by default; the surrounding text (\"Nothing here yet\") is what carries meaning."
+    ],
+    "usage": "import { Mascot } from \"@/components/ui/mascot\"\n\nexport function Example() {\n  return <Mascot pose=\"wave\" size={96} />\n}",
+    "parts": [
+      "Mascot"
+    ]
+  },
+  "categories": [
+    "Stickers & doodles"
+  ],
+  "type": "registry:ui"
+}

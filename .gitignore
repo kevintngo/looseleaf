@@ -1,0 +1,8 @@
+node_modules
+dist
+.locks
+*.log
+.DS_Store
+lookdev
+.claude
+.vitest

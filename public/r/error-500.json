@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "error-500",
+  "title": "500, server error",
+  "description": "Stubby says oops and a pink sticky note says sorry, over an incident slip with the request, the time and a circled reference with a barcode and a copy button; try again, go home, check the status. Looks right on paper or on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/doodle.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/lettering.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/mascot.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json",
+    "https://kevintngo.github.io/looseleaf/r/receipt.json",
+    "https://kevintngo.github.io/looseleaf/r/sticky-note.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/error-500/components/error-500-scene.tsx",
+      "content": "import { Doodle } from \"@/components/ui/doodle\"\nimport { Mascot } from \"@/components/ui/mascot\"\nimport { StickyNote, StickyNoteContent, StickyNoteTitle } from \"@/components/ui/sticky-note\"\n\nfunction Error500Scene() {\n  return (\n    <div data-slot=\"error-scene\" aria-hidden=\"true\" className=\"relative flex flex-wrap items-end justify-center gap-x-8 gap-y-8 pt-6\">\n      <div className=\"relative\">\n        <Doodle name=\"exclaim-burst\" size={52} seed=\"e500-burst\" className=\"absolute -start-9 -top-3\" />\n        <Mascot pose=\"oops\" size={196} className=\"h-[196px] w-auto\" />\n      </div>\n      <div className=\"relative\">\n        <Doodle name=\"lightning\" size={72} seed=\"e500-bolt\" className=\"absolute -top-14 -end-4\" />\n        <StickyNote color=\"pink\" tape=\"top\" tapeKind=\"masking\" seed=\"e500-note\" className=\"w-44\">\n          <StickyNoteTitle>sorry!</StickyNoteTitle>\n          <StickyNoteContent className=\"text-xl\">that one is on us</StickyNoteContent>\n        </StickyNote>\n      </div>\n    </div>\n  )\n}\n\nexport { Error500Scene }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/error-500/components/error-500-scene.tsx"
+    },
+    {
+      "path": "src/blocks/error-500/components/error-500-slip.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Receipt, ReceiptBarcode, ReceiptFooter, ReceiptHeader, ReceiptLine, ReceiptLines, ReceiptTotal } from \"@/components/ui/receipt\"\n\ntype Error500SlipProps = {\n  reference: string\n  request: string\n  time: string\n}\n\ntype CopyState = \"idle\" | \"copied\" | \"failed\"\n\nfunction Error500Slip({ reference, request, time }: Error500SlipProps) {\n  const [copy, setCopy] = React.useState<CopyState>(\"idle\")\n\n  React.useEffect(() => {\n    if (copy === \"idle\") return\n    const t = setTimeout(() => setCopy(\"idle\"), 2600)\n    return () => clearTimeout(t)\n  }, [copy])\n\n  const copyReference = async () => {\n    try {\n      await navigator.clipboard.writeText(reference)\n      setCopy(\"copied\")\n    } catch {\n      setCopy(\"failed\")\n    }\n  }\n\n  return (\n    <div className=\"flex flex-col items-center gap-3\">\n      <Receipt role=\"group\" aria-label=\"Details for support\" seed=\"error-500-slip\" className=\"w-72 max-w-full text-start text-sm\">\n        <ReceiptHeader>\n          <p>Incident slip</p>\n          <p>keep this for support</p>\n        </ReceiptHeader>\n        <ReceiptLines>\n          <ReceiptLine price=\"500\">Status</ReceiptLine>\n          <ReceiptLine price={time}>Time</ReceiptLine>\n          <ReceiptLine price={request}>Asked for</ReceiptLine>\n        </ReceiptLines>\n        <ReceiptTotal label=\"REF\" circled seed=\"error-500-ref\">\n          {reference}\n        </ReceiptTotal>\n        <ReceiptBarcode value={reference.replace(/[^0-9a-z]/gi, \"\").toUpperCase()} />\n        <ReceiptFooter>We are on it.</ReceiptFooter>\n      </Receipt>\n      <Button type=\"button\" variant=\"outline\" size=\"sm\" onClick={copyReference}>\n        <Icon name={copy === \"copied\" ? \"check\" : \"copy\"} />\n        {copy === \"copied\" ? \"Copied\" : \"Copy reference\"}\n      </Button>\n      <p role=\"status\" className=\"min-h-5 text-sm text-ink-muted\">\n        {copy === \"copied\" ? `Reference ${reference} copied.` : copy === \"failed\" ? \"Could not copy. Select the reference on the slip instead.\" : \"\"}\n      </p>\n    </div>\n  )\n}\n\nexport { Error500Slip }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/error-500/components/error-500-slip.tsx"
+    },
+    {
+      "path": "src/blocks/error-500/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Lettering } from \"@/components/ui/lettering\"\nimport { Paper } from \"@/components/ui/paper\"\nimport { Error500Scene } from \"@/components/blocks/error-500/components/error-500-scene\"\nimport { Error500Slip } from \"@/components/blocks/error-500/components/error-500-slip\"\n\ntype Error500Props = {\n  reference?: string\n  request?: string\n  time?: string\n  onRetry?: () => void\n}\n\nexport default function Error500({ reference = \"7F3A-91C2\", request = \"/notebooks/48\", time = \"09:41 UTC\", onRetry = () => window.location.reload() }: Error500Props) {\n  const titleId = React.useId()\n  return (\n    <section aria-labelledby={titleId} className=\"@container w-full\">\n      <div className=\"px-8 py-10 @xl:py-14\">\n        <Paper stock=\"paper\" tilt={false} tape=\"both\" tapeKind=\"washi-stripes\" seed=\"error-500\" className=\"mx-auto max-w-3xl px-6 py-12 text-center @xl:px-12\">\n          <Error500Scene />\n\n          <p className=\"mt-10 font-type text-sm tracking-[0.18em] text-pencil-text uppercase\">Error 500 &middot; Server error</p>\n          <Lettering as=\"h1\" id={titleId} size=\"md\" tone=\"tomato\" wobble={0.4} seed=\"error-500-title\" className=\"mt-3\">\n            Something broke on our side\n          </Lettering>\n          <p className=\"mx-auto mt-4 max-w-md text-lg/7 text-ink-soft\">It is not you, and nothing you wrote is lost. We have been told, and somebody is already sharpening a pencil.</p>\n\n          <div className=\"mt-8\">\n            <Error500Slip reference={reference} request={request} time={time} />\n          </div>\n\n          <div className=\"mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-3\">\n            <Button type=\"button\" size=\"lg\" onClick={onRetry}>\n              <Icon name=\"rotate-cw\" />\n              Try again\n            </Button>\n            <Button asChild size=\"lg\" variant=\"outline\">\n              <a href=\"#home\">Go home</a>\n            </Button>\n            <Button asChild size=\"lg\" variant=\"link\">\n              <a href=\"#status\">\n                Check the status page\n                <Icon name=\"arrow-up-right\" className=\"rtl:-scale-x-100\" />\n              </a>\n            </Button>\n          </div>\n        </Paper>\n      </div>\n    </section>\n  )\n}\n\nexport type { Error500Props }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/error-500/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "marketing",
+      "error",
+      "500",
+      "stubby"
+    ]
+  },
+  "docs": "Installed the \"500, server error\" block into your components directory under blocks/error-500/.\nImport it: import Error500 from \"<your components alias>/blocks/error-500/page\"",
+  "categories": [
+    "feedback"
+  ],
+  "type": "registry:block"
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "label",
+  "title": "Label",
+  "description": "The words that go with a field, in the bold hand font, with an optional red pencil star for required fields. It fades with a disabled control and hands its click to it.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink-art.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/label.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Label as LabelPrimitive } from \"radix-ui\"\n\nimport type { ArtDef } from \"@/lib/ink/art/types\"\nimport { drawSkeleton, memo } from \"@/lib/ink/art-draw\"\nimport { cn } from \"@/lib/utils\"\n\nconst STAR: ArtDef = {\n  kind: \"icon\",\n  grid: 24,\n  parts: [\n    [\"s\", \"M12.3 4.4 L11.7 19.6\", 1.25],\n    [\"s\", \"M4.9 8.3 L19.3 15.9\", 1.25],\n    [\"s\", \"M18.7 8.6 L6.4 15.4\", 1.25],\n  ],\n  small: [\n    [\"s\", \"M12.4 3.4 L11.6 20.6\", 1.05],\n    [\"s\", \"M3.9 7.6 L20.2 16.6\", 1.05],\n    [\"s\", \"M19.4 7.9 L5.4 16.1\", 1.05],\n  ],\n}\n\nfunction RequiredMark({ seed }: { seed: string }) {\n  const res = memo(`label-star|${seed}`, () => drawSkeleton(STAR, 12, seed, { tone: \"ui\", kind: \"icon\" }))\n  return (\n    <svg\n      data-slot=\"label-required\"\n      data-ink=\"icon\"\n      aria-hidden=\"true\"\n      focusable=\"false\"\n      viewBox={`0 0 ${res.w} ${res.h}`}\n      className=\"pointer-events-none mt-px size-[0.8em] shrink-0 self-start overflow-visible text-red\"\n      dangerouslySetInnerHTML={{ __html: res.svg }}\n    />\n  )\n}\n\nfunction Label({\n  className,\n  required,\n  seed,\n  children,\n  ...props\n}: React.ComponentProps<typeof LabelPrimitive.Root> & {\n  required?: boolean\n  seed?: string | number\n}) {\n  const id = React.useId()\n  return (\n    <LabelPrimitive.Root\n      data-slot=\"label\"\n      className={cn(\n        \"flex items-center gap-1 font-hand text-[15px] leading-none font-bold text-foreground select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:text-pencil-text peer-disabled:cursor-not-allowed peer-disabled:text-pencil-text peer-has-[>input:disabled]:cursor-not-allowed peer-has-[>input:disabled]:text-pencil-text peer-has-[>textarea:disabled]:cursor-not-allowed peer-has-[>textarea:disabled]:text-pencil-text\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      {required && <RequiredMark seed={seed === undefined ? id : String(seed)} />}\n    </LabelPrimitive.Root>\n  )\n}\n\nexport { Label }\n",
+      "type": "registry:ui",
+      "target": "@ui/label.tsx"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "label",
+    "related": [
+      "input",
+      "textarea",
+      "checkbox",
+      "field"
+    ],
+    "a11y": [
+      "A native <label>: clicking it focuses or toggles its control; the control's accessible name is the label's text (the star is aria-hidden).",
+      "Bold Kevin Sans at 15 px in ink on paper (14:1). Disabled controls dim their label: put peer on the control before the label (peer-disabled), on a drawn Input / Textarea frame (peer-has-[>input:disabled]), or wrap both in a group with data-disabled=\"true\".",
+      "The star is intrinsic art: it stays visible in Windows high contrast and never takes focus."
+    ],
+    "usage": "import { Input } from \"@/components/ui/input\"\nimport { Label } from \"@/components/ui/label\"\n\nexport function Example() {\n  return (\n    <div className=\"grid gap-2\">\n      <Label htmlFor=\"name\" required>Your name</Label>\n      <Input id=\"name\" required />\n    </div>\n  )\n}",
+    "parts": [
+      "Label"
+    ]
+  },
+  "categories": [
+    "Forms"
+  ],
+  "type": "registry:ui"
+}

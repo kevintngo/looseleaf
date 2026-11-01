@@ -1,0 +1,12 @@
+{
+  "name": "looseleaf",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "dependencies": ["radix-ui", "class-variance-authority"],
+      "registryDependencies": ["https://looseleaf.example/r/looseleaf-theme.json", "https://looseleaf.example/r/ink.json"],
+      "files": [{ "path": "src/components/ui/button.tsx", "type": "registry:ui" }]
+    }
+  ]
+}

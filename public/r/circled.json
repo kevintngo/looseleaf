@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "circled",
+  "title": "Circled",
+  "description": "A hand loop around a word or phrase: a circle that overshoots where it started, a box, or a pair of square brackets. It can be written on as it scrolls into view.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-mark-ink.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/circled.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Slot } from \"radix-ui\"\n\nimport { MARK_REVEAL, useMarkInk } from \"@/hooks/use-mark-ink\"\nimport { useMergedRef } from \"@/lib/ink/react\"\nimport { circledRecipe, type CircledShape } from \"@/lib/ink/recipes/circled-ink\"\nimport type { MarkPen, MarkWeight } from \"@/lib/ink/recipes/text-marks-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Circled({\n  shape = \"circle\",\n  tone = \"ink\",\n  weight = \"regular\",\n  bleed,\n  animate = false,\n  show = true,\n  delay,\n  seed,\n  asChild = false,\n  className,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<\"span\"> & {\n  shape?: CircledShape\n  tone?: MarkPen\n  weight?: MarkWeight\n  bleed?: number\n  animate?: boolean\n  show?: boolean\n  delay?: number\n  seed?: string | number\n  asChild?: boolean\n}) {\n  const { hostRef, hostProps, nodes } = useMarkInk({\n    recipe: circledRecipe,\n    params: { shape, tone, weight, bleed },\n    kind: \"circled\",\n    seed,\n    mode: \"box\",\n    over: true,\n    animate,\n    show,\n    delay,\n  })\n  const Comp = asChild ? Slot.Root : \"span\"\n  return (\n    <Comp\n      data-slot=\"circled\"\n      data-shape={shape}\n      ref={useMergedRef<HTMLElement>(hostRef, ref as React.Ref<HTMLElement> | undefined)}\n      {...hostProps}\n      className={cn(\n        \"relative isolate outline-1 outline-offset-2 outline-pencil-mark data-[ink-ready]:not-focus-visible:outline-none data-[mark=off]:outline-none\",\n        animate && \"outline-none noscript:outline-1\",\n        animate && MARK_REVEAL,\n        className,\n      )}\n      {...props}\n    >\n      <Slot.Slottable>{children}</Slot.Slottable>\n      {nodes}\n    </Comp>\n  )\n}\n\nexport { Circled }\n",
+      "type": "registry:ui",
+      "target": "@ui/circled.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/circled-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { markRevealId, revealMark } from '@/lib/ink/recipes/mark-reveal-ink'\nimport { markPen, type LineParams, type MarkPen, type MarkWeight } from '@/lib/ink/recipes/text-marks-ink'\nimport { boxLines, bracketLines, loopLines } from '@/lib/ink/shapes'\nimport type { Line } from '@/lib/ink/types'\n\nexport type CircledShape = 'circle' | 'box' | 'brackets'\n\nexport interface CircledParams extends LineParams {\n  shape: CircledShape\n  tone: MarkPen\n  weight: MarkWeight\n  bleed?: number\n}\n\nexport const BLEED_DEFAULT = 2\nexport const BLEED_MAX = 16\nexport const ONE_LINE_POWER = 2.5\n\nexport const bleedOf = (p: Pick<CircledParams, 'bleed'>): number => {\n  const b = p.bleed\n  return typeof b === 'number' && Number.isFinite(b) ? Math.round(Math.min(BLEED_MAX, Math.max(0, b)) * 2) / 2 : BLEED_DEFAULT\n}\n\nexport function circledReach(w: number, h: number, p: Pick<LineParams, 'fs'> & Pick<CircledParams, 'bleed'>): number {\n  return Math.ceil(Math.max(14, w * 0.15 + p.fs * 0.7, h * 0.4 + p.fs * 0.5)) + Math.max(0, bleedOf(p) - BLEED_DEFAULT)\n}\n\nexport function loopRadii(tw: number, th: number, p: Pick<LineParams, 'fs' | 'ch'> & Pick<CircledParams, 'bleed'>, h: number): [number, number] {\n  const b = bleedOf(p)\n  if (h > p.ch * 1.5) return [tw * 1.08 + p.fs * 0.34 + (b - BLEED_DEFAULT), th * 1.32 + p.fs * 0.34 + (b - BLEED_DEFAULT)]\n  return [tw * 1.06 + p.fs * 0.17 + b, th * 1.18 + p.fs * 0.08 + b]\n}\n\nexport function squareUp(lines: Line[], cx: number, cy: number, rx: number, ry: number, n: number): Line[] {\n  return lines.map((l) => ({\n    ...l,\n    pts: l.pts.map(([x, y]) => {\n      const u = (x - cx) / rx, v = (y - cy) / ry\n      const r = Math.hypot(u, v)\n      if (r < 1e-6) return [x, y] as [number, number]\n      const k = (Math.abs(u / r) ** n + Math.abs(v / r) ** n) ** (-1 / n)\n      return [cx + u * k * rx, cy + v * k * ry] as [number, number]\n    }),\n  }))\n}\n\nexport const circledRecipe = defineRecipe<CircledParams>({\n  id: 'circled',\n  kind: 'circled',\n  layers: ['rest'],\n  pad: (b, p) => circledReach(b.w, b.h, p),\n  draw(ink, { w, h }, p, ctx) {\n    const { pen, width } = markPen(p.tone, p.weight, p.fs)\n    const top = p.base - p.cap\n    const bot = h - (p.ch - p.base - p.desc)\n    const cx = w / 2, cy = (top + bot) / 2\n    const tw = w / 2, th = (bot - top) / 2\n    const rng = ink.next('circled')\n    let lines: Line[]\n    if (p.shape === 'box') {\n      const b = bleedOf(p)\n      const px = p.fs * 0.32 + b, py = p.fs * 0.22 + b * 0.75\n      lines = boxLines(rng, -px, top - py, w + 2 * px, bot - top + 2 * py, { corner: 3 })\n    } else if (p.shape === 'brackets') {\n      const off = p.fs * 0.3 + bleedOf(p) - BLEED_DEFAULT\n      const hh = bot - top + p.fs * 0.5 + (bleedOf(p) - BLEED_DEFAULT)\n      const y = top - p.fs * 0.25 - (bleedOf(p) - BLEED_DEFAULT) / 2\n      lines = [...bracketLines(rng, -off, y, hh, { kind: 'square', dir: 1 }), ...bracketLines(rng.fork('r'), w + off, y, hh, { kind: 'square', dir: -1 })]\n    } else {\n      const [rx, ry] = loopRadii(tw, th, p, h)\n      if (h <= p.ch * 1.5) {\n        lines = squareUp(loopLines(rng, cx, cy, rx, ry, { drift: rng.fork('d').range(0.01, 0.05) }), cx, cy, rx, ry, ONE_LINE_POWER)\n      } else lines = loopLines(rng, cx, cy, rx, ry)\n    }\n    ink.layer('rest', () => {\n      if (p.animate) {\n        revealMark(ink, { id: markRevealId(ctx.seed, 'c'), lines, pen, box: { w, h }, pad: circledReach(w, h, p) + 6, width, revealWidth: 5 + p.fs * 0.15 })\n      } else ink.lines(lines, pen, { width })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/circled-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "annotate",
+      "underline",
+      "highlight",
+      "arrow"
+    ],
+    "a11y": [
+      "The words are ordinary text; the loop is aria-hidden and pointer-events-none, so it never blocks a click on a link or button inside.",
+      "If the circle carries meaning (the correct answer, the item to check) say so in text as well; a drawing alone is not announced.",
+      "Until the drawing exists a thin outline shows; in Windows high contrast a real outline is shown instead of the drawing."
+    ],
+    "usage": "import { Circled } from \"@/components/ui/circled\"\n\nexport function Example() {\n  return (\n    <p>\n      Please reply by <Circled tone=\"red\">Friday</Circled>.\n    </p>\n  )\n}",
+    "parts": [
+      "Circled"
+    ]
+  },
+  "categories": [
+    "Marks"
+  ],
+  "type": "registry:ui"
+}

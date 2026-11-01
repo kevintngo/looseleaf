@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "scribble",
+  "title": "Scribble",
+  "description": "Words scribbled out with tight back-and-forth strokes, like a note someone changed their mind about. A look, not a redaction: the text underneath stays in the DOM.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-mark-ink.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/scribble.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Slot } from \"radix-ui\"\n\nimport { MARK_WIPE, useMarkInk } from \"@/hooks/use-mark-ink\"\nimport { useMergedRef } from \"@/lib/ink/react\"\nimport { scribbleRecipe } from \"@/lib/ink/recipes/scribble-ink\"\nimport type { MarkPen, MarkWeight } from \"@/lib/ink/recipes/text-marks-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Scribble({\n  tone = \"ink\",\n  weight = \"regular\",\n  animate = false,\n  show = true,\n  delay,\n  seed,\n  asChild = false,\n  className,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<\"span\"> & {\n  tone?: MarkPen\n  weight?: MarkWeight\n  animate?: boolean\n  show?: boolean\n  delay?: number\n  seed?: string | number\n  asChild?: boolean\n}) {\n  const { hostRef, hostProps, nodes } = useMarkInk({\n    recipe: scribbleRecipe,\n    params: { tone, weight },\n    kind: \"scribble\",\n    seed,\n    over: true,\n    animate,\n    show,\n    delay,\n  })\n  const Comp = asChild ? Slot.Root : \"span\"\n  return (\n    <Comp\n      data-slot=\"scribble\"\n      ref={useMergedRef<HTMLElement>(hostRef, ref as React.Ref<HTMLElement> | undefined)}\n      {...hostProps}\n      className={cn(\n        \"relative isolate line-through decoration-2 decoration-ink data-[ink-ready]:no-underline data-[mark=off]:no-underline forced-colors:not-data-[mark=off]:line-through! not-focus-visible:outline-none forced-colors:not-focus-visible:outline-none!\",\n        animate && \"no-underline noscript:line-through\",\n        animate && MARK_WIPE,\n        className,\n      )}\n      {...props}\n    >\n      <Slot.Slottable>{children}</Slot.Slottable>\n      {nodes}\n    </Comp>\n  )\n}\n\nexport { Scribble }\n",
+      "type": "registry:ui",
+      "target": "@ui/scribble.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/scribble-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { markPen, overshoot, type LineParams, type MarkPen, type MarkWeight } from '@/lib/ink/recipes/text-marks-ink'\nimport type { Line, Pt } from '@/lib/ink/types'\n\nexport interface ScribbleParams extends LineParams {\n  tone: MarkPen\n  weight: MarkWeight\n}\n\nexport const scribbleRecipe = defineRecipe<ScribbleParams>({\n  id: 'scribble',\n  kind: 'scribble',\n  layers: ['rest'],\n  pad: 10,\n  draw(ink, { w }, p, ctx) {\n    const o = overshoot(p.fs)\n    const rng = ink.next('redact')\n    const top = p.base - p.cap - p.fs * 0.06\n    const bot = p.base + p.desc * 0.7\n    const { pen, width } = markPen(p.tone, p.weight === 'regular' ? 'brush' : p.weight, p.fs)\n    const x0 = -o * 0.7, x1 = w + o * 0.8\n    const pitch = Math.max(2.6, p.fs * 0.2)\n    ink.layer('rest', () => {\n      const lines: Line[] = []\n      let pts: Pt[] = []\n      let x = x0\n      let up = true\n      let len = 0\n      const lean = rng.gauss(0.22, 0.05) * (bot - top)\n      while (x < x1) {\n        const t = up ? top + rng.range(0, 0.18) * (bot - top) : bot - rng.range(0, 0.18) * (bot - top)\n        pts.push([Math.min(x1, x + (up ? -lean / 2 : lean / 2)), t])\n        x += pitch * rng.range(0.7, 1.35)\n        up = !up\n        len += pitch\n        if (len > 160 && pts.length > 3) {\n          lines.push({ pts, o: { end: 'flick', speed: 1.5, wobble: 0.5, poly: true, round: 1.4 } })\n          pts = [pts[pts.length - 1]]\n          len = 0\n        }\n      }\n      if (pts.length > 1) lines.push({ pts, o: { end: 'flick', speed: 1.5, wobble: 0.5, poly: true, round: 1.4 } })\n      ink.lines(lines, pen, { width: 0.7 * width })\n      if (!ctx.calm) {\n        const back: Pt[] = []\n        const n = Math.max(4, Math.round((x1 - x0) / (pitch * 3.1)))\n        for (let i = 0; i <= n; i++) back.push([x0 + ((x1 - x0) * i) / n + rng.gauss(0, 1), i % 2 ? top + 1 : bot - 1])\n        ink.lines([{ pts: back, o: { end: 'flick', speed: 1.4, wobble: 0.6, poly: true, round: 1.2 } }], pen, { width: 0.6 * width })\n      }\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/scribble-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "strike",
+      "highlight",
+      "underline"
+    ],
+    "a11y": [
+      "Never scribble out a secret: the text is still in the DOM, still selectable, still read by a screen reader. Remove sensitive text from the page instead.",
+      "The drawing is aria-hidden and pointer-events-none. Before it exists, and in Windows high contrast, the browser's own line-through is shown."
+    ],
+    "usage": "import { Scribble } from \"@/components/ui/scribble\"\n\nexport function Example() {\n  return (\n    <p>\n      The plan is <Scribble>very secret</Scribble> a surprise.\n    </p>\n  )\n}",
+    "parts": [
+      "Scribble"
+    ]
+  },
+  "categories": [
+    "Marks"
+  ],
+  "type": "registry:ui"
+}

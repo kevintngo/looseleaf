@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "direction",
+  "title": "Direction",
+  "description": "Tells every Radix part, every drawing and every logical property which way the page reads. One provider at the root of a right-to-left page (or on an island inside a left-to-right one) turns arrow keys, sub-menus, slider edges, tab shoulders and hand-drawn strokes round together.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/direction.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Direction, Slot } from \"radix-ui\"\n\nimport { InkContext, useInkContext, useMergedRef, type InkContextValue, type InkScopeProps } from \"@/lib/ink/react\"\nimport { cn } from \"@/lib/utils\"\n\ntype Dir = \"ltr\" | \"rtl\"\n\ntype DirectionScope = InkScopeProps & { dir: Dir }\n\nfunction readDirection(from: Element | null): Dir | undefined {\n  for (let el = from; el; el = el.parentElement) {\n    const d = el.getAttribute(\"dir\")\n    if (d === \"rtl\" || d === \"ltr\") return d\n  }\n  return undefined\n}\n\nfunction DirectionProvider({\n  dir,\n  direction,\n  asChild = false,\n  className,\n  children,\n  ref,\n  ...props\n}: Omit<React.ComponentProps<\"div\">, \"dir\"> & {\n  dir?: Dir\n  direction?: Dir\n  asChild?: boolean\n}) {\n  const explicit = direction ?? dir\n  const hostRef = React.useRef<HTMLElement | null>(null)\n  const [inherited, setInherited] = React.useState<Dir>(\"ltr\")\n\n  React.useLayoutEffect(() => {\n    const host = hostRef.current\n    if (explicit || !host) return\n    const read = () => setInherited(readDirection(host.parentElement) ?? \"ltr\")\n    read()\n    if (typeof MutationObserver === \"undefined\") return\n    const mo = new MutationObserver(read)\n    mo.observe(host.ownerDocument.documentElement, { attributes: true, attributeFilter: [\"dir\"], subtree: true })\n    return () => mo.disconnect()\n  }, [explicit])\n\n  const value: Dir = explicit ?? inherited\n  const ink = useInkContext()\n  const inkValue = React.useMemo<InkContextValue>(() => {\n    const scope: DirectionScope = { ...ink.scope, dir: value }\n    return { ...ink, dir: value, scope }\n  }, [ink, value])\n\n  const Comp = asChild ? Slot.Root : \"div\"\n  return (\n    <Direction.DirectionProvider dir={value}>\n      <InkContext.Provider value={inkValue}>\n        <Comp data-slot=\"direction\" ref={useMergedRef(hostRef, ref)} dir={explicit} className={asChild ? className : cn(\"contents\", className)} {...props}>\n          {children}\n        </Comp>\n      </InkContext.Provider>\n    </Direction.DirectionProvider>\n  )\n}\n\nconst useDirection: (localDir?: Dir) => Dir = Direction.useDirection\n\nexport { DirectionProvider, useDirection }\n",
+      "type": "registry:ui",
+      "target": "@ui/direction.tsx"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "direction",
+    "related": [
+      "tabs",
+      "dropdown-menu",
+      "slider",
+      "carousel",
+      "sidebar",
+      "table",
+      "icon"
+    ],
+    "a11y": [
+      "Radix reads its direction from this provider only, never from the `dir` attribute. Without it, Tabs, Menubar, Radio Group, Toggle Group, Navigation Menu and the menus keep their left-to-right arrow keys on a right-to-left page, a Scroll Area keeps its scrollbar on the wrong side and a Slider starts at the wrong edge. With it, ArrowLeft moves to the next tab, opens a sub-menu towards the left, and so on.",
+      "The wrapper carries `dir`, so the browser lays out bidirectional text, punctuation and inline order correctly; `lang` is yours to set on the wrapper or the page (`<DirectionProvider direction=\"rtl\" lang=\"ar\">`) so screen readers pick the right voice.",
+      "Direction glyphs (chevrons, arrows, panel, log-in and log-out, undo and redo, send, list and menu icons) flip themselves in a right-to-left context; icons that do not depend on reading order (check, plus, clock, media controls) stay as drawn.",
+      "The drawn layer is aria-hidden and decorative; mirroring it never changes what a screen reader announces.",
+      "Two engines behind Looseleaf parts take the direction as an option of their own and do not read the provider yet: give a Carousel `opts={{ direction: \"rtl\" }}` (Embla) and a Calendar `dir=\"rtl\"` (react-day-picker); a Sonner Toaster follows `<html dir>` or takes its own `dir`. The Direction examples do it.",
+      "Kevin Sans covers Latin only. Arabic and Hebrew text falls back to the system font for each missing glyph, which is correct and readable but not hand-lettered; ship an Arabic or Hebrew face in `--font-hand` for a matching look."
+    ],
+    "usage": "import { DirectionProvider, useDirection } from \"@/components/ui/direction\"\n\nexport function Root({ children }: { children: React.ReactNode }) {\n  return <DirectionProvider direction=\"rtl\">{children}</DirectionProvider>\n}\n\nfunction useForwardKey() {\n  const dir = useDirection()\n  return dir === \"rtl\" ? \"ArrowLeft\" : \"ArrowRight\"\n}",
+    "parts": [
+      "DirectionProvider",
+      "useDirection"
+    ]
+  },
+  "categories": [
+    "Layout"
+  ],
+  "type": "registry:ui"
+}

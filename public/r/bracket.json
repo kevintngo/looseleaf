@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "bracket",
+  "title": "Bracket",
+  "description": "A hand bracket down one side of a block: these paragraphs, this list, these three rows belong together. Square, curly or round, on either side, and it flips with the page direction.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/use-mark-ink.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/bracket.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { MARK_REVEAL, useMarkPhase } from \"@/hooks/use-mark-ink\"\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { bracketRecipe, type BracketKind } from \"@/lib/ink/recipes/bracket-ink\"\nimport type { MarkPen, MarkWeight } from \"@/lib/ink/recipes/text-marks-ink\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Bracket({\n  kind = \"square\",\n  side = \"start\",\n  tone = \"ink\",\n  weight = \"regular\",\n  inset = 8,\n  animate = false,\n  show = true,\n  delay,\n  seed,\n  className,\n  style,\n  children,\n  ref,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  kind?: BracketKind\n  side?: \"start\" | \"end\"\n  tone?: MarkPen\n  weight?: MarkWeight\n  inset?: number\n  animate?: boolean\n  show?: boolean\n  delay?: number\n  seed?: string | number\n}) {\n  const { hostRef, hostProps, node } = useInk({ recipe: bracketRecipe, params: { kind, side, tone, weight, inset, animate }, kind: \"bracket\", seed })\n  const { phaseRef, phaseProps } = useMarkPhase({ animate, show })\n  const ready = !!node && show\n  return (\n    <div\n      data-slot=\"bracket\"\n      data-kind={kind}\n      data-side={side}\n      ref={useMergedRef<HTMLElement>(hostRef, phaseRef, ref as React.Ref<HTMLElement> | undefined)}\n      {...(ready ? hostProps : {})}\n      {...phaseProps}\n      style={{ ...(animate ? ({ \"--ll-draw-delay\": `${delay ?? 0}ms` } as React.CSSProperties) : undefined), ...style }}\n      className={cn(\"relative isolate outline-none\", side === \"start\" ? \"ps-7\" : \"pe-7\", animate && MARK_REVEAL, className)}\n      {...props}\n    >\n      {ready ? node : null}\n      {children}\n    </div>\n  )\n}\n\nexport { Bracket }\n",
+      "type": "registry:ui",
+      "target": "@ui/bracket.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/bracket-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { markRevealId, revealMark } from '@/lib/ink/recipes/mark-reveal-ink'\nimport { markPen, STRUCTURAL_DRY, type MarkPen, type MarkWeight } from '@/lib/ink/recipes/text-marks-ink'\nimport type { Rng } from '@/lib/ink/rng'\nimport { bracketLines } from '@/lib/ink/shapes'\nimport type { Line, Pt } from '@/lib/ink/types'\n\nexport type BracketKind = 'square' | 'curly' | 'round'\n\nexport interface BracketParams {\n  kind: BracketKind\n  side: 'start' | 'end'\n  tone: MarkPen\n  weight: MarkWeight\n  inset: number\n  animate?: boolean\n}\n\nfunction roundLines(rng: Rng, x: number, y: number, h: number, d: 1 | -1): Line[] {\n  const tip = Math.min(11, Math.max(3.5, h * 0.13))\n  const skew = rng.range(0.78, 1.28)\n  const lean = rng.gauss(0, 0.014) * h\n  const pts: Pt[] = []\n  for (let i = 0; i <= 14; i++) {\n    const t = i / 14\n    pts.push([x + d * tip * (1 - Math.sin(Math.PI * t ** skew)) + lean * (t - 0.5) + rng.gauss(0, 0.12), y + h * t])\n  }\n  return [{ pts, o: { start: 'soft', end: 'flick', wobble: 0.6 } }]\n}\n\nexport const bracketRecipe = defineRecipe<BracketParams>({\n  id: 'bracket',\n  kind: 'bracket',\n  layers: ['rest'],\n  pad: 12,\n  draw(ink, { w, h }, p, ctx) {\n    const { pen, width } = markPen(p.tone, p.weight, 18)\n    const left = (p.side === 'start') === (ctx.dir !== 'rtl')\n    const x = left ? p.inset : w - p.inset\n    const trim = Math.min(6, h * 0.04)\n    const H = Math.max(8, h - 2 * trim)\n    const d = left ? 1 : -1\n    const rng = ink.next('bracket')\n    const lines = p.kind === 'round' ? roundLines(rng, x, trim, H, d) : bracketLines(rng, x, trim, H, { kind: p.kind, dir: d })\n    ink.layer('rest', () => {\n      if (p.animate) revealMark(ink, { id: markRevealId(ctx.seed, 'b'), lines, pen, box: { w, h }, pad: 14, width, opts: { dry: STRUCTURAL_DRY }, revealWidth: 5 })\n      else ink.lines(lines, pen, { width, dry: STRUCTURAL_DRY })\n    })\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/bracket-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "circled",
+      "annotate",
+      "squiggle",
+      "callout"
+    ],
+    "a11y": [
+      "Decorative: the bracket is aria-hidden and pointer-events-none. If grouping matters to everyone, group in the markup as well (a list, a <section>, a fieldset).",
+      "It lives in the block's padding, so text never runs under it; change the padding with className if you move the spine (`inset`).",
+      "Windows high contrast hides the drawing like every overlay ink."
+    ],
+    "usage": "import { Bracket } from \"@/components/ui/bracket\"\n\nexport function Example() {\n  return (\n    <Bracket kind=\"curly\" tone=\"blue\">\n      <p>These two paragraphs are one idea.</p>\n      <p>The bracket says so.</p>\n    </Bracket>\n  )\n}",
+    "parts": [
+      "Bracket"
+    ]
+  },
+  "categories": [
+    "Marks"
+  ],
+  "type": "registry:ui"
+}

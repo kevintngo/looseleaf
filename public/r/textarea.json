@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "textarea",
+  "title": "Textarea",
+  "description": "A multi-line text field on paper: a pencil box around a real <textarea> that grows with its text, with optional hand-ruled lines on the baselines, a drawn resize handle and a character counter.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/field-class.json",
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-recipes.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/textarea.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { splitFieldClass } from \"@/lib/field-class\"\nimport { useInk, useMergedRef } from \"@/lib/ink/react\"\nimport { textareaRecipe } from \"@/lib/ink/recipes/textarea-ink\"\nimport { cn } from \"@/lib/utils\"\n\nconst control =\n  \"min-w-0 flex-1 resize-y appearance-none self-stretch border-0 bg-transparent px-3 py-2 text-[length:inherit] leading-6 [text-align:inherit] \" +\n  \"disabled:cursor-not-allowed disabled:text-pencil-text aria-invalid:pe-9 forced-colors:aria-invalid:underline forced-colors:aria-invalid:decoration-wavy [&::-webkit-resizer]:bg-transparent \" +\n  \"autofill:shadow-[inset_0_0_0_1000px_var(--ll-slip)] autofill:[-webkit-text-fill-color:var(--ll-input-ink)]\"\nconst RULED_LINE = 28\nconst RULED_TOP = 8\n\nconst frame =\n  \"relative isolate flex min-h-16 w-full min-w-0 items-stretch font-hand text-base text-(--ll-input-ink) caret-(--ll-caret) calm:text-[15px]\"\n\nconst isTrue = (v: unknown) => v === true || v === \"true\"\nconst noResize = (s: string) => /(?:^|\\s)(?:[^\\s:]+:)*resize-none(?:\\s|$)/.test(s)\n\nfunction TextareaControl({ className, ...props }: React.ComponentProps<\"textarea\">) {\n  return <textarea data-slot=\"textarea\" className={cn(control, \"field-sizing-content\", className)} {...props} />\n}\n\ninterface CountInfo {\n  length: number\n  max?: number\n}\n\nfunction Textarea({\n  className,\n  inputClassName,\n  ruled = false,\n  autoGrow = true,\n  showCount = false,\n  seed,\n  style,\n  ref,\n  onChange,\n  ...props\n}: React.ComponentProps<\"textarea\"> & {\n  inputClassName?: string\n  ruled?: boolean\n  autoGrow?: boolean\n  showCount?: boolean | ((info: CountInfo) => React.ReactNode)\n  seed?: string | number\n}) {\n  const split = splitFieldClass(className)\n  const grow = autoGrow || ruled\n  const resizable = !noResize(`${className ?? \"\"} ${inputClassName ?? \"\"}`)\n  const { hostRef, hostProps, node } = useInk({\n    recipe: textareaRecipe,\n    params: {\n      disabled: !!props.disabled,\n      invalid: isTrue(props[\"aria-invalid\"]),\n      readOnly: !!props.readOnly,\n      ruled,\n      lineHeight: RULED_LINE,\n      ruleTop: RULED_TOP,\n      grip: resizable,\n    },\n    kind: \"field\",\n    seed,\n    still: true,\n  })\n\n  const inner = React.useRef<HTMLTextAreaElement | null>(null)\n  const [typed, setTyped] = React.useState(() => String(props.defaultValue ?? \"\").length)\n  React.useEffect(() => {\n    const form = inner.current?.form\n    if (!showCount || !form) return\n    const onReset = () => queueMicrotask(() => setTyped(inner.current?.value.length ?? 0))\n    form.addEventListener(\"reset\", onReset)\n    return () => form.removeEventListener(\"reset\", onReset)\n  }, [showCount])\n  const length = props.value !== undefined ? String(props.value).length : typed\n  const mergedRef = useMergedRef(ref, inner)\n  const countId = React.useId()\n  const count = typeof showCount === \"function\" ? showCount({ length, max: props.maxLength }) : `${length}${props.maxLength ? `/${props.maxLength}` : \"\"}`\n\n  return (\n    <span data-slot=\"textarea-frame\" data-ink-focus=\"within\" ref={hostRef} {...hostProps} style={style} className={cn(frame, ruled && \"min-h-24\", split.frame)}>\n      {node}\n      <TextareaControl\n        {...props}\n        ref={mergedRef}\n        className={cn(!grow && \"field-sizing-fixed\", showCount && \"pb-7\", split.control, inputClassName, ruled && \"pt-2 pb-2 leading-7\")}\n        aria-describedby={showCount ? cn(countId, props[\"aria-describedby\"]) : props[\"aria-describedby\"]}\n        onChange={(e) => {\n          if (showCount) setTyped(e.currentTarget.value.length)\n          onChange?.(e)\n        }}\n      />\n      {showCount && (\n        <span data-slot=\"textarea-count\" id={countId} className=\"pointer-events-none absolute end-6 bottom-1.5 text-sm text-ink-muted ll-num\">\n          <span aria-hidden=\"true\">{count}</span>\n          <span className=\"sr-only\">\n            {length} characters{props.maxLength ? ` of ${props.maxLength}` : \"\"}\n          </span>\n        </span>\n      )}\n    </span>\n  )\n}\n\nexport { Textarea, TextareaControl }\n",
+      "type": "registry:ui",
+      "target": "@ui/textarea.tsx"
+    },
+    {
+      "path": "src/lib/ink/recipes/textarea-ink.ts",
+      "content": "import { defineRecipe } from '@/lib/ink/recipes'\nimport { drawFieldFrame } from '@/lib/ink/recipes/field-frame-ink'\n\nexport interface TextareaParams {\n  disabled?: boolean\n  invalid?: boolean\n  readOnly?: boolean\n  ruled?: boolean\n  lineHeight?: number\n  ruleTop?: number\n  grip?: boolean\n}\n\nexport const textareaRecipe = defineRecipe<TextareaParams>({\n  id: 'textarea',\n  kind: 'field',\n  layers: ['rest', 'hover', 'focus', 'invalid', 'disabled'],\n  lazy: ['focus', 'hover'],\n  pad: 12,\n  draw(ink, box, params, ctx) {\n    drawFieldFrame(ink, box, { ...params, multiline: true }, ctx)\n  },\n})\n",
+      "type": "registry:lib",
+      "target": "@lib/ink/recipes/textarea-ink.ts"
+    }
+  ],
+  "meta": {
+    "status": "stable",
+    "upstream": "textarea",
+    "related": [
+      "input",
+      "label",
+      "field"
+    ],
+    "a11y": [
+      "A native <textarea>: Enter adds a line, Tab moves on, and label / aria-describedby / required work as usual.",
+      "aria-invalid, disabled and readOnly are the real attributes; the drawing follows them.",
+      "Focus draws the blue felt ring; the browser's outline is used before the drawing exists and in Windows high contrast.",
+      "The counter is aria-describedby text (\"12 characters of 280\"), never a live region.",
+      "Resizing uses the browser's own handle (made transparent and redrawn by hand), so it keeps working with the mouse and touch.",
+      "field-sizing: content needs a current browser; elsewhere the textarea keeps its rows and scrolls."
+    ],
+    "usage": "import { Textarea } from \"@/components/ui/textarea\"\n\nexport function Example() {\n  return (\n    <>\n      <Textarea placeholder=\"Tell us what happened...\" />\n      <Textarea ruled showCount maxLength={280} aria-label=\"Diary\" />\n    </>\n  )\n}",
+    "parts": [
+      "Textarea",
+      "TextareaControl"
+    ]
+  },
+  "categories": [
+    "Forms"
+  ],
+  "type": "registry:ui"
+}

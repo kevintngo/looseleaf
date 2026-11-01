@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tape",
+  "title": "Tape",
+  "description": "A strip of masking, washi, kraft or cellophane tape, drawn: translucent, with slit lines along its edges, crinkles and torn or pinked ends. Stick it across a corner, use it as a label, or let Paper place it for you.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/ink.json",
+    "https://kevintngo.github.io/looseleaf/r/ink-paper.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/tape.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { dropShadow, tiltFor } from \"@/lib/ink/paper/shadows\"\nimport { tape, type TapeEnds, type TapeKind } from \"@/lib/ink/paper/props\"\nimport { PropSvg } from \"@/lib/ink/paper/prop-svg\"\nimport { useDensity, useInkSeed, useInkTier } from \"@/lib/ink/react\"\nimport { cn } from \"@/lib/utils\"\n\ntype TapeProps = Omit<React.ComponentProps<\"svg\">, \"children\"> & {\n  kind?: TapeKind\n  length?: number\n  height?: number\n  angle?: number\n  ends?: TapeEnds\n  color?: \"tomato\" | \"tangerine\" | \"lemon\" | \"grass\" | \"teal\" | \"sky\" | \"grape\" | \"bubblegum\"\n  seed?: string | number\n}\n\nfunction Tape({ kind = \"masking\", length = 72, height = 22, angle, ends, color, seed: seedProp, className, style, ...props }: TapeProps) {\n  const seed = useInkSeed(seedProp)\n  const tier = useInkTier()\n  const calm = useDensity() === \"calm\"\n  const res = React.useMemo(() => tape(`${seed}|tape`, { kind, length, height, ends, color, tier, calm }), [seed, kind, length, height, ends, color, tier, calm])\n  const deg = angle ?? tiltFor(`${seed}|tape`, 4)\n  return (\n    <PropSvg\n      res={res}\n      kind=\"tape\"\n      data-slot=\"tape\"\n      data-kind={kind}\n      className={cn(\"pointer-events-none relative z-(--ll-z-prop) block shrink-0\", className)}\n      style={{\n        rotate: `clamp(calc(var(--ll-tilt-max) * -2.5), ${deg}deg, calc(var(--ll-tilt-max) * 2.5))`,\n        filter: dropShadow(\"tape\"),\n        ...style,\n      }}\n      {...props}\n    />\n  )\n}\n\nexport { Tape }\nexport type { TapeProps }\n",
+      "type": "registry:ui",
+      "target": "@ui/tape.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "paper",
+      "card",
+      "sticker"
+    ],
+    "a11y": [
+      "Tape is decoration: aria-hidden, focusable=false, pointer-events: none. Never put the only copy of information on it; a label written on tape is real text next to (not inside) the svg.",
+      "Tape keeps its colours in Windows high contrast (it is an intrinsic ink kind).",
+      "Its tilt collapses to zero in calm density."
+    ],
+    "usage": "import { Tape } from \"@/components/ui/tape\"\n\n<div className=\"relative w-64 p-6\">\n  <Tape kind=\"washi-dots\" className=\"absolute -top-3 left-6\" />\n  …content\n</div>",
+    "parts": [
+      "Tape"
+    ]
+  },
+  "categories": [
+    "Paper"
+  ],
+  "type": "registry:ui"
+}

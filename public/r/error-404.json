@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "error-404",
+  "title": "404, page not found",
+  "description": "A torn scrap with 404 in riso lettering and Stubby shrugging beside it, a sentence, a search box (press / to reach it) and two ways out, all on one taped sheet. Looks right on paper or on the desk.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/button.json",
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/input-group.json",
+    "https://kevintngo.github.io/looseleaf/r/kbd.json",
+    "https://kevintngo.github.io/looseleaf/r/lettering.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/mascot.json",
+    "https://kevintngo.github.io/looseleaf/r/napkin.json",
+    "https://kevintngo.github.io/looseleaf/r/paper.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/error-404/components/error-404-scene.tsx",
+      "content": "import { Lettering } from \"@/components/ui/lettering\"\nimport { Mascot } from \"@/components/ui/mascot\"\nimport { Napkin, NapkinContent } from \"@/components/ui/napkin\"\n\nfunction Error404Scene() {\n  return (\n    <div data-slot=\"error-scene\" aria-hidden=\"true\" className=\"flex flex-col items-center gap-y-6 @xl:flex-row @xl:items-end @xl:justify-center @xl:gap-x-2\">\n      <Napkin fold=\"quarter\" stain fastener=\"pin\" fastenerTone=\"tomato\" seed=\"error-404-napkin\" className=\"min-h-0 w-72 max-w-full p-7\">\n        <NapkinContent className=\"flex items-center justify-center\">\n          <Lettering as=\"p\" size=\"hero\" tone=\"tomato\" seed=\"error-404-digits\" className=\"ll-num\">\n            404\n          </Lettering>\n        </NapkinContent>\n      </Napkin>\n      <Mascot pose=\"shrug\" size={184} className=\"mb-1 h-[184px] w-auto @xl:-ms-10\" />\n    </div>\n  )\n}\n\nexport { Error404Scene }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/error-404/components/error-404-scene.tsx"
+    },
+    {
+      "path": "src/blocks/error-404/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { InputGroup, InputGroupAddon, InputGroupInput } from \"@/components/ui/input-group\"\nimport { Kbd } from \"@/components/ui/kbd\"\nimport { Lettering } from \"@/components/ui/lettering\"\nimport { Paper } from \"@/components/ui/paper\"\nimport { Error404Scene } from \"@/components/blocks/error-404/components/error-404-scene\"\n\ntype Error404Props = {\n  onSearch?: (query: string) => void\n  onGoBack?: () => void\n}\n\nexport default function Error404({ onSearch, onGoBack = () => window.history.back() }: Error404Props) {\n  const titleId = React.useId()\n  const inputRef = React.useRef<HTMLInputElement>(null)\n  const [query, setQuery] = React.useState(\"\")\n\n  React.useEffect(() => {\n    const onKey = (e: KeyboardEvent) => {\n      if (e.key !== \"/\" || e.metaKey || e.ctrlKey || e.altKey) return\n      const t = e.target as HTMLElement | null\n      if (t && (t.isContentEditable || /^(input|textarea|select)$/i.test(t.tagName))) return\n      e.preventDefault()\n      inputRef.current?.focus()\n    }\n    document.addEventListener(\"keydown\", onKey)\n    return () => document.removeEventListener(\"keydown\", onKey)\n  }, [])\n\n  return (\n    <section aria-labelledby={titleId} className=\"@container w-full\">\n      <div className=\"px-8 py-10 @xl:py-14\">\n        <Paper stock=\"paper\" tilt={false} tape=\"both\" tapeKind=\"masking\" seed=\"error-404\" className=\"mx-auto max-w-3xl px-6 py-12 text-center @xl:px-12\">\n          <Error404Scene />\n\n          <p className=\"mt-10 font-type text-sm tracking-[0.18em] text-pencil-text uppercase\">Error 404 &middot; Page not found</p>\n          <Lettering as=\"h1\" id={titleId} size=\"md\" tone=\"marker\" wobble={0.4} seed=\"error-404-title\" className=\"mt-3\">\n            This page wandered off\n          </Lettering>\n          <p className=\"mx-auto mt-4 max-w-md text-lg/7 text-ink-soft\">We looked under the desk, behind the stapler and in the recycling. Nothing. The link may be old, or mistyped.</p>\n\n          <form\n            role=\"search\"\n            className=\"mx-auto mt-8 max-w-md\"\n            onSubmit={(e) => {\n              e.preventDefault()\n              onSearch?.(query.trim())\n            }}\n          >\n            <InputGroup>\n              <InputGroupAddon>\n                <Icon name=\"search\" />\n              </InputGroupAddon>\n              <InputGroupInput ref={inputRef} type=\"search\" name=\"q\" className=\"text-start\" aria-label=\"Search the site\" placeholder=\"Try searching for pages…\" value={query} onChange={(e) => setQuery(e.target.value)} />\n              <InputGroupAddon align=\"inline-end\" className=\"max-sm:hidden\">\n                <Kbd aria-hidden=\"true\">/</Kbd>\n              </InputGroupAddon>\n            </InputGroup>\n          </form>\n\n          <div className=\"mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-3\">\n            <Button asChild size=\"lg\">\n              <a href=\"#home\">\n                <Icon name=\"house\" />\n                Take me home\n              </a>\n            </Button>\n            <Button type=\"button\" size=\"lg\" variant=\"outline\" onClick={onGoBack}>\n              <Icon name=\"arrow-left\" className=\"rtl:-scale-x-100\" />\n              Go back\n            </Button>\n          </div>\n\n          <p className=\"mt-8 text-[15px] text-ink-muted\">\n            Still lost?{\" \"}\n            <a href=\"#contact\" className=\"text-link underline underline-offset-4 hover:text-link-hover\">\n              Tell us what you were looking for\n            </a>\n            .\n          </p>\n        </Paper>\n      </div>\n    </section>\n  )\n}\n\nexport type { Error404Props }\n",
+      "type": "registry:component",
+      "target": "@components/blocks/error-404/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "marketing",
+      "error",
+      "404",
+      "stubby"
+    ]
+  },
+  "docs": "Installed the \"404, page not found\" block into your components directory under blocks/error-404/.\nImport it: import Error404 from \"<your components alias>/blocks/error-404/page\"",
+  "categories": [
+    "feedback"
+  ],
+  "type": "registry:block"
+}

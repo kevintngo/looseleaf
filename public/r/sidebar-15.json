@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar-15",
+  "title": "Sidebar 15",
+  "description": "A left and a right sidebar: the notes pad hangs from the left and folds away, the calendar pad is taped in on the right and stays (from the lg breakpoint up), the page is a sheet between them. Mirrors shadcn's sidebar-15. Looks right on the desk and on plain paper.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/icon.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar.json",
+    "https://kevintngo.github.io/looseleaf/r/sidebar-shared.json",
+    "https://kevintngo.github.io/looseleaf/r/tape.json"
+  ],
+  "files": [
+    {
+      "path": "src/blocks/sidebar-15/components/sidebar-15-sidebar-left.tsx",
+      "content": "import * as React from \"react\"\n\nimport { appTeams, notesFavorites, notesNav, notesSecondary, notesWorkspaces } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { NavSecondary } from \"@/components/blocks/sidebar-shared/sidebar-nav-app\"\nimport { NavFavorites, NavLinks, NavWorkspaces } from \"@/components/blocks/sidebar-shared/sidebar-nav-notes\"\nimport { TeamSwitcher } from \"@/components/blocks/sidebar-shared/sidebar-team-switcher\"\nimport { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from \"@/components/ui/sidebar\"\n\nexport function SidebarLeft({ ...props }: React.ComponentProps<typeof Sidebar>) {\n  return (\n    <Sidebar role=\"navigation\" aria-label=\"Notes\" {...props}>\n      <SidebarHeader>\n        <TeamSwitcher teams={appTeams} compact />\n        <NavLinks items={notesNav} />\n      </SidebarHeader>\n      <SidebarContent>\n        <NavFavorites favorites={notesFavorites} />\n        <NavWorkspaces workspaces={notesWorkspaces} />\n        <NavSecondary items={notesSecondary} className=\"mt-auto\" />\n      </SidebarContent>\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-15/components/sidebar-15-sidebar-left.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-15/components/sidebar-15-sidebar-right.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { appUser, calendarGroups } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { Calendars, DatePicker } from \"@/components/blocks/sidebar-shared/sidebar-calendar\"\nimport { NavUser } from \"@/components/blocks/sidebar-shared/sidebar-user-menu\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarSeparator } from \"@/components/ui/sidebar\"\nimport { Tape } from \"@/components/ui/tape\"\nimport { cn } from \"@/lib/utils\"\n\nexport function SidebarRight({\n  date,\n  onDateChange,\n  visible,\n  onVisibleChange,\n  contained = false,\n  className,\n  ...props\n}: React.ComponentProps<typeof Sidebar> & {\n  date: Date\n  onDateChange: (date: Date) => void\n  visible: string[]\n  onVisibleChange: (next: string[]) => void\n  contained?: boolean\n}) {\n  return (\n    <Sidebar\n      collapsible=\"none\"\n      role=\"navigation\"\n      aria-label=\"Calendars\"\n      className={cn(\"sticky top-0 hidden border-s border-sidebar-border pt-3 lg:flex\", contained ? \"h-full\" : \"h-svh\", className)}\n      {...props}\n    >\n      <Tape kind=\"washi-stripes\" color=\"tangerine\" length={72} height={18} angle={-2} className=\"absolute top-0 start-1/2 -ms-9\" />\n      <SidebarHeader className=\"h-16 border-b border-sidebar-border\">\n        <NavUser user={appUser} align=\"start\" />\n      </SidebarHeader>\n      <SidebarContent>\n        <DatePicker selected={date} onSelect={(next) => next && onDateChange(next)} />\n        <SidebarSeparator className=\"mx-0\" />\n        <Calendars groups={calendarGroups} value={visible} onValueChange={onVisibleChange} />\n      </SidebarContent>\n      <SidebarFooter>\n        <SidebarMenu>\n          <SidebarMenuItem>\n            <SidebarMenuButton>\n              <Icon name=\"plus\" />\n              <span>New calendar</span>\n            </SidebarMenuButton>\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarFooter>\n    </Sidebar>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-15/components/sidebar-15-sidebar-right.tsx"
+    },
+    {
+      "path": "src/blocks/sidebar-15/page.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { SidebarLeft } from \"@/components/blocks/sidebar-15/components/sidebar-15-sidebar-left\"\nimport { SidebarRight } from \"@/components/blocks/sidebar-15/components/sidebar-15-sidebar-right\"\nimport { containedClasses } from \"@/components/blocks/sidebar-shared/sidebar-contained\"\nimport { formatDay } from \"@/components/blocks/sidebar-shared/sidebar-data\"\nimport { PageBody, PageHeader, PageNote, PageSheet } from \"@/components/blocks/sidebar-shared/sidebar-page\"\nimport { SidebarProvider } from \"@/components/ui/sidebar\"\nimport { cn } from \"@/lib/utils\"\n\nconst START = new Date(2026, 8, 25)\nconst DEFAULT_VISIBLE = [\"Personal\", \"Work\", \"Holidays\"]\n\nexport default function Page({ contained = false }: { contained?: boolean }) {\n  const c = containedClasses(contained)\n  const [date, setDate] = React.useState(START)\n  const [visible, setVisible] = React.useState(DEFAULT_VISIBLE)\n\n  return (\n    <SidebarProvider className={cn(\"overflow-clip\", c.provider)}>\n      <SidebarLeft className={c.sidebar} />\n      <PageSheet className={c.inset}>\n        <PageHeader crumbs={[\"Project plan & to-dos\"]} sticky />\n        <PageBody title=\"Project plan & to-dos\" kicker={formatDay(date)}>\n          <PageNote title=\"Two pads, one page\" pose=\"carry\">\n            Notes on the left, your week on the right. <span className=\"max-lg:hidden\">Pick a day in the month and the kicker above follows.</span>\n            <span className=\"lg:hidden\">Widen the window and the week pad opens.</span>\n          </PageNote>\n        </PageBody>\n      </PageSheet>\n      <SidebarRight contained={contained} date={date} onDateChange={setDate} visible={visible} onVisibleChange={setVisible} />\n    </SidebarProvider>\n  )\n}\n",
+      "type": "registry:component",
+      "target": "@components/blocks/sidebar-15/page.tsx"
+    }
+  ],
+  "meta": {
+    "tags": [
+      "sidebar",
+      "calendar",
+      "app"
+    ]
+  },
+  "docs": "Installed the \"Sidebar 15\" block into your components directory under blocks/sidebar-15/.\nImport it: import Page from \"<your components alias>/blocks/sidebar-15/page\"",
+  "categories": [
+    "sidebar"
+  ],
+  "type": "registry:block"
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "lettering",
+  "title": "Lettering",
+  "description": "Display titles in the script font with a riso print look: ink with a second colour printed a hair off register. Pure CSS text-shadow, so the words are real text at any size. No gradients, no filters.",
+  "registryDependencies": [
+    "https://kevintngo.github.io/looseleaf/r/handwritten.json",
+    "https://kevintngo.github.io/looseleaf/r/looseleaf-theme.json"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/lettering.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { Handwritten } from \"@/components/ui/handwritten\"\nimport { cn } from \"@/lib/utils\"\n\nconst SIZE = {\n  sm: \"text-3xl\",\n  md: \"text-5xl\",\n  lg: \"text-6xl\",\n  xl: \"text-7xl sm:text-8xl\",\n  hero: \"text-7xl sm:text-9xl\",\n} as const\n\nconst TONE = {\n  marker: \"[--ll-riso:var(--ll-marker)]\",\n  tomato: \"[--ll-riso:var(--ll-tomato)]\",\n  tangerine: \"[--ll-riso:var(--ll-tangerine)]\",\n  lemon: \"[--ll-riso:var(--ll-lemon)]\",\n  grass: \"[--ll-riso:var(--ll-grass)]\",\n  teal: \"[--ll-riso:var(--ll-teal)]\",\n  sky: \"[--ll-riso:var(--ll-sky)]\",\n  grape: \"[--ll-riso:var(--ll-grape)]\",\n  bubblegum: \"[--ll-riso:var(--ll-bubblegum)]\",\n} as const\n\nconst DUOTONE =\n  \"[text-shadow:calc(0.055em*var(--ll-misreg-k))_calc(0.045em*var(--ll-misreg-k))_0_var(--ll-riso),calc(-0.035em*var(--ll-misreg-k))_calc(0.07em*var(--ll-misreg-k))_0_var(--ll-riso-b)]\"\n\nfunction Lettering({\n  as: Comp = \"h2\",\n  size = \"lg\",\n  tone = \"marker\",\n  duotone,\n  wobble = 0,\n  seed,\n  className,\n  style,\n  children,\n  ...props\n}: Omit<React.ComponentProps<\"h2\">, \"ref\"> & {\n  as?: React.ElementType\n  size?: keyof typeof SIZE\n  tone?: keyof typeof TONE\n  duotone?: keyof typeof TONE\n  wobble?: number\n  seed?: string | number\n  ref?: React.Ref<HTMLElement>\n}) {\n  const second = duotone ? ({ \"--ll-riso-b\": `var(--ll-${duotone})` } as React.CSSProperties) : undefined\n  return (\n    <Comp\n      data-slot=\"lettering\"\n      data-size={size}\n      style={{ ...second, ...style }}\n      className={cn(\"ll-riso font-script leading-[0.95] font-bold tracking-tight text-balance text-ink\", SIZE[size], TONE[tone], duotone && DUOTONE, className)}\n      {...props}\n    >\n      {wobble > 0 ? (\n        <Handwritten as=\"span\" strength={wobble} seed={seed}>\n          {children}\n        </Handwritten>\n      ) : (\n        children\n      )}\n    </Comp>\n  )\n}\n\nexport { Lettering }\n",
+      "type": "registry:ui",
+      "target": "@ui/lettering.tsx"
+    }
+  ],
+  "meta": {
+    "status": "new",
+    "related": [
+      "typography",
+      "signature",
+      "handwritten",
+      "quote"
+    ],
+    "a11y": [
+      "A real heading (or the element you choose): headings keep their level and outline. The offset colour is decoration; the ink text has 14:1 contrast on paper.",
+      "Use one Lettering as the page's h1 at most; for repeated display text prefer p or span.",
+      "The riso offset is a text-shadow, so it scales with the text, follows the density knob (calm = none) and disappears in Windows high contrast."
+    ],
+    "usage": "import { Lettering } from \"@/components/ui/lettering\"\n\nexport function Example() {\n  return (\n    <Lettering as=\"h1\" size=\"xl\" tone=\"teal\">\n      Paper Club\n    </Lettering>\n  )\n}",
+    "parts": [
+      "Lettering"
+    ]
+  },
+  "categories": [
+    "Typography"
+  ],
+  "type": "registry:ui"
+}

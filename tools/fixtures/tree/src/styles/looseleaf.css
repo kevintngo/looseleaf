@@ -1,0 +1,155 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./fonts.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-pencil: var(--pencil);
+  --color-highlighter: var(--highlighter);
+
+  --font-hand: "Kalam", "Segoe Print", cursive;
+  --font-script: "Caveat", cursive;
+  --font-type: "Special Elite", ui-monospace, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --shadow-sheet: var(--ll-shadow-sheet);
+  --animate-wobble: ll-wobble 2.4s ease-in-out infinite;
+  --animate-soak: ll-soak 520ms ease-out both;
+
+  @keyframes ll-wobble {
+    0%,
+    100% {
+      transform: rotate(-0.6deg);
+    }
+    50% {
+      transform: rotate(0.6deg);
+    }
+  }
+}
+
+@keyframes ll-soak {
+  from {
+    opacity: 0.15;
+  }
+  55% {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+:root {
+  --background: #ece6da;
+  --foreground: #2a2420;
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --border: #a9bfdc;
+  --ring: #2c4f9e;
+  --paper: #f8f5ee;
+  --ink: #2a2420;
+  --pencil: #66615a;
+  --highlighter: oklch(0.9 0.15 100);
+
+  --radius: 0.5rem;
+  --ll-tilt: 0.6deg;
+  --ll-ink-rgb: 42, 36, 32;
+  --ll-shadow-sheet: 0 1px 1px rgb(var(--ll-ink-rgb) / 0.2), 0 6px 14px -6px rgb(var(--ll-ink-rgb) / 0.35);
+  --ll-motion: 1;
+  --ll-grain: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4z8DwHwAFAAH/iZk9HQAAAABJRU5ErkJggg==");
+}
+
+.dark {
+  --background: #292623;
+  --foreground: #e6dccb;
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --border: #4a5f80;
+  --ring: #8fb0ff;
+  --paper: #34302b;
+  --ink: #e6dccb;
+  --pencil: #b3aa9b;
+  --highlighter: oklch(0.55 0.1 100);
+
+  --ll-ink-rgb: 230, 220, 203;
+}
+
+[data-theme="forest"] {
+  --paper: #dfe9d8;
+  --ink: #23342b;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-hand;
+  }
+}
+
+@layer components {
+  .ll-sheet {
+    background-color: var(--paper);
+    background-image: var(--ll-grain);
+    box-shadow: var(--ll-shadow-sheet);
+    rotate: var(--ll-tilt);
+    transition: rotate 0.2s ease-out;
+
+    &:hover {
+      rotate: 0deg;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .dark & {
+      box-shadow: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+}
+
+@utility ll-underline {
+  text-decoration: underline wavy;
+  text-decoration-color: var(--ink);
+  &:hover {
+    text-decoration-style: solid;
+  }
+}
+
+@utility ll-rot-* {
+  rotate: calc(--value(integer) * 1deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ll-motion: 0;
+  }
+  .animate-wobble {
+    animation: none;
+  }
+}
+
+:root[data-motion="reduced"] {
+  --ll-motion: 0;
+}
+
+@property --ll-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
