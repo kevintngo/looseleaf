@@ -12,6 +12,8 @@ export function itemCss(): string {
 
 function build(): string {
   const t = EDGE_TH
+  const end = `${t / 2 - 0.5}px`
+  const span = `calc(100% - ${t - 1}px)`
   const frames = Array.from({ length: ITEM_FRAMES }, (_, f) => ({
     eh: edgeTile(`item|edge-h|${f}`, false),
     ev: edgeTile(`item|edge-v|${f}`, true),
@@ -29,24 +31,21 @@ function build(): string {
     `[data-slot=item],[data-slot=item-media],[data-slot=item-separator]{${vars}--ll-it-m:${outline(0)};--ll-it-r:${v('ru', 0)}}` +
     pick +
     `[data-slot=item],[data-slot=item-media][data-variant=icon]{position:relative;isolation:isolate}` +
-    `[data-slot=item][data-variant=outline]::before,[data-slot=item-media][data-variant=icon]::before{content:"";position:absolute;inset:-${t / 2}px -${t / 2 + 3}px;z-index:-1;pointer-events:none;background:var(--ll-pencil);opacity:.8;` +
+    `[data-slot=item][data-variant=outline]::before,[data-slot=item-media][data-variant=icon]::before{content:"";position:absolute;inset:-${t / 2}px;z-index:-1;pointer-events:none;background:var(--ll-pencil);opacity:.8;` +
     both('mask-image', 'var(--ll-it-m)') +
-    both('mask-size', `${EDGE_LEN}px ${t}px,${EDGE_LEN}px ${t}px,${t}px ${EDGE_LEN}px,${t}px ${EDGE_LEN}px`) +
-    both('mask-position', '0 0,0 100%,3px 0,calc(100% - 3px) 0') +
-    both('mask-repeat', 'repeat-x,repeat-x,repeat-y,repeat-y') +
-    `}` +
-    `[data-slot=item-media][data-variant=icon]::before{inset:-${t / 2}px;` +
-    both('mask-position', '0 0,0 100%,0 0,100% 0') +
+    both('mask-size', `${span} ${t}px,${span} ${t}px,${t}px ${span},${t}px ${span}`) +
+    both('mask-position', `${end} 0,${end} 100%,0 ${end},100% ${end}`) +
+    both('mask-repeat', 'no-repeat') +
     `}` +
     `[data-slot=item-media][data-variant=icon]{background-color:color-mix(in srgb,var(--ll-paper-shade) 75%,transparent)}` +
-    `[data-slot=item][data-variant=muted]{background-color:color-mix(in srgb,var(--ll-paper-shade) 65%,transparent);border-radius:3px 8px 4px 9px/8px 3px 9px 4px}` +
-    `[data-slot=item-group][data-ruled] [data-slot=item]::after{content:"";position:absolute;left:-3px;right:-3px;bottom:-${t / 2}px;height:${t}px;z-index:-1;pointer-events:none;background:var(--ll-rule-blue);opacity:.85;` +
+    `[data-slot=item][data-variant=muted]{background-color:color-mix(in srgb,var(--ll-paper-shade) 65%,transparent);border-radius:6px}` +
+    `[data-slot=item-group][data-ruled] [data-slot=item]::after{content:"";position:absolute;left:0;right:0;bottom:-${t / 2}px;height:${t}px;z-index:-1;pointer-events:none;background:var(--ll-rule-blue);opacity:.85;` +
     both('mask-image', 'var(--ll-it-r)') +
     both('mask-size', `${EDGE_LEN}px ${t}px`) +
     both('mask-repeat', 'repeat-x') +
     `}` +
     `[data-slot=item-separator][data-variant=pencil]{position:relative;isolation:isolate}` +
-    `[data-slot=item-separator][data-variant=pencil]::before{content:"";position:absolute;left:-3px;right:-3px;top:50%;height:${t}px;margin-top:-${t / 2}px;z-index:-1;pointer-events:none;background:var(--ll-pencil);opacity:.75;` +
+    `[data-slot=item-separator][data-variant=pencil]::before{content:"";position:absolute;left:0;right:0;top:50%;height:${t}px;margin-top:-${t / 2}px;z-index:-1;pointer-events:none;background:var(--ll-pencil);opacity:.75;` +
     both('mask-image', 'var(--ll-it-r)') +
     both('mask-size', `${EDGE_LEN}px ${t}px`) +
     both('mask-repeat', 'repeat-x') +

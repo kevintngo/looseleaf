@@ -23,8 +23,8 @@ export const progressRecipe = defineRecipe<Record<string, never>>({
       const gap = clamp(w / 60, ctx.calm ? 5.5 : 4, 40)
       void gap
       solidFill(ink, body, 'paper-shade', { alpha: 1, material: 'wash' })
-      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false })
-      else box(ink, 0, 0, w, h, { pen: 'ink', corner: r, ghost: false, opts: { width: 1.05, simple: w > 240 } })
+      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r })
+      else box(ink, 0, 0, w, h, { pen: 'ink', corner: r, opts: { width: 1.05, simple: w > 240 } })
     })
   },
 })

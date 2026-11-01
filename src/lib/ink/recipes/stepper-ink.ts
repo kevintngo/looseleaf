@@ -1,9 +1,9 @@
 import { wash } from '@/lib/ink/fills'
-import { roundRectPoly, seg } from '@/lib/ink/geom'
+import { roundRectPoly } from '@/lib/ink/geom'
 import { Ink } from '@/lib/ink/builder'
 import { defineRecipe } from '@/lib/ink/recipes'
 import { clamp } from '@/lib/ink/rng'
-import { box, dashedBox, focusRing, squiggle, tallyLines, underline } from '@/lib/ink/shapes'
+import { box, dashedBox, focusRing, squiggle, tallyLines, underline, RULER } from '@/lib/ink/shapes'
 
 export interface StepperParams {
   disabled?: boolean
@@ -12,7 +12,7 @@ export interface StepperParams {
 }
 
 function tick(ink: Ink, x: number, h: number, alpha: number, pen: 'pencil.fine' | 'red.fine' = 'pencil.fine'): void {
-  ink.stroke(seg(x, 6, x + 0.6, h - 6, 0.6, 3), pen, { alpha, start: 'soft', end: 'flick', wobble: 0.4, simple: true })
+  ink.stroke([[x, 6], [x, h - 6]], pen, { ...RULER, alpha, simple: true })
 }
 
 export const stepperRecipe = defineRecipe<StepperParams>({
@@ -38,12 +38,12 @@ export const stepperRecipe = defineRecipe<StepperParams>({
       return
     }
     ctx.lazy('focus', (f) => focusRing(f, 0, 0, w, h, { r }))
-    ctx.lazy('hover', (hv) => box(hv, 0.6, 0.6, w - 1.2, h - 1.2, { pen: invalid ? 'red.fine' : 'ink.fine', corner: r, style: 'loop', loose: 0.7, ghost: false, opts: { alpha: invalid ? 0.7 : 0.75 } }))
+    ctx.lazy('hover', (hv) => box(hv, 0.6, 0.6, w - 1.2, h - 1.2, { pen: invalid ? 'red.fine' : 'ink.fine', corner: r, loose: 0.7, opts: { alpha: invalid ? 0.7 : 0.75 } }))
     if (ctx.lazyOnly) return
     if (invalid) {
       ink.layer('invalid', () => {
         ink.poly('under', body, 'slip', 0.7)
-        box(ink, 0, 0, w, h, { pen: ctx.calm ? 'red.fine' : 'red', corner: r, style: ctx.calm ? 'loop' : 'two', ...(ctx.calm ? { stubs: false } : {}), ghost: false, opts: { width: ctx.calm ? 1.1 : 1.25 } })
+        box(ink, 0, 0, w, h, { pen: ctx.calm ? 'red.fine' : 'red', corner: r, opts: { width: ctx.calm ? 1.1 : 1.25 } })
         if (!ctx.calm) squiggle(ink, 6, h + 5, clamp(w - 40, 24, 90), { pen: 'redfelt.fine', h: 7, amp: 0.8 })
         if (roomy) {
           tick(ink, h, h, 0.7, 'red.fine')
@@ -54,8 +54,8 @@ export const stepperRecipe = defineRecipe<StepperParams>({
     }
     ink.layer('rest', () => {
       ink.poly('under', body, 'slip', 0.7)
-      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false })
-      else box(ink, 0, 0, w, h, { pen: 'pencil', corner: r, style: 'two', ghost: false, opts: { width: 1.15 } })
+      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r })
+      else box(ink, 0, 0, w, h, { pen: 'pencil', corner: r, opts: { width: 1.15 } })
       if (roomy) {
         tick(ink, h, h, 0.8)
         tick(ink, w - h, h, 0.8)

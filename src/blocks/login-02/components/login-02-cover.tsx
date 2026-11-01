@@ -1,6 +1,5 @@
 import { Mascot } from "@/components/ui/mascot"
 import { Paper } from "@/components/ui/paper"
-import { Sticker } from "@/components/ui/sticker"
 import { StickyNote } from "@/components/ui/sticky-note"
 
 function LoginCover() {
@@ -14,9 +13,6 @@ function LoginCover() {
       <StickyNote color="yellow" fastener="pin" tilt={-3} seed="login-02-note" className="absolute start-0 top-[13rem] min-h-0 w-28 px-3 pt-6 pb-3 text-lg">
         psst: tab works too
       </StickyNote>
-      <Sticker name="rocket" size={84} rotate={12} className="absolute end-0 top-0" />
-      <Sticker name="coffee-to-go" size={78} rotate={-9} className="absolute start-1 top-[22.5rem]" />
-      <Sticker name="sun-shades" size={72} rotate={8} className="absolute end-1 top-[24.5rem]" />
     </div>
   )
 }

@@ -2,6 +2,8 @@ import type { Line, PenName, PenSpec, Pt, StrokeOpts } from '@/lib/ink/types'
 import type { Ink } from '@/lib/ink/builder'
 import { clamp, type Rng } from '@/lib/ink/rng'
 import { TAU, seg } from '@/lib/ink/geom'
+import { n } from '@/lib/ink/paint'
+import { pen } from '@/lib/ink/pens'
 
 export interface ShapeOpts {
   pen?: PenName | PenSpec
@@ -52,21 +54,13 @@ export function chain(vs: Pt[], bows: number[], rad: number, rng: Rng, cnt = 14)
   return out
 }
 
-export function lineLines(rng: Rng, x1: number, y1: number, x2: number, y2: number, o: { bow?: number; single?: boolean } = {}): Line[] {
-  const len = Math.hypot(x2 - x1, y2 - y1)
-  const bow = clamp(rng.gauss(0, o.bow ?? 0.006) * len, -4, 4)
-  if (len > 320 && !o.single) {
-    const m = 0.45 + rng.range(0, 0.17)
-    const mx = x1 + (x2 - x1) * m, my = y1 + (y2 - y1) * m
-    return [
-      { pts: seg(x1, y1, mx + 3, my + rng.gauss(0, 0.5), bow * 0.5, Math.ceil((len * m) / 12)), o: { end: 'soft', start: 'soft' } },
-      { pts: seg(mx - 2, my + rng.gauss(0, 0.6), x2, y2, bow * 0.5, Math.ceil((len * (1 - m)) / 12)), o: { start: 'soft', end: 'flick' } },
-    ]
-  }
-  return [{ pts: seg(x1, y1, x2, y2, bow, Math.max(4, Math.ceil(len / 12))), o: { end: 'flick' } }]
+export const RULER: StrokeOpts = { poly: true, raw: true, start: 'soft', end: 'soft', speed: 1, dry: 0 }
+
+export function lineLines(x1: number, y1: number, x2: number, y2: number): Line[] {
+  return [{ pts: [[x1, y1], [x2, y2]], o: RULER }]
 }
-export function line(ink: Ink, x1: number, y1: number, x2: number, y2: number, o: ShapeOpts & { bow?: number; single?: boolean } = {}): void {
-  put(ink, 'line', (r) => lineLines(r, x1, y1, x2, y2, o), 'pencil', o)
+export function line(ink: Ink, x1: number, y1: number, x2: number, y2: number, o: ShapeOpts = {}): void {
+  put(ink, 'line', () => lineLines(x1, y1, x2, y2), 'pencil', o)
 }
 
 export function squiggleLines(rng: Rng, x: number, y: number, w: number, o: { h?: number; amp?: number; wl?: number } = {}): Line[] {
@@ -99,9 +93,8 @@ export function squiggle(ink: Ink, x: number, y: number, w: number, o: ShapeOpts
 
 export function underlineLines(rng: Rng, x: number, y: number, w: number, o: { kind?: 'single' | 'double' | 'wavy' } = {}): Line[] {
   if (o.kind === 'wavy') return squiggleLines(rng, x, y, w, { h: 7, amp: 0.85 })
-  const ruler: StrokeOpts = { poly: true, raw: true, start: 'soft', end: 'soft', speed: 1, dry: 0 }
-  const out: Line[] = [{ pts: [[x, y], [x + w, y]], o: ruler }]
-  if (o.kind === 'double') out.push({ pts: [[x, y + 3.6], [x + w, y + 3.6]], o: ruler })
+  const out: Line[] = [{ pts: [[x, y], [x + w, y]], o: RULER }]
+  if (o.kind === 'double') out.push({ pts: [[x, y + 3.6], [x + w, y + 3.6]], o: RULER })
   return out
 }
 export function underline(ink: Ink, x: number, y: number, w: number, o: ShapeOpts & { kind?: 'single' | 'double' | 'wavy' } = {}): void {
@@ -121,11 +114,7 @@ export function strike(ink: Ink, x: number, y: number, w: number, o: ShapeOpts &
 }
 
 export interface BoxOpts {
-  style?: 'two' | 'loop' | 'four'
-  stubs?: boolean
   corner?: number
-  ov?: number
-  ghost?: number | false
   loose?: number
   wobble?: number
 }
@@ -135,60 +124,17 @@ export function boxLines(rng: Rng, x: number, y: number, w: number, h: number, o
   const m = Math.min(w, h)
   const jc = clamp(0.012 * m, 0.12, 0.4) * k
   const tilt = rng.gauss(0, 0.0012) * k
-  const ov = clamp(o.ov ?? 0.13 * m, 1.4, 5.2) * k
   const rad = o.corner ?? clamp(m * 0.09, 0.9, 3.4)
-  let style = o.style ?? 'loop'
-  if (style === 'four' && rad > 4.5) style = 'two'
-  const stubs = style === 'four' ? true : (o.stubs ?? false)
-  const over = (): number => (stubs ? (rng.chance(0.14) ? -rng.range(0.1, 0.35) * ov : rng.range(0.35, 1) * ov) : rng.range(-0.3, 0.3) * ov * 0.5)
   const C = (px: number, py: number, sy: number): Pt => [px + rng.gauss(0, jc), py + rng.gauss(0, jc) + sy * tilt * w]
   const TL = C(x, y, 0), TR = C(x + w, y, 1), BR = C(x + w, y + h, 1), BL = C(x, y + h, 0)
-  const so: StrokeOpts = { speed: 1, wobble: 0.28 * (o.wobble ?? 1), dry: 0 }
   const lift = (l: number): number => rng.range(0.05, 0.32) * clamp(l / 110, 0.3, 1.2) * k
   const drift = (l: number): number => rng.gauss(0, 0.1) * clamp(l / 40, 0.4, 1) * k
-  const ext = (a: Pt, b: Pt, e: number): Pt => {
-    const d = dirv(a, b)
-    return [b[0] + d[0] * e, b[1] + d[1] * e]
-  }
-  const out: Line[] = []
-  if (o.ghost !== false && o.ghost !== undefined && m >= 24 && rng.chance(o.ghost)) {
-    const g = rng.pick([[TL, TR], [BL, BR], [TL, BL]] as Array<[Pt, Pt]>)
-    const s0 = ext(g[1], g[0], rng.range(2, 6)), e0 = ext(g[0], g[1], rng.range(2, 6))
-    out.push({ pts: seg(s0[0] + 0.8, s0[1] + 1.2, e0[0] + 0.8, e0[1] + 1.2, 0.3, 4), pen: 'pencil', o: { alpha: 0.32, width: 0.7, end: 'soft', start: 'soft', wobble: 0.5, simple: true } })
-  }
-  if (style === 'four') {
-    const edges: Array<[Pt, Pt, boolean]> = [[TL, TR, true], [TR, BR, false], [BR, BL, true], [TL, BL, false]]
-    for (const [a, b, hz] of edges) {
-      const s = ext(b, a, over()), e = ext(a, b, over())
-      const l = Math.hypot(e[0] - s[0], e[1] - s[1])
-      const bow = hz ? (e[0] - s[0] > 0 ? -lift(l) : lift(l)) : drift(l)
-      out.push({ pts: seg(s[0], s[1], e[0], e[1], bow, Math.max(4, Math.ceil(l / 14))), o: { ...so, end: rng.chance(0.4) ? 'pool' : 'flick' } })
-    }
-    return out
-  }
-  if (style === 'loop') {
-    const t0 = rng.range(0.35, 0.65)
-    const S: Pt = [TL[0] + (TR[0] - TL[0]) * t0, TL[1] + (TR[1] - TL[1]) * t0]
-    const run = Math.min(0.06 * w, rng.range(1.6, 2.6))
-    const vs: Pt[] = [S, TR, BR, BL, TL, [S[0] + run, S[1]]]
-    const bows = [-lift(w * (1 - t0)), drift(h), lift(w), drift(h), -lift(w * t0 + run)]
-    out.push({ pts: chain(vs, bows, rad, rng), o: { ...so, end: 'soft', start: 'soft' } })
-    return out
-  }
-  if (rad > 4.5) {
-    const fa = rng.range(0.3, 0.7), fb = rng.range(0.3, 0.7)
-    const onL = (f: number, e: number): Pt => [TL[0] + (BL[0] - TL[0]) * f, TL[1] + (BL[1] - TL[1]) * f + e]
-    const onR = (f: number, e: number): Pt => [TR[0] + (BR[0] - TR[0]) * f, TR[1] + (BR[1] - TR[1]) * f + e]
-    out.push({ pts: chain([onL(fa, over()), TL, TR, onR(fb, over())], [drift(h), -lift(w), drift(h)], rad, rng), o: { ...so, end: 'flick', start: 'pool' } })
-    out.push({ pts: chain([onR(fb, -over() * 0.6), BR, BL, onL(fa, -over())], [drift(h), lift(w), drift(h)], rad, rng), o: { ...so, end: 'flick', start: 'soft' } })
-    return out
-  }
-  const A0 = ext(TR, TL, over()), A2 = ext(TR, BR, over())
-  out.push({ pts: chain([A0, TR, A2], [-lift(w), drift(h)], rad, rng), o: { ...so, end: 'flick', start: 'pool' } })
-  const B0 = ext(BL, TL, over() * 0.6)
-  const B3: Pt = [BR[0] + over(), BR[1] + rng.gauss(0, 0.3)]
-  out.push({ pts: chain([B0, BL, B3], [drift(h), -lift(w)], rad, rng), o: { ...so, end: 'flick', start: 'soft' } })
-  return out
+  const t0 = rng.range(0.35, 0.65)
+  const S: Pt = [TL[0] + (TR[0] - TL[0]) * t0, TL[1] + (TR[1] - TL[1]) * t0]
+  const run = Math.min(0.06 * w, rng.range(1.6, 2.6))
+  const vs: Pt[] = [S, TR, BR, BL, TL, [S[0] + run, S[1]]]
+  const bows = [-lift(w * (1 - t0)), drift(h), lift(w), drift(h), -lift(w * t0 + run)]
+  return [{ pts: chain(vs, bows, rad, rng), o: { speed: 1, wobble: 0.28 * (o.wobble ?? 1), dry: 0, end: 'soft', start: 'soft' } }]
 }
 export function box(ink: Ink, x: number, y: number, w: number, h: number, o: ShapeOpts & BoxOpts = {}): void {
   put(ink, 'box', (r) => boxLines(r, x, y, w, h, o), 'ink', o)
@@ -470,7 +416,7 @@ export function focusRingLines(rng: Rng, x: number, y: number, w: number, h: num
   const X = x - gap, Y = y - gap, W = w + gap * 2, H = h + gap * 2
   if (rect) {
     const R = (o.r ?? 4) + gap
-    out.push(...boxLines(rng.fork('ring'), X, Y, W, H, { style: 'loop', corner: R, stubs: false, ghost: false, ov: 1.5 }))
+    out.push(...boxLines(rng.fork('ring'), X, Y, W, H, { corner: R }))
   } else {
     out.push(...loopLines(rng.fork('ring'), x + w / 2, y + h / 2, W / 2, H / 2, { clean: true }))
   }
@@ -530,18 +476,24 @@ export function dashedBoxLines(rng: Rng, x: number, y: number, w: number, h: num
     return [closed[i - 1][0] + (closed[i][0] - closed[i - 1][0]) * t, closed[i - 1][1] + (closed[i][1] - closed[i - 1][1]) * t]
   }
   const dash = o.dash ?? clamp(Math.min(w, h) * 0.3, 5, 9), gap = o.gap ?? dash * 0.55
+  const count = Math.max(4, Math.round(per_ / (dash + gap)))
+  const step = per_ / count
+  const len = step * (dash / (dash + gap))
+  const d0 = rng() * step
   const out: Line[] = []
-  let d = rng() * (dash + gap)
-  const end = per_ + d - 3
-  while (d < end) {
-    const len = dash * rng.range(0.75, 1.2)
+  for (let i = 0; i < count; i++) {
+    const d = d0 + i * step
     const pts: Pt[] = []
-    for (let k = 0; k <= 3; k++) pts.push(at(d + (len * k) / 3))
-    out.push({ pts, o: { start: 'soft', end: 'soft', wobble: 0.5, simple: true } })
-    d += len + gap * rng.range(0.7, 1.3)
+    for (let k = 0; k <= 4; k++) pts.push(at(d + (len * k) / 4))
+    out.push({ pts, o: { ...RULER, simple: true } })
   }
   return out
 }
 export function dashedBox(ink: Ink, x: number, y: number, w: number, h: number, o: ShapeOpts & { r?: number; dash?: number; gap?: number } = {}): void {
-  put(ink, 'dash', (r) => dashedBoxLines(r, x, y, w, h, o), 'pencil', o)
+  const P = pen(o.pen ?? 'pencil')
+  const color = o.opts?.color ?? P.color
+  const sw = P.W * 0.85 * (o.opts?.width ?? 1) * ink.knobs.width
+  let d = ''
+  for (const l of dashedBoxLines(ink.next('dash'), x, y, w, h, o)) d += 'M' + l.pts.map((p) => `${n(p[0], 100)} ${n(p[1], 100)}`).join('L')
+  ink.flat(P.kind === 'pencil' ? 'pencil' : 'felt', d, color, P.alpha * (o.opts?.alpha ?? 1), { stroke: color, sw, bbox: [x - sw, y - sw, x + w + sw, y + h + sw] })
 }

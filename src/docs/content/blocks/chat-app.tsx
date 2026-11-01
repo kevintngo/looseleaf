@@ -3,7 +3,7 @@ import { Desk } from "@/components/ui/desk"
 
 export default function ChatAppPreview() {
   return (
-    <Desk objects={["coffee", "pencil"]} seed="chat-app-desk">
+    <Desk objects={["pencil"]} seed="chat-app-desk">
       <ChatApp />
     </Desk>
   )

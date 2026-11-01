@@ -165,7 +165,7 @@ export const notebookCoverRecipe = defineRecipe<NotebookCoverParams>({
       const rtl = ctx.dir === 'rtl'
       ink.raw(shadowMark('lift', rtl ? [9, 3, 3, 9] : [3, 9, 9, 3]) + (rtl ? `<g transform="${MIRROR(w)}">${s}</g>` : s), 'under')
       ink.grow([-1, -1, w + 1, h + 1])
-      if (!ctx.calm) box(ink, 0.5, 0.5, w - 1, h - 1, { pen: 'ink.fine', corner: 9, ghost: false, opts: { alpha: 0.5, simple: true } })
+      if (!ctx.calm) box(ink, 0.5, 0.5, w - 1, h - 1, { pen: 'ink.fine', corner: 9, opts: { alpha: 0.5, simple: true } })
     })
   },
 })

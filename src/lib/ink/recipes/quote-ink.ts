@@ -1,10 +1,10 @@
-import { seg } from '@/lib/ink/geom'
 import { pen as penSpec } from '@/lib/ink/pens'
 import { defineRecipe } from '@/lib/ink/recipes'
 import { markRevealId, revealMark } from '@/lib/ink/recipes/mark-reveal-ink'
 import { markPen, type MarkPen, type MarkWeight } from '@/lib/ink/recipes/text-marks-ink'
 import type { Rng } from '@/lib/ink/rng'
 import type { Line, PenName, PenSpec, Pt } from '@/lib/ink/types'
+import { RULER } from '@/lib/ink/shapes'
 
 export interface QuoteParams {
   tone: MarkPen
@@ -52,7 +52,7 @@ export const quoteRecipe = defineRecipe<QuoteParams>({
       else ink.lines(lines, pen, { width })
       if (p.rule) {
         const x = ctx.dir === 'rtl' ? w - 3 : 3
-        ink.lines([{ pts: seg(x, s + 10, x + 0.6, h - c - 4, 1.4, Math.max(4, Math.round(h / 18))), o: { start: 'soft', end: 'flick', wobble: 0.6 } }], 'pencil', { width: 1.1 })
+        ink.lines([{ pts: [[x, s + 10], [x, h - c - 4]], o: RULER }], 'pencil', { width: 1.1 })
       }
     })
   },

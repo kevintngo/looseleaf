@@ -9,6 +9,7 @@ import { Icon } from "@/components/ui/icon"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Paper } from "@/components/ui/paper"
+import { Separator } from "@/components/ui/separator"
 import { Tape } from "@/components/ui/tape"
 import { InkProvider } from "@/lib/ink/react"
 import { Stage } from "@/docs/kit"
@@ -61,16 +62,19 @@ function Ribbons() {
   )
 }
 
-function Unclosed() {
+function Ruled() {
   return (
-    <Panel n={2} label="nothing closes">
-      <Specimen caption="a circle that runs past its start">
+    <Panel n={2} label="ruled straight, eased at the ends">
+      <Specimen caption="a rule drawn against a ruler">
+        <Separator className="w-48" />
+      </Specimen>
+      <Specimen caption="a box that closes">
+        <Button variant="outline">Cancel</Button>
+      </Specimen>
+      <Specimen caption="a hand loop, for notes only">
         <p className="m-0 text-xl">
           Please reply by <Circled tone="red">Friday</Circled>.
         </p>
-      </Specimen>
-      <Specimen caption="a box whose corners cross">
-        <Button variant="outline">Cancel</Button>
       </Specimen>
     </Panel>
   )
@@ -228,11 +232,11 @@ export const LAWS: readonly Law[] = [
   },
   {
     n: 2,
-    title: "Nothing closes",
-    rule: "Ends overshoot or fall short.",
-    why: "People do not stop a pen on a point. A circle passes its start, a box's corners cross, a tick flicks out. Perfect joins are what make a drawing look digital.",
-    meet: "Circled, Bracket, and the outline of every button and field.",
-    specimen: () => <Unclosed />,
+    title: "Straight lines are ruled",
+    rule: "Rules stay level, outlines close, ends ease off.",
+    why: "A careful hand draws its straight lines against a ruler and closes its boxes. The hand still shows: every rule eases in and out at its ends, and a loop meets itself with a soft overlap instead of a hard join. Only notes, like a circled word, run past their start.",
+    meet: "Every rule, divider and outline. Circled and Bracket are the loose exceptions.",
+    specimen: () => <Ruled />,
   },
   {
     n: 3,

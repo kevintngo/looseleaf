@@ -1,6 +1,6 @@
 import { bandFill, blobFill, wash } from '@/lib/ink/fills'
 import { pillPoly, roundRectPoly, seg } from '@/lib/ink/geom'
-import { chain, dashedBox, focusRing } from '@/lib/ink/shapes'
+import { chain, dashedBox, focusRing, RULER } from '@/lib/ink/shapes'
 import { clamp } from '@/lib/ink/rng'
 import { defineRecipe } from '@/lib/ink/recipes'
 import type { Ink } from '@/lib/ink/builder'
@@ -140,10 +140,7 @@ export const bubbleRecipe = defineRecipe<BubbleParams>({
         if (calm) return
         const d = 3.6
         ink.lines(
-          [
-            { pts: seg(r + d + 2, h + d, w + d - 1, h + d, 0.5, 6), o: { start: 'soft', end: 'flick' } },
-            { pts: seg(w + d, r + d + 2, w + d, h + d - 1, 0.4, 4), o: { start: 'soft', end: 'flick' } },
-          ],
+          [{ pts: chain([[r + d + 2, h + d], [w + d, h + d], [w + d, r + d + 2]], [0, 0], Math.max(2.5, r), ink.next('drop')), o: RULER }],
           'ink.fine',
           { width: 1.35 },
         )

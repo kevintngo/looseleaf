@@ -412,37 +412,19 @@ export function coffeeRing(seed: string | number, o: CoffeeRingOpts = {}): InkRe
   const ink = make(seed, o)
   const R0 = o.radius ?? 48
   const r = ink.next('ring')
-  const N = 96
-  const wob = noise1(r.fork('w1'), N, 22)
-  const wob2 = noise1(r.fork('w2'), N, 4)
-  const dens = noise1(r.fork('d'), N, 14)
+  const p1 = r.range(0, TAU), p2 = r.range(0, TAU)
   const gapC = r.range(0, TAU), gapW = r.range(0.35, 0.8)
-  const strong = (i: number) => {
-    let da = (((i / N) * TAU - gapC) % TAU + TAU) % TAU
-    if (da > Math.PI) da -= TAU
-    return clamp(0.66 + 0.38 * dens(i), 0.15, 1) * (1 - 0.85 * Math.exp(-(da * da) / (2 * gapW * gapW)))
-  }
-  const pt = (i: number, R: number): Pt => {
-    const a = (i / N) * TAU
-    const rr = R * (1 + 0.02 * wob(i) + 0.006 * wob2(i))
+  const pt = (a: number, R: number): Pt => {
+    const rr = R * (1 + 0.008 * Math.sin(2 * a + p1) + 0.005 * Math.sin(3 * a + p2))
     return [R0 + Math.cos(a) * rr, R0 + Math.sin(a) * rr * 0.98]
   }
-  const tide = (R: number, k: number, from = 0, to = N) => {
-    let s = ''
-    for (let i = from; i < to; i += 2) {
-      const q: Pt[] = [pt(i, R), pt(i + 1, R), pt(Math.min(i + 3, N), R)]
-      const st = strong(i)
-      s += pathTag(poly(q), { stroke: tok('orange-text'), sw: 0.9 + 0.9 * st, op: clamp(0.34 * k * st, 0, 1) })
-    }
-    return s
+  const arc = (R: number, a0: number, a1: number): Pt[] => {
+    const steps = Math.max(8, Math.ceil(((a1 - a0) * R) / 3))
+    return Array.from({ length: steps + 1 }, (_, i) => pt(a0 + ((a1 - a0) * i) / steps, R))
   }
   let s = pathTag(circle(R0, R0, R0 * 0.965), { fill: tok('kraft'), op: 0.05 })
   s += pathTag(circle(R0, R0, R0 - 2), { stroke: tok('kraft'), sw: 4, op: 0.16 })
-  s += tide(R0 - 1, 1)
-  if (r.fork('second')() < 0.75) {
-    const a0 = r.range(0, N), span = r.range(0.14, 0.3) * N
-    s += tide(R0 * r.range(0.9, 1.04), 0.45, Math.floor(a0), Math.min(N, Math.floor(a0 + span)))
-  }
+  s += pathTag(poly(arc(R0 - 1, gapC + gapW, gapC + TAU - gapW)), { stroke: tok('orange-text'), sw: 1.4, op: 0.3 })
   ink.raw(`<g style="mix-blend-mode:var(--ll-blend)">${s}</g>`, 'top')
   ink.grow([0, 0, R0 * 2, R0 * 2])
   return ink.toSvg({ w: R0 * 2, h: R0 * 2, pad: 3 })

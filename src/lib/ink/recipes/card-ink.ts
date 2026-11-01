@@ -19,7 +19,7 @@ export const cardRuleRecipe = defineRecipe<CardRuleParams>({
     const x1 = w - x0
     ink.layer('rest', () => {
       if (ctx.calm) {
-        line(ink, x0, y, x1, y, { pen: 'pencil.fine', single: true, bow: 0, opts: { alpha: 0.7, wobble: 0.2 } })
+        line(ink, x0, y, x1, y, { pen: 'pencil.fine', opts: { alpha: 0.7, wobble: 0.2 } })
       } else if (style === 'dashed') {
         const r = ink.next('dash')
         const dash = 8
@@ -31,7 +31,7 @@ export const cardRuleRecipe = defineRecipe<CardRuleParams>({
       } else if (style === 'wavy') {
         squiggle(ink, x0, y, x1 - x0, { pen: 'pencil.fine', h: 3, amp: 1.3, wl: 15 })
       } else {
-        line(ink, x0, y, x1, y, { pen: 'pencil', bow: 0.6 })
+        line(ink, x0, y, x1, y, { pen: 'pencil' })
       }
     })
   },

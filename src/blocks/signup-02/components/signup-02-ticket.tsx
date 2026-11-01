@@ -19,10 +19,8 @@ function SignupTicket() {
       </Ticket>
       <Sticker name="party-popper" size={92} rotate={-10} className="absolute start-2 top-2" />
       <Stamp name="stamp-member" size={120} tilt={-8} className="absolute end-0 top-[12.5rem]" />
-      <Sticker name="rainbow" size={84} rotate={6} className="absolute start-2 top-[15rem]" />
       <Mascot pose="celebrate" size={190} seed="signup-02-stubby" className="absolute start-[7.5rem] bottom-0 [--ll-blend:normal]" />
       <p className="absolute start-2 bottom-10 max-w-[7.5rem] font-script text-[2rem] leading-[0.95] font-bold text-ink">your seat is saved</p>
-      <Sticker name="heart-eyes" size={72} rotate={8} className="absolute end-2 bottom-4" />
     </div>
   )
 }

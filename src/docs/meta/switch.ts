@@ -5,7 +5,7 @@ export default {
   title: "Switch",
   category: "Forms",
   description:
-    "An on/off switch that is a marker pen being uncapped, not a glossy pill: a felt-outlined track the terracotta marker fills when it is on (with a darker rim where the ink pooled), and a paper coin for a thumb that slides across. Radix Switch underneath.",
+    "An on/off switch drawn as one clean felt pill: the terracotta marker fills the track when it is on, and a paper coin for a thumb slides across. Radix Switch underneath.",
   status: "stable",
   upstream: "switch",
   parts: [
@@ -27,12 +27,12 @@ export default {
   ],
   a11y: [
     "role=\"switch\" with aria-checked true or false. Space and Enter toggle it, Tab focuses it (Radix). Label it with <Label htmlFor>, wrap it, or use aria-label.",
-    "State is not carried by color alone: off shows a pencil o at the end and the thumb at the start, on shows a felt bar and the thumb at the end.",
+    "State is not carried by color alone: the thumb sits at the start when off and at the end when on, and the track fills when it is on.",
     "The hit area is 8 px larger than the track on every side (an ::after, so layout never moves). The track is 24 px tall at the default size, 20 px small with the enlarged hit area.",
     "A Label beside it is a peer: peer-disabled dims it, and hovering the row (a `group/field`) or the label right after it lights the switch's hover overlay.",
     "Keyboard focus draws a blue felt ring; the drawing is aria-hidden, pointer-events: none and never focusable. Windows high contrast replaces the ink by a real border, a Highlight fill when on and a solid thumb.",
     "Reduced motion (the OS setting or data-motion=\"reduced\") makes the thumb jump and the marker appear at once.",
-    "Right-to-left: the thumb starts at the right and travels left (rtl: twins), and the o and bar marks swap ends.",
+    "Right-to-left: the thumb starts at the right and travels left (rtl: twins).",
   ],
   usage: `import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"

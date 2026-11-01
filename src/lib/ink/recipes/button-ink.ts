@@ -39,7 +39,7 @@ export const buttonRecipe = defineRecipe<ButtonParams>({
     const fillOpts = squareish ? { ends: 'square' as const, W: clamp(Math.min(w, h) * 0.3, 5, 9), angle: -0.04 } : calm ? { ends: 'square' as const } : {}
     const outlinePen = calm ? (variant === 'destructive' ? 'red.fine' : 'pencil.fine') : variant === 'destructive' ? 'redfelt' : 'ink'
     const wide = w > WIDE_PX
-    const outline = { ...(calm || pill ? { style: 'loop' as const, stubs: false, ghost: false as const } : {}), ...(wide ? { opts: { simple: true } } : {}) }
+    const outline = wide ? { opts: { simple: true } } : {}
     const underlineY = h / 2 + LABEL_PX[size] * 0.56
 
     if (disabled) {
@@ -78,7 +78,7 @@ export const buttonRecipe = defineRecipe<ButtonParams>({
         underline(ink, w * 0.1, underlineY, w * 0.8, { pen: 'blue.fine', kind: 'single' })
       } else if (variant === 'ghost') {
         if (circle) loop(ink, w / 2, h / 2, w / 2 - 1.2, h / 2 - 1.2, { pen: 'pencil.fine', clean: true, opts: { alpha: 0.42 } })
-        else box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, style: 'loop', ghost: false, opts: { alpha: 0.42 } })
+        else box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, opts: { alpha: 0.42 } })
       } else if (circle) {
         loop(ink, w / 2, h / 2, w / 2 - 1.2, h / 2 - 1.2, { pen: outlinePen, clean: true, ...(wide ? { opts: { simple: true } } : {}) })
       } else {
@@ -98,7 +98,7 @@ export const buttonRecipe = defineRecipe<ButtonParams>({
       }
       if (variant === 'outline') wash(ink, body, 'hi', { alpha: 0.5 })
       if (calm) {
-        box(ink, 1.2, 1.2, w - 2.4, h - 2.4, { pen: outlinePen, corner: r, style: 'loop', stubs: false, ghost: false, loose: 0.6, opts: { alpha: 0.7, simple: true } })
+        box(ink, 1.2, 1.2, w - 2.4, h - 2.4, { pen: outlinePen, corner: r, loose: 0.6, opts: { alpha: 0.7, simple: true } })
         return
       }
       ink.lines(

@@ -68,7 +68,7 @@ describe("Mascot (Stubby)", () => {
     expect(at(236)).toBeLessThan(75_000)
     expect(at(139) / at(120)).toBeLessThan(1.3)
     expect(at(160) / at(96)).toBeLessThan(1.8)
-    expect(at(160, { tier: "hi" })).toBeGreaterThan(at(160) * 1.6)
+    expect(at(160, { tier: "hi" })).toBeGreaterThanOrEqual(at(160))
     expect(renderToString(<Mascot pose="idle" size={160} tier="hi" />)).toContain('data-pose="idle"')
   })
 

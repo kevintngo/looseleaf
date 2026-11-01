@@ -3,7 +3,7 @@ import { Desk } from "@/components/ui/desk"
 
 export default function NotesAppPreview() {
   return (
-    <Desk objects={["coffee", "pencil"]} seed="notes-app-desk">
+    <Desk objects={["pencil"]} seed="notes-app-desk">
       <NotesApp />
     </Desk>
   )

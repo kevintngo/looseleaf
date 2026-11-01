@@ -261,7 +261,7 @@ describe("switchRecipe and switchThumbRecipe", () => {
     expect(run({ disabled: true }).layers).toEqual(["rest", "checked"])
   })
 
-  it("lo tier budget: the rest state is at most 12 nodes and 8 KB; the on-layer is a marker fill, a rim and a bar", () => {
+  it("lo tier budget: the rest state is at most 12 nodes and 8 KB; the on-layer is one marker fill", () => {
     for (const [w, h] of [[36, 20], [44, 24], [60, 32]]) {
       const f = run({}, w, h)
       expect(nodes(f.parts.rest ?? ""), `${w}/rest`).toBeLessThanOrEqual(12)
@@ -277,7 +277,7 @@ describe("switchRecipe and switchThumbRecipe", () => {
     expect(run({}).parts.checked).toMatch(/data-part="fill" style="--mx:-?[\d.]+;--my:-?[\d.]+"/)
   })
 
-  it("draws sane markup at every size, density and tier, and mirrors for rtl", () => {
+  it("draws sane markup at every size, density and tier, and the same symmetric drawing in rtl", () => {
     for (const [w, h] of [[36, 20], [44, 24], [70, 36]]) {
       for (const density of ["comfortable", "compact", "calm"] as const) {
         for (const tier of ["lo", "hi"] as const) {
@@ -288,7 +288,7 @@ describe("switchRecipe and switchThumbRecipe", () => {
         }
       }
     }
-    expect(run({}, 44, 24, { dir: "rtl" }).parts.rest).not.toBe(run({}).parts.rest)
+    expect(run({}, 44, 24, { dir: "rtl" }).parts.rest).toBe(run({}).parts.rest)
   })
 
   it("lazy layers are the same bytes whenever asked for and never change the eager ones", () => {

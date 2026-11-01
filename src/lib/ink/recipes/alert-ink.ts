@@ -33,13 +33,13 @@ export const alertRecipe = defineRecipe<AlertParams>({
       ink.poly('under', body, 'slip', 0.94)
       if (tone === 'warning') ink.part('fill', () => bandFill(ink, body, 'hi', { alpha: calm ? 0.4 : 0.6, passes: 1, ends: 'flag' }))
       if (calm) {
-        if (tone !== 'default' && tone !== 'warning') line(ink, X(6.5), 4, X(6.5), h - 4, { pen: HAIR[tone], single: true, opts: { alpha: 0.9 } })
+        if (tone !== 'default' && tone !== 'warning') line(ink, X(6.5), 4, X(6.5), h - 4, { pen: HAIR[tone], opts: { alpha: 0.9 } })
       } else if (tone === 'destructive') {
         wash(ink, body, 'red', { alpha: 0.04 })
         ink.part('fill', () => bandFill(ink, roundRectPoly(rtl ? w - 11 : 3, 3.5, 8, h - 7, 2), 'red', { alpha: 0.9, passes: 1, ends: 'square', W: 5 }))
       } else if (tone === 'info') {
-        line(ink, X(5.2), 5, X(5.6), h - 5, { pen: 'bluepencil', single: true })
-        line(ink, X(10), 5.5, X(10.4), h - 6, { pen: 'bluepencil', single: true, opts: { alpha: 0.75 } })
+        line(ink, X(5.2), 5, X(5.6), h - 5, { pen: 'bluepencil' })
+        line(ink, X(10), 5.5, X(10.4), h - 6, { pen: 'bluepencil', opts: { alpha: 0.75 } })
       } else if (tone === 'success') {
         ink.part('fill', () => bandFill(ink, roundRectPoly(rtl ? w - 11 : 3, 3.5, 8, h - 7, 2), 'grass', { alpha: 0.7, passes: 1, ends: 'square', W: 5 }))
       }
@@ -53,7 +53,7 @@ export const alertRecipe = defineRecipe<AlertParams>({
           return off
         })
       }
-      if (calm) box(ink, 0, 0, w, h, { pen: HAIR[tone], corner: r, style: 'loop', stubs: false, ghost: false })
+      if (calm) box(ink, 0, 0, w, h, { pen: HAIR[tone], corner: r })
       else box(ink, 0, 0, w, h, { pen: PEN[tone], corner: r, opts: wide ? { simple: true } : undefined })
     })
   },

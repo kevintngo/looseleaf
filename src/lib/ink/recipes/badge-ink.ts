@@ -1,6 +1,6 @@
 import { blobFill, highlight, wash } from '@/lib/ink/fills'
-import { pillPoly, seg } from '@/lib/ink/geom'
-import { tallyLines, box, focusRing, underline } from '@/lib/ink/shapes'
+import { pillPoly } from '@/lib/ink/geom'
+import { tallyLines, box, focusRing, underline, RULER } from '@/lib/ink/shapes'
 import { defineRecipe } from '@/lib/ink/recipes'
 import type { PaintKey } from '@/lib/ink/paint'
 
@@ -52,7 +52,7 @@ export const badgeRecipe = defineRecipe<BadgeParams>({
       const outlinePen = calm ? 'pencil.fine' : 'ink.fine'
       if (variant === 'default') {
         ink.part('fill', () => blobFill(ink, body, fillTone, { alpha: 0.9, mis: calm ? false : undefined }))
-        box(ink, 0, 0, w, h, { pen: outlinePen, corner: r, style: 'loop', stubs: false, ghost: false })
+        box(ink, 0, 0, w, h, { pen: outlinePen, corner: r })
       } else if (variant === 'secondary') {
         ink.part(
           'fill',
@@ -64,9 +64,9 @@ export const badgeRecipe = defineRecipe<BadgeParams>({
         )
       } else if (variant === 'destructive') {
         ink.part('fill', () => blobFill(ink, body, 'red', { alpha: 0.97 }))
-        box(ink, 0, 0, w, h, { pen: calm ? 'red.fine' : 'redfelt', corner: r, style: 'loop', stubs: false, ghost: false, opts: { width: 0.8 } })
+        box(ink, 0, 0, w, h, { pen: calm ? 'red.fine' : 'redfelt', corner: r, opts: { width: 0.8 } })
       } else if (variant === 'outline') {
-        box(ink, 0, 0, w, h, { pen: outlinePen, corner: r, style: 'loop', stubs: false, ghost: false })
+        box(ink, 0, 0, w, h, { pen: outlinePen, corner: r })
       }
       if (tally) {
         const gh = tallyHeight(h)
@@ -91,16 +91,13 @@ export const badgeRecipe = defineRecipe<BadgeParams>({
         box(ink, 1, 1, w - 2, h - 2, {
           pen: 'pencil.fine',
           corner: r,
-          style: 'loop',
-          stubs: false,
-          ghost: false,
           loose: 0.6,
           opts: { alpha: 0.7, simple: true },
         })
         return
       }
       const d = 3 + h / 40
-      ink.lines([{ pts: seg(r * 0.8 + d, h + d, w - r * 0.7 + d, h + d - 0.3, 0.5, 6), o: { start: 'soft', end: 'flick' } }], 'ink.fine', { width: 1.3 })
+      ink.lines([{ pts: [[r * 0.8 + d, h + d], [w - r * 0.7 + d, h + d]], o: RULER }], 'ink.fine', { width: 1.3 })
     })
   },
 })

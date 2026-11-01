@@ -29,7 +29,7 @@ export const toggleGroupRecipe = defineRecipe<ToggleGroupParams>({
     const opts = { ...(w > 360 ? { simple: true } : {}), ...(invalid ? { width: 1.2 } : {}) }
     ink.layer('rest', () =>
       calm
-        ? box(ink, 0, 0, w, h, { pen: invalid ? 'red.fine' : 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false, opts })
+        ? box(ink, 0, 0, w, h, { pen: invalid ? 'red.fine' : 'pencil.fine', corner: r, opts })
         : box(ink, 0, 0, w, h, { pen: invalid ? 'red' : 'ink', corner: r, opts })
     )
   },

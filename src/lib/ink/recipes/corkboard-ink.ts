@@ -72,7 +72,7 @@ export const corkBoardRecipe = defineRecipe<CorkBoardParams>({
     ink.layer('rest', () => {
       if (ctx.calm) {
         ink.raw(`<rect x="${f}" y="${f}" width="${n(w - 2 * f)}" height="${n(h - 2 * f)}" fill="var(--ll-kraft)"/>`, 'top')
-        box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: 3, ghost: false })
+        box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: 3 })
         return
       }
       for (const [x, y, sw, sh] of [[1, 1, w - 2, f], [1, h - f - 1, w - 2, f], [1, 1, f, h - 2], [w - f - 1, 1, f, h - 2]] as const) {
@@ -80,7 +80,7 @@ export const corkBoardRecipe = defineRecipe<CorkBoardParams>({
       }
       const ring = (a: number) => `M${n(a)} ${n(a)}H${n(w - a)}V${n(h - a)}H${n(a)}ZM${n(f)} ${n(f)}V${n(h - f)}H${n(w - f)}V${n(f)}Z`
       ink.flat('wash', ring(3), 'marker', 0.4, { rule: 'evenodd', bbox: [0, 0, w, h] })
-      box(ink, 0, 0, w, h, { pen: 'ink.fine', corner: 3, ghost: false })
+      box(ink, 0, 0, w, h, { pen: 'ink.fine', corner: 3 })
       const g = ink.next('grain')
       for (let i = 0; i < 4; i++) {
         const on = i % 2 === 0

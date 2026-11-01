@@ -26,7 +26,7 @@ export const FOUNDATIONS: readonly FoundationTopic[] = [
     summary: "The ten laws of the hand, what each pen means and a checklist for shipping: the why behind every other page.",
     facts: [
       "A notebook on a tidy desk: cream paper, a dark felt-tip for the words, blue felt for you and anything you can act on, graphite for the small print. Every color is a tool with one job.",
-      "Ten laws decide whether a component looks drawn by a person: lines are ribbons with pressure, nothing closes, no two things are identical, fills are a separate layer, paper has tooth, shadows are warm and short, paper tilts and text never does, text sits on real baselines, color is ink and marker, and the charm is a dial you can turn down.",
+      "Ten laws decide whether a component looks drawn by a person: lines are ribbons with pressure, straight lines are ruled, no two things are identical, fills are a separate layer, paper has tooth, shadows are warm and short, paper tilts and text never does, text sits on real baselines, color is ink and marker, and the charm is a dial you can turn down.",
       "Every drawing is seeded, so the same seed draws the same hand on the server and in the browser.",
       "A short list of questions to ask before a component or a screen ships.",
     ],

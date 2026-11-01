@@ -255,7 +255,7 @@ describe("item stylesheet", () => {
     expect(css).toContain("[data-slot=item-media][data-variant=icon]::before")
     expect(css).toContain("[data-slot=item][data-variant=muted]{")
     expect(css).toContain("[data-slot=item-group][data-ruled] [data-slot=item]::after")
-    expect(css).toContain("border-radius:3px 8px 4px 9px/8px 3px 9px 4px")
+    expect(css).toContain("border-radius:6px")
     for (let f = 0; f < ITEM_FRAMES; f++) expect(css).toContain(`[data-slot=item][data-frame="${f}"]`)
   })
 

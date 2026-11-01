@@ -1,9 +1,8 @@
 import { bandFill, blobFill, wash } from '@/lib/ink/fills'
 import type { PaintKey } from '@/lib/ink/paint'
 import { defineRecipe } from '@/lib/ink/recipes'
-import { box, focusRing, underline } from '@/lib/ink/shapes'
+import { box, focusRing, underline, RULER } from '@/lib/ink/shapes'
 import { clamp } from '@/lib/ink/rng'
-import { seg } from '@/lib/ink/geom'
 import type { Pt } from '@/lib/ink/types'
 
 export const ribbonVariantList = ['banner', 'swallow', 'flag'] as const
@@ -80,7 +79,7 @@ export const ribbonRecipe = defineRecipe<RibbonParams>({
             ? [[1.5, 1.5], [w - 1.5, 1.5], [w - 1.5 - notch, H / 2], [w - 1.5, H - 1.5], [1.5, H - 1.5], [1.5 + notch, H / 2]]
             : flip([[1.5, 1.5], [w - 1.5, 1.5], [w - 1.5 - notch, H / 2], [w - 1.5, H - 1.5], [1.5, H - 1.5]])
       ink.part('fill', () => bandFill(ink, band, fill, { passes: ctx.calm ? 1 : 2, ends: ctx.calm ? 'square' : undefined }))
-      if (variant === 'banner') box(ink, T, 0, w - 2 * T, H, { pen: outline, corner: 2, ghost: false })
+      if (variant === 'banner') box(ink, T, 0, w - 2 * T, H, { pen: outline, corner: 2 })
       else ink.stroke(closed(band), outline, { poly: true, round: 1.4 })
     })
 
@@ -91,7 +90,7 @@ export const ribbonRecipe = defineRecipe<RibbonParams>({
       const y = H + 3.5
       const x0 = variant === 'banner' ? T + 4 : 6
       const x1 = variant === 'banner' ? w - T - 4 : w - 8
-      ink.lines([{ pts: seg(x0, y, x1, y - 0.4, 0.6, 8), o: { start: 'soft', end: 'flick' } }], 'ink.fine', { width: 1.2 })
+      ink.lines([{ pts: [[x0, y], [x1, y]], o: RULER }], 'ink.fine', { width: 1.2 })
     })
   },
 })

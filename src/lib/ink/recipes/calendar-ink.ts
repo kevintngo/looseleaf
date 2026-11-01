@@ -170,10 +170,10 @@ export const calendarGridRecipe = defineRecipe<CalendarGridParams>({
     const X = (x: number): number => (rtl ? w - x : x)
     const calm = ctx.calm
     ink.layer('rest', () => {
-      line(ink, -2, head, w + 3, head, { pen: calm ? 'pencil.fine' : 'ink.fine', single: w < 320, opts: { alpha: 0.85, simple: true } })
+      line(ink, -2, head, w + 3, head, { pen: calm ? 'pencil.fine' : 'ink.fine', opts: { alpha: 0.85, simple: true } })
       for (let r = 1; r <= rows; r++) {
         const y = head + r * cell
-        line(ink, -2, y, w + 3, y, { pen: calm ? 'pencil.fine' : 'pencil', single: w < 320, opts: { alpha: calm ? 0.7 : 0.75, simple: true } })
+        line(ink, -2, y, w + 3, y, { pen: calm ? 'pencil.fine' : 'pencil', opts: { alpha: calm ? 0.7 : 0.75, simple: true } })
       }
       for (let c = 0; c <= 7; c++) {
         const x = X(wn + c * cell)

@@ -3,7 +3,7 @@ import { Marker, MarkerContent } from "@/components/ui/marker"
 
 export const meta = {
   title: "Day separators",
-  description: "A pencil line on each side of the day, written in the script font. The lines rise a little to the right, overshoot at the far end and stop short of the words.",
+  description: "A ruled pencil line on each side of the day, written in the script font. The lines run level and stop just short of the words.",
   layout: "stack" as const,
 }
 

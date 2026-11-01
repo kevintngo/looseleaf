@@ -36,7 +36,7 @@ export const emptyMediaRecipe = defineRecipe<Record<string, never>>({
     ink.layer('rest', () => {
       ink.poly('under', body, 'slip', 0.98)
       wash(ink, body, 'hi', { alpha: ctx.calm ? 0.25 : 0.35 })
-      box(ink, 0, 0, w, h, { pen: ctx.calm ? 'pencil.fine' : 'ink.fine', corner: 6, style: 'loop', stubs: false, ghost: false })
+      box(ink, 0, 0, w, h, { pen: ctx.calm ? 'pencil.fine' : 'ink.fine', corner: 6 })
       if (!ctx.calm) {
         edgeBand(ink, 0, 0, w, h, 'b', { thick: 4 })
         edgeBand(ink, 0, 0, w, h, 'r', { thick: 4 })

@@ -1,8 +1,7 @@
 import type { Ink } from '@/lib/ink/builder'
 import { blobFill, wash, type Offset } from '@/lib/ink/fills'
-import { seg } from '@/lib/ink/geom'
 import { clamp } from '@/lib/ink/rng'
-import { focusRing, loop } from '@/lib/ink/shapes'
+import { focusRing, loop, RULER } from '@/lib/ink/shapes'
 import { defineRecipe } from '@/lib/ink/recipes'
 import { arcPts, layoutGauge, layoutPie, layoutRadar, layoutRadial, polar, sectorPoly, TAU } from '@/lib/ink/charts/chart-polar'
 import { slotKey, type GaugeSpec, type PieSpec, type RadarSpec, type RadialSpec } from '@/lib/ink/charts/chart-types'
@@ -66,7 +65,7 @@ export const pieRecipe = defineRecipe<PieSpec>({
             for (const s of L.sectors) {
               const p0 = polar(cx, cy, Math.max(0, r0 - 1.5), s.a0)
               const p1 = polar(cx, cy, R + 1.6, s.a0)
-              ink.stroke(seg(p0[0], p0[1], p1[0], p1[1], 0.2, 3), calm ? 'ink.fine' : 'ink.fine', { simple: true, wobble: 0.3, width: 1.1, start: 'soft', end: 'flick' })
+              ink.stroke([p0, p1], 'ink.fine', { ...RULER, simple: true, width: 1.1 })
             }
           }
         },
@@ -94,22 +93,17 @@ export const radarRecipe = defineRecipe<RadarSpec>({
         ghostRing(ink, cx, cy, R, 0)
         return
       }
-      const rng = ink.next('web')
       L.rings.forEach((r, k) => {
         const ring = L.axesAngles.map((a) => polar(cx, cy, r, a))
         const alpha = k === L.rings.length - 1 ? 0.75 : 0.45
         ring.forEach((p, i) => {
           const q = ring[(i + 1) % ring.length]
-          const len = Math.hypot(q[0] - p[0], q[1] - p[1]) || 1
-          const over = calm ? 0 : rng.range(0.4, 1.6)
-          const ux = (q[0] - p[0]) / len
-          const uy = (q[1] - p[1]) / len
-          ink.stroke(seg(p[0] - ux * over, p[1] - uy * over, q[0] + ux * over * 0.6, q[1] + uy * over * 0.6, calm ? 0 : rng.gauss(0, 0.004) * len, 4), 'pencil', { simple: true, alpha, width: calm ? 0.75 : 0.8, wobble: calm ? 0.2 : 0.6, start: 'soft', end: 'soft' })
+          ink.stroke([p, q], 'pencil', { ...RULER, simple: true, alpha, width: calm ? 0.75 : 0.8 })
         })
       })
       L.axesAngles.forEach((a) => {
         const p = polar(cx, cy, R, a)
-        ink.stroke(seg(cx, cy, p[0], p[1], 0, 2), 'pencil', { simple: true, alpha: 0.5, width: 0.75, wobble: calm ? 0.2 : 0.6 })
+        ink.stroke([[cx, cy], p], 'pencil', { ...RULER, simple: true, alpha: 0.5, width: 0.75 })
       })
       ink.group(
         { part: 'wipe' },
@@ -231,19 +225,19 @@ export const gaugeRecipe = defineRecipe<GaugeSpec>({
           for (const a of [L.a0, L.a1, ...L.zones.map((z) => z.a1)]) {
             const p0 = polar(cx, cy, R - t - 2, a)
             const p1 = polar(cx, cy, R + 2, a)
-            ink.stroke(seg(p0[0], p0[1], p1[0], p1[1], 0.2, 3), 'ink.fine', { simple: true, wobble: 0.3, width: 1.05, start: 'soft', end: 'flick' })
+            ink.stroke([p0, p1], 'ink.fine', { ...RULER, simple: true, width: 1.05 })
           }
           if (!calm) {
             for (const a of L.tickAngles) {
               const p0 = polar(cx, cy, R + 4, a)
               const p1 = polar(cx, cy, R + 9, a)
-              ink.stroke(seg(p0[0], p0[1], p1[0], p1[1], 0, 2), 'pencil', { simple: true, alpha: 0.6, width: 0.8, wobble: 0.3, end: 'flick' })
+              ink.stroke([p0, p1], 'pencil', { ...RULER, simple: true, alpha: 0.6, width: 0.8 })
             }
           }
           if (zoned || spec.zones.length === 0) {
             const tip = polar(cx, cy, R - t * 0.2, L.av)
             const base = polar(cx, cy, 6, L.av + Math.PI)
-            ink.stroke(seg(base[0], base[1], tip[0], tip[1], 0.7, 8), 'redfelt', { start: 'soft', end: 'flick', width: calm ? 1 : 1.3, wobble: 0.5, simple: calm })
+            ink.stroke([base, tip], 'redfelt', { ...RULER, width: calm ? 1 : 1.3, simple: calm })
             loop(ink, cx, cy, 5.4, 5.2, { pen: 'ink.fine', opts: { simple: true, width: 1 } })
             ink.dot(cx, cy, 2.4, 'ink')
           }

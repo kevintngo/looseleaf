@@ -183,19 +183,19 @@ export function drawGrid(ink: Ink, positions: number[], frame: AxisFrame, vertic
   for (const p of positions) {
     if (vertical) {
       if (Math.abs(p - frame.y1) < 1.5) continue
-      line(ink, frame.x0 + 3, p, frame.x1, p, { pen: 'pencil.fine', bow: 0, opts: { alpha: 0.45, width: 0.8, simple: true, wobble: 0.12, dry: 0 } })
+      line(ink, frame.x0 + 3, p, frame.x1, p, { pen: 'pencil.fine', opts: { alpha: 0.45, width: 0.8, simple: true, wobble: 0.12, dry: 0 } })
     } else {
       if (Math.abs(p - frame.x0) < 1.5) continue
-      line(ink, p, frame.y0 - 2, p, frame.y1 - 2, { pen: 'pencil.fine', bow: 0, opts: { alpha: 0.45, width: 0.8, simple: true, wobble: 0.12, dry: 0 } })
+      line(ink, p, frame.y0 - 2, p, frame.y1 - 2, { pen: 'pencil.fine', opts: { alpha: 0.45, width: 0.8, simple: true, wobble: 0.12, dry: 0 } })
     }
   }
 }
 
 export function drawAxisLines(ink: Ink, f: AxisFrame, o: { x: boolean; y: boolean; calm: boolean; zeroY?: number | null }): void {
   const penX: PenName = o.calm ? 'ink.fine' : 'ink.fine'
-  if (o.x) line(ink, f.x0, f.y1, f.x1, f.y1, { pen: penX, single: true, bow: 0, opts: { simple: o.calm, width: o.calm ? 0.85 : 1.05, wobble: 0.15, dry: 0 } })
-  if (o.y) line(ink, f.x0, f.y1, f.x0, f.y0 - 2, { pen: 'ink.fine', single: true, bow: 0, opts: { simple: o.calm, width: 0.9, wobble: 0.15, dry: 0, alpha: 0.8 } })
-  if (o.zeroY != null && Math.abs(o.zeroY - f.y1) > 2) line(ink, f.x0, o.zeroY, f.x1, o.zeroY - (o.calm ? 0 : 0.6), { pen: 'ink.fine', single: true, bow: 0.003, opts: { simple: true, width: 0.95, alpha: 0.85 } })
+  if (o.x) line(ink, f.x0, f.y1, f.x1, f.y1, { pen: penX, opts: { simple: o.calm, width: o.calm ? 0.85 : 1.05, wobble: 0.15, dry: 0 } })
+  if (o.y) line(ink, f.x0, f.y1, f.x0, f.y0 - 2, { pen: 'ink.fine', opts: { simple: o.calm, width: 0.9, wobble: 0.15, dry: 0, alpha: 0.8 } })
+  if (o.zeroY != null && Math.abs(o.zeroY - f.y1) > 2) line(ink, f.x0, o.zeroY, f.x1, o.zeroY - (o.calm ? 0 : 0.6), { pen: 'ink.fine', opts: { simple: true, width: 0.95, alpha: 0.85 } })
 }
 
 export function swipeFill(ink: Ink, r: { x: number; y: number; w: number; h: number }, horizontal: boolean, calm: boolean): void {

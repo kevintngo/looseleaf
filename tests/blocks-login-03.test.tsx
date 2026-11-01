@@ -8,11 +8,11 @@ describeAuthPage({ slug: "login-03", Page: Login03Page, heading: "Welcome back" 
 describeLoginForm({ slug: "login-03", Form: LoginForm as never, socials: ["Sign in with Apple", "Sign in with Google"] })
 
 describe("login-03: paper on a quiet desk", () => {
-  it("lies on the desk with a coffee ring and a pencil, which are decoration", () => {
+  it("lies on the desk with a pencil, which is decoration", () => {
     const { container } = mountPage(Login03Page)
     const objects = container.querySelector('[data-slot="desk-objects"]')
     expect(objects).toHaveAttribute("aria-hidden", "true")
-    expect([...container.querySelectorAll("[data-object]")].map((o) => o.getAttribute("data-object"))).toEqual(["coffee", "pencil"])
+    expect([...container.querySelectorAll("[data-object]")].map((o) => o.getAttribute("data-object"))).toEqual(["pencil"])
   })
 
   it("puts the provider buttons above the rule and the fields below it", () => {

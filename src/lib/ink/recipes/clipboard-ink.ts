@@ -53,7 +53,7 @@ export const clipboardBoardRecipe = defineRecipe<ClipboardBoardParams>({
       s += litEdge(`M12 0.7H${num(w - 12)}`, 0.45)
       ink.raw(shadowMark('lift', [11, 11, 11, 11]) + s, 'under')
       ink.grow([-1, -1, w + 1, h + 1])
-      if (plastic && !ctx.calm) box(ink, 0.5, 0.5, w - 1, h - 1, { pen: 'ink.fine', corner: 11, ghost: false, opts: { alpha: 0.55, simple: w > 360 } })
+      if (plastic && !ctx.calm) box(ink, 0.5, 0.5, w - 1, h - 1, { pen: 'ink.fine', corner: 11, opts: { alpha: 0.55, simple: w > 360 } })
     })
   },
 })

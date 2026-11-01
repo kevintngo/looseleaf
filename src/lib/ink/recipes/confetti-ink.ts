@@ -20,7 +20,7 @@ export interface ConfettiPiece {
 const cache = new Map<string, ConfettiPiece>()
 
 const outline = (ink: Ink, x: number, y: number, w: number, h: number, corner = 1) =>
-  box(ink, x, y, w, h, { pen: 'ink.fine', corner, style: 'loop', stubs: false, ghost: false, opts: { width: 0.55, alpha: 0.6 } })
+  box(ink, x, y, w, h, { pen: 'ink.fine', corner, opts: { width: 0.55, alpha: 0.6 } })
 
 export function confettiPiece(kind: ConfettiKind, color: PaintKey, variant = 0): ConfettiPiece {
   const key = `${kind}|${color}|${variant}`

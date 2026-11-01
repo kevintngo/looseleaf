@@ -26,7 +26,7 @@ export default {
     {
       name: "DropzoneArea",
       description:
-        "The patch you drop on: a `<label>` (a click anywhere opens the picker) round the real, visually hidden file input (Tab reaches it, Enter and Space open the picker). Drawn as a paper-shade patch with a cut edge and a wavering running stitch a few pixels in (stitches of uneven length, even in calm); the stitches turn blue on a yellow wash while a file is over it, and the drawing wiggles. `inputProps` reaches the input.",
+        "The patch you drop on: a `<label>` (a click anywhere opens the picker) round the real, visually hidden file input (Tab reaches it, Enter and Space open the picker). Drawn as a paper-shade patch with a cut edge and an even running stitch a few pixels in (stitches of uneven length, even in calm); the stitches turn blue on a yellow wash while a file is over it, and the drawing wiggles. `inputProps` reaches the input.",
       props: [
         { name: "inputProps", type: "InputHTMLAttributes", description: "`aria-label`, `capture`, `webkitdirectory`..." },
         { name: "seed", type: "string | number", description: "Pins the hand: the same seed always sews the same patch." },

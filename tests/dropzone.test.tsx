@@ -450,18 +450,17 @@ describe("Dropzone review fixes (hand stitches, focus after removal, cheap thumb
   const req = { seed: "s", tier: "lo" as const, density: "comfortable" as const, dir: "ltr" as const, knobs: DEFAULT_KNOBS }
   const dashes = (f: ReturnType<typeof runRecipe>) => (Object.values(f.parts).join("").match(/stroke-dasharray="([^"]+)"/g) ?? []).map((m) => m.slice(18, -1))
 
-  it("the stitches are never all the same length (a plain dash and gap reads as a CSS border), repeat for a seed, and are even in calm", () => {
+  it("the stitches are even and fitted to the edge, repeat for a seed, and keep the same rhythm in calm", () => {
     const rest = runRecipe(dropzoneRecipe, { ...req, params: {}, box: { w: 420, h: 176 } })
     const [pattern] = dashes(rest)
     const numbers = pattern.split(" ").map(Number)
-    expect(numbers.length).toBeGreaterThanOrEqual(16)
-    expect(new Set(numbers.filter((_, i) => i % 2 === 0)).size).toBeGreaterThan(4)
-    expect(new Set(numbers.filter((_, i) => i % 2 === 1)).size).toBeGreaterThan(4)
+    expect(numbers).toHaveLength(2)
     expect(numbers.every((x) => x > 0)).toBe(true)
     expect(dashes(runRecipe(dropzoneRecipe, { ...req, params: {}, box: { w: 420, h: 176 } }))).toEqual(dashes(rest))
-    expect(dashes(runRecipe(dropzoneRecipe, { ...req, seed: "another", params: {}, box: { w: 420, h: 176 } }))).not.toEqual(dashes(rest))
-    expect(dashes(runRecipe(dropzoneRecipe, { ...req, density: "calm", params: {}, box: { w: 420, h: 176 } }))).toEqual(["5 5"])
-    expect(dashes(runRecipe(dropzoneRecipe, { ...req, params: { over: true }, box: { w: 420, h: 176 } }))[0].split(" ").length).toBeGreaterThanOrEqual(16)
+    const [calmDash, calmGap] = dashes(runRecipe(dropzoneRecipe, { ...req, density: "calm", params: {}, box: { w: 420, h: 176 } }))[0].split(" ").map(Number)
+    expect(calmDash).toBeCloseTo(5, 0)
+    expect(calmGap).toBe(calmDash)
+    expect(dashes(runRecipe(dropzoneRecipe, { ...req, params: { over: true }, box: { w: 420, h: 176 } }))[0].split(" ")).toHaveLength(2)
   })
 
   it("removing a file keeps the keyboard on the zone (the row and its button are gone)", async () => {

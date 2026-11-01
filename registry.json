@@ -1239,7 +1239,7 @@
             "color": "MarkText"
           }
         },
-        "[data-slot=\"code-block\"][data-tone=\"dark\"]": {
+        ":is([data-slot=\"code-block\"][data-tone=\"dark\"])": {
           "--ll-stock": "#24272e",
           "--ll-ink": "#ece6d9",
           "--ll-ink-soft": "#d9d2c3",
@@ -7765,7 +7765,7 @@
       "name": "switch",
       "type": "registry:ui",
       "title": "Switch",
-      "description": "An on/off switch that is a marker pen being uncapped, not a glossy pill: a felt-outlined track the terracotta marker fills when it is on (with a darker rim where the ink pooled), and a paper coin for a thumb that slides across. Radix Switch underneath.",
+      "description": "An on/off switch drawn as one clean felt pill: the terracotta marker fills the track when it is on, and a paper coin for a thumb slides across. Radix Switch underneath.",
       "categories": [
         "Forms"
       ],
@@ -7800,12 +7800,12 @@
         ],
         "a11y": [
           "role=\"switch\" with aria-checked true or false. Space and Enter toggle it, Tab focuses it (Radix). Label it with <Label htmlFor>, wrap it, or use aria-label.",
-          "State is not carried by color alone: off shows a pencil o at the end and the thumb at the start, on shows a felt bar and the thumb at the end.",
+          "State is not carried by color alone: the thumb sits at the start when off and at the end when on, and the track fills when it is on.",
           "The hit area is 8 px larger than the track on every side (an ::after, so layout never moves). The track is 24 px tall at the default size, 20 px small with the enlarged hit area.",
           "A Label beside it is a peer: peer-disabled dims it, and hovering the row (a `group/field`) or the label right after it lights the switch's hover overlay.",
           "Keyboard focus draws a blue felt ring; the drawing is aria-hidden, pointer-events: none and never focusable. Windows high contrast replaces the ink by a real border, a Highlight fill when on and a solid thumb.",
           "Reduced motion (the OS setting or data-motion=\"reduced\") makes the thumb jump and the marker appear at once.",
-          "Right-to-left: the thumb starts at the right and travels left (rtl: twins), and the o and bar marks swap ends."
+          "Right-to-left: the thumb starts at the right and travels left (rtl: twins)."
         ],
         "usage": "import { Label } from \"@/components/ui/label\"\nimport { Switch } from \"@/components/ui/switch\"\n\nexport function Example() {\n  return (\n    <div className=\"flex items-center gap-3\">\n      <Switch id=\"airplane\" />\n      <Label htmlFor=\"airplane\">Airplane mode</Label>\n    </div>\n  )\n}",
         "parts": [
@@ -9352,7 +9352,7 @@
       "name": "forgot-password-01",
       "type": "registry:block",
       "title": "Forgot password 01",
-      "description": "One field asks for a reset link, and the answer never says whether the address has an account. The card then turns into a note that the link is on its way, with a way to send it again. Taped card, coffee ring, Stubby searching. Made for the desk.",
+      "description": "One field asks for a reset link, and the answer never says whether the address has an account. The card then turns into a note that the link is on its way, with a way to send it again. Taped card, Stubby searching. Made for the desk.",
       "categories": [
         "authentication"
       ],
@@ -9697,7 +9697,6 @@
         "https://kevintngo.github.io/looseleaf/r/mascot.json",
         "https://kevintngo.github.io/looseleaf/r/paper.json",
         "https://kevintngo.github.io/looseleaf/r/spinner.json",
-        "https://kevintngo.github.io/looseleaf/r/sticker.json",
         "https://kevintngo.github.io/looseleaf/r/sticky-note.json"
       ],
       "files": [
@@ -9736,7 +9735,7 @@
       "name": "login-03",
       "type": "registry:block",
       "title": "Login 03",
-      "description": "A card on a quiet desk with a coffee ring and a pencil lying about. Apple and Google buttons, an or-continue-with rule, then email and password. The desk is the muted background of the official block and travels with the block.",
+      "description": "A card on a quiet desk with a pencil lying about. Apple and Google buttons, an or-continue-with rule, then email and password. The desk is the muted background of the official block and travels with the block.",
       "categories": [
         "authentication"
       ],

@@ -39,7 +39,6 @@ export const sliderTrackRecipe = defineRecipe<SliderTrackParams>({
         box(ink, vertical ? 0.7 : 0, vertical ? 0 : 0.7, vertical ? th - 1.4 : len, vertical ? len : th - 1.4, {
           pen: invalid ? (calm ? 'red.fine' : 'red') : 'ink.fine',
           corner: (th - 1.4) / 2,
-          style: 'loop',
           opts: { width: 1.15, simple: len > 500 },
         })
       }

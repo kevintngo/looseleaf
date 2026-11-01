@@ -442,7 +442,7 @@
   "separator": {
     "file": "separator.jpg",
     "w": 640,
-    "h": 388
+    "h": 387
   },
   "sheet": {
     "file": "sheet.jpg",
@@ -597,7 +597,7 @@
   "typewriter": {
     "file": "typewriter.jpg",
     "w": 640,
-    "h": 395
+    "h": 375
   },
   "typing-indicator": {
     "file": "typing-indicator.jpg",

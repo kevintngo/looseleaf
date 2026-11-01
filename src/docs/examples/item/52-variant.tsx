@@ -3,7 +3,7 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from "@/co
 
 export const meta = {
   title: "Variants",
-  description: "shadcn's `item-variant`: `default` is bare, `outline` has a rough pencil line round it, `muted` is a wash of paper-shade. The same three words as upstream.",
+  description: "shadcn's `item-variant`: `default` is bare, `outline` has a ruled pencil line round it, `muted` is a wash of paper-shade. The same three words as upstream.",
   layout: "center" as const,
 }
 

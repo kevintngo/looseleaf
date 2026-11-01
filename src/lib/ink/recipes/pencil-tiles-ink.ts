@@ -1,6 +1,5 @@
 import { Ink } from '@/lib/ink/builder'
-import { TAU } from '@/lib/ink/geom'
-import { loopLines } from '@/lib/ink/shapes'
+import { loopLines, RULER } from '@/lib/ink/shapes'
 import type { Line, Pt } from '@/lib/ink/types'
 
 export const EDGE_LEN = 96
@@ -10,30 +9,21 @@ export const CIRCLE = 64
 
 const CURRENT = { color: 'current' as const }
 
-function tile(seed: string, w: number, h: number, draw: (ink: Ink) => void, tier: 'lo' | 'hi' = 'lo'): string {
+function tile(seed: string, w: number, h: number, draw: (ink: Ink) => void, tier: 'lo' | 'hi' = 'lo', stretch = false): string {
   const ink = new Ink(seed, { tier, grain: false })
   ink.layer('rest', () => draw(ink))
   const svg = ink.toSvg({ w, h, pad: 0 }).svg
-  const doc = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">${svg}</svg>`
+  const fit = stretch ? ' preserveAspectRatio="none"' : ''
+  const doc = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}"${fit}>${svg}</svg>`
   return `url("data:image/svg+xml,${encodeURIComponent(doc)}")`
 }
 
 export function edgeTile(seed: string, vertical: boolean): string {
   const w = vertical ? EDGE_TH : EDGE_LEN
   const h = vertical ? EDGE_LEN : EDGE_TH
-  return tile(seed, w, h, (ink) => {
-    const rng = ink.next('edge')
-    const a1 = rng.range(0.4, 0.7),
-      a2 = rng.range(0.15, 0.32)
-    const p1 = rng.range(0, TAU),
-      p2 = rng.range(0, TAU)
-    const pts: Pt[] = []
-    for (let t = -16; t <= EDGE_LEN + 16; t += 2) {
-      const off = a1 * Math.sin((TAU * t) / EDGE_LEN + p1) + a2 * Math.sin((2 * TAU * t) / EDGE_LEN + p2)
-      pts.push(vertical ? [EDGE_TH / 2 + off, t] : [t, EDGE_TH / 2 + off])
-    }
-    ink.stroke(pts, 'pencil', { ...CURRENT, width: 0.95, start: 'soft', end: 'soft', wobble: 0.35, simple: true })
-  })
+  const c = EDGE_TH / 2
+  const ends: Pt[] = vertical ? [[c, -16], [c, EDGE_LEN + 16]] : [[-16, c], [EDGE_LEN + 16, c]]
+  return tile(seed, w, h, (ink) => ink.stroke(ends, 'pencil', { ...CURRENT, ...RULER, width: 0.95, simple: true }), 'lo', true)
 }
 
 export function hatchTile(seed: string): string {
@@ -61,7 +51,7 @@ export function hatchTile(seed: string): string {
 
 export function circleTile(seed: string): string {
   return tile(seed, CIRCLE, CIRCLE, (ink) => {
-    const lines = loopLines(ink.next('circle'), CIRCLE / 2, CIRCLE / 2, CIRCLE / 2 - 5, CIRCLE / 2 - 5)
+    const lines = loopLines(ink.next('circle'), CIRCLE / 2, CIRCLE / 2, CIRCLE / 2 - 5, CIRCLE / 2 - 5, { clean: true })
     ink.lines(lines, 'pencil', { ...CURRENT, width: 1.05, simple: true })
   })
 }

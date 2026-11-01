@@ -3,7 +3,7 @@ import { Desk } from "@/components/ui/desk"
 
 export default function Checkout01Preview() {
   return (
-    <Desk objects={["coffee", "pins"]} seed="checkout-01-desk">
+    <Desk objects={["pins"]} seed="checkout-01-desk">
       <Checkout01 />
     </Desk>
   )

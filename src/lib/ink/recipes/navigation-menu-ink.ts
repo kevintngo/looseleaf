@@ -2,7 +2,7 @@ import { Ink, type InkResult } from '@/lib/ink/builder'
 import { blobFill, wash } from '@/lib/ink/fills'
 import { roundRectPoly } from '@/lib/ink/geom'
 import { defineRecipe } from '@/lib/ink/recipes'
-import { chain, dashedBox, focusRing, line, underline } from '@/lib/ink/shapes'
+import { chain, dashedBox, focusRing, line, RULER, underline } from '@/lib/ink/shapes'
 import type { PenName, Pt, Tier } from '@/lib/ink/types'
 
 export interface NavTabParams {
@@ -17,11 +17,9 @@ function vertices(w: number, h: number, rtl: boolean, grow = 0): Pt[] {
   return rtl ? vs.map(([x, y]) => [w - x, y] as Pt) : vs
 }
 
-function outline(ink: Ink, w: number, h: number, rtl: boolean, pen: PenName, o: { grow?: number; alpha?: number; width?: number; name: string }) {
-  const rng = ink.next(o.name)
-  const jv = vertices(w, h, rtl, o.grow ?? 0).map(([x, y]) => [x + rng.gauss(0, 0.5), y + rng.gauss(0, 0.5)] as Pt)
-  const pts = chain(jv, [rng.gauss(0, 0.6), -rng.range(0.3, 1), rng.gauss(0, 0.6)], R, rng)
-  ink.stroke(pts, pen, { start: 'pool', end: 'flick', wobble: 0.7, alpha: o.alpha, width: o.width })
+function outline(ink: Ink, w: number, h: number, rtl: boolean, pen: PenName, o: { grow?: number; alpha?: number; width?: number } = {}) {
+  const pts = chain(vertices(w, h, rtl, o.grow ?? 0), [0, 0, 0], R, ink.next('tab'))
+  ink.stroke(pts, pen, { ...RULER, alpha: o.alpha, width: o.width })
 }
 
 export const navTabRecipe = defineRecipe<NavTabParams>({
@@ -42,16 +40,16 @@ export const navTabRecipe = defineRecipe<NavTabParams>({
     const body = roundRectPoly(1.5, 1.5, w - 3, h + 2, R)
     const on = role === 'trigger' ? 'open' : 'checked'
     ink.layer('rest', () => {
-      ink.group({ hideOn: on }, () => outline(ink, w, h - 5, rtl, 'pencil.fine', { name: 'sk', alpha: calm ? 0.62 : 0.58, width: calm ? 0.9 : 1.02 }), 'pencil')
+      ink.group({ hideOn: on }, () => outline(ink, w, h, rtl, 'pencil.fine', { alpha: calm ? 0.62 : 0.58, width: calm ? 0.9 : 1.02 }), 'pencil')
     })
     ink.layer('hover', () => {
       wash(ink, body, 'hi', { alpha: 0.4 })
-      if (!calm) outline(ink, w, h, rtl, 'ink.fine', { name: 'hv', alpha: 0.55, width: 0.9 })
+      if (!calm) outline(ink, w, h, rtl, 'ink.fine', { alpha: 0.55, width: 0.9 })
     })
     ink.layer(on, () => {
       if (role === 'link') ink.part('fill', () => (calm ? wash(ink, body, 'hi', { alpha: 0.7 }) : blobFill(ink, body, 'hi', { alpha: 0.9 })))
       else wash(ink, body, 'hi', { alpha: calm ? 0.35 : 0.5 })
-      outline(ink, w, h, rtl, calm ? 'ink.fine' : 'ink', { name: 'ck', grow: 1.5 })
+      outline(ink, w, h, rtl, calm ? 'ink.fine' : 'ink', { grow: 1.5 })
     })
   },
 })
@@ -62,7 +60,7 @@ export const navBaselineRecipe = defineRecipe<Record<string, never>>({
   layers: ['rest'],
   pad: 8,
   draw(ink, { w, h }, _p, ctx) {
-    ink.layer('rest', () => line(ink, -4, h, w + 4, h + 0.4, { pen: ctx.calm ? 'pencil.fine' : 'pencil', opts: w > 360 ? { simple: true } : undefined }))
+    ink.layer('rest', () => line(ink, 0, h, w, h, { pen: ctx.calm ? 'pencil.fine' : 'pencil', opts: w > 360 ? { simple: true } : undefined }))
   },
 })
 

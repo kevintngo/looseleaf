@@ -1,5 +1,5 @@
 import { TAU } from '@/lib/ink/geom'
-import { line } from '@/lib/ink/shapes'
+import { line, RULER } from '@/lib/ink/shapes'
 import { n } from '@/lib/ink/paint'
 import { defineRecipe } from '@/lib/ink/recipes'
 import { outlinePath, sheetOutline, type Outline } from '@/lib/ink/paper/edges'
@@ -31,13 +31,13 @@ export const separatorRecipe = defineRecipe<SeparatorParams>({
     ink.layer('rest', () => {
       switch (kind) {
         case 'pencil': {
-          const [x1, y1] = at(-1, 0.4)
-          const [x2, y2] = at(L + 1, -0.5)
+          const [x1, y1] = at(0)
+          const [x2, y2] = at(L)
           line(ink, x1, y1, x2, y2, { pen: ctx.calm ? 'pencil.fine' : 'pencil' })
           break
         }
         case 'dashed':
-          ink.lines(dashes(ink.next('dash'), L, at), 'pencil', { width: 1.35 })
+          ink.lines(dashes(L, at), 'pencil', { width: 1.35 })
           break
         case 'wavy':
           ink.lines(wave(ink.next('wave'), L, at), 'ink.fine', { width: 1.1 })
@@ -59,20 +59,12 @@ export const separatorRecipe = defineRecipe<SeparatorParams>({
   },
 })
 
-function dashes(rng: ReturnType<Ink['next']>, L: number, at: (t: number, u?: number) => Pt): Line[] {
+function dashes(L: number, at: (t: number, u?: number) => Pt): Line[] {
+  const gap = 5
+  const count = Math.max(1, Math.round((L + gap) / 17))
+  const step = (L + gap) / count
   const out: Line[] = []
-  let t = rng.range(0, 3)
-  while (t < L - 4) {
-    const len = rng.range(10, 15)
-    const end = Math.min(L, t + len)
-    const u0 = rng.gauss(0, 0.28)
-    const u1 = u0 + rng.gauss(0, 0.22)
-    out.push({
-      pts: [at(t, u0), at((t + end) / 2, (u0 + u1) / 2 + rng.gauss(0, 0.12)), at(end, u1)],
-      o: { simple: true, start: 'soft', end: 'flick', speed: 1.1, wobble: 0.35 },
-    })
-    t = end + rng.range(4, 6)
-  }
+  for (let i = 0; i < count; i++) out.push({ pts: [at(i * step), at(i * step + step - gap)], o: RULER })
   return out
 }
 
@@ -103,13 +95,13 @@ function wave(rng: ReturnType<Ink['next']>, L: number, at: (t: number, u?: numbe
 }
 
 function dots(ink: Ink, L: number, at: (t: number, u?: number) => Pt): void {
-  const rng = ink.next('dot')
+  const r = 1.15
+  const count = Math.max(1, Math.round((L - 2 * r) / 6.5))
+  const step = (L - 2 * r) / count
   let d = ''
-  for (let t = 3; t < L - 2; t += rng.range(5.6, 7.4)) {
-    const [cx, cy] = at(t, rng.gauss(0, 0.3))
-    const r = rng.range(0.95, 1.5)
-    const k = [0, 1, 2, 3].map(() => r * rng.range(0.82, 1.15))
-    d += `M${num(cx - k[3])} ${num(cy)}Q${num(cx - k[3])} ${num(cy - k[0])} ${num(cx)} ${num(cy - k[0])}Q${num(cx + k[1])} ${num(cy - k[0])} ${num(cx + k[1])} ${num(cy)}Q${num(cx + k[1])} ${num(cy + k[2])} ${num(cx)} ${num(cy + k[2])}Q${num(cx - k[3])} ${num(cy + k[2])} ${num(cx - k[3])} ${num(cy)}Z`
+  for (let i = 0; i <= count; i++) {
+    const [cx, cy] = at(r + i * step)
+    d += `M${num(cx - r)} ${num(cy)}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z`
   }
   ink.flat('felt', d, 'ink', 0.86)
   ink.grow([0, -3, L, 3])
@@ -131,16 +123,14 @@ function tapeStrip(ink: Ink, L: number, c: number, vertical: boolean, tier: 'lo'
 }
 
 function stitchLine(ink: Ink, L: number, at: (t: number, u?: number) => Pt): void {
-  const rng = ink.next('stitch')
+  const gap = 4.2
+  const count = Math.max(1, Math.round((L - 2 + gap) / (6.4 + gap)))
+  const step = (L - 2 + gap) / count
   let d = ''
-  let t = rng.range(0, 3)
-  while (t < L - 5) {
-    const len = 6.4 * rng.range(0.88, 1.08)
-    const off = rng.gauss(0, 0.28)
-    const pts: Pt[] = []
-    for (let k = 0; k <= 2; k++) pts.push(at(t + (len * k) / 2, off + rng.gauss(0, 0.07)))
-    d += 'M' + pts.map((p) => `${num(p[0])} ${num(p[1])}`).join('L')
-    t += len + 4.2 + rng.gauss(0, 0.4)
+  for (let i = 0; i < count; i++) {
+    const [ax, ay] = at(1 + i * step)
+    const [bx, by] = at(1 + i * step + step - gap)
+    d += `M${num(ax)} ${num(ay)}L${num(bx)} ${num(by)}`
   }
   const id = `ll-sr${ink.seed.toString(36)}`
   const pass = (stroke: string, sw: number, op: number, tf: string) =>

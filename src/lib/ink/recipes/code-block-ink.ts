@@ -12,7 +12,7 @@ export const codeRuleRecipe = defineRecipe<Record<string, never>>({
     const x1 = w - x0
     ink.layer('rest', () => {
       if (ctx.calm) {
-        line(ink, x0, y, x1, y, { pen: 'pencil.fine', single: true, bow: 0, opts: { alpha: 0.7, wobble: 0.2 } })
+        line(ink, x0, y, x1, y, { pen: 'pencil.fine', opts: { alpha: 0.7, wobble: 0.2 } })
         return
       }
       const dash = 7

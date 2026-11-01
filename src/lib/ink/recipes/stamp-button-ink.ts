@@ -1,8 +1,8 @@
 import { bandFill, blobFill, wash } from '@/lib/ink/fills'
-import { ellipsePoly, roundRectPoly, seg } from '@/lib/ink/geom'
+import { ellipsePoly, roundRectPoly } from '@/lib/ink/geom'
 import type { PaintKey } from '@/lib/ink/paint'
 import { defineRecipe } from '@/lib/ink/recipes'
-import { box, dashedBox, focusRing, line } from '@/lib/ink/shapes'
+import { box, dashedBox, focusRing, line, RULER } from '@/lib/ink/shapes'
 import type { Pt } from '@/lib/ink/types'
 
 export const stampInkList = ['red', 'ink-you', 'green', 'ink'] as const
@@ -37,8 +37,8 @@ export const stampButtonRecipe = defineRecipe<StampButtonParams>({
         dashedBox(ink, 1, dieY, w - 2, dieH - 1, { r: 3, pen: 'pencil', opts: { color: 'pencil', width: 1.2 } })
         const knob = ellipsePoly(cx, 9.5, 14, 8.2, 28)
         ink.stroke([...knob, knob[0]], 'pencil.fine', { poly: true, round: 1, simple: true, alpha: 0.7 })
-        line(ink, cx - 4.6, 16, cx - 4, dieY - 1, { pen: 'pencil.fine', single: true, opts: { simple: true } })
-        line(ink, cx + 4.6, 16, cx + 4, dieY - 1, { pen: 'pencil.fine', single: true, opts: { simple: true } })
+        line(ink, cx - 4.6, 16, cx - 4, dieY - 1, { pen: 'pencil.fine', opts: { simple: true } })
+        line(ink, cx + 4.6, 16, cx + 4, dieY - 1, { pen: 'pencil.fine', opts: { simple: true } })
       })
       return
     }
@@ -62,18 +62,18 @@ export const stampButtonRecipe = defineRecipe<StampButtonParams>({
       const outline = ctx.calm ? 'pencil.fine' : 'ink.fine'
       ink.stroke([...knob, knob[0]], outline, { poly: true, round: 1, simple: true })
       ink.stroke([...flange, flange[0]], outline, { poly: true, round: 1, simple: true })
-      line(ink, cx - 4.6, 16, cx - 3.6, 22, { pen: outline, single: true, opts: { simple: true } })
-      line(ink, cx + 4.6, 16, cx + 3.6, 22, { pen: outline, single: true, opts: { simple: true } })
-      line(ink, cx - 7.5, 8.6, cx + 5, 7, { pen: 'pencil.fine', single: true, opts: { simple: true, alpha: 0.6 } })
+      line(ink, cx - 4.6, 16, cx - 3.6, 22, { pen: outline, opts: { simple: true } })
+      line(ink, cx + 4.6, 16, cx + 3.6, 22, { pen: outline, opts: { simple: true } })
+      line(ink, cx - 7.5, 8.6, cx + 5, 7, { pen: 'pencil.fine', opts: { simple: true, alpha: 0.6 } })
       const die: Pt[] = [[2, dieY + 2], [w - 2, dieY + 2], [w - 2, h - 2], [2, h - 2]]
       ink.part('fill', () => bandFill(ink, die, colour, { alpha: 0.2, passes: 1, ends: 'square' }))
-      box(ink, 0, dieY, w, dieH, { pen, corner: 3, style: ctx.calm ? 'loop' : undefined, stubs: false, ghost: false, opts: ctx.calm ? { simple: true } : undefined })
-      box(ink, 4.5, dieY + 4.5, w - 9, dieH - 9, { pen: `${pen}.fine`, corner: 2, style: 'loop', stubs: false, ghost: false, opts: { simple: true } })
+      box(ink, 0, dieY, w, dieH, { pen, corner: 3, opts: ctx.calm ? { simple: true } : undefined })
+      box(ink, 4.5, dieY + 4.5, w - 9, dieH - 9, { pen: `${pen}.fine`, corner: 2, opts: { simple: true } })
     })
 
     ink.layer('hover', () => {
       if (!ctx.calm) wash(ink, [[2, dieY + 2], [w - 2, dieY + 2], [w - 2, h - 2], [2, h - 2]], colour, { alpha: 0.12, inset: 0 })
-      ink.lines([{ pts: seg(6, h + 3.5, w - 4, h + 3.1, 0.6, 8), o: { start: 'soft', end: 'flick' } }], 'ink.fine', { width: 1.2 })
+      ink.lines([{ pts: [[6, h + 3.4], [w - 4, h + 3.4]], o: RULER }], 'ink.fine', { width: 1.2 })
     })
   },
 })

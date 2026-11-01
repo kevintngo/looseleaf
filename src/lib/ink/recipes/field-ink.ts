@@ -15,15 +15,15 @@ export const fieldChoiceRecipe = defineRecipe<Record<string, never>>({
     const wide = w > 360
     ink.layer('rest', () => {
       ink.poly('under', body, 'slip', 0.7)
-      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false })
-      else box(ink, 0, 0, w, h, { pen: 'pencil', corner: r, style: 'two', ghost: false, opts: { width: 1.1, simple: wide } })
+      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r })
+      else box(ink, 0, 0, w, h, { pen: 'pencil', corner: r, opts: { width: 1.1, simple: wide } })
     })
     ink.layer('hover', () => {
-      box(ink, 0.8, 0.8, w - 1.6, h - 1.6, { pen: ctx.calm ? 'pencil.fine' : 'ink.fine', corner: r, style: 'loop', stubs: false, ghost: false, loose: 0.7, opts: { alpha: 0.75, simple: wide } })
+      box(ink, 0.8, 0.8, w - 1.6, h - 1.6, { pen: ctx.calm ? 'pencil.fine' : 'ink.fine', corner: r, loose: 0.7, opts: { alpha: 0.75, simple: wide } })
     })
     ink.layer('checked', () => {
       ink.part('fill', () => wash(ink, body, 'hi', { alpha: 0.5 }))
-      box(ink, 0, 0, w, h, { pen: ctx.calm ? 'pencil.fine' : 'ink', corner: r, style: ctx.calm ? 'loop' : 'two', ...(ctx.calm ? { stubs: false } : {}), ghost: false, opts: { width: 1.05, simple: wide } })
+      box(ink, 0, 0, w, h, { pen: ctx.calm ? 'pencil.fine' : 'ink', corner: r, opts: { width: 1.05, simple: wide } })
     })
   },
 })

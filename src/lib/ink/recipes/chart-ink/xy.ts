@@ -1,8 +1,8 @@
 import type { Ink } from '@/lib/ink/builder'
 import { blobFill, flatFill } from '@/lib/ink/fills'
-import { ellipsePoly, seg } from '@/lib/ink/geom'
+import { ellipsePoly } from '@/lib/ink/geom'
 import { clamp } from '@/lib/ink/rng'
-import { arrow, dashedBox, focusRing, loop, squiggle, underline } from '@/lib/ink/shapes'
+import { arrow, dashedBox, focusRing, loop, squiggle, underline, RULER } from '@/lib/ink/shapes'
 import { defineRecipe } from '@/lib/ink/recipes'
 import { layoutXY, type XYBar, type XYLayout } from '@/lib/ink/charts/chart-xy'
 import { slotKey, type XYSpec } from '@/lib/ink/charts/chart-types'
@@ -72,11 +72,10 @@ function drawNotes(ink: Ink, L: XYLayout, spec: XYSpec): void {
       for (const r of L.refs) {
         const len = Math.hypot(r.x2 - r.x1, r.y2 - r.y1)
         const p = NOTE_PEN[r.pen]
-        const rng = ink.next('ref')
-        for (let d = 0; d < len; d += 15 + rng.range(-1, 1)) {
+        for (let d = 0; d < len; d += 15) {
           const a = d / len
           const e = Math.min(len, d + 9) / len
-          ink.stroke(seg(r.x1 + (r.x2 - r.x1) * a, r.y1 + (r.y2 - r.y1) * a, r.x1 + (r.x2 - r.x1) * e, r.y1 + (r.y2 - r.y1) * e + rng.gauss(0, 0.3), 0.1, 2), p.fine === 'redfelt.fine' ? 'red' : 'pencil', { simple: true, alpha: 0.85, width: 0.95, start: 'soft', end: 'soft' })
+          ink.stroke([[r.x1 + (r.x2 - r.x1) * a, r.y1 + (r.y2 - r.y1) * a], [r.x1 + (r.x2 - r.x1) * e, r.y1 + (r.y2 - r.y1) * e]], p.fine === 'redfelt.fine' ? 'red' : 'pencil', { ...RULER, simple: true, alpha: 0.85, width: 0.95 })
         }
       }
     },

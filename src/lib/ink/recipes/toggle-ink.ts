@@ -1,7 +1,7 @@
 import { bandFill, blobFill, wash } from '@/lib/ink/fills'
-import { roundRectPoly, seg } from '@/lib/ink/geom'
+import { roundRectPoly } from '@/lib/ink/geom'
 import { clamp } from '@/lib/ink/rng'
-import { box, chain, dashedBox, focusRing } from '@/lib/ink/shapes'
+import { box, chain, dashedBox, focusRing, RULER } from '@/lib/ink/shapes'
 import { defineRecipe } from '@/lib/ink/recipes'
 
 export const toggleVariantList = ['default', 'outline'] as const
@@ -47,7 +47,6 @@ export const toggleRecipe = defineRecipe<ToggleParams>({
       box(ink, i, i, w - 2 * i, h - 2 * i, {
         pen,
         corner: r,
-        ...(fine ? { style: 'loop' as const, stubs: false, ghost: false } : {}),
         ...(alpha !== undefined || wide || calm || invalid
           ? { opts: { alpha, simple: wide || (calm && i > 0) || undefined, ...(invalid ? { width: 1.2 } : {}) } }
           : {}),
@@ -60,11 +59,11 @@ export const toggleRecipe = defineRecipe<ToggleParams>({
           'seam',
           () => {
             const pen = disabled || variant === 'default' || calm ? 'pencil.fine' : 'ink.fine'
-            const o = { start: 'soft' as const, end: 'flick' as const, alpha: disabled ? 0.55 : variant === 'default' ? 0.42 : 1 }
-            if (vertical) ink.lines([{ pts: seg(w * 0.06, 0.2, w * 0.94, 0.6, 0.4, 5), o }], pen)
+            const o = { ...RULER, alpha: disabled ? 0.55 : variant === 'default' ? 0.42 : 1 }
+            if (vertical) ink.lines([{ pts: [[w * 0.06, 0.4], [w * 0.94, 0.4]], o }], pen)
             else {
               const x = rtl ? w - 0.4 : 0.4
-              ink.lines([{ pts: seg(x, h * 0.05, x + (rtl ? -0.5 : 0.5), h * 0.95, 0.5, 5), o }], pen)
+              ink.lines([{ pts: [[x, h * 0.05], [x, h * 0.95]], o }], pen)
             }
             return { dx: 0, dy: 0 }
           },
@@ -87,9 +86,6 @@ export const toggleRecipe = defineRecipe<ToggleParams>({
           box(ink, 1, 1, w - 2, h - 2, {
             pen: 'pencil.fine',
             corner: r,
-            style: 'loop',
-            stubs: false,
-            ghost: false,
             loose: 0.6,
             opts: { alpha: 0.7, simple: true },
           })
@@ -118,12 +114,12 @@ export const toggleRecipe = defineRecipe<ToggleParams>({
         small ? blobFill(ink, body, tone, { alpha, mis }) : bandFill(ink, body, tone, { alpha, mis, passes: tone === 'marker' && !calm ? 2 : 1, ...fillOpts })
       )
       if (invalid) {
-        box(ink, 0, 0, w, h, { pen: calm ? 'red.fine' : 'red', corner: r, ghost: false, ...(calm ? { style: 'loop' as const, stubs: false } : {}), opts: { width: 1.3, simple: wide || undefined } })
+        box(ink, 0, 0, w, h, { pen: calm ? 'red.fine' : 'red', corner: r, opts: { width: 1.3, simple: wide || undefined } })
         return
       }
       if (variant === 'default' && !joined) {
-        if (calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false, opts: { simple: wide || undefined } })
-        else box(ink, 0, 0, w, h, { pen: 'ink.fine', corner: r, ghost: false, opts: wide ? { simple: true } : undefined })
+        if (calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, opts: { simple: wide || undefined } })
+        else box(ink, 0, 0, w, h, { pen: 'ink.fine', corner: r, opts: wide ? { simple: true } : undefined })
       }
     })
   },

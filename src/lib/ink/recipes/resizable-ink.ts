@@ -1,8 +1,7 @@
 import { wash } from '@/lib/ink/fills'
-import { roundRectPoly, seg } from '@/lib/ink/geom'
+import { roundRectPoly } from '@/lib/ink/geom'
 import { defineRecipe } from '@/lib/ink/recipes'
-import { box, focusRing } from '@/lib/ink/shapes'
-import { clamp, type Rng } from '@/lib/ink/rng'
+import { box, focusRing, RULER } from '@/lib/ink/shapes'
 import type { Line, Pt } from '@/lib/ink/types'
 
 export interface ResizableParams {
@@ -14,20 +13,16 @@ export interface ResizableParams {
 const TAB_LONG = 32
 const TAB_SHORT = 18
 
-function stitches(rng: Rng, len: number, across: number, vertical: boolean, gap: Pt | null): Line[] {
+function stitches(len: number, across: number, vertical: boolean, gap: Pt | null): Line[] {
+  const c = across / 2
+  const at = (t: number): Pt => (vertical ? [c, t] : [t, c])
+  const dash = 9, space = 5.2
+  const count = Math.max(1, Math.round((len - 6 + space) / (dash + space)))
+  const step = (len - 6 + space) / count
   const lines: Line[] = []
-  const cx = across / 2
-  let y = 3 + rng.range(0, 4)
-  while (y < len - 6) {
-    const dash = rng.range(7.5, 10.5)
-    const y1 = Math.min(len - 3, y + dash)
-    if (!gap || y1 < gap[0] || y > gap[1]) {
-      const slant = rng.gauss(0, 0.35)
-      const a: Pt = vertical ? [cx - slant + rng.gauss(0, 0.25), y] : [y, cx - slant + rng.gauss(0, 0.25)]
-      const b: Pt = vertical ? [cx + slant + rng.gauss(0, 0.25), y1] : [y1, cx + slant + rng.gauss(0, 0.25)]
-      lines.push({ pts: seg(a[0], a[1], b[0], b[1], rng.gauss(0, 0.15), 3), o: { start: 'soft', end: 'soft', wobble: 0.3, simple: true } })
-    }
-    y = y1 + rng.range(4.2, 6.4)
+  for (let i = 0; i < count; i++) {
+    const y = 3 + i * step, y1 = y + step - space
+    if (!gap || y1 < gap[0] || y > gap[1]) lines.push({ pts: [at(y), at(y1)], o: { ...RULER, simple: true } })
   }
   return lines
 }
@@ -51,7 +46,7 @@ export const resizableRecipe = defineRecipe<ResizableParams>({
 
     if (disabled) {
       if (ctx.lazyOnly) return
-      ink.layer('disabled', () => ink.lines(stitches(ink.next('stitch'), len, across, vertical, null), 'pencil.fine', { alpha: 0.4 }))
+      ink.layer('disabled', () => ink.lines(stitches(len, across, vertical, null), 'pencil.fine', { alpha: 0.4 }))
       return
     }
 
@@ -60,11 +55,11 @@ export const resizableRecipe = defineRecipe<ResizableParams>({
     ctx.lazy('focus', (f) => focusRing(f, cx - ringW / 2, cy - ringH / 2, ringW, ringH, { r: 4 }))
     if (ctx.lazyOnly) return
 
-    const geometry = stitches(ink.next('stitch'), len, across, vertical, gap)
+    const geometry = stitches(len, across, vertical, gap)
     const tab = (): void => {
       const x = cx - tabW / 2, y = cy - tabH / 2
       ink.poly('under', roundRectPoly(x + 0.8, y + 0.8, tabW - 1.6, tabH - 1.6, 3), 'slip', 0.98)
-      box(ink, x, y, tabW, tabH, { pen: ctx.calm ? 'pencil.fine' : 'ink.fine', corner: 3, style: 'loop', stubs: false, ghost: false })
+      box(ink, x, y, tabW, tabH, { pen: ctx.calm ? 'pencil.fine' : 'ink.fine', corner: 3 })
     }
 
     ink.layer('rest', () => {
@@ -77,8 +72,8 @@ export const resizableRecipe = defineRecipe<ResizableParams>({
     })
     ink.layer('pressed', () => {
       const a: Pt = vertical ? [cx, 1] : [1, cy]
-      const b: Pt = vertical ? [cx + 0.4, len - 1] : [len - 1, cy + 0.4]
-      ink.stroke(seg(a[0], a[1], b[0], b[1], clamp(len * 0.002, 0, 1.5), Math.max(4, Math.ceil(len / 24))), 'blue', { start: 'soft', end: 'soft', wobble: 0.4, width: 1.15 })
+      const b: Pt = vertical ? [cx, len - 1] : [len - 1, cy]
+      ink.stroke([a, b], 'blue', { ...RULER, width: 1.15 })
     })
   },
 })

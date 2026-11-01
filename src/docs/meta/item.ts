@@ -12,14 +12,14 @@ export default {
     {
       name: "Item",
       description:
-        "A flex row (a div, or your own element with asChild). The rough pencil box of variant=outline, the wash of muted and the highlighter hover of a link or button row are CSS (masks made from a few tiny drawn tiles, defined once per page in one hoisted stylesheet), never an svg per row. Inside an ItemGroup it is a list item; an asChild row is wrapped in one, so the link keeps its own role.",
+        "A flex row (a div, or your own element with asChild). The ruled pencil box of variant=outline, the wash of muted and the highlighter hover of a link or button row are CSS (masks made from a few tiny drawn tiles, defined once per page in one hoisted stylesheet), never an svg per row. Inside an ItemGroup it is a list item; an asChild row is wrapped in one, so the link keeps its own role.",
       props: [
         {
           name: "variant",
           type: '"default" | "outline" | "muted"',
           default: '"default"',
           description:
-            "default = bare; outline = a rough ruled pencil box (three hands, by seed); muted = a paper-shade wash in the shape of a highlighter swipe.",
+            "default = bare; outline = a ruled pencil box whose corners meet (three hands, by seed); muted = a paper-shade wash with rounded corners.",
         },
         {
           name: "size",
@@ -66,7 +66,7 @@ export default {
           type: '"default" | "icon" | "image"',
           default: '"default"',
           description:
-            "icon = a 36 px well with a rough box and a paper-shade wash; image = a 40 px photograph with a white border that lies a degree crooked (alternating rows, straight in calm density).",
+            "icon = a 36 px well with a ruled box and a paper-shade wash; image = a 40 px photograph with a white border that lies a degree crooked (alternating rows, straight in calm density).",
         },
       ],
     },

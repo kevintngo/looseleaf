@@ -235,7 +235,7 @@ function Calendar({
             month_grid: cn("table-fixed border-collapse [border-spacing:0]", d.month_grid),
             weekdays: cn(d.weekdays),
             weekday: cn(
-              "h-7 w-(--cell) p-0 text-center align-middle font-type text-[0.72rem] leading-none font-normal tracking-wider text-pencil-text uppercase select-none rtl:tracking-normal",
+              "h-7 w-(--cell) p-0 text-center align-middle font-type text-[0.78rem] leading-none font-normal text-pencil-text select-none",
               d.weekday
             ),
             week: cn(d.week),

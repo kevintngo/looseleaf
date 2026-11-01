@@ -62,6 +62,7 @@ export interface DrawOpts {
   nib?: number
   shade?: boolean
   grain?: boolean
+  crisp?: boolean
   calm?: boolean
   knobs?: Partial<Knobs>
   silAll?: boolean
@@ -216,6 +217,7 @@ export function paintSkeleton(ink: Ink, def: ArtDef, size: number, o: DrawOpts =
           wobble: wob,
           speed: 1,
           dry: 0,
+          simple: o.crisp,
           start: hand.start ?? 'soft',
           end: hand.end ?? 'soft',
           press: hand.taper ? (t: number) => Math.max(0.3, 1 + hand.taper! * (0.5 - t) * 1.5) : undefined,

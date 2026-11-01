@@ -41,7 +41,7 @@ function control(seed: string, w: number, h: number, tier: 'hi' | 'lo' = 'lo'): 
     bandFill(ink, roundRectPoly(1.5, 1.5, w - 3, h - 3, 4), 'marker', { passes: 2 })
     box(ink, 0, 0, w, h, { corner: 4 })
   })
-  ink.layer('hover', () => box(ink, 0.5, 0.5, w - 1, h - 1, { pen: 'ink.fine', style: 'loop', ghost: false }))
+  ink.layer('hover', () => box(ink, 0.5, 0.5, w - 1, h - 1, { pen: 'ink.fine' }))
   ink.layer('focus', () => focusRing(ink, 0, 0, w, h, { r: 4 }))
   return ink
 }
@@ -324,12 +324,12 @@ describe('builder', () => {
   it('lean: a felt line keeps its stain in its own group, so the stain shares the mask', () => {
     const ink = new Ink('lean:stain')
     ink.lean()
-    box(ink, 0, 0, 100, 30, { corner: 4, ghost: false })
+    box(ink, 0, 0, 100, 30, { corner: 4 })
     const svg = ink.toSvg({ w: 100, h: 30 }).svg
     expect(svg.startsWith('<g mask="url(#ll-felt-')).toBe(true)
     expect(svg.endsWith('</g>')).toBe(true)
     const plain = new Ink('lean:stain')
-    box(plain, 0, 0, 100, 30, { corner: 4, ghost: false })
+    box(plain, 0, 0, 100, 30, { corner: 4 })
     expect(plain.toSvg({ w: 100, h: 30 }).svg.startsWith('<path')).toBe(true)
   })
   it('lean never merges pencil, wax or stamp grain, groups that move, or a group with bare paint in it', () => {

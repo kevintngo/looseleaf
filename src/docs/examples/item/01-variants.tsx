@@ -5,7 +5,7 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle }
 export const meta = {
   title: "Variants and sizes",
   description:
-    "Bare, outlined in rough pencil, and washed like a swipe of paper-shade. The small size trims the padding. None of these rows draws an svg: the pencil is CSS.",
+    "Bare, outlined in ruled pencil, and washed in paper-shade. The small size trims the padding. None of these rows draws an svg: the pencil is CSS.",
   layout: "stack" as const,
 }
 

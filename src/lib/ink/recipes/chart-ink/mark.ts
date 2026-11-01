@@ -55,7 +55,7 @@ export const markRecipe = defineRecipe<MiniParams>({
         }
         case 'cell':
           blobFill(ink, rectPts(2, 2, w - 4, h - 4), 'hi', { alpha: 0.22, mis: false, rough: 0.5 })
-          box(ink, 1, 1, w - 2, h - 2, { pen: 'ink', corner: 2, style: 'two', stubs: false, ghost: false, opts: { simple: true, width: 1 } })
+          box(ink, 1, 1, w - 2, h - 2, { pen: 'ink', corner: 2, opts: { simple: true, width: 1 } })
           return
         case 'spoke':
           ink.stroke(seg(p.x1, p.y1, p.x2, p.y2, 0.6, 8), 'hi', { width: 0.7, alpha: 0.9, start: 'soft', end: 'soft' })

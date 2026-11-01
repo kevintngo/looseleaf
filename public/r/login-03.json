@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "login-03",
   "title": "Login 03",
-  "description": "A card on a quiet desk with a coffee ring and a pencil lying about. Apple and Google buttons, an or-continue-with rule, then email and password. The desk is the muted background of the official block and travels with the block.",
+  "description": "A card on a quiet desk with a pencil lying about. Apple and Google buttons, an or-continue-with rule, then email and password. The desk is the muted background of the official block and travels with the block.",
   "dependencies": [
     "@hookform/resolvers@^5",
     "react-hook-form@^7",
@@ -38,7 +38,7 @@
     },
     {
       "path": "src/blocks/login-03/page.tsx",
-      "content": "import { LoginForm } from \"@/components/blocks/login-03/components/login-03-form\"\nimport { Desk } from \"@/components/ui/desk\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { cn } from \"@/lib/utils\"\n\nexport default function Login03Page({ className, as = \"main\", ...props }: Omit<React.ComponentProps<typeof Desk>, \"as\"> & { as?: \"main\" | \"div\" }) {\n  return (\n    <Desk as={as} objects={[\"coffee\", \"pencil\"]} seed=\"login-03\" className={cn(\"@container/page min-h-svh w-full overflow-x-clip\", className)} {...props}>\n      <div className=\"flex min-h-[inherit] flex-col items-center justify-center gap-6 p-6 @xl/page:p-10\">\n        <div className=\"flex w-full max-w-sm flex-col gap-6\">\n          <a href=\"#home\" className=\"flex items-center gap-2 self-center font-script text-2xl leading-none font-bold\">\n            <Icon name=\"book-open\" tone=\"doodle\" size={24} />\n            Looseleaf\n          </a>\n          <LoginForm />\n        </div>\n      </div>\n    </Desk>\n  )\n}\n",
+      "content": "import { LoginForm } from \"@/components/blocks/login-03/components/login-03-form\"\nimport { Desk } from \"@/components/ui/desk\"\nimport { Icon } from \"@/components/ui/icon\"\nimport { cn } from \"@/lib/utils\"\n\nexport default function Login03Page({ className, as = \"main\", ...props }: Omit<React.ComponentProps<typeof Desk>, \"as\"> & { as?: \"main\" | \"div\" }) {\n  return (\n    <Desk as={as} objects={[\"pencil\"]} seed=\"login-03\" className={cn(\"@container/page min-h-svh w-full overflow-x-clip\", className)} {...props}>\n      <div className=\"flex min-h-[inherit] flex-col items-center justify-center gap-6 p-6 @xl/page:p-10\">\n        <div className=\"flex w-full max-w-sm flex-col gap-6\">\n          <a href=\"#home\" className=\"flex items-center gap-2 self-center font-script text-2xl leading-none font-bold\">\n            <Icon name=\"book-open\" tone=\"doodle\" size={24} />\n            Looseleaf\n          </a>\n          <LoginForm />\n        </div>\n      </div>\n    </Desk>\n  )\n}\n",
       "type": "registry:component",
       "target": "@components/blocks/login-03/page.tsx"
     }

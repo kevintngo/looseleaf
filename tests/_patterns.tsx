@@ -31,7 +31,7 @@ export const pillRecipe = defineRecipe<{ tone: "hi" | "marker"; disabled?: boole
       ink.part("fill", () => blobFill(ink, pillPoly(1.5, 1.5, w - 3, h - 3), tone, { alpha: 0.85 }))
       box(ink, 0, 0, w, h, { pen: "ink.fine", corner: h / 2 })
     })
-    ink.layer("hover", () => box(ink, 1, 1, w - 2, h - 2, { pen: "ink.fine", corner: h / 2, ghost: false, opts: { alpha: 0.6 } }))
+    ink.layer("hover", () => box(ink, 1, 1, w - 2, h - 2, { pen: "ink.fine", corner: h / 2, opts: { alpha: 0.6 } }))
   },
 })
 
@@ -108,7 +108,7 @@ export const switchRecipe = defineRecipe<{ disabled?: boolean }>({
     ink.layer("checked", () => {
       ink.part("fill", () => blobFill(ink, pillPoly(1.5, 1.5, w - 3, h - 3), disabled ? "pencil-mark" : "marker", { alpha: disabled ? 0.4 : 0.86 }))
     })
-    if (!disabled) ink.layer("hover", () => box(ink, 1, 1, w - 2, h - 2, { pen: "ink.fine", corner: h / 2, ghost: false, opts: { alpha: 0.6 } }))
+    if (!disabled) ink.layer("hover", () => box(ink, 1, 1, w - 2, h - 2, { pen: "ink.fine", corner: h / 2, opts: { alpha: 0.6 } }))
   },
 })
 

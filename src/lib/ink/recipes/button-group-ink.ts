@@ -14,7 +14,7 @@ export const buttonGroupTextRecipe = defineRecipe<Record<string, never>>({
     const inset = clamp(h * 0.06, 1.6, 3)
     ink.layer('rest', () => {
       wash(ink, roundRectPoly(inset, inset, w - 2 * inset, h - 2 * inset, r), 'paper-shade', { alpha: 0.95, material: 'wash' })
-      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false, opts: { simple: w > 360 || undefined } })
+      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, opts: { simple: w > 360 || undefined } })
       else box(ink, 0, 0, w, h, { pen: 'ink', corner: r, opts: w > 360 ? { simple: true } : undefined })
     })
   },

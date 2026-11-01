@@ -268,7 +268,6 @@ describe("rtl audit: ten components inside dir=rtl (server, drawn, facts)", () =
     },
     {
       name: "Switch",
-      mirrors: true,
       make: () => <Switch aria-label="تفعيل" defaultChecked seed="sw" />,
     },
     {

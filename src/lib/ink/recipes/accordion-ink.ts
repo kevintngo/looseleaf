@@ -11,8 +11,8 @@ export const accordionRuleRecipe = defineRecipe<Record<string, never>>({
     const y = h / 2
     const x0 = Math.min(6, w * 0.03)
     ink.layer('rest', () => {
-      if (ctx.calm) line(ink, x0, y, w - x0, y, { pen: 'pencil.fine', single: true, opts: { alpha: 0.7, wobble: 0.2 } })
-      else line(ink, x0, y, w - x0, y, { pen: 'pencil', bow: 0.5 })
+      if (ctx.calm) line(ink, x0, y, w - x0, y, { pen: 'pencil.fine', opts: { alpha: 0.7, wobble: 0.2 } })
+      else line(ink, x0, y, w - x0, y, { pen: 'pencil' })
     })
   },
 })

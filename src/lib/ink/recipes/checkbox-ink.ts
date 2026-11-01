@@ -1,7 +1,7 @@
 import { blobFill, wash } from '@/lib/ink/fills'
-import { roundRectPoly, seg } from '@/lib/ink/geom'
+import { roundRectPoly } from '@/lib/ink/geom'
 import { clamp } from '@/lib/ink/rng'
-import { checkLines, dashedBox, box, focusRing } from '@/lib/ink/shapes'
+import { checkLines, dashedBox, box, focusRing, RULER, chain } from '@/lib/ink/shapes'
 import { defineRecipe } from '@/lib/ink/recipes'
 import { reveal, revealId } from '@/lib/ink/recipes/draw-on-ink'
 import type { PenName } from '@/lib/ink/types'
@@ -30,9 +30,7 @@ export const checkboxRecipe = defineRecipe<CheckboxParams>({
     const outline = (): void => {
       const pen: PenName = invalid ? (calm || fine ? 'red.fine' : 'red') : calm ? 'pencil.fine' : fine ? 'ink.fine' : 'ink'
       box(ink, 0, 0, w, h, {
-        pen, corner: r, ov: 1.4 + 0.05 * s, ghost: false,
-        ...(calm ? { style: 'loop' as const, stubs: false } : {}),
-        opts: invalid ? { width: 1.2 } : undefined,
+        pen, corner: r, opts: invalid ? { width: 1.2 } : undefined,
       })
     }
 
@@ -49,18 +47,11 @@ export const checkboxRecipe = defineRecipe<CheckboxParams>({
     if (!disabled) {
       ink.layer('hover', () => {
         if (calm) {
-          box(ink, 1, 1, w - 2, h - 2, { pen: invalid ? 'red.fine' : 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false, loose: 0.5, opts: { alpha: 0.75, simple: true } })
+          box(ink, 1, 1, w - 2, h - 2, { pen: invalid ? 'red.fine' : 'pencil.fine', corner: r, loose: 0.5, opts: { alpha: 0.75, simple: true } })
           return
         }
         const d = 2 + s / 24
-        ink.lines(
-          [
-            { pts: seg(r + d + 1, h + d, w + d - 0.5, h + d, 0.3, 4), o: { start: 'soft', end: 'flick' } },
-            { pts: seg(w + d, r + d + 1, w + d, h + d - 0.5, 0.3, 3), o: { start: 'soft', end: 'flick' } },
-          ],
-          'ink.fine',
-          { width: 1.1 },
-        )
+        ink.lines([{ pts: chain([[r + d + 1, h + d], [w + d, h + d], [w + d, r + d + 1]], [0, 0], Math.max(2.5, r), ink.next('drop')), o: RULER }], 'ink.fine', { width: 1.1 })
       })
     }
 
@@ -71,7 +62,7 @@ export const checkboxRecipe = defineRecipe<CheckboxParams>({
 
     const invalidMark = (): void => {
       if (!invalid || disabled) return
-      box(ink, 0, 0, w, h, { pen: calm || fine ? 'red.fine' : 'red', corner: r, ov: 1.4 + 0.05 * s, ghost: false, ...(calm ? { style: 'loop' as const, stubs: false } : {}), opts: { width: 1.3 } })
+      box(ink, 0, 0, w, h, { pen: calm || fine ? 'red.fine' : 'red', corner: r, opts: { width: 1.3 } })
       const a = 4 + s * 0.14
       ink.lines([{ pts: [[w - 1, -a * 0.95], [w + a * 0.3, -a * 0.4], [w + a, 0.4]], o: { start: 'soft', end: 'flick', wobble: 0.3, poly: true } }], 'red.fine', { width: 1.25 })
     }
@@ -87,7 +78,7 @@ export const checkboxRecipe = defineRecipe<CheckboxParams>({
       const y = h * 0.52
       reveal(ink, {
         id: revealId(ctx.seed, 'i'),
-        lines: [{ pts: seg(w * 0.22, y + 0.6, w * 0.8, y - 0.8, 0.4, 5), o: { start: 'pool', end: 'flick', wobble: 0.4 } }],
+        lines: [{ pts: [[w * 0.22, y], [w * 0.78, y]], o: RULER }],
         pen: disabled ? 'pencil' : 'ink',
         box: { w, h },
         width: s < 20 ? 1.1 : 1.35,

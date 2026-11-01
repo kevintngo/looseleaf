@@ -31,14 +31,14 @@ export const otpSlotRecipe = defineRecipe<OtpSlotParams>({
     if (invalid) {
       ink.layer('invalid', () => {
         ink.poly('under', body, 'slip', 0.7)
-        box(ink, 0, 0, w, h, { pen: ctx.calm ? 'red.fine' : 'red', corner: r, style: ctx.calm ? 'loop' : 'two', ...(ctx.calm ? { stubs: false } : {}), ghost: false, opts: { width: ctx.calm ? 1.1 : 1.25 } })
+        box(ink, 0, 0, w, h, { pen: ctx.calm ? 'red.fine' : 'red', corner: r, opts: { width: ctx.calm ? 1.1 : 1.25 } })
       })
       return
     }
     ink.layer('rest', () => {
       ink.poly('under', body, 'slip', 0.7)
-      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r, style: 'loop', stubs: false, ghost: false })
-      else box(ink, 0, 0, w, h, { pen: filled ? 'ink.fine' : 'pencil', corner: r, style: 'two', ghost: false, opts: { width: filled ? 1.05 : 1.15 } })
+      if (ctx.calm) box(ink, 0, 0, w, h, { pen: 'pencil.fine', corner: r })
+      else box(ink, 0, 0, w, h, { pen: filled ? 'ink.fine' : 'pencil', corner: r, opts: { width: filled ? 1.05 : 1.15 } })
     })
   },
 })

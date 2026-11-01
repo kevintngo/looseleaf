@@ -31,7 +31,7 @@ export default {
           type: '"pencil" | "dashed" | "wavy" | "dotted" | "tape" | "stitched" | "torn"',
           default: '"pencil"',
           description:
-            "pencil = a graphite line that sags a little; dashed = ledger dashes; wavy = a felt-tip squiggle; dotted = ink dots; tape = a strip of kraft tape stuck across; stitched = a running stitch in marker thread; torn = a strip of paper torn along both edges. Calm density draws tape, stitched and torn as the pencil rule.",
+            "pencil = a graphite line drawn against a ruler; dashed = ledger dashes; wavy = a felt-tip squiggle; dotted = ink dots; tape = a strip of kraft tape stuck across; stitched = a running stitch in marker thread; torn = a strip of paper torn along both edges. Calm density draws tape, stitched and torn as the pencil rule.",
         },
         {
           name: "children",

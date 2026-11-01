@@ -289,7 +289,7 @@ export const sketchToolRecipe = defineRecipe<SketchToolParams>({
         const body = roundRectPoly(x, y, bw, bh, 3)
         blobFill(ink, body, 'bubblegum', { alpha: 0.85, mis: 1.6 })
         blobFill(ink, roundRectPoly(x + bw * 0.62, y, bw * 0.38, bh, 3), 'paper-shade', { alpha: 0.9, mis: 1 })
-        box(ink, x, y, bw, bh, { pen: 'ink.fine', corner: 3, style: 'loop', ghost: false })
+        box(ink, x, y, bw, bh, { pen: 'ink.fine', corner: 3 })
         ink.dot(x - 6, cy + 5, 1.1, 'pencil')
         ink.dot(x - 9.5, cy + 2, 0.8, 'pencil')
         return
@@ -305,7 +305,7 @@ export const sketchToolRecipe = defineRecipe<SketchToolParams>({
     })
     ink.layer('checked', () => {
       highlight(ink, 5, h - 21, w - 10, 17, { pen: 'hi' })
-      box(ink, 1, 1, w - 2, h - 2, { pen: 'ink.fine', corner: 5, ghost: false })
+      box(ink, 1, 1, w - 2, h - 2, { pen: 'ink.fine', corner: 5 })
     })
   },
 })
@@ -377,7 +377,7 @@ export const canvasFrameRecipe = defineRecipe<Record<string, never>>({
     if (ctx.lazyOnly) return
     ink.layer('rest', () => {
       if (ctx.calm) return
-      box(ink, -2, -2, w + 4, h + 4, { pen: 'pencil.fine', style: 'two', ghost: false, opts: { alpha: 0.5 } })
+      box(ink, -2, -2, w + 4, h + 4, { pen: 'pencil.fine', opts: { alpha: 0.5 } })
     })
   },
 })

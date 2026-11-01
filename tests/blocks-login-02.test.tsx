@@ -16,7 +16,7 @@ describe("login-02: the cover slot", () => {
     expect(cover?.closest('[data-slot="desk"]')?.className).toContain("hidden")
     expect(cover?.closest('[data-slot="desk"]')?.className).toContain("@3xl/page:flex")
     expect(cover?.querySelector('[data-slot="mascot"][data-pose="wave"]')).toBeInTheDocument()
-    expect(cover?.querySelectorAll('[data-slot="sticker"]').length).toBeGreaterThanOrEqual(3)
+    expect(cover?.querySelectorAll('[data-slot="sticker"]').length).toBe(0)
     expect(cover?.querySelector('[data-slot="sticky-note"]')).toHaveTextContent("psst: tab works too")
   })
 

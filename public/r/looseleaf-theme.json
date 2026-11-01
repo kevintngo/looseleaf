@@ -999,7 +999,7 @@
         "color": "MarkText"
       }
     },
-    "[data-slot=\"code-block\"][data-tone=\"dark\"]": {
+    ":is([data-slot=\"code-block\"][data-tone=\"dark\"])": {
       "--ll-stock": "#24272e",
       "--ll-ink": "#ece6d9",
       "--ll-ink-soft": "#d9d2c3",

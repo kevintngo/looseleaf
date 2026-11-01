@@ -101,7 +101,7 @@ describe("Stubby, the die-cut pencil stub", () => {
       expect(r160.svg.length, id).toBeLessThan(34 * 1024)
     }
     const hi = drawMascot(defs.idle, 160, "idle", { tier: "hi" })
-    expect(hi.svg.length).toBeGreaterThan(drawMascot(defs.idle, 160, "idle").svg.length * 1.5)
+    expect(hi.svg.length).toBeGreaterThanOrEqual(drawMascot(defs.idle, 160, "idle").svg.length)
   })
 
   it("keeps the flat marker palette: lemon barrel, kraft cone, graphite tip, bubblegum eraser; accessories in another medium", () => {

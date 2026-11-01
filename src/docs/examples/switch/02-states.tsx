@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch"
 
 export const meta = {
   title: "Sizes and states",
-  description: "Default and sm, off and on, invalid (red pencil outline that stays red when it is on) and disabled (dashed pencil, graphite fill). Off carries a pencil o, on a felt bar, so the state never rests on color alone.",
+  description: "Default and sm, off and on, invalid (red pencil outline that stays red when it is on) and disabled (dashed pencil, graphite fill). The thumb's side and the fill carry the state, so it never rests on color alone.",
   layout: "stack" as const,
 }
 

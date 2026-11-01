@@ -4,12 +4,12 @@ import type { InkResult } from '@/lib/ink/builder'
 import { n } from '@/lib/ink/paint'
 import { defineRecipe } from '@/lib/ink/recipes'
 import { curlMarkup } from '@/lib/ink/paper/props'
-import { seg } from '@/lib/ink/geom'
 import { ruleGeometry, STICKY_VEIL, stockOf, type StockName } from '@/lib/ink/paper/stocks'
 import { edgeInset, outlinePath, sheetOutline, sideInsets, type EdgeSpec, type Outline } from '@/lib/ink/paper/edges'
 import { faceMark, renderFaces, type FaceSvgOptions } from '@/lib/ink/paper/faces'
 import { contactShadow, farShadow, type SheetShadowKind } from '@/lib/ink/paper/shadows'
 import type { Pt, Tier } from '@/lib/ink/types'
+import { RULER } from '@/lib/ink/shapes'
 
 export interface SheetParams {
   stock: StockName
@@ -122,14 +122,10 @@ export const handRulesRecipe = defineRecipe<HandRulesParams>({
     const g = ruleGeometry('ruled', { calm: ctx.calm })
     const color = paper === 'pad' ? 'ink-you' : 'rule-blue'
     ink.layer('rest', () => {
-      const r = ink.next('rules')
-      for (let y = g.first - g.offset, i = 0; y < h - 4; y += g.pitch, i++) {
-        const drop = r.gauss(0, 0.5) - i * 0.04
-        ink.stroke(seg(-1, y + drop, w + 1, y + drop + r.gauss(0, 0.6), r.gauss(0, 0.5), Math.max(6, Math.round(w / 60))), 'pencil.fine', {
-          simple: true, wobble: 0.35, start: 'soft', end: 'soft', color, alpha: paper === 'pad' ? 0.42 : 0.85, width: 0.9,
-        })
+      for (let y = g.first - g.offset; y < h - 4; y += g.pitch) {
+        ink.stroke([[-1, y], [w + 1, y]], 'pencil.fine', { ...RULER, simple: true, color, alpha: paper === 'pad' ? 0.42 : 0.85, width: 0.9 })
       }
-      if (g.margin !== undefined) ink.stroke(seg(g.margin + r.gauss(0, 0.4), -1, g.margin + r.gauss(0, 0.8), h + 1, r.gauss(0, 0.5), Math.max(6, Math.round(h / 60))), 'pencil.fine', { simple: true, wobble: 0.3, start: 'soft', end: 'soft', color: 'rule-red', alpha: 0.9, width: 1.1 })
+      if (g.margin !== undefined) ink.stroke([[g.margin, -1], [g.margin, h + 1]], 'pencil.fine', { ...RULER, simple: true, color: 'rule-red', alpha: 0.9, width: 1.1 })
     })
   },
 })

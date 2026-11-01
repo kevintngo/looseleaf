@@ -209,7 +209,7 @@ function HitRow({ density }: { density: Density }) {
 }
 
 const CHANGES: [string, string, string, string][] = [
-  ["Outline", "A felt-tip box that overshoots at the corners, sometimes with a ghost pencil line.", "The same, a touch finer (pen ×0.94).", "One hairline pencil loop. No stubs, no ghost line."],
+  ["Outline", "One felt-tip loop whose ends meet, edges ruled straight.", "The same, a touch finer (pen ×0.94).", "One hairline pencil loop."],
   ["Fill", "One solid pass, in register.", "The same.", "The same, a shade lighter."],
   ["Hover", "Drop-lines, a slight turn of the drawing, the fill nudging further off.", "The same.", "A second inset hairline. Still visible without hue."],
   ["Focus", "A blue ring with corner ticks, 2.2 px, 4 px off.", "The same.", "The same. The ring is never toned down."],

@@ -55,20 +55,20 @@ export const stickerBoardItemRecipe = defineRecipe<ItemFrameParams>({
       dashedBox(ink, x0, y0, x1 - x0, y1 - y0, { r: 7, pen: 'bluepencil', dash, gap: dash * 0.72, opts: { width: ctx.calm ? 1 : 1.5 } })
       const t = 7
       const tick = (cx: number, cy: number, sx: number, sy: number) => {
-        line(ink, cx - sx * 2, cy, cx + sx * t, cy, { pen: 'blue.fine', single: true, opts: { simple: true } })
-        line(ink, cx, cy - sy * 2, cx, cy + sy * t, { pen: 'blue.fine', single: true, opts: { simple: true } })
+        line(ink, cx - sx * 2, cy, cx + sx * t, cy, { pen: 'blue.fine', opts: { simple: true } })
+        line(ink, cx, cy - sy * 2, cx, cy + sy * t, { pen: 'blue.fine', opts: { simple: true } })
       }
       tick(x0 - 1, y0 - 1, 1, 1)
       tick(x1 + 1, y0 - 1, -1, 1)
       tick(x0 - 1, y1 + 1, 1, -1)
       if (!handles) return
       const cx = w / 2
-      line(ink, cx, y0 - 1, cx, y0 - HANDLE.rotateUp + HANDLE.ring, { pen: 'blue.fine', single: true, opts: { simple: true } })
+      line(ink, cx, y0 - 1, cx, y0 - HANDLE.rotateUp + HANDLE.ring, { pen: 'blue.fine', opts: { simple: true } })
       loop(ink, cx, y0 - HANDLE.rotateUp, HANDLE.ring, HANDLE.ring, { pen: 'blue', opts: { simple: true, width: 1.2 } })
       const sx = x1 + HANDLE.scaleOut - HANDLE.scaleSize / 2
       const sy = y1 + HANDLE.scaleOut - HANDLE.scaleSize / 2
       ink.part('fill', () => blobFill(ink, roundRectPoly(sx, sy, HANDLE.scaleSize, HANDLE.scaleSize, 2.5), 'ink-you', { alpha: 0.9 }))
-      line(ink, x1 - 1, y1 + 1, x1 - t, y1 + 1, { pen: 'blue.fine', single: true, opts: { simple: true } })
+      line(ink, x1 - 1, y1 + 1, x1 - t, y1 + 1, { pen: 'blue.fine', opts: { simple: true } })
     })
   },
 })

@@ -20,8 +20,8 @@ export const stickerSheetRecipe = defineRecipe<StickerSheetParams>({
       if (ctx.calm) return
       const t = 7, g = 4
       const mark = (cx: number, cy: number, sx: number, sy: number) => {
-        line(ink, cx - sx * g, cy, cx - sx * (g + t), cy, { pen: 'pencil.fine', single: true, opts: { alpha: 0.75, simple: true } })
-        line(ink, cx, cy - sy * g, cx, cy - sy * (g + t), { pen: 'pencil.fine', single: true, opts: { alpha: 0.75, simple: true } })
+        line(ink, cx - sx * g, cy, cx - sx * (g + t), cy, { pen: 'pencil.fine', opts: { alpha: 0.75, simple: true } })
+        line(ink, cx, cy - sy * g, cx, cy - sy * (g + t), { pen: 'pencil.fine', opts: { alpha: 0.75, simple: true } })
       }
       mark(x0, y0, 1, 1)
       mark(x1, y0, -1, 1)

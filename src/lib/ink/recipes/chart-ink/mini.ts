@@ -31,7 +31,7 @@ export const sparkRecipe = defineRecipe<SparkSpec>({
     const calm = ctx.calm
     ink.layer('rest', () => {
       if (spec.state !== 'ready' || !L.pts.some(Boolean)) {
-        line(ink, 4, box.h / 2, box.w - 4, box.h / 2 - 0.6, { pen: 'pencil', single: true, opts: { simple: true, alpha: 0.6, width: 0.9 } })
+        line(ink, 4, box.h / 2, box.w - 4, box.h / 2 - 0.6, { pen: 'pencil', opts: { simple: true, alpha: 0.6, width: 0.9 } })
         return
       }
       ink.group(
@@ -77,11 +77,11 @@ export const tallyRecipe = defineRecipe<TallySpec>({
     const L = layoutTally(spec, box, ctx.calm)
     ink.layer('rest', () => {
       if (spec.state !== 'ready' || !L.rows.length) {
-        line(ink, 8, box.h / 2, box.w - 8, box.h / 2 - 0.6, { pen: 'pencil', single: true, opts: { simple: true, alpha: 0.6, width: 0.9 } })
+        line(ink, 8, box.h / 2, box.w - 8, box.h / 2 - 0.6, { pen: 'pencil', opts: { simple: true, alpha: 0.6, width: 0.9 } })
         return
       }
       for (const r of L.rows) {
-        line(ink, L.markArea.x0 - 6, r.y + r.gh + 4, L.markArea.x1, r.y + r.gh + 3.4, { pen: 'pencil', single: true, bow: 0.004, opts: { simple: true, alpha: ctx.calm ? 0.3 : 0.38, width: 0.75, wobble: ctx.calm ? 0.2 : 1 } })
+        line(ink, L.markArea.x0 - 6, r.y + r.gh + 4, L.markArea.x1, r.y + r.gh + 3.4, { pen: 'pencil', opts: { simple: true, alpha: ctx.calm ? 0.3 : 0.38, width: 0.75, wobble: ctx.calm ? 0.2 : 1 } })
       }
       ink.group(
         { part: 'wipe' },
