@@ -12,16 +12,17 @@ import { codeBodyRecipe, codeRuleRecipe } from "@/lib/ink/recipes/code-block-ink
 import { cn } from "@/lib/utils"
 
 const TOKEN_CLASS: Partial<Record<TokenType, string>> = {
-  keyword: "text-red",
-  literal: "text-red",
-  number: "text-red",
-  tag: "text-red",
-  function: "[text-shadow:0.45px_0_0_currentColor]",
-  type: "[text-shadow:0.45px_0_0_currentColor]",
-  attr: "[text-shadow:0.45px_0_0_currentColor]",
-  variable: "[text-shadow:0.45px_0_0_currentColor]",
-  string: "underline decoration-ink/30 decoration-1 underline-offset-[3px]",
-  comment: "text-pencil-text",
+  keyword: "text-(--ll-code-keyword)",
+  literal: "text-(--ll-code-literal)",
+  number: "text-(--ll-code-number)",
+  tag: "text-(--ll-code-tag)",
+  function: "text-(--ll-code-function)",
+  type: "text-(--ll-code-type)",
+  attr: "text-(--ll-code-attr)",
+  variable: "text-(--ll-code-variable)",
+  string: "text-(--ll-code-string)",
+  comment: "text-(--ll-code-comment)",
+  punct: "text-(--ll-code-punct)",
 }
 
 type Model = {
@@ -135,6 +136,7 @@ type CodeBlockProps = Omit<PaperProps, "as" | "children"> & {
   wrap?: boolean
   startLine?: number
   copyable?: boolean
+  tone?: "dark" | "paper"
   children?: React.ReactNode
 }
 
@@ -149,6 +151,7 @@ function CodeBlock({
   copyable = true,
   stock = "slip",
   tape = "top",
+  tone = "dark",
   seed,
   className,
   children,
@@ -166,6 +169,7 @@ function CodeBlock({
       <Paper
         as="figure"
         data-slot="code-block"
+        data-tone={tone}
         data-language={lang}
         data-diff={isDiff ? "" : undefined}
         stock={stock}

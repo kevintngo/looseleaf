@@ -7,7 +7,7 @@
   "alert": {
     "file": "alert.jpg",
     "w": 640,
-    "h": 348
+    "h": 356
   },
   "alert-dialog": {
     "file": "alert-dialog.jpg",
@@ -42,7 +42,7 @@
   "avatar": {
     "file": "avatar.jpg",
     "w": 640,
-    "h": 379
+    "h": 391
   },
   "badge": {
     "file": "badge.jpg",
@@ -52,7 +52,7 @@
   "boil": {
     "file": "boil.jpg",
     "w": 640,
-    "h": 386
+    "h": 396
   },
   "bookmark": {
     "file": "bookmark.jpg",
@@ -157,7 +157,7 @@
   "corkboard": {
     "file": "corkboard.jpg",
     "w": 640,
-    "h": 384
+    "h": 392
   },
   "date-picker": {
     "file": "date-picker.jpg",
@@ -222,7 +222,7 @@
   "folder": {
     "file": "folder.jpg",
     "w": 640,
-    "h": 386
+    "h": 394
   },
   "form": {
     "file": "form.jpg",
@@ -267,7 +267,7 @@
   "input-otp": {
     "file": "input-otp.jpg",
     "w": 640,
-    "h": 346
+    "h": 358
   },
   "item": {
     "file": "item.jpg",
@@ -287,7 +287,7 @@
   "label-tag": {
     "file": "label-tag.jpg",
     "w": 640,
-    "h": 376
+    "h": 386
   },
   "lettering": {
     "file": "lettering.jpg",
@@ -302,12 +302,12 @@
   "marquee": {
     "file": "marquee.jpg",
     "w": 640,
-    "h": 358
+    "h": 365
   },
   "mascot": {
     "file": "mascot.jpg",
     "w": 640,
-    "h": 391
+    "h": 400
   },
   "menubar": {
     "file": "menubar.jpg",
@@ -352,7 +352,7 @@
   "pagination": {
     "file": "pagination.jpg",
     "w": 640,
-    "h": 370
+    "h": 381
   },
   "paper": {
     "file": "paper.jpg",
@@ -382,7 +382,7 @@
   "prompt-input": {
     "file": "prompt-input.jpg",
     "w": 640,
-    "h": 345
+    "h": 354
   },
   "quote": {
     "file": "quote.jpg",
@@ -402,7 +402,7 @@
   "receipt": {
     "file": "receipt.jpg",
     "w": 640,
-    "h": 397
+    "h": 399
   },
   "resizable": {
     "file": "resizable.jpg",
@@ -412,7 +412,7 @@
   "reveal": {
     "file": "reveal.jpg",
     "w": 640,
-    "h": 367
+    "h": 374
   },
   "ribbon": {
     "file": "ribbon.jpg",
@@ -432,12 +432,12 @@
   "seal": {
     "file": "seal.jpg",
     "w": 640,
-    "h": 375
+    "h": 382
   },
   "select": {
     "file": "select.jpg",
     "w": 640,
-    "h": 381
+    "h": 392
   },
   "separator": {
     "file": "separator.jpg",
@@ -447,7 +447,7 @@
   "sheet": {
     "file": "sheet.jpg",
     "w": 640,
-    "h": 379
+    "h": 391
   },
   "sidebar": {
     "file": "sidebar.jpg",
@@ -462,7 +462,7 @@
   "signature-pad": {
     "file": "signature-pad.jpg",
     "w": 640,
-    "h": 408
+    "h": 416
   },
   "skeleton": {
     "file": "skeleton.jpg",
@@ -482,7 +482,7 @@
   "sonner": {
     "file": "sonner.jpg",
     "w": 640,
-    "h": 336
+    "h": 337
   },
   "spinner": {
     "file": "spinner.jpg",
@@ -507,7 +507,7 @@
   "stepper": {
     "file": "stepper.jpg",
     "w": 640,
-    "h": 392
+    "h": 400
   },
   "sticker": {
     "file": "sticker.jpg",
@@ -592,12 +592,12 @@
   "tooltip": {
     "file": "tooltip.jpg",
     "w": 640,
-    "h": 350
+    "h": 362
   },
   "typewriter": {
     "file": "typewriter.jpg",
     "w": 640,
-    "h": 388
+    "h": 395
   },
   "typing-indicator": {
     "file": "typing-indicator.jpg",

@@ -61,36 +61,6 @@ describe("Typography parts", () => {
     expect(getByText("Body")).toHaveClass("text-[17px]", "leading-[1.7]")
   })
 
-  it("H1 and H2 carry a hand rule from a hoisted stylesheet that holds the six masks once; rule={false} turns it off", () => {
-    const { getByText, container } = render(
-      <div>
-        <H1 seed="a">Ruled</H1>
-        <H2 seed="b">Also ruled</H2>
-        <H2 rule={false}>Plain</H2>
-      </div>,
-    )
-    expect(getByText("Ruled").className).toContain("supports-[mask-image:none]:after:[mask-image:var(--ll-rule-1")
-    expect(getByText("Also ruled").className).toContain("var(--ll-rule-2")
-    expect(getByText("Plain").className).not.toContain("mask-image")
-    const styles = document.head.querySelectorAll("style[data-href=ll-typography-rules]")
-    expect(styles.length).toBeLessThanOrEqual(1)
-    expect(TYPOGRAPHY_RULE_1).toHaveLength(3)
-    expect(TYPOGRAPHY_RULE_2).toHaveLength(3)
-    expect(container.textContent).toBe("RuledAlso ruledPlain")
-  })
-
-  it("the hand of the rule follows the seed: different seeds pick different tiles", () => {
-    const cls = (seed: string) => {
-      const { getByText, unmount } = render(<H2 seed={seed}>{seed}</H2>)
-      const c = /--ll-rule-2([abc])/.exec(getByText(seed).className)?.[1]
-      unmount()
-      return c
-    }
-    const set = new Set(["a", "b", "c", "d", "e", "f", "g", "h"].map(cls))
-    expect(set.size).toBeGreaterThan(1)
-    expect(cls("a")).toBe(cls("a"))
-  })
-
   it("the rule beside a quotation is a felt-tip pull (a mask on ::before, three hands by seed) with a plain border only where masks are missing", () => {
     const { getByText, container } = render(<Blockquote seed="q">Quote</Blockquote>)
     const bq = getByText("Quote")

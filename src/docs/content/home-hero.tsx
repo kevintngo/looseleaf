@@ -16,7 +16,7 @@ export default function HomeHeroArt() {
   return (
     <div data-slot="home-hero-art" className="@container relative mx-auto h-80 w-full max-w-md">
       <Paper stock="sticky-yellow" fastener="pin" seed="hero-note" className="absolute top-1 right-3 w-52 px-4 pt-5 pb-4">
-        <p className="font-script text-[1.7rem] leading-[1.1] font-bold text-ink">psst: it is all live. poke it.</p>
+        <p className="font-script text-[1.7rem] leading-[1.1] font-bold text-ink">psst: the desk below works. poke it.</p>
       </Paper>
       <Mascot pose="wave" size={124} seed="hero-stubby" className="absolute bottom-0 left-8 h-auto w-44 [--ll-blend:normal] @sm:w-60" />
       <LazyOnView height={0} slip={false} delay={500} className="contents">

@@ -14,7 +14,6 @@ const ChartCard = lazy(() => import("./home/chart-card"))
 const PrefsCard = lazy(() => import("./home/prefs-card"))
 const Annotated = lazy(() => import("./home/annotated"))
 const StickerDesk = lazy(() => import("./home/sticker-desk"))
-const SketchCorner = lazy(() => import("./home/sketch-corner"))
 const Planner = lazy(() => import("./home/planner"))
 const ChatCard = lazy(() => import("./home/chat-card"))
 const TabsCard = lazy(() => import("./home/tabs-card"))
@@ -39,7 +38,7 @@ export default function Home() {
         <section aria-labelledby="live" className="mt-16">
           <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
             <h2 id="live" className="font-script text-5xl leading-[1.02] font-bold text-balance text-ink @xl:text-6xl">
-              Everything on this desk is live.
+              This desk is made of real components.
             </h2>
             <Callout direction="left" curve="curved" tone="ink" className="hidden @2xl:inline-flex [&_[data-slot=callout-text]]:text-ink" seed="live-note">
               go on, poke it
@@ -64,14 +63,11 @@ export default function Home() {
               </div>
             </div>
 
-            <div className={`${ROW} @2xl:grid-cols-2 @5xl:grid-cols-3`}>
+            <div className={`${ROW} @2xl:grid-cols-2`}>
               <LazyOnView height={21} order={3} className="min-w-0">
                 <StickerDesk />
               </LazyOnView>
-              <LazyOnView height={21} order={4} className="min-w-0 @5xl:mt-8">
-                <SketchCorner />
-              </LazyOnView>
-              <LazyOnView height={25} order={5} className="min-w-0 @2xl:col-span-2 @5xl:col-span-1">
+              <LazyOnView height={25} order={5} className="min-w-0 @4xl:mt-8">
                 <Planner />
               </LazyOnView>
             </div>

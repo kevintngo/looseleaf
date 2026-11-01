@@ -22,21 +22,10 @@ const RULES_CSS = [
 ].join("")
 
 const RULE =
-  "border-b-2 border-pencil-mark/60 pb-1.5 supports-[mask-image:none]:border-b-0 supports-[mask-image:none]:pb-0 " +
-  "supports-[mask-image:none]:after:mt-1.5 supports-[mask-image:none]:after:block supports-[mask-image:none]:after:h-3 supports-[mask-image:none]:after:w-full " +
-  "supports-[mask-image:none]:after:bg-current supports-[mask-image:none]:after:opacity-70 supports-[mask-image:none]:after:content-[''] " +
-  "supports-[mask-image:none]:after:[mask-repeat:no-repeat] supports-[mask-image:none]:after:[mask-size:100%_100%]"
+  "after:mt-2 after:block after:h-[2px] after:w-full after:rounded-full after:bg-current after:opacity-55 after:content-['']"
 
-const RULE_1 = [
-  "supports-[mask-image:none]:after:[mask-image:var(--ll-rule-1a)]",
-  "supports-[mask-image:none]:after:[mask-image:var(--ll-rule-1b)]",
-  "supports-[mask-image:none]:after:[mask-image:var(--ll-rule-1c)]",
-] as const
-const RULE_2 = [
-  "supports-[mask-image:none]:after:[mask-image:var(--ll-rule-2a)]",
-  "supports-[mask-image:none]:after:[mask-image:var(--ll-rule-2b)]",
-  "supports-[mask-image:none]:after:[mask-image:var(--ll-rule-2c)]",
-] as const
+const RULE_1 = ["", "", ""] as const
+const RULE_2 = ["", "", ""] as const
 
 const BAR =
   "relative border-s-[3px] border-marker/70 supports-[mask-image:none]:border-s-0 " +

@@ -69,14 +69,6 @@ describe("CodeBlock", () => {
     expect(container.querySelector('[data-slot="code-block-title"]')).toHaveTextContent("bash")
   })
 
-  it("types keywords in red, strikes functions twice, underscores strings, greys comments", () => {
-    const { getByText } = render(<CodeBlock code={'const f = g("s") // c'} language="ts" />)
-    expect(getByText("const")).toHaveClass("text-red")
-    expect(getByText("g")).toHaveClass("[text-shadow:0.45px_0_0_currentColor]")
-    expect(getByText('"s"')).toHaveClass("underline")
-    expect(getByText("// c")).toHaveClass("text-pencil-text")
-  })
-
   it("line numbers are generated content from data-line", () => {
     const { container } = render(<CodeBlock code={CODE} language="ts" lineNumbers startLine={10} />)
     const lines = Array.from(container.querySelectorAll('[data-slot="code-line"]'))

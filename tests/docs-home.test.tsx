@@ -174,7 +174,7 @@ describe("home", () => {
     const stubby = container.querySelector("[data-slot=mascot][data-pose=wave]")
     expect(stubby).not.toBeNull()
     expect(stubby).toHaveClass("[--ll-blend:normal]")
-    expect(container.querySelector("[data-slot=paper]")).toHaveTextContent("it is all live")
+    expect(container.querySelector("[data-slot=paper]")).toHaveTextContent("the desk below works")
     await waitFor(() => expect(container.querySelectorAll("[data-slot=sticker]").length).toBe(3), { timeout: 5000 })
     for (const sticker of container.querySelectorAll("[data-slot=sticker]")) {
       expect(sticker).toHaveAttribute("aria-hidden", "true")
@@ -236,7 +236,7 @@ describe("home", () => {
     const { user } = renderDocs("#/")
     const main = screen.getByRole("main")
     await waitFor(() => expect(main.querySelector("[data-home=planner]")).not.toBeNull(), SLOW)
-    for (const piece of ["chart", "prefs", "annotated", "stickers", "sketch", "planner", "chat", "tabs", "toast", "stats"]) {
+    for (const piece of ["chart", "prefs", "annotated", "stickers", "planner", "chat", "tabs", "toast", "stats"]) {
       await waitFor(() => expect(main.querySelector(`[data-home=${piece}]`), piece).not.toBeNull(), SLOW)
     }
 
@@ -262,7 +262,6 @@ describe("home", () => {
     expect(within(tabs).getByText("3 of 4 done")).toBeInTheDocument()
 
     expect(within(main.querySelector<HTMLElement>("[data-home=stickers]")!).getByRole("group", { name: /Sticker page/ })).toBeInTheDocument()
-    expect(within(main.querySelector<HTMLElement>("[data-home=sketch]")!).getByRole("group", { name: "Drawing tools" })).toBeInTheDocument()
 
     const planner = main.querySelector<HTMLElement>("[data-home=planner]")!
     expect(within(planner).getByRole("grid")).toBeInTheDocument()
@@ -280,7 +279,7 @@ describe("home", () => {
     renderDocs("#/")
     const main = screen.getByRole("main")
     await screen.findByRole("heading", { level: 2, name: "Why Looseleaf" }, SLOW)
-    for (const name of ["Everything on this desk is live.", "Why Looseleaf", "How it works", "By the numbers"]) {
+    for (const name of ["This desk is made of real components.", "Why Looseleaf", "How it works", "By the numbers"]) {
       expect(within(main).getByRole("heading", { level: 2, name })).toBeInTheDocument()
     }
     for (const reason of ["Practical", "Handmade", "Accessible", "Themeable"]) {
@@ -306,7 +305,7 @@ describe("home", () => {
     vi.stubGlobal("IntersectionObserver", SeenIO)
     const { container } = renderDocs("#/")
     const main = screen.getByRole("main")
-    for (const piece of ["chart", "prefs", "annotated", "stickers", "sketch", "planner", "chat", "tabs", "toast", "stats"]) {
+    for (const piece of ["chart", "prefs", "annotated", "stickers", "planner", "chat", "tabs", "toast", "stats"]) {
       await waitFor(() => expect(main.querySelector(`[data-home=${piece}]`), piece).not.toBeNull(), SLOW)
     }
     await axeCheck(container)

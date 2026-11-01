@@ -99,14 +99,9 @@ export function squiggle(ink: Ink, x: number, y: number, w: number, o: ShapeOpts
 
 export function underlineLines(rng: Rng, x: number, y: number, w: number, o: { kind?: 'single' | 'double' | 'wavy' } = {}): Line[] {
   if (o.kind === 'wavy') return squiggleLines(rng, x, y, w, { h: 7, amp: 0.85 })
-  const x1 = x - rng.range(0, 3), x2 = x + w + rng.range(-1, 4)
-  const y1 = y + rng.gauss(0, 0.4), y2 = y - rng.range(0.3, 1.2 + 0.008 * w)
-  const bow = rng.gauss(0, 0.004) * w + 0.3
-  const out: Line[] = [{ pts: seg(x1, y1, x2, y2, bow, Math.max(4, Math.ceil(w / 14))), o: { end: 'flick', speed: 1.1 } }]
-  if (o.kind === 'double') {
-    const d = rng.range(3, 4.2)
-    out.push({ pts: seg(x1 + rng.range(1, 6), y1 + d, x2 - rng.range(2, 10), y2 + d + rng.range(0, 1), rng.gauss(0, 0.004) * w, Math.max(4, Math.ceil(w / 14))), o: { end: 'flick', speed: 1.2 } })
-  }
+  const ruler: StrokeOpts = { poly: true, raw: true, start: 'soft', end: 'soft', speed: 1, dry: 0 }
+  const out: Line[] = [{ pts: [[x, y], [x + w, y]], o: ruler }]
+  if (o.kind === 'double') out.push({ pts: [[x, y + 3.6], [x + w, y + 3.6]], o: ruler })
   return out
 }
 export function underline(ink: Ink, x: number, y: number, w: number, o: ShapeOpts & { kind?: 'single' | 'double' | 'wavy' } = {}): void {
