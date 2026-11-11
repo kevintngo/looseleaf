@@ -30,7 +30,7 @@ function Command({
 }) {
   const paper: CommandSheet = typeof sheet === "object" ? sheet : {}
   return (
-    <CommandPrimitive data-slot="command" className={cn("flex h-full w-full flex-col text-popover-foreground", className)} {...props}>
+    <CommandPrimitive data-slot="command" className={cn("flex h-full w-full min-w-0 flex-col text-popover-foreground", className)} {...props}>
       {sheet ? (
         <Paper data-slot="command-sheet" stock="slip" edge="cut" tilt={false} rules="none" shadow="lift" {...paper} className={cn("flex h-full w-full flex-col", NESTED)}>
           {children}
