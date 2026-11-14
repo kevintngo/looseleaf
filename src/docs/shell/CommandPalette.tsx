@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { useCatalog } from "../core/catalog-context"
 import { navigate, useLocation } from "../core/router"
 import { hrefFor, parseHash } from "../core/router-core"
@@ -68,16 +69,42 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
           <DialogTitle>Search documentation</DialogTitle>
           <DialogDescription>Search components, parts and topics. Use the arrow keys, then Enter.</DialogDescription>
         </DialogHeader>
-        <Command sheet={false} shouldFilter={false} loop label="Search components, parts and topics">
-          <PaletteBody
-            onChoose={(movesFocus) => {
-              chosen.current = movesFocus
-              onClose()
-            }}
-          />
-        </Command>
+        <TooltipProvider delayDuration={300} skipDelayDuration={150}>
+          <Command sheet={false} shouldFilter={false} loop label="Search components, parts and topics">
+            <PaletteBody
+              onChoose={(movesFocus) => {
+                chosen.current = movesFocus
+                onClose()
+              }}
+              onEscape={onClose}
+            />
+          </Command>
+        </TooltipProvider>
       </DialogContent>
     </Dialog>
+  )
+}
+
+function TruncatedText({ text, className, onEscape, children }: { text: string; className?: string; onEscape: () => void; children: ReactNode }) {
+  const ref = useRef<HTMLSpanElement | null>(null)
+  const [open, setOpen] = useState(false)
+  return (
+    <Tooltip
+      open={open}
+      onOpenChange={(next) => {
+        const el = ref.current
+        setOpen(next && el !== null && el.scrollWidth > el.clientWidth + 1)
+      }}
+    >
+      <TooltipTrigger asChild>
+        <span ref={ref} className={className}>
+          {children}
+        </span>
+      </TooltipTrigger>
+      <TooltipContent align="start" onEscapeKeyDown={onEscape}>
+        {text}
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
@@ -94,7 +121,7 @@ function useFreshActiveDescendant(key: string) {
   }, [key])
 }
 
-function PaletteBody({ onChoose }: { onChoose: (movesFocus: boolean) => void }) {
+function PaletteBody({ onChoose, onEscape }: { onChoose: (movesFocus: boolean) => void; onEscape: () => void }) {
   const catalog = useCatalog()
   const location = useLocation()
   const index = useMemo(() => buildSearchIndex(catalog), [catalog])
@@ -118,8 +145,12 @@ function PaletteBody({ onChoose }: { onChoose: (movesFocus: boolean) => void }) 
           {results.map((result) => (
             <CommandItem key={result.entry.id} value={result.entry.id} onSelect={() => go(result)} className="items-baseline gap-3">
               <span className="flex min-w-0 flex-1 flex-col">
-                <span className="dk-palette-title truncate font-bold">{highlight(result.entry.title, result.titlePositions)}</span>
-                <span className="dk-palette-sub truncate text-sm font-normal text-ink-muted">{result.entry.subtitle}</span>
+                <TruncatedText text={result.entry.title} className="dk-palette-title truncate font-bold" onEscape={onEscape}>
+                  {highlight(result.entry.title, result.titlePositions)}
+                </TruncatedText>
+                <TruncatedText text={result.entry.subtitle} className="dk-palette-sub truncate text-sm font-normal text-ink-muted" onEscape={onEscape}>
+                  {result.entry.subtitle}
+                </TruncatedText>
               </span>
               <span className="dk-palette-group shrink-0 font-type text-xs text-ink-muted">{result.entry.group}</span>
             </CommandItem>
